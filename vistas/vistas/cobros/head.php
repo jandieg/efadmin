@@ -1,0 +1,283 @@
+<?php
+require_once MODELO.'EmpresaLocal.php';
+require_once MODELO.'Grupo.php';
+require_once MODELO.'PresupuestoCobro.php';
+require_once MODELO.'ForumLeader.php';
+require_once MODELO.'Periodo.php';
+require_once MODELO.'FormaPago.php';
+require_once MODELO.'Cobro.php';
+require_once MODELO.'Miembro.php';
+require_once MODELO.'Inscripcion.php';
+include(HTML."/html_combos.php");
+include(HTML."/html.php");
+include(HTML."/html_2.php");
+include(HTML."/html_filtros.php");
+$objPresupuestoCobro;
+$objGrupo;
+$objEmpresaLocal;
+$objFormaPago;
+include(LENGUAJE."/lenguaje_1.php");
+
+                        
+function getDetalleEmpresaConMiembros($id, $key, $año) {  
+     if(isset($_SESSION['cobro_ultimo_id'])){
+        $id= $_SESSION['cobro_ultimo_id'];
+        $key= $_SESSION['cobro_key'];
+    }
+    $cuerpo='';
+    $objPresupuestoCobro= new PresupuestoCobro();
+    if($key == "EMPRESA"){
+        $resultset= $objPresupuestoCobro->getPresupuestoCobroMiembrosxEmpresas($id, $año);
+    }elseif ($key == "MIEMBRO") {
+        $resultset= $objPresupuestoCobro->getPresupuestoCobroMiembrosxMiembros($id, $año);
+    }elseif ($key == "GRUPO"){
+        $resultset= $objPresupuestoCobro->getPresupuestoCobroMiembrosFiltroGrupo($id,$año );
+    }
+    
+    while ($row = $resultset->fetch_assoc()) {   
+        $boton= array();
+        $nombre= $row['per_nombre'] ." ". $row['per_apellido'];
+        if($row['valor_inscripcion'] != ""){
+            $msg="El valor de la Inscripción del Miembro ".$nombre." es de : $ ".$row['valor_inscripcion'];
+            $boton['boton_1'] = array("elemento" => "boton" ,"modal" => "#modal_InscripcionCobro" ,"color" => "btn-info" ,"click" => "getGenerarInscripcionCobro('".$msg."',".$row['mie_id'].")" ,"titulo" => "Cobrar Inscripción" ,"lado" => "" ,"icono" => "fa-money"); 
+        }
+        $boton['boton_2'] = array("elemento" => "boton" ,"modal" => "#modal_detalleCobro" ,"color" => "btn-info" ,"click" => "getGenerarDetalleCobro('".$nombre."',".(($row['precobro_id'] == "") ? "0": $row['precobro_id']) .",".$row['mie_id'].")" ,"titulo" => "Cobrar Cuotas" ,"lado" => "" ,"icono" => "fa-money");
+        
+        $cuerpo.= generadorTablaColoresFilas("" , array(     
+                   $nombre,
+                   generadorBoton($boton)));   
+        // $tabla_miembros= generadorTablaModal(1,"","", array( "Código", "Nombre",'EF Paid','1st FM','Dues Mo','YTD'), $cuerpo);     
+    }
+    $tablaDetalleMiembros=  generadorTablaModal(1,"","", array( "Miembros",""), $cuerpo);     
+    return "<h4></h4>".$tablaDetalleMiembros.'<div id="ben_contenedor_detalle_cobro"></div>';
+    
+    
+    
+    
+}
+function getCheckPrincipal($total) {
+    $msg='';
+    $msg='<center><input type="checkbox" id="selectall" name="'.$total.'" onclick="getSeleccionarTodos()"/></center>'; 
+    return $msg;
+}
+function getCheckCobro($id, $idPresupuesto, $disabled, $bandera ) {
+    $msg='';
+    $msg='<center><input type="checkbox" class="'.$bandera.'" name="'.$idPresupuesto.'" id="'.$id.'" '.$disabled.' onclick="getSeleccionarCobro()" /></center>'; 
+    return $msg;
+}
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {    
+    try{
+        switch ($_POST['KEY']): 
+            case 'KEY_DETALLE_FILTRO_EMPRESA':
+                if(!empty($_POST['_id']) ){ 
+                    
+                    $_SESSION['cobro_ultimo_id']=$_POST['_id'];
+                    $_SESSION['cobro_key']=$_POST['_key_filtro'];
+
+                    echo getDetalleEmpresaConMiembros($_POST['_id'],$_POST['_key_filtro'] ,$_POST['_año']);
+                    exit();            
+                }
+                break;
+            
+            case 'KEY_DETALLE_PRESUPUESTO_COBRO':
+                        
+                if(!empty($_POST['_nombre']) &&  !empty($_POST['_id_presupuesto']) && !empty($_POST['id_miembro'])){ 
+                    $estadoColor="danger";
+                    $disabled="";
+                    $bandera="case";
+                    $cuerpo="";
+                    $cont=1;
+                    $objPresupuestoCobro= new PresupuestoCobro();
+                    $resultset= $objPresupuestoCobro->getDetallePresupuestoMiembro($_POST['_id_presupuesto']);
+                    while($row = $resultset->fetch_assoc()) { 
+                        if($row['estado_presupuesto_est_pre_id'] == '2'){
+                            $estadoColor="success";
+                             $disabled="disabled";
+                             $bandera="";
+                        }
+                       
+                        $fecha= $row['detalleprecobro_fechavencimiento'];
+
+                         $cuerpo.= generadorTablaColoresFilas("" ,
+                               array(
+                                   getCheckCobro($cont,$row['detalleprecobro_id'],$disabled,$bandera),                 
+                                   getFormatoFechadmy($fecha),
+                                   "$ ".$row['detalleprecobro_valor'],           
+                                   '<span class="label label-'.$estadoColor.'">'.$row['detalleprecobro_estado'].'</span>')); 
+                         $cont=$cont + 1;
+                         $estadoColor="danger";
+                         $disabled="";
+                         $bandera="case";
+                     }
+          
+
+                    $tablaDetalle= generadorTablaDetalleEstadoCuenta(
+                        array( 
+                            getCheckPrincipal($cont - 1),
+                            //generadorNegritas("N°"),
+                            generadorNegritas("Fecha"),
+                            generadorNegritas("Valor a Cobrar"),
+                            generadorNegritas("Estado")), $cuerpo); 
+                    $formModal['form_1'] = array("elemento" => "caja - oculta","id" => "_id_presupuesto_cobro" ,"reemplazo" => $_POST['_id_presupuesto']);
+                    $formModal['form_2'] = array("elemento" => "caja - oculta","id" => "_id_miembro_cobro" ,"reemplazo" =>$_POST['id_miembro']);  
+                    $idOcultos= generadorEtiquetaVVertical($formModal);
+                    
+               
+                    $objFormaPago= new FormaPago();
+                    $listaFormaPago= $objFormaPago->getListaFormaPago();    
+                    $form['form_1'] = array("elemento" => "combo","change" => "","titulo" => "Forma de Pago", "id" => "_formapago", "option" => $listaFormaPago);  
+                    
+                    $boton_f['boton_2'] = array("elemento" => "boton","id" => "btnGuardar" ,"modal" => "" ,"color" => "btn-primary" ,
+                    "click" => "setCobrar()" ,"titulo" => "Cobrar" ,"lado" => "" ,"icono" => ""); 
+                    
+                     
+                     
+                    $pie= str_replace("{contenedor_2}", generadorEtiqueta($form),  getPage('page_detalle') );
+                    $pie= str_replace("{contenedor_1}", '',  $pie );
+                    
+                    $html = str_replace("{cuerpo}", $tablaDetalle.$pie.$idOcultos, getPage("page_detalle_forum_modal")); 
+                    $html = str_replace("{boton}",generadorBoton3($boton_f), $html); 
+                    
+                    
+                    
+                    echo $html; 
+                    
+                    
+                    
+                   // echo $tablaDetalle.generadorEtiquetasFiltroSencillo($form).$idOcultos;
+       
+                }else{
+                    echo '<center><h1>Debes agregar un presupuesto!</h1></center></br></br></br></br>';
+                }
+              
+                break;
+                
+            case 'KEY_GUARDAR_COBRO': 
+                 
+                 if( !empty($_POST['_id_presupuesto']) && !empty($_POST['_lista_id_detalle_presupuesto'] ) && !empty($_POST['_formapago'] ) && !empty($_POST['_id_miembro'] )){  
+                    
+               
+                    $lista="";
+                    if(isset($_POST['_lista_id_detalle_presupuesto'])){
+                        foreach($_POST['_lista_id_detalle_presupuesto'] as $valor){
+                            $lista.= $valor.",";
+                        }
+                    }
+                     
+               
+                     $objCobro= new Cobro();
+                     $comp= $objCobro->setGrabar($_POST['_id_presupuesto'],$lista,$_POST['_id_miembro'], $_POST['_formapago'],$_SESSION['user_id_ben']);  
+                    
+                      
+                     
+                     if($comp == "OK"){
+                        $data = array("success" => "true", "priority"=>'success',"msg" => 'El Cobro se creo correctamente!');  
+                        echo json_encode($data);
+                    }else{
+                        $data = array("success" => "false", "priority"=>'info',"msg" => $comp); 
+                        echo json_encode($data);
+                    }
+
+
+                 }  else {
+                     $data = array("success" => "false", "priority"=>'info', "msg" => 'Faltan campos por llenar!');  
+                     echo json_encode($data); 
+                 }
+
+                 break;
+            
+            case 'KEY_GUARDAR_COBRO_INSCRIPCION': 
+                 
+                 if( !empty($_POST['_id_inscripcion_miembro'])){  
+               
+                     $objInscripcion= new Inscripcion();
+                     $comp= $objInscripcion->setCobrar($_POST['_id_inscripcion_miembro'],$_SESSION['user_id_ben']);  
+   
+                     if($comp == "OK"){
+                        $data = array("success" => "true", "priority"=>'success',"msg" => 'El Cobro se realizó correctamente!');  
+                        echo json_encode($data);
+                    }else{
+                        $data = array("success" => "false", "priority"=>'info',"msg" => $comp); 
+                        echo json_encode($data);
+                    }
+
+
+                 }  else {
+                     $data = array("success" => "false", "priority"=>'info', "msg" => 'Faltan campos por llenar!');  
+                     echo json_encode($data); 
+                 }
+
+                 break;
+                
+                
+        endswitch;    
+    } catch (Exception $exc) { echo getError($exc);}  
+    
+     exit(); 
+}
+function getTablaFiltro($listaMiembros= array(),$listaEmpresa= array(), $listaGrupos= array(),$tabla_miembros='' ) {
+    global $perVerTodosFiltrosCobrosOp13, $perVerFiltrosIDForumOp13;
+    if(count($listaEmpresa) > 0 ){
+        $form1['form_1'] = array("elemento" => "combo","change" => "getDetalleFiltro('EMPRESA')","titulo" => "<h4>Empresa</h4>", "id" => "_empresa", "option" => $listaEmpresa); 
+    }
+    if(count($listaMiembros) > 0 ){
+        $form2['form_2'] = array("elemento" => "combo","change" => "getDetalleFiltro('MIEMBRO')","titulo" => "<h4>Miembros</h4>", "id" => "_miembros", "option" => $listaMiembros);  
+    }
+    if(count($listaGrupos) > 0 ){
+        $form3['form_3'] = array("elemento" => "combo","change" => "getDetalleFiltro('GRUPO')","titulo" => "<h4>Grupos</h4>", "id" => "_grupos", "option" => $listaGrupos); 
+    }
+   $form4['form_1'] = array("elemento" => "combo","disabled" => "","change" => "","titulo" => "<h4>Año</h4>", "id" => "_año", "option" => generadorComboAños(date('Y')));
+    if (in_array($perVerTodosFiltrosCobrosOp13, $_SESSION['usu_permiso'])) {
+        $resultado = str_replace("{contenedor_1}", generadorEtiquetasFiltro($form1),  getPage('page_detalle_filtros')); 
+    }  elseif (in_array($perVerFiltrosIDForumOp13, $_SESSION['usu_permiso'])) {
+        $resultado =   getPage('page_detalle_filtros_forum'); 
+    }
+         
+    $resultado = str_replace("{contenedor_2}", generadorEtiquetasFiltro($form2), $resultado); 
+    $resultado = str_replace("{contenedor_3}", generadorEtiquetasFiltro($form3), $resultado); 
+    $resultado = str_replace("{contenedor_4}", '<div id="ben_contenedor_tabla">'.$tabla_miembros.'</div>', $resultado); 
+    $resultado = str_replace("{contenedor_5}", generadorEtiquetasFiltro($form4), $resultado); 
+    $resultado = str_replace("{boton}", "", $resultado);  
+    $resultado = str_replace("{cabecera}", "Cobros", $resultado);   
+
+    return $resultado;
+}
+
+
+if (in_array($perVerTodosFiltrosCobrosOp13, $_SESSION['usu_permiso'])) {
+
+    $lista['lista_']= array("value" => "x",  "select" => "" ,"texto" => "Seleccione...");
+    $objEmpresaLocal= new EmpresaLocal();
+    $listaEmpresa= $objEmpresaLocal->getListaEmpresa2($objEmpresaLocal->getPrimerEmpresa(), $lista);
+    
+    $objMiembro= new Miembro();
+    $listaMiembros= $objMiembro->getListaMiembros(NULL, $lista,"",FALSE);
+    
+    $objGrupo= new Grupo();
+    $listaGrupos= $objGrupo->getListaGrupos2(NULL,$lista);
+    
+    $tabla_miembros= getDetalleEmpresaConMiembros($objGrupo->getPrimerGrupo(), "GRUPO", date('Y')); 
+    
+    $t=getTablaFiltro($listaMiembros,$listaEmpresa,$listaGrupos, $tabla_miembros );
+    
+ }  elseif (in_array($perVerFiltrosIDForumOp13, $_SESSION['usu_permiso'])) {
+    
+    $lista['lista_']= array("value" => "x",  "select" => "" ,"texto" => "Seleccione...");   
+    $objMiembro= new Miembro();
+    $listaMiembros= $objMiembro->getListaMiembros(NULL, $lista,$_SESSION['user_id_ben'],FALSE);
+    
+    $objGrupo= new Grupo();
+    $listaGrupos= $objGrupo->getListaGruposForum($_SESSION['user_id_ben'],NULL, $lista); 
+    
+    $tabla_miembros= getDetalleEmpresaConMiembros($objGrupo->getPrimerGrupo(), "GRUPO", date('Y')); 
+    
+    $t=getTablaFiltro($listaMiembros ,NULL, $listaGrupos ,$tabla_miembros);
+    
+}
+$objPerido= new Periodo();
+$listaPeriodos= $objPerido->getListaComboPeriodo("");
+
+
+
+
+
