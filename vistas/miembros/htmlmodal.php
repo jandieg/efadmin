@@ -294,6 +294,42 @@
    </div>
 </div> 
 
+<div class="modal fade" id="modal_getCancelarMiembro" role="dialog" area-labelledby="myModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static" >
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Cancelar Miembro</h4>
+            </div>
+            <div class="modal-body">
+             <div id="frm_perfilUsuario" class="form-medium" >
+                    <div id="respuesta_modal" class="form-medium" >
+                        <div class="form-group">
+                            <input type="hidden" class="form-control" id="_seleccion_del_mes" value="<?php echo date('m/Y',strtotime('-1 month')); ?>">
+                            <input type="hidden" class="form-control" id="_id_miembro_cancelar">
+                            <input type="hidden" class="form-control" id="_id_persona_cancelar">
+                        </div>                                          
+                         <div class="form-group">                          
+                            <div class="date-picker-meses" id="_seleccion_mes" /></div>
+                            <label>Se eliminar&aacute;n los cobros no pagados a partir del mes 
+                          <span id="mesact">
+                          <?php echo date('m/Y',strtotime('-1 months')); ?></span></label>
+                        </div>                                                                                    
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnActualizarCancelacion" onclick="setActualizarCancelacion()">Guardar</button>
+            </div>
+        </div>
+    </div>
+    <style>
+        .ui-datepicker-calendar{
+            display: none;
+        }
+    </style>
+</div>
+
 <div class="modal fade" id="modal_getActualizarEmpresa"  role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -330,6 +366,7 @@
                     </div>
                 </div>
             </div>
+            
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" id="btnActualizarEmpresa" onclick="setActualizarEmpresa(1)">Guardar</button>
             </div>

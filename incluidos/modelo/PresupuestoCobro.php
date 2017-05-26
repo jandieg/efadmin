@@ -33,8 +33,13 @@ class PresupuestoCobro extends Conexion{
         $sql="CALL sp_updatePresupuestoCobroMiembro('$idPresupuesto','$valor','$totalCobro','$idPeriodo','$id_user','$listaFechas','$idMembresia', '$idMiembro','$listaFechasFaltantes','$valorFechasFaltantes','$idTipo','$year')";
         return parent::setSqlSp($sql);   
     }
-               
-            
+
+    public function cancelarPresupuestoCobroMiembro($idMiembro, $mes, $anho) {
+        $fecha = date("Y=m-d H:i:s"); 
+        $sql = "CALL sp_cancelPresupuestoCobroMiembro('$idMiembro', '$mes', '$anho', '$fecha')";
+        return parent::setSqlSp($sql);
+    }       
+
     public function getDetallePresupuestoMiembro($id) {
         $sql="CALL sp_selectDetallePresupuestoMiembro('$id')";
         return parent::getConsultar($sql);   

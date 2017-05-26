@@ -72,6 +72,8 @@ if(file_exists(E_VISTAS.E_PAGE."/head.php")){
         <!--<link rel="stylesheet" href="public/framework/plugins/iCheck/all.css">-->
         <!-- Select2 -->
         <link rel="stylesheet" href="public/framework/plugins/select2/select2.min.css">
+        <!-- Datepicker -->
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
         <!-- Theme style -->
         <link rel="stylesheet" href="public/framework/dist/css/AdminLTE.min.css">
         <link rel="stylesheet" href="public/css/jquery.msg.css">
@@ -90,6 +92,7 @@ if(file_exists(E_VISTAS.E_PAGE."/head.php")){
         
                   <!-- jQuery 2.1.4 -->
         <script src="public/framework/plugins/jQuery/jquery-2.2.3.min.js"></script>
+        <script src="public/framework/plugins/jQueryUI/jquery-ui.min.js"></script>
         <!-- Bootstrap 3.3.5 -->
         <script src="public/framework/bootstrap/js/bootstrap.min.js"></script>
 
@@ -172,6 +175,7 @@ function do_report(type,userid){
 	
 		var page=type;
 	var dataString = "year=" + year + "&userid=" + userid + "&group=" + group + "&page=" + page;
+    console.log(dataString);
 	$.ajax({  
 		type: "POST",  
 		url: "reports.php",  
