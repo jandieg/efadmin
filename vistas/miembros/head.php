@@ -162,7 +162,7 @@ list($c1, $c2, $c3, $c4) = split('[/.-]', $codigo_usuario);
 		
         $form2['form_2'] = array("elemento" => "combo","change" => "getComboCargarGrupos()","titulo" => generadorAsterisco($lblForumLeader), "id" => "_propietario", "option" => $listaForumLeader);
        // $form2['form_2'] = array("elemento" => "combo","change" => "","titulo" => generadorAsterisco("Asignar Grupo"), "id" => "_grupo_asignar", "option" => $listaGrupos);
-        $form2['form_3'] = array("elemento" => "combo","change" => "","titulo" => generadorAsterisco("Member Status"), "id" => "_status", "option" => $listaStatus);
+        $form2['form_3'] = array("elemento" => "combo","change" => "cambioMembresia()","titulo" => generadorAsterisco("Member Status"), "id" => "_status", "option" => $listaStatus);
         $form2['form_4'] = array("elemento" => "combo + boton","change" => "",                   "titulo" => "Empresa", "id" => "_id_empresa", "option" => $listaEmpresas, 
                                             "modal" => "","boton_click" => "getPAMEmpresaModal('1')", "boton_icono" => "fa fa-industry","boton_nombre" => "", "boton_title" =>"Crear Empresa"
                                             ,"boton_tipo" => "btn-info");
@@ -179,6 +179,7 @@ list($c1, $c2, $c3, $c4) = split('[/.-]', $codigo_usuario);
         }  else {
             $form7['form_12'] = array("elemento" => "Checkbox-color" ,"tipo" => "" ,"chec" => "", "titulo" => $lblParticipacionCorreo, "id" => "_participacion" ,"reemplazo" => '');
         }
+        $form7['form_17'] = array("elemento" => "caja" ,"tipo" => "hidden" ,"id" => "_id_miembro_cancel", "reemplazo" => $row['mie_id']);
         $form_7= generadorEtiqueta($form7);
         
         $form8['form_13'] = array("elemento" => "caja pequeña + caja" ,"titulo" => $lblTF
@@ -206,6 +207,7 @@ list($c1, $c2, $c3, $c4) = split('[/.-]', $codigo_usuario);
         $form5['form_1'] = array("elemento" => "textarea" ,"tipo" => "text" , "titulo" => $lblDescDesafios, "id" => "_desafios" ,"reemplazo" => $row['mie_descripcion_desafio']);
         $form5['form_2'] = array("elemento" => "lista-multiple", "titulo" => "Lista de Desafíos", "id" => "_lista_desafio", "option" => $listadesafio);
         $form_5= generadorEtiqueta($form5);
+        
 
 //        $form6['form_2'] = array("elemento" => "lista-multiple", "titulo" => $lblListaHobbies, "id" => "_lista_hobbies", "option" => $listahobby);
  //       $form_6= generadorEtiqueta($form6);

@@ -5,6 +5,14 @@ session_start();
 
 <script>
 
+var cambioMembresia = function () {
+    if ($("#_status").val() == 2) {
+        generarRangoFechas();        
+        $("#modal_getCancelarMiembro").modal('toggle');
+    }
+}
+
+
 var generarRangoFechas = function () {
     var date2 = new Date().toISOString().substr(0,19).replace('T', ' ');
     var month = date2.substr(5,2);
@@ -177,12 +185,17 @@ var getDetalle = function( id_miembro, base){
     });
 };
 
+var setGuardarCancelacion = function() {
+    $("#_id_miembro_cancelar").val($("#_id_miembro_cancel").val());
+    $('#modal_getCancelarMiembro').modal('toggle');
+}
+
 var setActualizarCancelacion = function(){
-    $.msg({content : '<img src="public/images/loanding.gif" />', autoUnblock: false});
-    var parametros = {
+    if ($("#_id_miembro_cancelar").val() > 0) {
+        $.msg({content : '<img src="public/images/loanding.gif" />', autoUnblock: false});
+        var parametros = {
                 KEY: 'KEY_CANCELAR_MEMBRESIA_MIEMBRO',
                 _id_miembro: $("#_id_miembro_cancelar").val().toString(),
-                _id_persona: $("#_id_persona_cancelar").val().toString(),
                 _mes_elegido: $("#_seleccion_del_mes").val().toString()
         };
         $.ajax({
@@ -192,10 +205,8 @@ var setActualizarCancelacion = function(){
             dataType : 'json',
             success:  function (mensaje) { 
                     $.msg('unblock');
-                    if(mensaje.success == "true"){
-                        $('#modal_getCancelarMiembro').modal('toggle');
+                    if(mensaje.success == "true"){                        
                         $.toaster({ priority : mensaje.priority, title : 'Alerta', message : mensaje.msg});
-                        setUserActualizarCanc(parametros._id_persona, parametros._id_miembro);
                     }else{
                         $.toaster({ priority : mensaje.priority, title : 'Alerta', message : mensaje.msg});
                     }
@@ -205,6 +216,8 @@ var setActualizarCancelacion = function(){
                 $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema'});
             }
         });
+    }
+    
 };
 
 var setUserActualizar = function(  id_persona, id_miembro){
@@ -262,11 +275,8 @@ var setUserActualizar = function(  id_persona, id_miembro){
         };
         
         if ($("#_status").val() == 2) {
-            generarRangoFechas();
-            $("#_id_miembro_cancelar").val(id_miembro);
-            $("#_id_persona_cancelar").val(id_persona);
-            $("#modal_getCancelarMiembro").modal('toggle');             
-        } else {
+            setActualizarCancelacion();
+        } 
             $.ajax({
                 data:  parametros,
                 url:   'miembros',
@@ -291,94 +301,12 @@ var setUserActualizar = function(  id_persona, id_miembro){
                     $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema'});
                 }
             }); 
-        }
+        
 
                
 
 };
 
-var setUserActualizarCanc = function(  id_persona, id_miembro){
-    
-    var _lista_hobbies = []; 
-    $('#_lista_hobbies :selected').each(function(i, selected){ 
-      _lista_hobbies[i] = $(selected).val();
-    });
-    
-     var _lista_desafio = []; 
-    $('#_lista_desafio :selected').each(function(i, selected){ 
-      _lista_desafio[i] = $(selected).val();
-      //alert($(selected).val().toString());
-    });
-
-    var participacion='0';
-    if( $('#_participacion').prop('checked') ) {
-        participacion="1";
-     }
-
-        var parametros = {
-                KEY: 'KEY_ACTUALIZAR', 
-                _id_empresa: $("#_id_empresa").val().toString(),
-				_precio_esp: $("#_precio_esp").val().toString(),
-                _id_miembro:id_miembro.toString(),
-                _id_persona: id_persona.toString(),
-                _propietario: $("#_propietario").val().toString(),
-                _nombre: $("#_nombre").val().toString(),
-                _apellido: $("#_apellido").val().toString(),
-                _titulo: $("#_titulo").val().toString(),
-                _fn: $("#_fn").val().toString(),
-                _correo: $("#_correo").val().toString(),
-                _correo_2: $("#_correo_2").val().toString(),
-                _telefono: $("#_telefono").val().toString(), 
-                _celular: $("#_celular").val().toString(),
-                //_codigo: $("#_codigo").val().toString(),
-				_codigo: $("#_cod_1").val().toString() +"-"+ $("#_cod_2").val().toString() +"-"+ $("#_cod_3").val().toString() +"-"+ $("#_cod_4").val().toString() ,
-                _tipo_p: $("#_tipo_p").val().toString(),
-                _identificacion: $("#_identificacion").val().toString(),
-                _genero: $("#_genero").val().toString(),
-                _status: $("#_status").val().toString(),
-                
-                _membresia: $("#_membresia").val().toString(),
-                _id_skype: $("#_id_skype").val().toString(),
-                _id_Twitter: $("#_id_Twitter").val().toString(),
-                _observacion:$("#_observacion").val().toString(),
-                _calle: $("#_calle").val().toString(),
-                _ciudad: $("#_ciudad").val().toString(),
-                _desafios: $("#_desafios").val().toString(),
-                _categoria: $("#_categoria").val().toString(),
-                _participacion: participacion,
-                _lista_desafio:_lista_desafio,
-                _lista_hobbies:_lista_hobbies,
-                _grupo_asignar:$("#_grupo_asignar").val().toString()
-        };
-        
-        
-            $.ajax({
-                data:  parametros,
-                url:   'miembros',
-                type:  'post',
-                dataType : 'json',
-                beforeSend: function () {
-                    $.msg({content : '<img src="public/images/loanding.gif" />', autoUnblock: false});
-                        //$.blockUI({ message: '<h3>Esperé un momento...</h3>'}); 
-                },
-                success:  function (mensaje) {
-                    $.msg('unblock');
-                    //$.unblockUI();
-                        if(mensaje.success == "true"){
-                        getDetalle( id_miembro,'');
-                        $.toaster({ priority : mensaje.priority, title : 'Alerta', message : mensaje.msg});
-                        }else if(mensaje.success == "false"){
-                        $.toaster({ priority : mensaje.priority, title : 'Alerta', message : mensaje.msg});
-                    }
-                },error : function(xhr, status) {
-        //                $.unblockUI();
-                    $.msg('unblock');
-                    $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema'});
-                }
-            }); 
-               
-
-};
 
 var getRecargar = function(){
     //location.reload();

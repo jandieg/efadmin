@@ -306,8 +306,7 @@
                     <div id="respuesta_modal" class="form-medium" >
                         <div class="form-group">
                             <input type="hidden" class="form-control" id="_seleccion_del_mes" value="<?php echo date('m/Y',strtotime('-1 month')); ?>">
-                            <input type="hidden" class="form-control" id="_id_miembro_cancelar">
-                            <input type="hidden" class="form-control" id="_id_persona_cancelar">
+                            <input type="hidden" class="form-control" id="_id_miembro_cancelar" value="0">
                         </div>                                          
                          <div class="form-group">                          
                             <div class="date-picker-meses" id="_seleccion_mes" /></div>
@@ -319,7 +318,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="btnActualizarCancelacion" onclick="setActualizarCancelacion()">Guardar</button>
+                <button type="button" class="btn btn-primary" id="btnActualizarCancelacion" onclick="setGuardarCancelacion()">Guardar</button>
             </div>
         </div>
     </div>
