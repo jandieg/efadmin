@@ -175,7 +175,6 @@ function do_report(type,userid){
 	
 		var page=type;
 	var dataString = "year=" + year + "&userid=" + userid + "&group=" + group + "&page=" + page;
-    console.log(dataString);
 	$.ajax({  
 		type: "POST",  
 		url: "reports.php",  

@@ -42,7 +42,7 @@ var generarRangoFechas = function () {
                 }
             }
             
-            console.log($("#_seleccion_mes").val());
+            
         },
        
     });
