@@ -645,8 +645,13 @@ function generadorEtiqueta($tab=array()){
                if($valor['elemento']=='combo'){
                    $msg.='<div class="form-group">'; 
                    $msg.='<label for="" class="col-sm-3 control-label">'.$valor['titulo'].'</label>'; 
-                   $msg.='<div class="col-sm-9">';     
-                   $msg.='<select id="'.$valor['id'].'" onChange="'.$valor['change'].'" class="form-control select2" style="width: 100%;">'; 
+                   $msg.='<div class="col-sm-9">';  
+                   if (isset($valor['deshabilitado'])) {                      
+                        $msg.='<select id="'.$valor['id'].'" onChange="'.$valor['change'].'" disabled="true" class="form-control select2" style="width: 100%;">'; 
+                   } else {
+                        $msg.='<select id="'.$valor['id'].'" onChange="'.$valor['change'].'" class="form-control select2" style="width: 100%;">'; 
+                   }
+                   
                    if(count($valor['option']) > 0){
                     foreach ($valor['option'] as $option => $val) {
                         $msg.='<option value="'.$val['value'].'" '.$val['select'].'>'.$val['texto'].'</option>';

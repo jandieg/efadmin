@@ -259,7 +259,6 @@ var setUserActualizar = function(  id_persona, id_miembro){
     if( $('#_participacion').prop('checked') ) {
         participacion="1";
      }
-
         var parametros = {
                 KEY: 'KEY_ACTUALIZAR', 
                 _id_empresa: $("#_id_empresa").val().toString(),

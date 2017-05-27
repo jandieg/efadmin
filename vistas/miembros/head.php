@@ -114,6 +114,12 @@ function getDetalleUpdate($id, $recargar) {
         $listaM= array();
         $listaM['lista_'] = array("value" => "x",  "select" => "" ,"texto" => "Seleccione...");
         $listaM= $objMembresia->getListaMembresias($row['membresia_id'],$listaM);
+        $valorMembresiaOculto = 0;
+        foreach($listaM as $d) {
+            if (strlen($d['select']) > 0) {
+                $valorMembresiaOculto = $d['value'];
+            }
+        }
         
         $objEmpresaLocal= new EmpresaLocal();
         $listaEmpresas= $objEmpresaLocal->getListaEmpresa($row['emp_id']);
@@ -157,7 +163,8 @@ list($c1, $c2, $c3, $c4) = split('[/.-]', $codigo_usuario);
         $form_1= generadorEtiqueta($form);
         
         //Formularios
- $form2['form_0'] = array("elemento" => "combo","change" => "Show_Esp_Price()","titulo" => generadorAsterisco("Precio Mensual"), "id" => "_membresia", "option" => $listaM);
+        $form2['form_7'] = array("elemento" => "caja", "tipo" => "hidden","id" => "_membresia", "reemplazo" => $valorMembresiaOculto);
+ $form2['form_0'] = array("elemento" => "combo","change" => "Show_Esp_Price()", 'deshabilitado' => true, "titulo" => generadorAsterisco("Precio"), "id" => "_membresia", "option" => $listaM);
 	   $form2['form_1'] = array("elemento" => "caja" ,"tipo" => "hidden" , "titulo" => " ","id" => "_precio_esp","reemplazo" => $row['precio_esp']);
 		
         $form2['form_2'] = array("elemento" => "combo","change" => "getComboCargarGrupos()","titulo" => generadorAsterisco($lblForumLeader), "id" => "_propietario", "option" => $listaForumLeader);
