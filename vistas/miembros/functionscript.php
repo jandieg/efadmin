@@ -223,8 +223,11 @@ var setActualizarCancelacion = function(){
             type:  'post',
             dataType : 'json',
             success:  function (mensaje) { 
+                    $("#_id_miembro_cancelar").val(0);
+                    console.log($("#_id_miembro_cancelar").val());
                     $.msg('unblock');
                     if(mensaje.success == "true"){                        
+                        
                         $.toaster({ priority : mensaje.priority, title : 'Alerta', message : mensaje.msg});
                     }else{
                         $.toaster({ priority : mensaje.priority, title : 'Alerta', message : mensaje.msg});
