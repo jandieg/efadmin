@@ -308,23 +308,60 @@
                             <input type="hidden" class="form-control" id="_seleccion_del_mes" value="<?php echo date('m/Y',strtotime('-1 month')); ?>">
                             <input type="hidden" class="form-control" id="_id_miembro_cancelar" value="0">
                         </div>                                          
-                         <div class="form-group">                          
+                         <div class="form-group">      
+                         <label>Indicar la fecha en la cual el miembro es cancelado:</label>                    
                             <div class="date-picker-meses" id="_seleccion_mes" /></div>
-                            <label>Se eliminar&aacute;n los cobros no pagados a partir del mes 
+                            
+                        </div>
+                        <div class="form-group">
+                            <input type="checkbox" id="_chequea_cancelacion" onclick="checkCancel()"/><label> Se eliminar&aacute;n los cobros no pagados a partir del mes de 
                           <span id="mesact">
-                          <?php echo date('m/Y',strtotime('-1 months')); ?></span></label>
+                          <?php 
+                          $meses = array();
+                          $meses[1]  = "Enero";
+                          $meses[2]  = "Febrero";
+                          $meses[3]  = "Marzo";
+                          $meses[4]  = "Abril";
+                          $meses[5]  = "Mayo";
+                          $meses[6]  = "Junio";
+                          $meses[7]  = "Julio";
+                          $meses[8]  = "Agosto";
+                          $meses[9]  = "Septiembre";
+                          $meses[10] = "Octubre";
+                          $meses[11] = "Noviembre";
+                          $meses[12] = "Diciembre";
+                          echo $meses[intval(date('m'))] . " (incluido " . $meses[intval(date('m'))] . ")"; ?></span></label>
                         </div>                                                                                    
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="btnActualizarCancelacion" onclick="setGuardarCancelacion()">Guardar</button>
+                <button type="button" class="btn btn-primary" id="btnActualizarCancelacion" disabled="true" onclick="setGuardarCancelacion()">Guardar</button>
             </div>
         </div>
     </div>
     <style>
-        .ui-datepicker-calendar{
+        .ui-datepicker-calendar, .ui-datepicker-next, .ui-datepicker-prev{
             display: none;
+        }
+
+        .ui-widget.ui-widget-content{
+            border: 0px;
+        }
+        .ui-datepicker-header{
+            background: white;
+            border: 0px;
+        }
+        .ui-datepicker-title{
+            margin-left: 0px !important;
+            margin-right: 0px !important;
+        }
+        .ui-datepicker select.ui-datepicker-month, .ui-datepicker select.ui-datepicker-year{
+            width: 110px;
+            height: 30px;
+        }
+        .ui-datepicker select.ui-datepicker-month b, .ui-datepicker select.ui-datepicker-year b{
+            border-color: #888;
         }
     </style>
 </div>

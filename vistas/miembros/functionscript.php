@@ -12,6 +12,14 @@ var cambioMembresia = function () {
     }
 }
 
+var checkCancel = function() {
+    if ($("#_chequea_cancelacion").is(":checked")) {
+        $("#btnActualizarCancelacion").attr("disabled", false);
+    } else {
+        $("#btnActualizarCancelacion").attr("disabled", true);
+    }
+}
+
 
 var generarRangoFechas = function () {
     var date2 = new Date().toISOString().substr(0,19).replace('T', ' ');
@@ -23,13 +31,14 @@ var generarRangoFechas = function () {
     } else {
         month = month - 2;
     }
+    var meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 
     var fechaInicial = new Date(year, month, 1);
 
     $('.date-picker-meses').datepicker(
     {
         dateFormat: "mm/yy",
-        monthNameShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+        monthNamesShort: meses,
         changeMonth: true,
         changeYear: true,
         showButtonPanel: false,
@@ -38,14 +47,24 @@ var generarRangoFechas = function () {
         onChangeMonthYear: function(y,m,i) {
             if (year == y && month > m) {
                 //se valida que no caiga en bug del datepicker
-                $("#mesact").html(month + '/' + y);
-                $("#_seleccion_del_mes").val(month + '/' + y);
+                
+                if (month+1 == 12) {
+                    $("#mesact").html(meses[0]+" (incluido " + meses[0] + ")");
+                } else {
+                    $("#mesact").html(meses[month+1]+" (incluido " + meses[month+1] + ")");
+                }
+                $("#_seleccion_del_mes").val( (month+1) + '/' + y);
             } else {
                 if (m.length < 2) { 
-                    $("#mesact").html('0' + m.toString() + '/' + y);
+                    $("#mesact").html(meses[m]+" (incluido " + meses[m] + ")");
                     $("#_seleccion_del_mes").val('0' + m.toString() + '/' + y);
                 } else {
-                    $("#mesact").html(m + '/' + y);
+                    if (m == 12) {  
+                        $("#mesact").html(meses[0]+" (incluido " + meses[0] + ")");
+                    } else {
+                        $("#mesact").html(meses[m]+" (incluido " + meses[m] + ")");
+                    }
+                    
                     $("#_seleccion_del_mes").val(m + '/' + y);
                 }
             }
