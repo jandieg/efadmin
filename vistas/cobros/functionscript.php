@@ -128,14 +128,14 @@ var setCobrar = function(){
         banderacredito = 1;
         montopagar += Number($("#_credito").val());
     }
-    console.log(montopagar);
+    
     $(".case").each(function() {
         if (Number($(this).val()) <= montopagar) {
             montopagar -= $(this).val();
             listaIDDetalle.push($(this).attr("name"));
         }
     });
-    console.log(listaIDDetalle);
+    
     /*
     for (var i=0; i < cont; i++) {
         if($("#" + (i + 1)).prop('checked') ) {
