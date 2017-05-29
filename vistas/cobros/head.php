@@ -60,9 +60,9 @@ function getCheckPrincipal($total) {
     $msg='<center><input type="checkbox" id="selectall" name="'.$total.'" onclick="getSeleccionarTodos()"/></center>'; 
     return $msg;
 }
-function getCheckCobro($id, $idPresupuesto, $disabled, $bandera ) {
+function getCheckCobro($id, $idPresupuesto, $disabled, $bandera, $cobro ) {
     $msg='';
-    $msg='<center><input type="checkbox" class="'.$bandera.'" name="'.$idPresupuesto.'" id="'.$id.'" '.$disabled.' onclick="getSeleccionarCobro()" /></center>'; 
+    $msg='<center><input type="checkbox" class="'.$bandera.'" name="'.$idPresupuesto.'" id="'.$id.'" '.$disabled.' value="'.$cobro.'" onclick="getSeleccionarCobro()" /></center>'; 
     return $msg;
 }
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {    
@@ -87,8 +87,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $bandera="case";
                     $cuerpo="";
                     $cont=1;
+                    $credito = 0;
                     $objPresupuestoCobro= new PresupuestoCobro();
-                    $resultset= $objPresupuestoCobro->getDetallePresupuestoMiembro($_POST['_id_presupuesto']);
+                    $credito = $objPresupuestoCobro->getCreditoMiembro($_POST['_id_presupuesto']);
+                    $objPresupuestoCobro2= new PresupuestoCobro();
+                    $resultset= $objPresupuestoCobro2->getDetallePresupuestoMiembro($_POST['_id_presupuesto']);
+                    
+                    
+                    
                     while($row = $resultset->fetch_assoc()) { 
                         if($row['estado_presupuesto_est_pre_id'] == '2'){
                             $estadoColor="success";
@@ -100,7 +106,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                          $cuerpo.= generadorTablaColoresFilas("" ,
                                array(
-                                   getCheckCobro($cont,$row['detalleprecobro_id'],$disabled,$bandera),                 
+                                   getCheckCobro($cont,$row['detalleprecobro_id'],$disabled,$bandera, $row['detalleprecobro_valor']),                 
                                    getFormatoFechadmy($fecha),
                                    "$ ".$row['detalleprecobro_valor'],           
                                    '<span class="label label-'.$estadoColor.'">'.$row['detalleprecobro_estado'].'</span>')); 
@@ -125,17 +131,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                
                     $objFormaPago= new FormaPago();
                     $listaFormaPago= $objFormaPago->getListaFormaPago();    
+
                     $form['form_1'] = array("elemento" => "combo","change" => "","titulo" => "Forma de Pago", "id" => "_formapago", "option" => $listaFormaPago);  
                     
                     $boton_f['boton_2'] = array("elemento" => "boton","id" => "btnGuardar" ,"modal" => "" ,"color" => "btn-primary" ,
                     "click" => "setCobrar()" ,"titulo" => "Cobrar" ,"lado" => "" ,"icono" => ""); 
                     
                      
-                     
-                    $pie= str_replace("{contenedor_2}", generadorEtiqueta($form),  getPage('page_detalle') );
-                    $pie= str_replace("{contenedor_1}", '',  $pie );
-                    
-                    $html = str_replace("{cuerpo}", $tablaDetalle.$pie.$idOcultos, getPage("page_detalle_forum_modal")); 
+                    $form2['form_1'] = array("elemento" => "caja pequeña", "titulo" => "Monto Pagado ", "tipo" => "text", "id" => "_montopagado");  
+                    $form3['fomr_1'] = array('elemento' => "Checkbox-color", "titulo" => "Utilizar credito de $ " . $credito, 
+                    "chec" => 'value="'.$credito.'"', "id" => "_credito");
+                    $pie= str_replace("{contenedor_1}", generadorEtiqueta($form2),  getPage('page_detalle'));
+                    $pie= str_replace("{contenedor_2}", generadorEtiqueta($form),  $pie );
+                    $pie2 = str_replace("{contenedor_1}", generadorEtiqueta($form3), getPage('page_detalle'));                                        
+                    $pie2 = str_replace("{contenedor_2}", "", $pie2);                                        
+                    $html = str_replace("{cuerpo}", $tablaDetalle.$pie.$pie2.$idOcultos, getPage("page_detalle_forum_modal")); 
                     $html = str_replace("{boton}",generadorBoton3($boton_f), $html); 
                     
                     
@@ -154,7 +164,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 
             case 'KEY_GUARDAR_COBRO': 
                  
-                 if( !empty($_POST['_id_presupuesto']) && !empty($_POST['_lista_id_detalle_presupuesto'] ) && !empty($_POST['_formapago'] ) && !empty($_POST['_id_miembro'] )){  
+                 if( !empty($_POST['_id_presupuesto']) && !empty($_POST['_lista_id_detalle_presupuesto'] ) 
+                 && !empty($_POST['_formapago'] ) && !empty($_POST['_id_miembro']) 
+                 && ! empty($_POST['_bandera_credito']) && ! empty($_POST['_resto']) ){  
                     
                
                     $lista="";
@@ -163,14 +175,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             $lista.= $valor.",";
                         }
                     }
-                     
-               
+
+                     $objPresupuestoCobro = new PresupuestoCobro();
+                    $resultado = $objPresupuestoCobro->actualizarCreditoPresupuestoMiembro($_POST['_id_presupuesto'], $_POST['_resto'], $_POST['_bandera_credito']); 
+                   
                      $objCobro= new Cobro();
                      $comp= $objCobro->setGrabar($_POST['_id_presupuesto'],$lista,$_POST['_id_miembro'], $_POST['_formapago'],$_SESSION['user_id_ben']);  
                     
-                      
-                     
+                   
+                                    
+                    
                      if($comp == "OK"){
+                       
                         $data = array("success" => "true", "priority"=>'success',"msg" => 'El Cobro se creo correctamente!');  
                         echo json_encode($data);
                     }else{

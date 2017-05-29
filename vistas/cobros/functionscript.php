@@ -91,9 +91,26 @@ var getSeleccionarTodos = function(){
     } else {
         $(".case").prop("checked", false);
     }
+    var total = 0;
+    $(".case").each(function(){
+        if ($(this).is(":checked")) {
+            total += Number($(this).val());
+        }
+    });
+    $("#_montopagado").val(total);
 };
 
 var getSeleccionarCobro = function(){
+    
+    var total = 0;
+    console.log('invoca el getselectcobro');
+    $(".case").each(function(){
+        if ($(this).is(":checked")) {
+            console.log('entra al foreach');
+            total += Number($(this).val());
+        }
+    });
+    $("#_montopagado").val(total);
     if($(".case").length == $(".case:checked").length) {
         $("#selectall").prop("checked", true);
     } else {
@@ -104,12 +121,28 @@ var getSeleccionarCobro = function(){
 var setCobrar = function(){
     var cont= $("#selectall").attr("name");
     var listaIDDetalle = [];
+    var montopagar = Number($("#_montopagado").val());
+    var banderacredito = 0;
+    var resto = 0;
+    if ($("#_credito").is(":checked")) {
+        banderacredito = 1;
+        montopagar += Number($("#_credito").val());
+    }
+    console.log(montopagar);
+    $(".case").each(function() {
+        if (Number($(this).val()) <= montopagar) {
+            montopagar -= $(this).val();
+            listaIDDetalle.push($(this).attr("name"));
+        }
+    });
+    console.log(listaIDDetalle);
+    /*
     for (var i=0; i < cont; i++) {
         if($("#" + (i + 1)).prop('checked') ) {
             listaIDDetalle.push($("#" + (i + 1)).attr("name"));
             //alert($("#" + (i + 1)).attr("name"));            
         }     
-    }
+    }*/
  
     $('#btnGuardar').attr("disabled", true);
     $.msg({content : '<img src="public/images/loanding.gif" />', autoUnblock: false});
@@ -118,8 +151,12 @@ var setCobrar = function(){
                 _lista_id_detalle_presupuesto: listaIDDetalle,
                 _id_presupuesto: $("#_id_presupuesto_cobro").val().toString(),
                 _formapago: $("#_formapago").val().toString(),
-                _id_miembro:$("#_id_miembro_cobro").val().toString()
+                _id_miembro:$("#_id_miembro_cobro").val().toString(),
+                _resto: montopagar,
+                _bandera_credito: banderacredito
         };
+
+    console.log(parametros);
         $.ajax({
             data:  parametros,
             url:   'cobros',

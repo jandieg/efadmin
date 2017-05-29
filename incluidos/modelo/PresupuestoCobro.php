@@ -40,6 +40,23 @@ class PresupuestoCobro extends Conexion{
         return parent::setSqlSp($sql);
     }       
 
+    public function getCreditoPresupuestoMiembro($id) {
+        $sql="CALL sp_selectCreditoPresupuestoMiembro('$id')";
+        return parent::getConsultar($sql);
+    }
+
+    public function actualizarCreditoPresupuestoMiembro($id, $monto, $bandera) {
+        $sql = "CALL sp_updateCreditoPresupuestoMiembro('$id','$monto','$bandera')";
+        return parent::setSqlSp($sql);
+    }
+
+    public function getCreditoMiembro($id) {
+        $resultset = $this->getCreditoPresupuestoMiembro($id);
+        while ($row = $resultset->fetch_assoc()) {
+            return $row['precobro_credito'];
+        }
+    }
+
     public function getDetallePresupuestoMiembro($id) {
         $sql="CALL sp_selectDetallePresupuestoMiembro('$id')";
         return parent::getConsultar($sql);   
