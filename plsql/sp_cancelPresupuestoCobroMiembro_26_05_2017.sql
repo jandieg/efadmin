@@ -1,11 +1,17 @@
-CREATE DEFINER=`execforums`@`localhost` PROCEDURE `sp_cancelPresupuestoCobroMiembro`(_id_miembro int(11), _mes int(11), _anho int(11), _fecha Datetime)
+CREATE DEFINER = 'execforums'@'localhost' PROCEDURE `sp_cancelPresupuestoCobroMiembro`(
+  _id_miembro int(11),
+  _mes int(11),
+  _anho int(11),
+  _fecha datetime
+)
 BEGIN
-
-update miembro set mie_fecha_cambio_status = _fecha where mie_id = _id_miembro;
-delete from detallepresupuestocobro 
-where year(detalleprecobro_fechavencimiento) >= _anho and 
-month (detalleprecobro_fechavencimiento) > _mes and
-presupuestocobro_precobro_id = (select precobro_id 
-from presupuestocobro where miembro_mie_id = _id_miembro);
-
+  UPDATE `miembro` SET `mie_fecha_cambio_status` = `_fecha` WHERE `mie_id` = `_id_miembro`;
+  DELETE
+  FROM
+    `detallepresupuestocobro`
+  WHERE
+    YEAR(`detalleprecobro_fechavencimiento`) >= `_anho`
+      AND `estado_presupuesto_est_pre_id` = 1
+      AND MONTH(`detalleprecobro_fechavencimiento`) > `_mes`
+      AND `presupuestocobro_precobro_id` = (SELECT `precobro_id` FROM `presupuestocobro` WHERE `miembro_mie_id` = `_id_miembro`);
 END;
