@@ -68,6 +68,7 @@ session_start();
              {contenedor_6}
         </div>    
       </div>
+      
     
       <div class="row" style="visibility:hidden;">    
         <div class="col-md-6">

@@ -166,7 +166,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                  
                  if( !empty($_POST['_id_presupuesto']) && !empty($_POST['_lista_id_detalle_presupuesto'] ) 
                  && !empty($_POST['_formapago'] ) && !empty($_POST['_id_miembro']) 
-                 && ! empty($_POST['_bandera_credito']) && ! empty($_POST['_resto']) ){  
+                 &&  strlen($_POST['_bandera_credito']) > 0 && strlen($_POST['_resto'])>0 ){  
                     
                
                     $lista="";

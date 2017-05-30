@@ -49,6 +49,7 @@ class Periodo extends Conexion{
         }
         return $lista;
     }
+    
      public function getListaPeriodos($id='', $lista_=array()) {   
         $resultset= $this->getPeriodos(); 
         $lista=$lista_;

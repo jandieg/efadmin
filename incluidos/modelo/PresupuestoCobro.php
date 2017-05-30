@@ -57,6 +57,16 @@ class PresupuestoCobro extends Conexion{
         }
     }
 
+    public function getPresupuestoMiembro($id) {
+        $sql="CALL sp_selectPresupuestoMiembro('$id')";
+        return parent::getConsultar($sql);
+    }
+
+    public function getPresupuestoByIdMiembro($id_miembro) {
+        $sql="CALL sp_selectPresupuestoByIdMiembro('$id_miembro')";
+        return parent::getConsultar($sql);
+    }
+
     public function getDetallePresupuestoMiembro($id) {
         $sql="CALL sp_selectDetallePresupuestoMiembro('$id')";
         return parent::getConsultar($sql);   

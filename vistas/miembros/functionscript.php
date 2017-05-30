@@ -224,7 +224,7 @@ var setActualizarCancelacion = function(){
             dataType : 'json',
             success:  function (mensaje) { 
                     $("#_id_miembro_cancelar").val(0);
-                    console.log($("#_id_miembro_cancelar").val());
+                    
                     $.msg('unblock');
                     if(mensaje.success == "true"){                        
                         
@@ -294,6 +294,23 @@ var setUserActualizar = function(  id_persona, id_miembro){
                 _lista_hobbies:_lista_hobbies,
                 _grupo_asignar:$("#_grupo_asignar").val().toString()
         };
+
+        setAgregarInscripcionEnPrincipal(
+            $("#_id_insc").val().toString(), 
+            id_miembro.toString(), 
+            $("#_fecha_registro").val().toString(), 
+            $("#_ins_valor").val().toString(), 
+            $("#_estado_presupuesto").val().toString(), 
+            $("#_fecha_cobro").val().toString()
+        );
+
+        setAgregarPresupuestoEnPrincipal(
+            $("#_id_presup").val().toString(), 
+            id_miembro.toString(), 
+            $("#_periodo_presupuesto").val().toString(), 
+            $("#_fecha_registro").val().toString(), 
+            $("#_membresia_presupuesto").val().toString()
+        );
         
         if ($("#_status").val() == 2) {
             setActualizarCancelacion();
@@ -465,6 +482,35 @@ var getAgregarPresupuesto = function(id_presupuesto, id_miembro,id_membresia, no
     }
    
 };
+var setAgregarPresupuestoEnPrincipal = function(id_presupuesto, id_miembro, id_periodo, fecha_registro, id_membresia) {
+        var parametros = {
+                KEY: 'KEY_GUARDAR_PRESUPUESTO',
+                _id_presupuesto: id_presupuesto,
+                _id_miembro: id_miembro,
+                _id_periodo: id_periodo,
+                _fecha_registro: fecha_registro,
+                _id_membresia: id_membresia
+        };
+        $.ajax({
+            data:  parametros,
+            url:   'miembros',
+            type:  'post',
+            dataType : 'json',
+            beforeSend: function () {
+               
+            },
+            success:  function (mensaje) {
+                    if(mensaje.success == "true"){
+                        //$.toaster({ priority : mensaje.priority, title : 'Alerta', message : mensaje.msg});               
+                    }else{
+                        $.toaster({ priority : mensaje.priority, title : 'Alerta Membresia', message : mensaje.msg});               
+                    }
+            },error : function(xhr, status) {
+                $.toaster({ priority : 'danger', title : 'Alerta Membresia', message : 'Disculpe, existió un problema' + status.toString()+" "+ xhr.toString()});
+            }
+        });
+
+}
 var setAgregarPresupuesto = function(){
         var parametros = {
                 KEY: 'KEY_GUARDAR_PRESUPUESTO',
@@ -472,8 +518,7 @@ var setAgregarPresupuesto = function(){
                 _id_miembro: $("#_id_miembro_presupuesto").val().toString(),
                 _id_periodo: $("#_periodo_presupuesto").val().toString(),
                 _fecha_registro: $("#_fecha_registro_miembro_presupuesto").val().toString(),
-                _id_membresia: $("#_membresia_presupuesto").val().toString()
-                
+                _id_membresia: $("#_membresia_presupuesto").val().toString()                
         };
         $.ajax({
             data:  parametros,
@@ -552,6 +597,39 @@ var getInscripcion = function(id_miembro, nombre, fecha_registro, membresia){
             }
         });
 };
+
+var setAgregarInscripcionEnPrincipal = function(id_inscripcion, id_miembro_inscripcion, fecha_inscripcion, membresia_inscripcion, estado_inscripcion, fecha_cobro){
+        var parametros = {
+                KEY: 'KEY_GUARDAR_INSCRIPCION',
+                _id_inscripcion: id_inscripcion,
+                _id_miembro_inscripcion: id_miembro_inscripcion,
+                _fecha_inscripcion: fecha_inscripcion,
+                _membresia_inscripcion: membresia_inscripcion,
+                _estado_inscripcion: estado_inscripcion,
+                _fecha_cobro: fecha_cobro
+                
+        };
+        $.ajax({
+            data:  parametros,
+            url:   'miembros',
+            type:  'post',
+            dataType : 'json',
+            beforeSend: function () {
+                
+            },
+            success:  function (mensaje) {
+                    if(mensaje.success == "true"){
+                      //  $.toaster({ priority : mensaje.priority, title : 'Alerta Inscripcion', message : mensaje.msg});                
+                    }else{
+                        $.toaster({ priority : mensaje.priority, title : 'Alerta Inscripcion', message : mensaje.msg});
+                    }
+            },error : function(xhr, status) {
+                $.toaster({ priority : 'danger', title : 'Alerta Inscripcion', message : 'Disculpe, existió un problema ' + status.toString()+" "+ xhr.toString()});
+            }
+        });
+
+};
+
 var setAgregarInscripcion = function(){
         var parametros = {
                 KEY: 'KEY_GUARDAR_INSCRIPCION',

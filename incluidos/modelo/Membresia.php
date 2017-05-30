@@ -35,7 +35,33 @@ class Membresia extends Conexion{
         }
         return $valor;
     }
+
+    function getListaComboMembresiaValor($id='') {
+        $resultset= $this->getMembresias('A'); 
+        $lista=array();
+        //if (!empty($resultset))
+        while ($row = $resultset->fetch_assoc()) {  
+            if ($id == $row['memb_id']) {
+                $lista[$row['memb_valor']] = array("value" => $row['memb_id'],  "select" => "Selected" ,"texto" => "$ " . $row['memb_valor']);                
+            } else {
+                $lista[$row['memb_valor']] = array("value" => $row['memb_id'],  "select" => "" ,"texto" => "$ " . $row['memb_valor']);                
+            }            
+            
+        }
+        krsort($lista);
+        return $lista;
+    }
     
+    function getListaComboMembresiaValorValor() {
+        $resultset= $this->getMembresias('A'); 
+        $lista=array();
+        
+        while ($row = $resultset->fetch_assoc()) {                 
+            $lista[$row['memb_valor']] = array("value" => $row['memb_valor'],  "select" => "" ,"texto" => "$ " . $row['memb_valor']);                
+        }
+        krsort($lista);
+        return $lista;
+    }
     
     
     function getListaComboMembresia($idSeleccionado="") {

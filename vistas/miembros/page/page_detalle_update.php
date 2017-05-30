@@ -21,6 +21,36 @@
         </div> 
           
       </div>
+
+      <div id="#_inscripcion"></div>
+
+      <div class="row">
+            <div class="col-md-12">
+            <h2 class="page-header">
+              Inscripci&oacute;n 
+            </h2>
+
+          </div>
+        <div class="col-md-6">
+             {contenedor_13}
+        </div>
+        <div class="col-md-6">
+            {contenedor_14}
+        </div>      
+      </div>
+      <div class="row">
+            <div class="col-md-12">
+            <h2 class="page-header">
+              Membres&iacute;a 
+            </h2>
+          </div>
+        <div class="col-md-6">
+             {contenedor_15}
+        </div>
+        <div class="col-md-6">
+            {contenedor_16}
+        </div>      
+      </div>
       
       <div class="row">
         <div class="col-md-6">

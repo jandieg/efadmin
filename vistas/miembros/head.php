@@ -57,7 +57,7 @@ function getDetalleUpdate($id, $recargar) {
 	}else{
 	$resultset= $objMiembro->getMiembro1($id);	
 	}
-    
+    $lamembresia = "";
     if($row = $resultset->fetch_assoc()) { 
         $idpersona=$row['per_id'];
          
@@ -109,7 +109,7 @@ function getDetalleUpdate($id, $recargar) {
         $listaStatus['lista_'] = array("value" => "x",  "select" => "" ,"texto" => "Seleccionar...");
         $objStatus= new StatusMember();
         $listaStatus= $objStatus->getLista($row['status_member_id'],$listaStatus, '1');
-        
+        $lamembresia = $row['membresia_id'];
         $objMembresia= new Membresia();
         $listaM= array();
         $listaM['lista_'] = array("value" => "x",  "select" => "" ,"texto" => "Seleccione...");
@@ -253,6 +253,78 @@ list($c1, $c2, $c3, $c4) = split('[/.-]', $codigo_usuario);
                         $boton_asistente['boton_6'] = array("elemento" => "boton" ,"modal" => "#modal_getPAMCrearAsistente" ,"color" => "btn-info" ,"click" => "getPAMAgregarAsistente(".$_POST['id_miembro'].")" ,"titulo" => "Agregar Asistente","lado" => "pull-right" ,"icono" => "fa-plus");
 			
 		}
+
+
+        //presupuesto
+
+                 $objPresupuestoCobro = new PresupuestoCobro();
+                 $result_presupuestocobro = $objPresupuestoCobro->getPresupuestoByIdMiembro($_POST['id_miembro']);
+                 $periodo_perio_id = "";
+                 $id_presupuesto = 0;
+                 $objMembresia2 = new Membresia();
+                 $listaMemb = $objMembresia2->getListaComboMembresiaValor($lamembresia);
+                 if ($row_precobro = $result_presupuestocobro->fetch_assoc()) {
+                     $id_presupuesto = $row_precobro['precobro_id'];
+                     $periodo_perio_id = $row_precobro['periodo_perio_id'];
+                 }
+                 $objPresupuestoCobro2 = new PresupuestoCobro();
+                 $objPeriodo = new Periodo();
+                 $listaP['lista_'] = array("value" => "x",  "select" => "" ,"texto" => "Seleccione...");
+                 $listaP = $objPeriodo->getListaPeriodos($periodo_perio_id);
+
+                
+                
+                $form9['form_1'] = array("elemento" => "combo","change" => "", "titulo" => "Periodo", "id" => "_periodo_presupuesto", "option" => $listaP);
+                 if (strlen($id_presupuesto) > 0) {
+                    $form9['form_2'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_id_presup" ,"reemplazo" => $id_presupuesto);
+                 } else {
+                     $form9['form_2'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_id_presup" ,"reemplazo" => 0);
+                 }
+                $form10['form_1'] = array("elemento" => "combo","change" => "", "titulo" => "Precio Mensual", "id" => "_membresia_presupuesto", "option" => $listaMemb);
+                $form_9 = generadorEtiqueta($form9);
+                $form_10 = generadorEtiqueta($form10);
+                $objMembresia3 = new Membresia();
+                $listaMembValor = $objMembresia3->getListaComboMembresiaValorValor();
+                        //inscripcion
+                        $objInscripcion= new Inscripcion();
+                        $resultset= $objInscripcion->getInscripcion($_POST['id_miembro']);  
+                        if($row4 = $resultset->fetch_assoc()) {                              
+                             $fecha_ingreso= $row4['mie_ins_fecha_ingreso'];                             
+                             $id_estado_cobro= $row4['estado_cobro_id'];
+                             $valor_ins ="$ ".$row4['mie_ins_valor'];
+                             $fecha_cobro= date('Y-m-d',strtotime($row4['mie_ins_fecha_cobro'])); 
+                             $objEstadoPresupuesto= new EstadoPresupuesto();
+                             $estado_presup = "";
+                             $listaEP= array();
+                             $listaEP['lista_'] = array("value" => "x",  "select" => "" ,"texto" => "Seleccione...");
+                             $listaEP= $objEstadoPresupuesto->getListaEstadoPresupuestos($id_estado_cobro,NULL);                             
+                            $form11['form_0'] = array("elemento" => "caja" ,"tipo" => "date", "titulo" => "Fecha de Registro", "id" => "_fecha_registro", "reemplazo" => $fecha_ingreso);                        
+                            $form11['form_1'] = array("elemento" => "combo","change" => "", "titulo" => "Estado", "id" => "_estado_presupuesto", "option" => $listaEP);
+                            $form11['form_2'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_id_insc" ,"reemplazo" => $row4['mie_ins_id']);
+                            $idBuscar = explode(' ', $valor_ins);
+                            
+                            $form12['form_0'] = array("elemento" => "readonly" ,"tipo" => "text" , "titulo" => "Valor en base al Precio Mensual", "id" => "_ins_valor2" ,"reemplazo" => $valor_ins);
+                            $form12['form_1'] = array("elemento" => "caja" ,"tipo" => "date", "titulo" => "Fecha de Cobro", "id" => "_fecha_cobro", "reemplazo" => $fecha_cobro);                        
+                            $form12['form_2'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_ins_valor" ,"reemplazo" => $listaMemb[$idBuscar[1]]['value']);
+                        } else {
+                            $objEstadoPresupuesto= new EstadoPresupuesto();
+                            $listaEP= array();
+                            $listaEP['lista_'] = array("value" => "x",  "select" => "" ,"texto" => "Seleccione...");
+                            $listaEP= $objEstadoPresupuesto->getListaEstadoPresupuestos("",NULL);                             
+                            $form11['form_0'] = array("elemento" => "caja" ,"tipo" => "date", "titulo" => "Fecha de Registro", "id" => "_fecha_registro", "reemplazo" => date('Y-m-d'));                            
+                            $form11['form_1'] = array("elemento" => "combo","change" => "", "titulo" => "Estado", "id" => "_estado_presupuesto", "option" => $listaEP);
+                            $form11['form_2'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_id_insc" ,"reemplazo" => 0);
+                            $form12['form_0'] = array("elemento" => "combo", "change" => "", "titulo" => "Valor en base al Precio Mensual",  "id" => "_ins_valor" ,"option" => $$listaMemb);
+                            $form12['form_1'] = array("elemento" => "caja" ,"tipo" => "date", "titulo" => "Fecha de Cobro", "id" => "_fecha_cobro", "reemplazo" => date('Y-m-d'));                        
+                        }
+
+                        $form_11= generadorEtiqueta($form11);
+                        $form_12= generadorEtiqueta($form12);
+                             
+                             
+
+
+                        //end inscripcion
 		               
 						
 						
@@ -269,6 +341,10 @@ list($c1, $c2, $c3, $c4) = split('[/.-]', $codigo_usuario);
                         $resultado = str_replace("{contenedor_10}", $tablaDetalleAsistente, $resultado);
         $resultado = str_replace("{contenedor_11}", $form_7, $resultado); 
         $resultado = str_replace("{contenedor_12}",$form_8, $resultado);
+        $resultado = str_replace("{contenedor_13}",$form_11, $resultado);
+        $resultado = str_replace("{contenedor_14}",$form_12, $resultado);
+        $resultado = str_replace("{contenedor_15}",$form_9, $resultado);
+        $resultado = str_replace("{contenedor_16}",$form_10, $resultado);
         $resultado = str_replace("{boton}",  generadorBoton($boton), $resultado); 
 		$resultado = str_replace("{boton_empresas}", generadorBoton($boton_empresas), $resultado);
                         $resultado = str_replace("{boton_asistente}", generadorBoton($boton_asistente), $resultado);
@@ -388,6 +464,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                        // if($row['per_tipo']=='N'){$tabla['t_6'] = array("t_1" => generadorNegritas($lblTipoPersona), "t_2" => "Natural");} 
                         $tabla['t_7'] = array("t_1" => generadorNegritas($lblGenero), "t_2" => $row['per_genero']);
 
+                        
                     //    $tabla2['t_1'] = array("t_1" => generadorNegritas("Precio Mensual"), "t_2" => $row['memb_descripcion']);
                         $tabla2['t_2'] = array("t_1" => generadorNegritas($lblForumLeader), "t_2" => $row['nombre_forum']);
                       //  $tabla2['t_3'] = array("t_1" => generadorNegritas("Grupo"), "t_2" => $row['gru_descripcion']);
@@ -476,6 +553,51 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             
                         }
 
+                        $objPresupuestoCobro = new PresupuestoCobro();
+                        $resultset_presupuestocobro = $objPresupuestoCobro->getPresupuestoMiembro($id_presupuesto);
+                        if ($row3 = $resultset_presupuestocobro->fetch_assoc()) {
+                            $tabla9['t_0'] = array("t_1" => generadorNegritas("Periodo"), "t_2" => $row3['perio_descripcion']);
+                            $tabla10['t_0'] = array("t_1" => generadorNegritas("Precio Mensual"), "t_2" => $row3['precobro_valor']);
+                        } else {
+                            $tabla9['t_0'] = array("t_1" => generadorNegritas("Periodo"), "t_2" => "---");
+                            $tabla10['t_0'] = array("t_1" => generadorNegritas("Precio Mensual"), "t_2" => "---");
+                        }
+
+                        //inscripcion
+                        $objInscripcion= new Inscripcion();
+                        $resultset= $objInscripcion->getInscripcion($_POST['id_miembro']);  
+                        if($row4 = $resultset->fetch_assoc()) {  
+                             $fecha_ingreso= $row4['mie_ins_fecha_ingreso'];                             
+                             $id_estado_cobro= $row4['estado_cobro_id'];
+                             $valor_ins ="$ ".$row4['mie_ins_valor'];
+                             $fecha_cobro= date('Y-m-d',strtotime($row4['mie_ins_fecha_cobro'])); 
+                             $objEstadoPresupuesto= new EstadoPresupuesto();
+                             $estado_presup = "";
+                             $listaEP= array();
+                             $listaEP= $objEstadoPresupuesto->getListaEstadoPresupuestos($id_estado_cobro,NULL);
+                             foreach($listaEP as $l) {
+                                 if (strlen($l['select'])) {
+                                     $estado_presup = $l['texto'];
+                                 }
+                             }
+                            $tabla7['t_0'] = array("t_1" => generadorNegritas("Fecha de Registro"), "t_2" => getFormatoFechadmy($fecha_ingreso));
+                            $tabla7['t_1'] = array("t_1" => generadorNegritas("Estado"), "t_2" => $estado_presup);
+                            $tabla8['t_0'] = array("t_1" => generadorNegritas("Valor en base al precio mensual"), "t_2" => $valor_ins);
+                            $tabla8['t_1'] = array("t_1" => generadorNegritas("Fecha de Cobro"), "t_2" => getFormatoFechadmy($fecha_cobro));
+                        } else {
+                            $tabla7['t_0'] = array("t_1" => generadorNegritas("Fecha de Registro"), "t_2" => "---");
+                            $tabla7['t_1'] = array("t_1" => generadorNegritas("Estado"), "t_2" => "---");
+                            $tabla8['t_0'] = array("t_1" => generadorNegritas("Valor en base al precio mensual"), "t_2" => "---");
+                            $tabla8['t_1'] = array("t_1" => generadorNegritas("Fecha de Cobro"), "t_2" => "---");
+                        }
+                             
+                             
+
+
+                        //end inscripcion
+                        
+
+
                         $boton=array();
                         if($id_membresia != "0"){
                             if (in_array($perEditarInscripcionOp6, $_SESSION['usu_permiso'])) {
@@ -535,6 +657,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         $resultado = str_replace("{contenedor_10}", $tablaDetalleAsistente, $resultado);
                         $resultado = str_replace("{contenedor_11}", generadorTabla_2($tabla5, "table-striped"), $resultado);
                         $resultado = str_replace("{contenedor_12}", generadorTabla_2($tabla6, "table-striped"), $resultado);
+                        $resultado = str_replace("{contenedor_13}", generadorTabla_2($tabla7, "table-striped"), $resultado); 
+                        $resultado = str_replace("{contenedor_14}", generadorTabla_2($tabla8, "table-striped"), $resultado);
+                        $resultado = str_replace("{contenedor_15}", generadorTabla_2($tabla9, "table-striped"), $resultado); 
+                        $resultado = str_replace("{contenedor_16}", generadorTabla_2($tabla10, "table-striped"), $resultado);
                         $resultado = str_replace("{boton}", $botones, $resultado);
                         $resultado = str_replace("{boton_empresas}", generadorBoton($boton_empresas), $resultado);
                         $resultado = str_replace("{boton_asistente}", generadorBoton($boton_asistente), $resultado);

@@ -560,6 +560,15 @@ function generadorEtiqueta($tab=array()){
                     $msg.=' </div>'; 
                     $msg.='</div>';            
                }
+
+               if($valor['elemento']=='readonly'){
+                   $msg.='<div class="form-group">'; 
+                    $msg.='<label for="" class="col-sm-3 control-label">'.$valor['titulo'].'</label>'; 
+                    $msg.='<div class="col-sm-9">'; 
+                    $msg.='<input type="'.$valor['tipo'].'" class="form-control" id="'.$valor['id'].'" placeholder="'.$valor['titulo'].'" required="required" value="'.$valor['reemplazo'].'" readonly="true">'; 
+                    $msg.=' </div>'; 
+                    $msg.='</div>';            
+               }
 			   
 			   
                 if($valor['elemento']=='caja + boton'){

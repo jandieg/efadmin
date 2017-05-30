@@ -103,10 +103,8 @@ var getSeleccionarTodos = function(){
 var getSeleccionarCobro = function(){
     
     var total = 0;
-    console.log('invoca el getselectcobro');
     $(".case").each(function(){
         if ($(this).is(":checked")) {
-            console.log('entra al foreach');
             total += Number($(this).val());
         }
     });
@@ -124,15 +122,20 @@ var setCobrar = function(){
     var montopagar = Number($("#_montopagado").val());
     var banderacredito = 0;
     var resto = 0;
+    
     if ($("#_credito").is(":checked")) {
         banderacredito = 1;
         montopagar += Number($("#_credito").val());
     }
+
+
     
     $(".case").each(function() {
         if (Number($(this).val()) <= montopagar) {
+            
             montopagar -= $(this).val();
             listaIDDetalle.push($(this).attr("name"));
+            
         }
     });
     
@@ -156,7 +159,7 @@ var setCobrar = function(){
                 _bandera_credito: banderacredito
         };
 
-    console.log(parametros);
+    
         $.ajax({
             data:  parametros,
             url:   'cobros',
