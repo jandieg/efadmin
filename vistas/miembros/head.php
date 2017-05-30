@@ -557,7 +557,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         $resultset_presupuestocobro = $objPresupuestoCobro->getPresupuestoMiembro($id_presupuesto);
                         if ($row3 = $resultset_presupuestocobro->fetch_assoc()) {
                             $tabla9['t_0'] = array("t_1" => generadorNegritas("Periodo"), "t_2" => $row3['perio_descripcion']);
-                            $tabla10['t_0'] = array("t_1" => generadorNegritas("Precio Mensual"), "t_2" => $row3['precobro_valor']);
+                            $tabla10['t_0'] = array("t_1" => generadorNegritas("Precio Mensual"), "t_2" => "$ " . $row3['precobro_valor']);
                         } else {
                             $tabla9['t_0'] = array("t_1" => generadorNegritas("Periodo"), "t_2" => "---");
                             $tabla10['t_0'] = array("t_1" => generadorNegritas("Precio Mensual"), "t_2" => "---");
@@ -600,16 +600,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                         $boton=array();
                         if($id_membresia != "0"){
-                            if (in_array($perEditarInscripcionOp6, $_SESSION['usu_permiso'])) {
+                         /*   if (in_array($perEditarInscripcionOp6, $_SESSION['usu_permiso'])) {
                                 $boton['boton_1'] = array("elemento" => "boton" ,"modal" => "#modal_inscripcion"  ,"color" => "btn-info" ,"click" => $funcion ,"titulo" => "Inscripción","lado" => "pull-right" ,"icono" => "");
-                            }
+                            }*/
                             if (in_array($perVerDetallePresupuestoOp6, $_SESSION['usu_permiso'])) {
-                                $boton['boton_2'] = array("elemento" => "boton" ,"modal" => "#modal_detallePresupuesto"  ,"color" => "btn-info" ,"click" => $funcion_2 ,"titulo" => "Cuotas","lado" => "pull-right" ,"icono" => "");
+                                $boton['boton_1'] = array("elemento" => "boton" ,"modal" => "#modal_detallePresupuesto"  ,"color" => "btn-info" ,"click" => $funcion_2 ,"titulo" => "Cuotas","lado" => "pull-right" ,"icono" => "");
                             }
+                            /*
                             if (in_array($perAgregarPresupuestoOp6, $_SESSION['usu_permiso'])) {
                                 $boton['boton_3'] = array("elemento" => "boton" ,"modal" => "#modal_agregarPresupuesto"  ,"color" => "btn-info" ,"click" => $funcion_1 ,"titulo" => "Presupuesto","lado" => "pull-right" ,"icono" => "");
-                            }
-                        }                        
+                            }*/
+                        }                     
                         ////////////////////////////////////////////////////////
                         $user= $row['mie_codigo'];
                         if($row['user'] != ''){
@@ -617,11 +618,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         }
 
                         if (in_array($perEnviarCorreoOp6, $_SESSION['usu_permiso'])) {
-                            $boton['boton_4'] = array("elemento" => "boton" ,"modal" => "#modal_enviarCorreo"  ,"color" => "btn-info" ,"click" => "getEnviarCorreoIndividual('".$row['correo']."','".$titulo."')" ,"titulo" => $lblbtnEnviarCorreo,"lado" => "pull-right" ,"icono" => "");
+                            $boton['boton_2'] = array("elemento" => "boton" ,"modal" => "#modal_enviarCorreo"  ,"color" => "btn-info" ,"click" => "getEnviarCorreoIndividual('".$row['correo']."','".$titulo."')" ,"titulo" => $lblbtnEnviarCorreo,"lado" => "pull-right" ,"icono" => "");
                         }
+                        /*
                         if (in_array($perAsignarUserOp6, $_SESSION['usu_permiso'])) {
                             $boton['boton_5'] = array("elemento" => "boton" ,"modal" => "#modal_getCrearUserClave" ,"color" => "btn-info" ,"click" => "getAsignarUserClave(".$idpersona.",'".$user."','".$row['correo']."' )" ,"titulo" => $lblActualizarUsuario,"lado" => "pull-right" ,"icono" => "");
-                        }
+                        }*/
                         $_SESSION['_ultimo_id_miembro_prospecto']= $_POST['id_miembro'];
                         $_SESSION['_ultimo_id_miembro_prospecto_bandera']= '1';
                         $boton_empresas['boton_1'] = array("elemento" => "boton" ,"modal" => "" ,"color" => "btn-info" ,"click" => "getPAMEmpresaModal('2')" ,"titulo" => "Crear Relacionar Empresa","lado" => "pull-right" ,"icono" => "fa-plus");
