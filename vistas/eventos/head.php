@@ -271,7 +271,7 @@ function getRecordarEvento($idEvento, $doAsistencia= false) {
          }
 
          if($msg_empresarios != ''){
-            $mensaje .="<br><br><b>Casos del Mes</b><br>";
+            $mensaje .="<br><br><b>Caso del Mes</b><br>";
             $mensaje .=substr($msg_empresarios, 0, -2); 
          }
          if($msg_invitados != ''){
@@ -451,7 +451,7 @@ $form['form_7'] = array("elemento" => "fecha + tiempo" ,"tipo_date" => "hidden" 
                     $objMiembro= new Miembro();
                         $listaMiembros= $objMiembro->getListaMiembros(Null, NULL,"",FALSE);
 						if(($_POST['_id_te']==1)||($_POST['_id_te']==2)){
-							$form['form_8'] = array("elemento" => "lista-multiple",  "titulo" => "Casos del Mes", "id" => "_empresarios_mes", "option" => $listaMiembros); 
+							$form['form_8'] = array("elemento" => "lista-multiple",  "titulo" => "Caso del Mes", "id" => "_empresarios_mes", "option" => $listaMiembros); 
 						}else{
 							$form['form_8'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_empresarios_mes", "option" => $listaMiembros); 
 						}
@@ -495,9 +495,9 @@ $form['form_7'] = array("elemento" => "fecha + tiempo" ,"tipo_date" => "hidden" 
 					if($_POST['_id_te']=='4'){
 					$form['form_11'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_descripcion" ,"reemplazo" => $row['eve_descripcion']);
 					}else{
-					$form['form_11'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => "Componente Educacional", "id" => "_descripcion" ,"reemplazo" => $row['eve_descripcion']);	
+					$form['form_11'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => "Expositor", "id" => "_descripcion" ,"reemplazo" => $row['eve_descripcion']);	
 					}
-						//$form['form_11'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => "Componente Educacional", "id" => "_descripcion" ,"reemplazo" => $row['eve_descripcion']);
+						//$form['form_11'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => "Expositor", "id" => "_descripcion" ,"reemplazo" => $row['eve_descripcion']);
                     }
 
                  //   $form['form_12'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => "Descripción", "id" => "_descripcion" ,"reemplazo" => "");
@@ -759,9 +759,9 @@ $form['form_7'] = array("elemento" => "fecha + tiempo" ,"tipo_date" => "hidden" 
                             $listaMiembros= $objEvento->getMultiListaEventosEmpresariosMes($_POST['id']);
                             
 							if($row['tipo_evento_id']=='1'){
-							$form['form_8'] = array("elemento" => "lista-multiple",  "titulo" => "Casos del Mes", "id" => "_empresarios_mes", "option" => $listaMiembros); 
+							$form['form_8'] = array("elemento" => "lista-multiple",  "titulo" => "Caso del Mes", "id" => "_empresarios_mes", "option" => $listaMiembros); 
 						}else if($row['tipo_evento_id']=='2'){
-							$form['form_8'] = array("elemento" => "lista-multiple",  "titulo" => "Casos del Mes", "id" => "_empresarios_mes", "option" => $listaMiembros); 
+							$form['form_8'] = array("elemento" => "lista-multiple",  "titulo" => "Caso del Mes", "id" => "_empresarios_mes", "option" => $listaMiembros); 
 						}else{
 							$form['form_8'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_empresarios_mes", "option" => $listaMiembros); 
 						}
@@ -805,7 +805,7 @@ $form['form_7'] = array("elemento" => "fecha + tiempo" ,"tipo_date" => "hidden" 
 					if($row['tipo_evento_id']=='4'){
 					$form['form_11'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_descripcion" ,"reemplazo" => $row['eve_descripcion']);
 					}else{
-					$form['form_11'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => "Componente Educacional", "id" => "_descripcion" ,"reemplazo" => $row['eve_descripcion']);	
+					$form['form_11'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => "Expositor", "id" => "_descripcion" ,"reemplazo" => $row['eve_descripcion']);	
 					}
 						
 						
@@ -1005,7 +1005,7 @@ $form['form_7'] = array("elemento" => "fecha + tiempo" ,"tipo_date" => "hidden" 
                             $resultset= $objEmpresariosMes->getEventosEmpresariosMes($_POST['_id']);
                             while($row_em = $resultset->fetch_assoc()) {
                                 if($cont == 50){
-                                    $tabla['t_'.$cont] = array("t_1" => generadorNegritas("Casos Del Mes"), "t_2" => $row_em['per_apellido']." ".$row_em['per_nombre']);
+                                    $tabla['t_'.$cont] = array("t_1" => generadorNegritas("Caso Del Mes"), "t_2" => $row_em['per_apellido']." ".$row_em['per_nombre']);
                                 }else{
                                     $tabla['t_'.$cont] = array("t_1" => "", "t_2" => $row_em['per_apellido']." ".$row_em['per_nombre']);
                                 }
