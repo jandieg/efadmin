@@ -1,2 +1,0 @@
-[10-May-2017 19:46:47 UTC] PHP Parse error:  syntax error, unexpected 'FILE__' (T_STRING) in /home/execforums/public_html/admin/cron/generateReports.php on line 14
-[10-May-2017 19:49:18 UTC] PHP Fatal error:  Class 'ZipArchive' not found in /home/execforums/public_html/admin/PHPExcel/Classes/PHPExcel/Shared/File.php on line 77
