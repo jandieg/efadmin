@@ -501,7 +501,7 @@ var setAgregarPresupuestoEnPrincipal = function(id_presupuesto, id_miembro, id_p
             },
             success:  function (mensaje) {
                     if(mensaje.success == "true"){
-                        //$.toaster({ priority : mensaje.priority, title : 'Alerta', message : mensaje.msg});               
+                        $.toaster({ priority : mensaje.priority, title : 'Alerta', message : mensaje.msg});               
                     }else{
                         $.toaster({ priority : mensaje.priority, title : 'Alerta Membresia', message : mensaje.msg});               
                     }
@@ -619,12 +619,12 @@ var setAgregarInscripcionEnPrincipal = function(id_inscripcion, id_miembro_inscr
             },
             success:  function (mensaje) {
                     if(mensaje.success == "true"){
-                      //  $.toaster({ priority : mensaje.priority, title : 'Alerta Inscripcion', message : mensaje.msg});                
+                        $.toaster({ priority : mensaje.priority, title : 'Alerta', message : mensaje.msg});                
                     }else{
                         $.toaster({ priority : mensaje.priority, title : 'Alerta Inscripcion', message : mensaje.msg});
                     }
             },error : function(xhr, status) {
-                $.toaster({ priority : 'danger', title : 'Alerta Inscripcion', message : 'Disculpe, existió un problema ' + status.toString()+" "+ xhr.toString()});
+              //  $.toaster({ priority : 'danger', title : 'Alerta Inscripcion', message : 'Disculpe, existió un problema ' + status.toString()+" "+ xhr.toString()});
             }
         });
 
