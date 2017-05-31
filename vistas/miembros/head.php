@@ -626,9 +626,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                          /*   if (in_array($perEditarInscripcionOp6, $_SESSION['usu_permiso'])) {
                                 $boton['boton_1'] = array("elemento" => "boton" ,"modal" => "#modal_inscripcion"  ,"color" => "btn-info" ,"click" => $funcion ,"titulo" => "Inscripción","lado" => "pull-right" ,"icono" => "");
                             }*/
-                            if (in_array($perVerDetallePresupuestoOp6, $_SESSION['usu_permiso'])) {
+                            /*if (in_array($perVerDetallePresupuestoOp6, $_SESSION['usu_permiso'])) {
                                 $boton['boton_1'] = array("elemento" => "boton" ,"modal" => "#modal_detallePresupuesto"  ,"color" => "btn-info" ,"click" => $funcion_2 ,"titulo" => "Cuotas","lado" => "pull-right" ,"icono" => "");
-                            }
+                            }*/
                             /*
                             if (in_array($perAgregarPresupuestoOp6, $_SESSION['usu_permiso'])) {
                                 $boton['boton_3'] = array("elemento" => "boton" ,"modal" => "#modal_agregarPresupuesto"  ,"color" => "btn-info" ,"click" => $funcion_1 ,"titulo" => "Presupuesto","lado" => "pull-right" ,"icono" => "");
@@ -641,7 +641,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         }
 
                         if (in_array($perEnviarCorreoOp6, $_SESSION['usu_permiso'])) {
-                            $boton['boton_2'] = array("elemento" => "boton" ,"modal" => "#modal_enviarCorreo"  ,"color" => "btn-info" ,"click" => "getEnviarCorreoIndividual('".$row['correo']."','".$titulo."')" ,"titulo" => $lblbtnEnviarCorreo,"lado" => "pull-right" ,"icono" => "");
+                            
+                            //$boton['boton_2'] = array("elemento" => "boton" ,"modal" => "#modal_enviarCorreo"  ,"color" => "btn-info" ,"click" => "getEnviarCorreoIndividual('".$row['correo']."','".$titulo."')" ,"titulo" => $lblbtnEnviarCorreo,"lado" => "pull-right" ,"icono" => "");
+                            $boton['boton_1'] = array("elemento" => "boton" ,"modal" => "#modal_enviarCorreo"  ,"color" => "btn-info" ,"click" => "getEnviarCorreoIndividual('".$row['correo']."','".$titulo."')" ,"titulo" => $lblbtnEnviarCorreo,"lado" => "pull-right" ,"icono" => "fa-pencil");
                         }
                         /*
                         if (in_array($perAsignarUserOp6, $_SESSION['usu_permiso'])) {
@@ -657,10 +659,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         if (in_array($perActualizarMiembroOp6, $_SESSION['usu_permiso'])) {
                             $boton1['boton_1'] = array("elemento" => "boton" ,"modal" => "" ,"color" => "btn-info" ,"click" => "getUserEditar(".$_POST['id_miembro'].")" ,"titulo" => $lblbtnEditar ,"lado" => "pull-right" ,"icono" => "fa-pencil");        
                         }
+                        
                         $acciones= "";
                         if($_SESSION['user_subasedatos'] == $_SESSION['db']){
 //                            if($_SESSION['user_subasedatos'] == $_POST['base'] || empty($_POST['base'])){
-                            $acciones= generadorBotonMenu($boton, 'btn-info', 'Más Opciones') 
+                            $acciones= generadorBotonSinLado($boton) 
                                 . generadorBotonSinLado($boton1);
                         }
                         $boton2['boton_1'] = array("elemento" => "boton" ,"modal" => "" ,"color" => "btn-info" ,"click" => "getRecargar()" ,"titulo" => $lblbtnRegresar ,"lado" => "" ,"icono" => "fa-mail-reply");
