@@ -13,20 +13,35 @@ if (isset($data)) {
                 $resultset= $objUsuario->getSp('sp_set_miembroAcceso', $parametros, 'usuario');
 
 				
-                if(count($resultset['usuario']) > 0 ){
+                if(count($resultset['usuario']) > 0){
 				$member=$resultset['usuario'][0];
 				$cuerpoMensaje="Estimado ".$member["name"].", utiliza el siguiente código para acceder a la APP de Executive Forums:<br><br> ".$code;
 				
 				$mail= new Mail();
-				$msg= $mail->enviar("Executive Forums - APP", "", "Código de acceso a App Executive Forums",  $cuerpoMensaje, "jandieg@live.com", TRUE);
+				$msg= $mail->enviar("Executive Forums - APP", "", "Código de acceso a App Executive Forums",  $cuerpoMensaje, $data->user, TRUE);
 
 					 $response["success"] = "1"; 
 				     $response["data"] = $resultset['usuario'][0]; 
 				     echo json_encode($response); 
                 }else{
-					 $response["success"] = "0"; 
-				     $response["data"] = "El usuario no existe"; 
-                     echo json_encode($response); 
+				//staff
+				$objUsuario= new Entity($response_1);
+				$resultset= $objUsuario->getSp('sp_set_staffAcceso', $parametros, 'staff');
+				 if(count($resultset['staff']) > 0 ){
+							$member=$resultset['staff'][0];
+							$cuerpoMensaje="Estimado ".$member["name"].", utiliza el siguiente código para acceder a la APP de Executive Forums:<br><br> ".$code;
+				
+							$mail= new Mail();
+							$msg= $mail->enviar("Executive Forums - APP", "", "Código de acceso a App Executive Forums",  $cuerpoMensaje, $data->user, TRUE);
+
+								 $response["success"] = "1"; 
+								 $response["data"] = $resultset['staff'][0]; 
+								 echo json_encode($response); 
+							}else{
+								 $response["success"] = "0"; 
+								 $response["data"] = "El usuario no existe"; 
+								 echo json_encode($response); 
+							}
                 }
                 exit();
   
