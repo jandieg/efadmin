@@ -274,15 +274,20 @@ list($c1, $c2, $c3, $c4) = split('[/.-]', $codigo_usuario);
 
                 
                 
+                
                 $form9['form_1'] = array("elemento" => "combo","change" => "", "titulo" => "Periodo", "id" => "_periodo_presupuesto", "option" => $listaP);
                  if (strlen($id_presupuesto) > 0) {
                     $form9['form_2'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_id_presup" ,"reemplazo" => $id_presupuesto);
                  } else {
+                       
+                    
+                    
                      $form9['form_2'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_id_presup" ,"reemplazo" => 0);
                  }
                 $form10['form_1'] = array("elemento" => "combo","change" => "", "titulo" => "Precio Mensual", "id" => "_membresia_presupuesto", "option" => $listaMemb);
                 $form_9 = generadorEtiqueta($form9);
                 $form_10 = generadorEtiqueta($form10);
+                $id_inscripcion = 0;
                 $objMembresia3 = new Membresia();
                 $listaMembValor = $objMembresia3->getListaComboMembresiaValorValor();
                         //inscripcion
@@ -301,6 +306,7 @@ list($c1, $c2, $c3, $c4) = split('[/.-]', $codigo_usuario);
                             $form11['form_0'] = array("elemento" => "caja" ,"tipo" => "date", "titulo" => "Fecha de Registro", "id" => "_fecha_registro", "reemplazo" => $fecha_ingreso);                        
                             $form11['form_1'] = array("elemento" => "combo","change" => "", "titulo" => "Estado", "id" => "_estado_presupuesto", "option" => $listaEP);
                             $form11['form_2'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_id_insc" ,"reemplazo" => $row4['mie_ins_id']);
+                            $id_inscripcion = $row4['mie_ins_id'];
                             $idBuscar = explode(' ', $valor_ins);
                             
                             $form12['form_0'] = array("elemento" => "readonly" ,"tipo" => "text" , "titulo" => "Valor en base al Precio Mensual", "id" => "_ins_valor2" ,"reemplazo" => $valor_ins);
@@ -348,9 +354,27 @@ list($c1, $c2, $c3, $c4) = split('[/.-]', $codigo_usuario);
         $resultado = str_replace("{boton}",  generadorBoton($boton), $resultado); 
 		$resultado = str_replace("{boton_empresas}", generadorBoton($boton_empresas), $resultado);
                         $resultado = str_replace("{boton_asistente}", generadorBoton($boton_asistente), $resultado);
+        if (strlen($lamembresia) == 0 || $lamembresia == "0") {
+            
+            $msg= "Edita y agrega una Precio Mensual.";
+            $alerta = str_replace("{contenedor_1}", generadorAlertaEstatica("Alerta!",$msg,"info")  , getPage('pager_row')); 
+            $resultado = str_replace("{contenedor_2}", $resultado, $alerta); 
+        } else{
+            
+            if($id_inscripcion == "0"){  
+                $msg="Registra la Inscripción del Miembro.</br>";
+            }     
+            if(strlen($id_presupuesto) == 0 || $id_presupuesto == "0" ){
+                $msg.= "Agrega un presupuesto.";   
+            } 
+            if(strlen($id_presupuesto) == 0 || $id_presupuesto == "0" || $id_inscripcion == "0"){
+                    $alerta = str_replace("{contenedor_1}", generadorAlertaEstatica("Alerta!",$msg,"info")  , getPage('pager_row')); 
+                $resultado = str_replace("{contenedor_2}", $resultado, $alerta);   
+            } 
+            
+        }
 		
 		
-
         return $resultado;
     }
     
