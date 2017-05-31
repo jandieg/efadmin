@@ -10,7 +10,8 @@ if (isset($data)) {
                 $response_1= array();               
                 $objUsuario= new Entity($response_1);
                 $parametros= array($data->token,$data->user);
-                $resultset= $objUsuario->getSp('sp_miembroLogin', $parametros, 'rs');
+				$endpoint=$data->type=="M"?'sp_miembroLogin':'sp_staffLogin';
+                $resultset= $objUsuario->getSp($endpoint, $parametros, 'rs');
 
                 if(count($resultset['rs']) > 0 ){
 					 $response["success"] = "1"; 
