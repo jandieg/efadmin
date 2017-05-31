@@ -307,11 +307,10 @@ list($c1, $c2, $c3, $c4) = split('[/.-]', $codigo_usuario);
                             $form11['form_1'] = array("elemento" => "combo","change" => "", "titulo" => "Estado", "id" => "_estado_presupuesto", "option" => $listaEP);
                             $form11['form_2'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_id_insc" ,"reemplazo" => $row4['mie_ins_id']);
                             $id_inscripcion = $row4['mie_ins_id'];
-                            $idBuscar = explode(' ', $valor_ins);
                             
                             $form12['form_0'] = array("elemento" => "readonly" ,"tipo" => "text" , "titulo" => "Valor en base al Precio Mensual", "id" => "_ins_valor2" ,"reemplazo" => $valor_ins);
                             $form12['form_1'] = array("elemento" => "caja" ,"tipo" => "date", "titulo" => "Fecha de Cobro", "id" => "_fecha_cobro", "reemplazo" => $fecha_cobro);                        
-                            $form12['form_2'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_ins_valor" ,"reemplazo" => $listaMemb[$idBuscar[1]]['value']);
+                            $form12['form_2'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_ins_valor" ,"reemplazo" => $valorMembresiaOculto);
                         } else {
                             $objEstadoPresupuesto= new EstadoPresupuesto();
                             $listaEP= array();
