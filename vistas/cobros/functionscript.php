@@ -88,15 +88,29 @@ var getSeleccionarTodos = function(){
     var checkAll = $("#selectall").prop('checked');
     if (checkAll) {
         $(".case").prop("checked", true);
+        $(".case2").prop("checked", true);
     } else {
+        $(".case2").prop("checked", false);
         $(".case").prop("checked", false);
     }
     var total = 0;
+    var total2 = 0;
+    var reversa = false;
     $(".case").each(function(){
         if ($(this).is(":checked")) {
             total += Number($(this).val());
         }
     });
+    $(".case2").each(function(){
+        reversa = true;
+        if ($(this).is(":checked")) {
+            total2 += Number($(this).val());
+        }
+    });
+    if (reversa) {
+        $("#_montoreversado").val(total2*-1);
+    }
+
     $("#_montopagado").val(total);
 };
 
@@ -108,12 +122,81 @@ var getSeleccionarCobro = function(){
             total += Number($(this).val());
         }
     });
+    var total2 = 0;
+    var reversa = false;
+    $(".case2").each(function(){
+        reversa = true;
+        if ($(this).is(":checked")) {
+            total2 += Number($(this).val());
+        }
+    });
     $("#_montopagado").val(total);
-    if($(".case").length == $(".case:checked").length) {
-        $("#selectall").prop("checked", true);
-    } else {
-        $("#selectall").prop("checked", false);
+    if (reversa) {
+        $("#_montoreversado").val(total2*-1);
     }
+    if (! reversa) {
+        if($(".case").length == $(".case:checked").length) {
+            $("#selectall").prop("checked", true);
+        } else {
+            $("#selectall").prop("checked", false);
+        }
+    } else {
+        if(($(".case").length + $(".case2").length) == $(".case:checked").length) {
+            $("#selectall").prop("checked", true);
+        } else {
+            $("#selectall").prop("checked", false);
+        }
+    }     
+    
+};
+
+var setReversarCobros = function(){
+    var cont= $("#selectall").attr("name");
+    var listaIDDetalle = [];
+
+    $(".case2").each(function() {
+        if ($(this).prop('checked')) {
+            listaIDDetalle.push($(this).attr("name"));
+        }
+    });
+    
+ 
+    $('#btnGuardar').attr("disabled", true);
+    $.msg({content : '<img src="public/images/loanding.gif" />', autoUnblock: false});
+    var parametros = {
+                KEY: 'KEY_REVERSAR_COBRO',  
+                _lista_id_detalle_presupuesto: listaIDDetalle,
+                _id_presupuesto: $("#_id_presupuesto_cobro").val().toString(),
+                _formapago: $("#_formapago").val().toString(),
+                _id_miembro:$("#_id_miembro_cobro").val().toString()                
+        };
+
+    
+        $.ajax({
+            data:  parametros,
+            url:   'cobros',
+            type:  'post',
+            dataType : 'json',
+            success:  function (mensaje) { 
+                if(mensaje.success == "true"){
+                    $.toaster({ priority : mensaje.priority, title : 'Alerta', message : mensaje.msg});
+                    $('#modal_detalleCobro').modal('toggle'); 
+                    $.msg('unblock');
+                    $('#btnGuardar').attr("disabled", false);
+                    //getRecargar();
+                }else{
+                    $.msg('unblock');
+                    $('#btnGuardar').attr("disabled", false);
+                    $.toaster({ priority : mensaje.priority, title : 'Alerta', message : mensaje.msg});
+                }
+               
+    
+                  
+            },error : function(xhr, status) {
+               $.msg('unblock');
+               $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema'});
+            }
+        });
 };
 
 var setCobrar = function(){

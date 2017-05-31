@@ -2,5 +2,5 @@
   {cuerpo}
 </div>
 <div class="modal-footer">
-    {boton}
+    {boton2} {boton} 
 </div>
