@@ -277,16 +277,27 @@ list($c1, $c2, $c3, $c4) = split('[/.-]', $codigo_usuario);
                 
                 
                 
-                $form9['form_1'] = array("elemento" => "combo","change" => "", "titulo" => "Periodo", "id" => "_periodo_presupuesto", "option" => $listaP);
-                 if (strlen($id_presupuesto) > 0) {
+                
+                 if (strlen($id_presupuesto) > 0 && $id_presupuesto != "0") {
+                     $form9['form_1'] = array("elemento" => "combo","change" => "", "titulo" => "Periodo", "id" => "_periodo_presupuesto", "option" => $listaP);
                     $form9['form_2'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_id_presup" ,"reemplazo" => $id_presupuesto);
+                    $form10['form_1'] = array("elemento" => "combo","change" => "", "titulo" => "Precio Mensual", "id" => "_membresia_presupuesto", "option" => $listaMemb);
                  } else {
-                       
-                    
-                    
-                     $form9['form_2'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_id_presup" ,"reemplazo" => 0);
+                     $listam2 = array();                     
+                     foreach ($listaMemb as $k=>$v) {                         
+                        $listam2[$k] = $v;
+                        $listam2[$k]['select'] = "";
+                     }
+                    $listam2['100000'] = array("value" => "x",  "select" => "Selected" ,"texto" => "Seleccione...");
+                    $listaP['lista_'] = array("value" => "x",  "select" => "Selected" ,"texto" => "Seleccione...");
+                    krsort($listam);
+                    $form10['form_1'] = array("elemento" => "combo","change" => "", "titulo" => "Precio Mensual", "id" => "_membresia_presupuesto", "option" => $listam2);
+                    $form9['form_1'] = array("elemento" => "combo","change" => "", "titulo" => "Periodo", "id" => "_periodo_presupuesto", "option" => $listaP);
+                    $form9['form_2'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_id_presup" ,"reemplazo" => 0);
                  }
-                $form10['form_1'] = array("elemento" => "combo","change" => "", "titulo" => "Precio Mensual", "id" => "_membresia_presupuesto", "option" => $listaMemb);
+
+                 
+                
                 $form_9 = generadorEtiqueta($form9);
                 $form_10 = generadorEtiqueta($form10);
                 $id_inscripcion = 0;

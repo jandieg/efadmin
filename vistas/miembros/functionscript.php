@@ -304,13 +304,15 @@ var setUserActualizar = function(  id_persona, id_miembro){
             $("#_fecha_cobro").val().toString()
         );
 
-        setAgregarPresupuestoEnPrincipal(
-            $("#_id_presup").val().toString(), 
-            id_miembro.toString(), 
-            $("#_periodo_presupuesto").val().toString(), 
-            $("#_fecha_registro").val().toString(), 
-            $("#_membresia_presupuesto").val().toString()
-        );
+        if ($("#_periodo_presupuesto").val().toString() != "x" && $("#_membresia_presupuesto").val().toString() != "x") {
+            setAgregarPresupuestoEnPrincipal(
+                $("#_id_presup").val().toString(), 
+                id_miembro.toString(), 
+                $("#_periodo_presupuesto").val().toString(), 
+                $("#_fecha_registro").val().toString(), 
+                $("#_membresia_presupuesto").val().toString()
+            );        
+        }
         
         if ($("#_status").val() == 2) {
             setActualizarCancelacion();
