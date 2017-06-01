@@ -83,8 +83,34 @@ if (isset($data)) {
                 exit();
                 
                 break;
+
+	case 'BUSCARHOBBIE':
+                setDatosConexion(''); 
+                
+                $response_1= array();
+                $objMiembro= new Entity($response_1);
+                $resultset= array();
+              
+				$parametros= array($data->filter, $data->pais);
+				$resultset= $objMiembro->getSp('sp_appGetMiembrosHobbies', $parametros, 'miembros');
+                
+                if(count($resultset['miembros']) > 0 ){
+					$result["data"]=$resultset['miembros'];
+                    $result["success"] = "1"; 
+                    echo json_encode($result); 
+                }else{
+                    $result["success"] = "1"; 
+                    $result["data"] = []; 
+                    echo json_encode($result); 
+                }
+
+                exit();
+                
+                break;
+				
        case 'DETALLE':
-                setDatosConexion('');
+                setDatosConexion('');			
+				
                 
                 $_id_empresa='';
                 //Miembro
@@ -96,22 +122,29 @@ if (isset($data)) {
                     $_id_empresa= $row['emp_id'];
                 }
                 //Direccion
-                $response_2= $objMiembro->getResponse();         
+                $response_2=  $objMiembro->getResponse();      
                 $objDireccion= new Entity($response_2);
                 $parametros= array($data->id);
                 $resultset= $objDireccion->getSp('sp_selectDireccion', $parametros, 'direccion');
+
                 //Industrias
-                $response_3= $objDireccion->getResponse();            
-                $objEmpresa= new Entity($objDireccion->getResponse());
+                $response_3= $objDireccion->getResponse();    
+                $objEmpresa= new Entity($response_3);
                 $parametros= array($_id_empresa);
                 $resultset= $objEmpresa->getSp('sp_selectEmpresaIndustrias', $parametros, 'sectores');
     
+			 //Intereses
+                $response_4= $objEmpresa->getResponse();    
+                $objHobbies= new Entity($response_4);
+                $parametros= array($data->id);
+                $resultset= $objHobbies->getSp('sp_appGetMyHobbies', $parametros, 'hobbies');
+
                 if(count($resultset['detalle_miembro']) > 0 ){
 				    $resultset['detalle_miembro'][0]["ind"]=$resultset['sectores'][0];//industria
+				    $resultset['detalle_miembro'][0]["hobbies"]=$resultset['hobbies'];//hobbies
 					$result["data"]=$resultset['detalle_miembro'][0];
                     $result["success"] = "1"; 
-                    echo json_encode($result); 
-                         
+                    echo json_encode($result);                          
                 }else{
                     $resultset["success"] = "0"; 
                     $resultset["data"] = "No existe Información!"; 
