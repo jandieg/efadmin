@@ -68,12 +68,12 @@ var cambioAnhoCobro = function() {
         },
         success: function (mensaje) {
             $.msg('unblock');
-            console.log('entra aca 1');
+            
             $("#_montopagado").val(0);
             $("#_montoreversado").val(0);
             $("#detalleCuenta").html(mensaje);
         },error : function(xhr, status) {
-            console.log('entra aca 2');
+            
             $.msg('unblock');
             $("#_montopagado").val(0);
             $("#_montoreversado").val(0);
