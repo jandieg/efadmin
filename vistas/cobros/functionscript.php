@@ -141,6 +141,31 @@ var getSeleccionarTodos = function(){
     $("#_montopagado").val(total);
 };
 
+var estanSalteados = function() {
+    var resp = false;
+    var actual = 0; 
+    //0 => iniclal
+    //1 => vacio/sin seleccionar
+    //2 => seleccionado
+    var el = document.getElementsByClassName('case');
+    for (var i=0; i<el.length; i++) {
+        if (el[i].checked) {
+            if (actual == 1) {
+                //si selecciono 
+                //y el anterior 
+                //no esta seleccionado 
+                //estoy saltandome
+                resp = true;
+            }
+            actual = 2;
+        } else {
+            actual = 1;
+        }
+    }
+    
+    return resp;
+}
+
 var getSeleccionarCobro = function(){
     
     var total = 0;
@@ -256,7 +281,9 @@ var setCobrarAdminReg = function(){
             //alert($("#" + (i + 1)).attr("name"));            
         }     
     }*/
- 
+    if (! estanSalteados()) {
+
+    
     $('#btnGuardar').attr("disabled", true);
     $.msg({content : '<img src="public/images/loanding.gif" />', autoUnblock: false});
     var parametros = {
@@ -296,6 +323,9 @@ var setCobrarAdminReg = function(){
                $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema'});
             }
         });
+    } else {
+               $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, debe seleccionar los cobros en orden sin saltarse ninguno'});
+    }
 };
 
 var setCobrar = function(){
@@ -328,7 +358,7 @@ var setCobrar = function(){
             //alert($("#" + (i + 1)).attr("name"));            
         }     
     }*/
- 
+    if (! estanSalteados()) {
     $('#btnGuardar').attr("disabled", true);
     $.msg({content : '<img src="public/images/loanding.gif" />', autoUnblock: false});
     var parametros = {
@@ -367,6 +397,9 @@ var setCobrar = function(){
                $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema'});
             }
         });
+        } else {
+               $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, debe seleccionar los cobros en orden sin saltarse ninguno'});
+        }
 };
 
 var getGenerarInscripcionCobro = function(msg, id_miembro){
