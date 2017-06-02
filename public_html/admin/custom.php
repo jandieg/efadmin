@@ -10,13 +10,6 @@ include_once("../../incluidos/db_config/config.php");
 
 $currency = '$ ';
 
-$smtp_Username ='9198ce4c0a23ad0d51628e6f5c62c68d';
-
-$smtp_Password ='cdf0cff2d7e8684e0faeb484936682d2'; //OLD PWD 427f36aba4d2bf1e16a0a4e26f49b4a2
-
-
-
-
 
 $sql = "SELECT * FROM miembro_inscripcion WHERE MONTH(mie_ins_fecha_cobro)='$i' AND YEAR(mie_ins_fecha_cobro)='$year' AND YEAR(mie_ins_fecha_ingreso)='$year'";	
 
