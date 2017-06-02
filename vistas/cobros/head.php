@@ -78,6 +78,53 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     exit();            
                 }
                 break;
+
+            case 'KEY_DETALLE_COBRO_ANHO':
+                if (! empty($_POST['_id_miembro']) && ! empty($_POST['_anho'])) {
+                    $objPresupuestoCobro= new PresupuestoCobro();
+                    $resultset= $objPresupuestoCobro->getDetallePresupuestoMiembroByAnho($_POST['_id_miembro'], $_POST['_anho']);
+                    $estadoColor="danger";
+                    $disabled="";
+                    $bandera="case";
+                    $cont = 1;
+                    $cuerpo = "";
+
+                    while($row = $resultset->fetch_assoc()) {
+                        if($row['estado_presupuesto_est_pre_id'] == '2'){                            
+                            $estadoColor="success";
+                            $disabled="";
+                            $bandera="case2";                                                   
+                        }
+                       
+                        $fecha= $row['detalleprecobro_fechavencimiento'];
+
+                         $cuerpo.= generadorTablaColoresFilas("" ,
+                               array(
+                                   getCheckCobro($cont,$row['detalleprecobro_id'],$disabled,$bandera, $row['detalleprecobro_valor']),                 
+                                   getFormatoFechadmy($fecha),
+                                   "$ ".$row['detalleprecobro_valor'],           
+                                   '<span class="label label-'.$estadoColor.'">'.$row['detalleprecobro_estado'].'</span>')); 
+                         $cont=$cont + 1;
+                         $estadoColor="danger";
+                         $disabled="";
+                         $bandera="case";
+                    }
+                    if (strlen($cuerpo) > 0) {
+                        $tablaDetalle= generadorTablaDetalleContenidoEstadoCuentaAdminReg(
+                        array( 
+                            getCheckPrincipal($cont - 1),
+                            //generadorNegritas("N°"),
+                            generadorNegritas("Fecha"),
+                            generadorNegritas("Valor a Cobrar"),
+                            generadorNegritas("Estado")), $cuerpo); 
+                        echo $tablaDetalle;
+                    } else {
+                        echo '<center><h1>No hay presupuesto para el año elegido</h1></center></br></br></br></br>';                 
+                    }                                                           
+                } else {                    
+                    echo '<center><h1>Faltan Datos</h1></center></br></br></br></br>';                
+                }
+            break;
             
             case 'KEY_DETALLE_PRESUPUESTO_COBRO':
                         
@@ -88,15 +135,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $cuerpo="";
                     $cont=1;
                     $credito = 0;
+                    $esadminreg = false;                    
+                    if (in_array(trim($_SESSION['user_perfil']), array('Administrador Regional'))) {
+                        $esadminreg = true;
+                    }
+                    if ($esadminreg) {
+                        $listaYear = array();
+                        $anho = intval(date('Y'));
+                        for ($i = $anho; $i > $anho-5; $i--) {
+                            $listaYear['lista_' . $i] = array("value" => $i, "select" => "", "texto" => $i);
+                        }                        
+                        
+                        $form6['form_1'] = array("elemento" => "combo","change" => "cambioAnhoCobro()", "titulo" => "Año", "id" => "_anho_cobro", "option" => $listaYear);
+                        $head1 = str_replace("{contenedor_2}", generadorEtiqueta($form6),  getPage('page_detalle'));
+                        $head1 = str_replace("{contenedor_1}", "",  $head1);
+                    }
+                    
                     $objPresupuestoCobro= new PresupuestoCobro();
                     $credito = $objPresupuestoCobro->getCreditoMiembro($_POST['_id_presupuesto']);
                     $objPresupuestoCobro2= new PresupuestoCobro();
                     $resultset= $objPresupuestoCobro2->getDetallePresupuestoMiembro($_POST['_id_presupuesto']);
-                    $esadminreg = false;
                     
-                    if (in_array(trim($_SESSION['user_perfil']), array('Administrador Regional'))) {
-                        $esadminreg = true;
-                    }
                         
 
                     while($row = $resultset->fetch_assoc()) { 
@@ -127,14 +186,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                          $bandera="case";
                      }
           
-
-                    $tablaDetalle= generadorTablaDetalleEstadoCuenta(
+                     if ($esadminreg) {
+                        $tablaDetalle= generadorTablaDetalleEstadoCuentaAdminReg(
                         array( 
                             getCheckPrincipal($cont - 1),
                             //generadorNegritas("N°"),
                             generadorNegritas("Fecha"),
                             generadorNegritas("Valor a Cobrar"),
                             generadorNegritas("Estado")), $cuerpo); 
+                     } else {
+                        $tablaDetalle= generadorTablaDetalleEstadoCuenta(
+                        array( 
+                            getCheckPrincipal($cont - 1),
+                            //generadorNegritas("N°"),
+                            generadorNegritas("Fecha"),
+                            generadorNegritas("Valor a Cobrar"),
+                            generadorNegritas("Estado")), $cuerpo); 
+                     }
+                    
                     $formModal['form_1'] = array("elemento" => "caja - oculta","id" => "_id_presupuesto_cobro" ,"reemplazo" => $_POST['_id_presupuesto']);
                     $formModal['form_2'] = array("elemento" => "caja - oculta","id" => "_id_miembro_cobro" ,"reemplazo" =>$_POST['id_miembro']);  
                     $idOcultos= generadorEtiquetaVVertical($formModal);
@@ -144,26 +213,35 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $listaFormaPago= $objFormaPago->getListaFormaPago();    
 
                     $form['form_1'] = array("elemento" => "combo","change" => "","titulo" => "Forma de Pago", "id" => "_formapago", "option" => $listaFormaPago);  
+                    if (! $esadminreg) {
+                        $boton_f['boton_2'] = array("elemento" => "boton","id" => "btnGuardar" ,"modal" => "" ,"color" => "btn-primary" ,
+                        "click" => "setCobrar()" ,"titulo" => "Cobrar" ,"lado" => "" ,"icono" => ""); 
+                    } else {
+                        $boton_f['boton_2'] = array("elemento" => "boton","id" => "btnGuardar" ,"modal" => "" ,"color" => "btn-primary" ,
+                        "click" => "setCobrarAdminReg()" ,"titulo" => "Cobrar" ,"lado" => "" ,"icono" => ""); 
+                    }
                     
-                    $boton_f['boton_2'] = array("elemento" => "boton","id" => "btnGuardar" ,"modal" => "" ,"color" => "btn-primary" ,
-                    "click" => "setCobrar()" ,"titulo" => "Cobrar" ,"lado" => "" ,"icono" => ""); 
                     $boton_r['boton_2'] = array("elemento" => "boton","id" => "btnReversar" ,"modal" => "" ,"color" => "btn-primary" ,
                     "click" => "setReversarCobros()" ,"titulo" => "Reversar Cobros" ,"lado" => "" ,"icono" => ""); 
                     
                      
                     $form2['form_1'] = array("elemento" => "caja pequeña", "titulo" => "Monto Pagado ", "tipo" => "text", "id" => "_montopagado");  
-                    $form3['fomr_1'] = array('elemento' => "Checkbox-color", "titulo" => "Utilizar credito de $ " . $credito, 
+                    $form3['form_1'] = array('elemento' => "Checkbox-color", "titulo" => "Utilizar credito de $ " . $credito,                     
                     "chec" => 'value="'.$credito.'"', "id" => "_credito");
                     $form4['form_1'] = array("elemento" => "caja pequeña", "titulo" => "Monto Reversado ", "tipo" => "text", "id" => "_montoreversado", "reemplazo" => 0);  
+                    $form5['form_1'] = array("elemento" => "caja" ,"tipo" => "date", "titulo" => "Fecha de Cobro", "id" => "_fecha_cobro", "reemplazo" => date('Y-m-d'));                                            
                     $pie= str_replace("{contenedor_1}", generadorEtiqueta($form2),  getPage('page_detalle'));
                     $pie= str_replace("{contenedor_2}", generadorEtiqueta($form),  $pie );
                     $pie2 = str_replace("{contenedor_1}", generadorEtiqueta($form3), getPage('page_detalle'));                                        
-                    $pie2 = str_replace("{contenedor_2}", "", $pie2);             
+                    
                     if ($esadminreg) {
+                        $pie2 = str_replace("{contenedor_2}", generadorEtiqueta($form5), $pie2);             
                         $pie3 = str_replace("{contenedor_1}", generadorEtiqueta($form4), getPage('page_detalle'));                                        
                         $pie3 = str_replace("{contenedor_2}", "", $pie3);                                        
-                        $html = str_replace("{cuerpo}", $tablaDetalle.$pie.$pie2.$pie3.$idOcultos, getPage("page_detalle_forum_modal")); 
+                        $html = str_replace("{cuerpo}", $head1.$tablaDetalle.$pie.$pie2.$pie3.$idOcultos, getPage("page_detalle_forum_modal")); 
+                        
                     } else {
+                        $pie2 = str_replace("{contenedor_2}", "", $pie2);             
                         $html = str_replace("{cuerpo}", $tablaDetalle.$pie.$pie2.$idOcultos, getPage("page_detalle_forum_modal")); 
                     }                           
                     
@@ -228,6 +306,48 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                  }
 
                  break;
+
+            case 'KEY_GUARDAR_COBRO_ADMIN_REG': 
+                 
+                 if( !empty($_POST['_id_presupuesto']) && !empty($_POST['_lista_id_detalle_presupuesto'] ) 
+                 && !empty($_POST['_formapago'] ) && !empty($_POST['_id_miembro']) && ! empty($_POST['_fecha'])
+                 &&  strlen($_POST['_bandera_credito']) > 0 && strlen($_POST['_resto'])>0 ){  
+                    
+               
+                $fechad = $_POST['_fecha'] . " 00:00:00";
+                    $lista="";
+                    if(isset($_POST['_lista_id_detalle_presupuesto'])){
+                        foreach($_POST['_lista_id_detalle_presupuesto'] as $valor){
+                            $lista.= $valor.",";
+                        }
+                    }
+
+                     $objPresupuestoCobro = new PresupuestoCobro();
+                    $resultado = $objPresupuestoCobro->actualizarCreditoPresupuestoMiembro($_POST['_id_presupuesto'], $_POST['_resto'], $_POST['_bandera_credito']); 
+                   
+                     $objCobro= new Cobro();
+                     $comp= $objCobro->setGrabarWithDatetime($_POST['_id_presupuesto'],$lista,$_POST['_id_miembro'], $_POST['_formapago'],$_SESSION['user_id_ben'], $fechad);  
+                    
+                   
+                                    
+                    
+                     if($comp == "OK"){
+                       
+                        $data = array("success" => "true", "priority"=>'success',"msg" => 'El Cobro se creo correctamente!');  
+                        echo json_encode($data);
+                    }else{
+                        $data = array("success" => "false", "priority"=>'info',"msg" => $comp); 
+                        echo json_encode($data);
+                    }
+
+
+                 }  else {
+                     $data = array("success" => "false", "priority"=>'info', "msg" => 'Faltan campos por llenar!');  
+                     echo json_encode($data); 
+                 }
+
+                 break;
+
 
             case 'KEY_REVERSAR_COBRO': 
                  

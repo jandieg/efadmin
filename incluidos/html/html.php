@@ -1133,6 +1133,48 @@ function generadorTablaDetalleEstadoCuenta($columnas= array(),$filas ) {
         return $msg;
 
 }
+
+function generadorTablaDetalleEstadoCuentaAdminReg($columnas= array(),$filas ) {
+        $msg='';
+        $msg.='<div class="row" id="detalleCuenta">';
+        $msg.='<div class="col-xs-12 table-responsive">';
+        $msg.='<table class="table table-striped">';         
+        $msg.='<thead>';
+        $msg.='<tr>';
+        foreach($columnas as $valor){
+            $msg.='<th>'.$valor.'</th>';
+        }
+        $msg.='</tr>';
+        $msg.='</thead>';
+        $msg.='<tbody>';
+        $msg.=$filas;
+        $msg.='</tbody>';
+        $msg.='</table>';
+        $msg.='</div>';
+        $msg.='</div>';
+        return $msg;
+
+}
+
+function generadorTablaDetalleContenidoEstadoCuentaAdminReg($columnas= array(),$filas ) {
+        $msg='';        
+        $msg.='<div class="col-xs-12 table-responsive">';
+        $msg.='<table class="table table-striped">';         
+        $msg.='<thead>';
+        $msg.='<tr>';
+        foreach($columnas as $valor){
+            $msg.='<th>'.$valor.'</th>';
+        }
+        $msg.='</tr>';
+        $msg.='</thead>';
+        $msg.='<tbody>';
+        $msg.=$filas;
+        $msg.='</tbody>';
+        $msg.='</table>';
+        $msg.='</div>';
+        return $msg;
+}
+
 function generadorTablaDetalleBloques($columnas= array(),$filas,  $bloques) {
         $msg='';
         $msg.='<div class="row">';

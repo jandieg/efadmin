@@ -24,6 +24,12 @@ class Cobro extends Conexion{
         return parent::setSqlSp($sql);   
     }
 
+    public function setGrabarWithDatetime($idpresupuestoCobro,$listaDetallePresupuesto="", $idMiembro, $idFormaPago, $user, $feche) {
+        //la variable $listaGrupos, es para controlar los pagos        
+        $sql="CALL sp_createCobro('$idpresupuestoCobro','$listaDetallePresupuesto', '$idMiembro', '$idFormaPago', '$fecha', '$user')";
+        return parent::setSqlSp($sql);   
+    }    
+
     public function setReversar($idpresupuestoCobro,$listaDetallePresupuesto="", $idMiembro) {        
         $sql="CALL sp_reverseCobro('$idpresupuestoCobro','$listaDetallePresupuesto', '$idMiembro')";
         return parent::setSqlSp($sql);   

@@ -72,6 +72,11 @@ class PresupuestoCobro extends Conexion{
         return parent::getConsultar($sql);   
     }
 
+    public function getDetallePresupuestoMiembroByAnho($id_miembro, $anho) {
+        $sql="CALL sp_selectDetallePresupuestoMiembroByAnho('$id_miembro', '$anho')";
+        return parent::getConsultar($sql);   
+    }
+
     public function getPresupuestoCobroMiembrosxEmpresas($id, $year) {
         $sql="CALL sp_selectPresupuestoCobroMiembrosxEmpresa('$id', '$year')";
         return parent::getConsultar($sql);   

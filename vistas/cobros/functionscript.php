@@ -53,7 +53,34 @@ var getDetalleFiltro = function(_key_filtro){
         });
 };
 
-
+var cambioAnhoCobro = function() {
+    var parametros = {
+        KEY: 'KEY_DETALLE_COBRO_ANHO',
+        _id_miembro: $("#_id_miembro_cobro").val().toString(),
+        _anho: $("#_anho_cobro").val().toString()
+    };
+    $.ajax({
+        data: parametros,
+        url: 'cobros',
+        type: 'post',
+        beforeSend: function() {
+            $.msg({content : '<img src="public/images/loanding.gif" />', autoUnblock: false});
+        },
+        success: function (mensaje) {
+            $.msg('unblock');
+            console.log('entra aca 1');
+            $("#_montopagado").val(0);
+            $("#_montoreversado").val(0);
+            $("#detalleCuenta").html(mensaje);
+        },error : function(xhr, status) {
+            console.log('entra aca 2');
+            $.msg('unblock');
+            $("#_montopagado").val(0);
+            $("#_montoreversado").val(0);
+            $("#detalleCuenta").html("Disculpe hubo un error al procesar la data");
+        }
+    });
+}
 
 var getGenerarDetalleCobro = function(nombre, id_presupuesto, id_miembro){
         var parametros = {
@@ -169,6 +196,78 @@ var setReversarCobros = function(){
                 _id_presupuesto: $("#_id_presupuesto_cobro").val().toString(),
                 _formapago: $("#_formapago").val().toString(),
                 _id_miembro:$("#_id_miembro_cobro").val().toString()                
+        };
+
+    
+        $.ajax({
+            data:  parametros,
+            url:   'cobros',
+            type:  'post',
+            dataType : 'json',
+            success:  function (mensaje) { 
+                if(mensaje.success == "true"){
+                    $.toaster({ priority : mensaje.priority, title : 'Alerta', message : mensaje.msg});
+                    $('#modal_detalleCobro').modal('toggle'); 
+                    $.msg('unblock');
+                    $('#btnGuardar').attr("disabled", false);
+                    //getRecargar();
+                }else{
+                    $.msg('unblock');
+                    $('#btnGuardar').attr("disabled", false);
+                    $.toaster({ priority : mensaje.priority, title : 'Alerta', message : mensaje.msg});
+                }
+               
+    
+                  
+            },error : function(xhr, status) {
+               $.msg('unblock');
+               $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema'});
+            }
+        });
+};
+
+var setCobrarAdminReg = function(){
+    var cont= $("#selectall").attr("name");
+    var listaIDDetalle = [];
+    var montopagar = Number($("#_montopagado").val());
+    var banderacredito = 0;
+    var resto = 0;
+    
+    if ($("#_credito").is(":checked")) {
+        banderacredito = 1;
+        montopagar += Number($("#_credito").val());
+    }
+
+
+    
+    $(".case").each(function() {
+        if (Number($(this).val()) <= montopagar) {
+            
+            montopagar -= $(this).val();
+            listaIDDetalle.push($(this).attr("name"));
+            
+        }
+    });
+    
+    /*
+    for (var i=0; i < cont; i++) {
+        if($("#" + (i + 1)).prop('checked') ) {
+            listaIDDetalle.push($("#" + (i + 1)).attr("name"));
+            //alert($("#" + (i + 1)).attr("name"));            
+        }     
+    }*/
+ 
+    $('#btnGuardar').attr("disabled", true);
+    $.msg({content : '<img src="public/images/loanding.gif" />', autoUnblock: false});
+    var parametros = {
+                KEY: 'KEY_GUARDAR_COBRO_ADMIN_REG',  
+                _lista_id_detalle_presupuesto: listaIDDetalle,
+                _id_presupuesto: $("#_id_presupuesto_cobro").val().toString(),
+                _formapago: $("#_formapago").val().toString(),
+                _id_miembro:$("#_id_miembro_cobro").val().toString(),
+                _resto: montopagar,
+                _fecha: $("#_fecha_cobro").val().toString(),
+                _bandera_credito: banderacredito
         };
 
     
