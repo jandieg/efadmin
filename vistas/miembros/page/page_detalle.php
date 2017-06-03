@@ -11,6 +11,9 @@
         </div>
        
       </div>
+      <div class="row" id="alertas">
+
+      </div>
 
   
        <div class="row">

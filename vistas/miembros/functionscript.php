@@ -190,6 +190,7 @@ var getUserEditar = function(id){
         }, function(mensaje) {
             $("#ben_contenedor").html(mensaje);
             $(".select2").select2();
+            $("#alertas").html("");
          });
 };
 var getDetalle = function( id_miembro, base){
@@ -200,7 +201,20 @@ var getDetalle = function( id_miembro, base){
         base: base
     }, function(mensaje) {
         $("#ben_contenedor").html(mensaje);
+        $("#alertas").html("");
 
+    });
+};
+var getDetalleWithAlerts = function( id_miembro, alertas){
+    var base = '';
+    $.post("miembros", {
+        KEY: 'KEY_SHOW_FORM_DETALLE',
+        id_miembro:id_miembro,
+        base: base
+    }, function(mensaje) {
+        $("#ben_contenedor").html(mensaje);
+        
+        $("#alertas").html(alertas);
     });
 };
 
@@ -210,6 +224,7 @@ var setGuardarCancelacion = function() {
 }
 
 var setActualizarCancelacion = function(){
+    var respuesta = '';
     if ($("#_id_miembro_cancelar").val() > 0) {
         $.msg({content : '<img src="public/images/loanding.gif" />', autoUnblock: false});
         var parametros = {
@@ -221,28 +236,36 @@ var setActualizarCancelacion = function(){
             data:  parametros,
             url:   'miembros',
             type:  'post',
+            async: false,
             dataType : 'json',
             success:  function (mensaje) { 
                     $("#_id_miembro_cancelar").val(0);
                     
                     $.msg('unblock');
                     if(mensaje.success == "true"){                        
-                        
+                        respuesta = "<div class='col-md-3'><div class='callout callout-success'><h4>Alerta:</h4><p>"+mensaje.msg+"</p></div></div>";
                         $.toaster({ priority : mensaje.priority, title : 'Alerta', message : mensaje.msg});
                     }else{
-                        $.toaster({ priority : mensaje.priority, title : 'Alerta', message : mensaje.msg});
+                        respuesta = "<div class='col-md-3'><div class='callout callout-info'><h4>Alerta:</h4><p>"+mensaje.msg+"</p></div></div>";
+                        //$.toaster({ priority : mensaje.priority, title : 'Alerta', message : mensaje.msg});
                     }
 
             },error : function(xhr, status) {
                 $.msg('unblock');
-                $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema'});
+                respuesta = "<div class='col-md-3'><div class='callout callout-danger'><h4>Alerta:</h4><p>Disculpe, existió un problema</p></div></div>";
+                //$.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema'});
             }
         });
+        
     }
+
+    return respuesta;
     
 };
 
 var setUserActualizar = function(  id_persona, id_miembro){
+
+    var textoalertas = '';
     
     var _lista_hobbies = []; 
     $('#_lista_hobbies :selected').each(function(i, selected){ 
@@ -295,7 +318,7 @@ var setUserActualizar = function(  id_persona, id_miembro){
                 _grupo_asignar:$("#_grupo_asignar").val().toString()
         };
 
-        setAgregarInscripcionEnPrincipal(
+        textoalertas += setAgregarInscripcionEnPrincipal(
             $("#_id_insc").val().toString(), 
             id_miembro.toString(), 
             $("#_fecha_registro").val().toString(), 
@@ -303,9 +326,11 @@ var setUserActualizar = function(  id_persona, id_miembro){
             $("#_estado_presupuesto").val().toString(), 
             $("#_fecha_cobro").val().toString()
         );
+       
+    
 
         if ($("#_periodo_presupuesto").val().toString() != "x" && $("#_membresia_presupuesto").val().toString() != "x") {
-            setAgregarPresupuestoEnPrincipal(
+            textoalertas += setAgregarPresupuestoEnPrincipal(
                 $("#_id_presup").val().toString(), 
                 id_miembro.toString(), 
                 $("#_periodo_presupuesto").val().toString(), 
@@ -313,10 +338,13 @@ var setUserActualizar = function(  id_persona, id_miembro){
                 $("#_membresia_presupuesto").val().toString()
             );        
         }
+
+     
         
         if ($("#_status").val() == 2) {
-            setActualizarCancelacion();
+            textoalertas += setActualizarCancelacion();
         } 
+        
             $.ajax({
                 data:  parametros,
                 url:   'miembros',
@@ -330,15 +358,19 @@ var setUserActualizar = function(  id_persona, id_miembro){
                     $.msg('unblock');
                     //$.unblockUI();
                         if(mensaje.success == "true"){
-                        getDetalle( id_miembro,'');
-                        $.toaster({ priority : mensaje.priority, title : 'Alerta', message : mensaje.msg});
+                       textoalertas += "<div class='col-md-3'><div class='callout callout-success'><h4>Alerta:</h4><p>"+mensaje.msg+"</p></div></div>";
+                       
+                        getDetalleWithAlerts( id_miembro, textoalertas);
+                        //$.toaster({ priority : mensaje.priority, title : 'Alerta', message : mensaje.msg});
                         }else if(mensaje.success == "false"){
-                        $.toaster({ priority : mensaje.priority, title : 'Alerta', message : mensaje.msg});
+                        $("#alertas").append(textoalertas + "<div class='col-md-3'><div class='callout callout-info'><h4>Alerta:</h4><p>"+mensaje.msg+"</p></div></div>");
+                        //$.toaster({ priority : mensaje.priority, title : 'Alerta', message : mensaje.msg});
                     }
                 },error : function(xhr, status) {
         //                $.unblockUI();
                     $.msg('unblock');
-                    $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema'});
+                    $("#alertas").append(textoalertas + "<div class='col-md-3'><div class='callout callout-danger'><h4>Alerta:</h4><p>Disculpe, existió un problema</p></div></div>");
+                    //$.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema'});
                 }
             }); 
         
@@ -485,6 +517,7 @@ var getAgregarPresupuesto = function(id_presupuesto, id_miembro,id_membresia, no
    
 };
 var setAgregarPresupuestoEnPrincipal = function(id_presupuesto, id_miembro, id_periodo, fecha_registro, id_membresia) {
+    var respuesta = '';
         var parametros = {
                 KEY: 'KEY_GUARDAR_PRESUPUESTO',
                 _id_presupuesto: id_presupuesto,
@@ -497,20 +530,28 @@ var setAgregarPresupuestoEnPrincipal = function(id_presupuesto, id_miembro, id_p
             data:  parametros,
             url:   'miembros',
             type:  'post',
+            async: false,
             dataType : 'json',
             beforeSend: function () {
                
             },
             success:  function (mensaje) {
                     if(mensaje.success == "true"){
-                        $.toaster({ priority : mensaje.priority, title : 'Alerta', message : mensaje.msg});               
+                        respuesta = "<div class='col-md-3'><div class='callout callout-success'><h4>Alerta:</h4><p>"+mensaje.msg+"</p></div></div>";
+                        //$.toaster({ priority : mensaje.priority, title : 'Alerta', message : mensaje.msg});               
                     }else{
-                        $.toaster({ priority : mensaje.priority, title : 'Alerta Membresia', message : mensaje.msg});               
+                        respuesta = "<div class='col-md-3'><div class='callout callout-info'><h4>Alerta:</h4><p>"+mensaje.msg+"</p></div></div>";
+                        //$.toaster({ priority : mensaje.priority, title : 'Alerta Membresia', message : mensaje.msg});               
                     }
             },error : function(xhr, status) {
-                $.toaster({ priority : 'danger', title : 'Alerta Membresia', message : 'Disculpe, existió un problema' + status.toString()+" "+ xhr.toString()});
+                respuesta = "<div class='col-md-3'><div class='callout callout-danger'><h4>Alerta:</h4><p>Disculpe, existió un problema " 
+                + status.toString()+" "+ xhr.toString()+ "</p></div></div>";
+                //$.toaster({ priority : 'danger', title : 'Alerta Membresia', message : 'Disculpe, existió un problema' + status.toString()+" "+ xhr.toString()});
             }
         });
+
+
+        return respuesta;
 
 }
 var setAgregarPresupuesto = function(){
@@ -601,6 +642,7 @@ var getInscripcion = function(id_miembro, nombre, fecha_registro, membresia){
 };
 
 var setAgregarInscripcionEnPrincipal = function(id_inscripcion, id_miembro_inscripcion, fecha_inscripcion, membresia_inscripcion, estado_inscripcion, fecha_cobro){
+    var respuesta = '';
         var parametros = {
                 KEY: 'KEY_GUARDAR_INSCRIPCION',
                 _id_inscripcion: id_inscripcion,
@@ -615,21 +657,24 @@ var setAgregarInscripcionEnPrincipal = function(id_inscripcion, id_miembro_inscr
             data:  parametros,
             url:   'miembros',
             type:  'post',
+            async: false,
             dataType : 'json',
             beforeSend: function () {
                 
             },
             success:  function (mensaje) {
                     if(mensaje.success == "true"){
-                        $.toaster({ priority : mensaje.priority, title : 'Alerta', message : mensaje.msg});                
+                        respuesta = "<div class='col-md-3'><div class='callout callout-success'><h4>Alerta:</h4><p>"+mensaje.msg+"</p></div></div>";
+                        //$.toaster({ priority : mensaje.priority, title : 'Alerta', message : mensaje.msg});                
                     }else{
-                        $.toaster({ priority : mensaje.priority, title : 'Alerta Inscripcion', message : mensaje.msg});
+                        respuesta = "<div class='col-md-3'><div class='callout callout-info'><h4>Alerta:</h4><p>"+mensaje.msg+"</p></div></div>";
+                        //$.toaster({ priority : mensaje.priority, title : 'Alerta Inscripcion', message : mensaje.msg});
                     }
             },error : function(xhr, status) {
               //  $.toaster({ priority : 'danger', title : 'Alerta Inscripcion', message : 'Disculpe, existió un problema ' + status.toString()+" "+ xhr.toString()});
             }
         });
-
+        return respuesta;
 };
 
 var setAgregarInscripcion = function(){

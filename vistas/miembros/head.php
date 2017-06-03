@@ -369,7 +369,7 @@ list($c1, $c2, $c3, $c4) = split('[/.-]', $codigo_usuario);
         if (strlen($lamembresia) == 0 || $lamembresia == "0") {
             
             $msg= "Edita y agrega una Precio Mensual.";
-            $alerta = str_replace("{contenedor_1}", generadorAlertaEstatica("Alerta!",$msg,"info")  , getPage('pager_row')); 
+            $alerta = str_replace("{contendor_1}", generadorAlertaEstatica("Alerta!",$msg,"info")  , getPage('pager_row')); 
             $resultado = str_replace("{contenedor_2}", $resultado, $alerta); 
         } else{
             
@@ -380,11 +380,12 @@ list($c1, $c2, $c3, $c4) = split('[/.-]', $codigo_usuario);
                 $msg.= "Agrega un presupuesto.";   
             } 
             if(strlen($id_presupuesto) == 0 || $id_presupuesto == "0" || $id_inscripcion == "0"){
-                    $alerta = str_replace("{contenedor_1}", generadorAlertaEstatica("Alerta!",$msg,"info")  , getPage('pager_row')); 
+                $alerta = str_replace("{contenedor_1}", generadorAlertaEstatica("Alerta!",$msg,"info")  , getPage('pager_row')); 
                 $resultado = str_replace("{contenedor_2}", $resultado, $alerta);   
             } 
             
         }
+        
 		
 		
         return $resultado;
@@ -719,11 +720,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 $msg.= "Agrega un presupuesto.";   
                             } 
                             if($id_presupuesto == "0" || $row['inscripcion'] == ""){
-                                 $alerta = str_replace("{contenedor_1}", generadorAlertaEstatica("Alerta!",$msg,"info")  , getPage('pager_row')); 
+                                
+                                $alerta = str_replace("{contenedor_1}", generadorAlertaEstatica("Alerta!",$msg,"info")  , getPage('pager_row')); 
                                 $resultado = str_replace("{contenedor_2}", $resultado, $alerta);   
                             } 
                            
                         }
+                        
                         echo $resultado;
 
                     }  else {

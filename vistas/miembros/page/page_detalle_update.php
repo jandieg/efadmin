@@ -12,6 +12,11 @@
        
       </div>
 
+      <div class="row" id="alertas">
+
+      </div>
+      
+
       <div class="row">    
         <div class="col-md-6">
              {contenedor_1}
