@@ -306,16 +306,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 if (in_array($perVerTodosFiltrosAsistenciaOp17, $_SESSION['usu_permiso'])) {
     //$lista['lista_']=array("value" => "x",  "select" => "" ,"texto" => "Seleccione...");
+    
     $objGrupo= new Grupo();
     $listaGrupos= $objGrupo->getListaGrupos2($objGrupo->getPrimerGrupo(),NULL);
     
  }  elseif (in_array($perVerFiltrosIDForumAsistenciaOp17, $_SESSION['usu_permiso'])) {
     //$lista['lista_']=array("value" => "x",  "select" => "" ,"texto" => "Seleccione...");
+    
     $objGrupo= new Grupo();
     $listaGrupos= $objGrupo->getListaGruposForum($_SESSION['user_id_ben'], NULL,NULL);
  }
     $objTipoE= new TipoEvento();
-    $listaEventos= $objTipoE->getLista(NULL,NULL,1, 1);
+    $listaEventos= $objTipoE->getLista(NULL,NULL,'', '');
+    
     $t=getTablaFiltro($listaEventos,$listaGrupos, getAsistencia($objTipoE->getPrimer(), '', '', ''));
 
 function getTablaFiltro($listaEventos= array(), $listaGrupos= array() , $tabla) { 
@@ -323,7 +326,7 @@ function getTablaFiltro($listaEventos= array(), $listaGrupos= array() , $tabla) 
     $lista['lista_2']=array("value" => "3",  "select" => "" ,"texto" => "CASO DEL MES");
     $lista['lista_3']=array("value" => "2",  "select" => "" ,"texto" => "OTROS");
     
-    $form0['form_0'] = array("elemento" => "combo","disabled" => "","change" => "getEventosPeriodos()","titulo" => "Asistencia / Mesa Redonda", "id" => "_tipo_asistencia", "option" => $lista); 
+    //$form0['form_0'] = array("elemento" => "combo","disabled" => "","change" => "getEventosPeriodos()","titulo" => "Asistencia / Mesa Redonda", "id" => "_tipo_asistencia", "option" => $lista); 
     $form1['form_3'] = array("elemento" => "combo","disabled" => "","change" => "","titulo" => "Grupos", "id" => "_grupos", "option" => $listaGrupos);
     
     $form2['form_1'] = array("elemento" => "combo","disabled" => "","change" => "","titulo" => "Años", "id" => "_año", "option" => generadorComboAños(date('Y')));
@@ -332,11 +335,11 @@ function getTablaFiltro($listaEventos= array(), $listaGrupos= array() , $tabla) 
     //$form2['form_1'] = array("elemento" => "caja" ,"disabled" => "","tipo" => "date" , "titulo" => "Fecha Inicio", "id" => "_fi" ,"reemplazo" => "");
     //$form3['form_1'] = array("elemento" => "caja" ,"disabled" => "","tipo" => "date" , "titulo" => "Fecha Fin", "id" => "_ff" ,"reemplazo" => "");    
     $form4['form_1'] = array("elemento" => "combo","disabled" => "","change" => "","titulo" => "Tipos Eventos", "id" => "_tipos_eventos", "option" => $listaEventos); 
-    $resultado = str_replace("{contenedor_1}", generadorEtiquetaVVertical2($form0),  getPage('page_cuerpo'));     
-    $resultado = str_replace("{contenedor_2}", generadorEtiquetaVVertical2($form4), $resultado); 
-    $resultado = str_replace("{contenedor_3}", '', $resultado); 
-    $resultado = str_replace("{contenedor_4}", generadorEtiquetaVVertical2($form1), $resultado); 
-    $resultado = str_replace("{contenedor_5}", generadorEtiquetaVVertical2($form2), $resultado); 
+    $resultado = str_replace("{contenedor_1}", generadorEtiquetaVVertical2($form4),  getPage('page_cuerpo'));     
+    $resultado = str_replace("{contenedor_2}", generadorEtiquetaVVertical2($form1), $resultado); 
+    $resultado = str_replace("{contenedor_3}", "", $resultado); 
+    $resultado = str_replace("{contenedor_4}", generadorEtiquetaVVertical2($form2), $resultado); 
+    $resultado = str_replace("{contenedor_5}", "", $resultado); 
     $resultado = str_replace("{contenedor_6}", '<div id="ben_contenedor_tabla">'.$tabla.'</div>', $resultado); 
     $resultado = str_replace("{boton}", "", $resultado);  
     $resultado = str_replace("{cabecera}", "Faltas", $resultado);   
