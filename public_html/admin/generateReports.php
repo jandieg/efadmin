@@ -21,7 +21,7 @@ $email=$_GET['email'];
 //Running Report//
 
 generate_enrollment_fees($userid,$year,$sede_id,$email); //This function will run The 1st report//	
-//generate_Summary($userid,$year,$sede_id); //This function will run The 1st report//	
+//generate_Dues($userid,$year,$sede_id,$email); //This function will run The 1st report//	
 
 function generate_enrollment_fees($userid,$year,$sedeid,$email){
 		include("../../incluidos/db_config/config.php");
@@ -44,7 +44,8 @@ $objPHPExcel->getProperties()->setCreator("Maarten Balliauw")
 							 ->setCategory("Test result file");
 $objPHPExcel = PHPExcel_IOFactory::load("./excels_templates/enrollment_fees.xlsx");
 $objPHPExcel->setActiveSheetIndex(0);
-$objPHPExcel->getActiveSheet()->setCellValue('N3', "1/1/".$year);
+//$objPHPExcel->getActiveSheet()->setCellValue('N3', "1/1/".$year);
+$objPHPExcel->getActiveSheet()->setCellValue('N3', set_report_date($year));
 $objPHPExcel->getActiveSheet()->setCellValue('D3', $report_name_for_excel);
 $objPHPExcel->getActiveSheet()->setCellValue('A72', $nextyear);
 //Consulting DataBase
@@ -117,7 +118,7 @@ $n++;
 //Computing Next Year//
 
 for ($i = 1; $i <= 12; $i++) {
-$sql = "SELECT * FROM miembro_inscripcion WHERE MONTH(mie_ins_fecha_cobro)='$i' AND YEAR(mie_ins_fecha_cobro)='$nextyear' AND YEAR(mie_ins_fecha_ingreso)='$nextyear'";	
+$sql = "SELECT * FROM miembro_inscripcion WHERE MONTH(mie_ins_fecha_cobro)='$i' AND YEAR(mie_ins_fecha_cobro)='$nextyear'";	
 $res = mysqli_query($con,$sql);
 //$row = mysqli_fetch_array($res);
 //$response["result"] = array();
@@ -511,7 +512,8 @@ $objPHPExcel->setActiveSheetIndex($xSheet);
 
 $objPHPExcel->getActiveSheet()->setCellValue('D3', $xrow['gru_descripcion']);
 $objPHPExcel->getActiveSheet()->setCellValue('D4', get_admin_details($xrow['gru_forum'],'fullname'));
-$objPHPExcel->getActiveSheet()->setCellValue('S3', '1/1/'.$year);
+//$objPHPExcel->getActiveSheet()->setCellValue('S3', '1/1/'.$year);
+$objPHPExcel->getActiveSheet()->setCellValue('S3', set_report_date($year));
 $objPHPExcel->getActiveSheet()->setCellValue('U6', $year+1);
 $xgroup=substr($xrow['gru_descripcion'], -7, 0);
 $sheetTitle = $xrow['gru_descripcion'];
@@ -559,13 +561,13 @@ $objPHPExcel->getActiveSheet()->setCellValue('G'.$i, $this_status_member);
 //$objPHPExcel->getActiveSheet()->getStyle('G'.$i)->getAlignment()->setWrapText(true);
 
 if($this_status_member=='SC'){
-$color='ffff00';
+$color='ffffff';
 $g_color='ffff00';
 }else if($this_status_member=='MS'){
 $color='92D050';
 $g_color='92D050';   
 }else if($this_status_member=='M'){
-$color='ffff00';
+$color='ffffff';
 $g_color='ffff00';
 }else if($this_status_member=='MC'){
 $color='CCCCCC';
@@ -575,58 +577,6 @@ $color='CCCCCC';
 $g_color='CCCCCC';
 }
 
-$first_FM_m=getInscription_info($row['mie_id'],'ins_month');
-$first_FM_y=getInscription_info($row['mie_id'],'ins_year');
-
-//Paiting FM //
-if(($first_FM_m=='01')&&($first_FM_y==$year)){ $x1='H'; $x2='H'; $xx1='U'; $xx2='U';  }
-if(($first_FM_m=='02')&&($first_FM_y==$year)){ $x1='H'; $x2='H'; $xx1='U'; $xx2='U';  }
-if(($first_FM_m=='03')&&($first_FM_y==$year)){$x1='H'; $x2='I'; $xx1='U'; $xx2='V';  }
-if(($first_FM_m=='04')&&($first_FM_y==$year)){$x1='H'; $x2='J'; $xx1='U'; $xx2='W';  }
-if(($first_FM_m=='05')&&($first_FM_y==$year)){$x1='H'; $x2='K'; $xx1='U'; $xx2='X';  }
-if(($first_FM_m=='06')&&($first_FM_y==$year)){$x1='H'; $x2='L'; $xx1='U'; $xx2='Y';  }
-if(($first_FM_m=='07')&&($first_FM_y==$year)){$x1='H'; $x2='M'; $xx1='U'; $xx2='Z';  }
-if(($first_FM_m=='08')&&($first_FM_y==$year)){$x1='H'; $x2='N'; $xx1='U'; $xx2='AA'; }
-if(($first_FM_m=='09')&&($first_FM_y==$year)){$x1='H'; $x2='O'; $xx1='U'; $xx2='AB'; }
-if(($first_FM_m=='10')&&($first_FM_y==$year)){$x1='H'; $x2='P'; $xx1='U'; $xx2='AC'; }
-if(($first_FM_m=='11')&&($first_FM_y==$year)){$x1='H'; $x2='Q'; $xx1='U'; $xx2='AD'; }
-if(($first_FM_m=='12')&&($first_FM_y==$year)){$x1='H'; $x2='R'; $xx1='U'; $xx2='AE'; }
-
-
-if($first_FM_y < date('Y')){$x1='H'; $x2='S';
-
-
-		 $objPHPExcel->getActiveSheet()->getStyle($x1.$i.':'.$x2.$i)->getFill()->applyFromArray(array(
-        'type' => PHPExcel_Style_Fill::FILL_SOLID,
-        'startcolor' => array(
-             'rgb' => 'CCCCCC'
-        )
-    ));
-
-
-	
-}else{
-	
-	 $objPHPExcel->getActiveSheet()->getStyle($x1.$i.':'.$x2.$i)->getFill()->applyFromArray(array(
-        'type' => PHPExcel_Style_Fill::FILL_SOLID,
-        'startcolor' => array(
-             'rgb' => 'CCCCCC'
-        )
-    ));
-
-
-	 $objPHPExcel->getActiveSheet()->getStyle($xx1.$i.':'.$xx2.$i)->getFill()->applyFromArray(array(
-        'type' => PHPExcel_Style_Fill::FILL_SOLID,
-        'startcolor' => array(
-             'rgb' => 'CCCCCC'
-        )
-    ));
-}
-
-
-	
-		
-  
 
 
 $objPHPExcel->getActiveSheet()->getStyle('G'.$i)->getFill()->applyFromArray(array(
@@ -636,13 +586,7 @@ $objPHPExcel->getActiveSheet()->getStyle('G'.$i)->getFill()->applyFromArray(arra
         )
     ));
 
-
 //Painting cell background//
-if($this_status_member!='M'){
-    if ($this_status_member == "MS") {
-       $color = '92D050';       
-    }    
-    
 	 $objPHPExcel->getActiveSheet()->getStyle('H'.$i.':'.'S'.$i)->getFill()->applyFromArray(array(
         'type' => PHPExcel_Style_Fill::FILL_SOLID,
         'startcolor' => array(
@@ -663,8 +607,133 @@ if($this_status_member!='M'){
              'rgb' => $color
         )
     ));
-    
+	
+
+
+$first_FM_m=getInscription_info($row['mie_id'],'ins_month');
+$first_FM_y=getInscription_info($row['mie_id'],'ins_year');
+
+
+$COLOR1='CCCCCC';
+$COLOR2='FFFFFF';
+$COLOR3='92D050';
+
+
+//Paiting FM //
+if(($first_FM_m=='01')&&($first_FM_y==$year)){$x1='H'; $x2='H';    $ins_color=$COLOR1; }else
+if(($first_FM_m=='02')&&($first_FM_y==$year)){$x1='H'; $x2='H';    $ins_color=$COLOR1; }else
+if(($first_FM_m=='03')&&($first_FM_y==$year)){$x1='H'; $x2='I';    $ins_color=$COLOR1; }else
+if(($first_FM_m=='04')&&($first_FM_y==$year)){$x1='H'; $x2='J';    $ins_color=$COLOR1; }else
+if(($first_FM_m=='05')&&($first_FM_y==$year)){$x1='H'; $x2='K';    $ins_color=$COLOR1; }else
+if(($first_FM_m=='06')&&($first_FM_y==$year)){$x1='H'; $x2='L';    $ins_color=$COLOR1; }else
+if(($first_FM_m=='07')&&($first_FM_y==$year)){$x1='H'; $x2='M';    $ins_color=$COLOR1; }else
+if(($first_FM_m=='08')&&($first_FM_y==$year)){$x1='H'; $x2='N';    $ins_color=$COLOR1; }else
+if(($first_FM_m=='09')&&($first_FM_y==$year)){$x1='H'; $x2='O';    $ins_color=$COLOR1; }else
+if(($first_FM_m=='10')&&($first_FM_y==$year)){$x1='H'; $x2='P';    $ins_color=$COLOR1; }else
+if(($first_FM_m=='11')&&($first_FM_y==$year)){$x1='H'; $x2='Q';    $ins_color=$COLOR1; }else
+if(($first_FM_m=='12')&&($first_FM_y==$year)){$x1='H'; $x2='R';    $ins_color=$COLOR1; }else{$x1='H'; $x2='S';  $ins_color=''; }
+
+
+
+
+if($ins_color){
+	 $objPHPExcel->getActiveSheet()->getStyle($x1.$i.':'.$x2.$i)->getFill()->applyFromArray(array(
+        'type' => PHPExcel_Style_Fill::FILL_SOLID,
+        'startcolor' => array(
+             'rgb' => $ins_color
+        )
+    ));
+
+
+	 $objPHPExcel->getActiveSheet()->getStyle($xx1.$i.':'.$xx2.$i)->getFill()->applyFromArray(array(
+        'type' => PHPExcel_Style_Fill::FILL_SOLID,
+        'startcolor' => array(
+             'rgb' => $ins_color
+        )
+    ));
+}else{
+    if ($this_status_member == "MS") {
+        $objPHPExcel->getActiveSheet()->getStyle($x1.$i.':'.$x2.$i)->getFill()->applyFromArray(array(
+            'type' => PHPExcel_Style_Fill::FILL_SOLID,
+            'startcolor' => array(
+                'rgb' => $COLOR3
+            )
+        ));
+
+
+        $objPHPExcel->getActiveSheet()->getStyle($xx1.$i.':'.$xx2.$i)->getFill()->applyFromArray(array(
+            'type' => PHPExcel_Style_Fill::FILL_SOLID,
+            'startcolor' => array(
+                'rgb' => $COLOR3
+            )
+        ));
+    } else {
+        $objPHPExcel->getActiveSheet()->getStyle($x1.$i.':'.$x2.$i)->getFill()->applyFromArray(array(
+            'type' => PHPExcel_Style_Fill::FILL_SOLID,
+            'startcolor' => array(
+                'rgb' => $COLOR2
+            )
+        ));
+
+
+        $objPHPExcel->getActiveSheet()->getStyle($xx1.$i.':'.$xx2.$i)->getFill()->applyFromArray(array(
+            'type' => PHPExcel_Style_Fill::FILL_SOLID,
+            'startcolor' => array(
+                'rgb' => $COLOR2
+            )
+        ));
+    }
+	
+	 
+	
 }
+
+//Next Year//
+
+if(($first_FM_m=='01')&&($first_FM_y==$nextyear)){ $xx1='U'; $xx2='U';  $ins_color2=$COLOR1; }else
+if(($first_FM_m=='02')&&($first_FM_y==$nextyear)){ $xx1='U'; $xx2='U';  $ins_color2=$COLOR1; }else
+if(($first_FM_m=='03')&&($first_FM_y==$nextyear)){ $xx1='U'; $xx2='V';  $ins_color2=$COLOR1; }else
+if(($first_FM_m=='04')&&($first_FM_y==$nextyear)){ $xx1='U'; $xx2='W';  $ins_color2=$COLOR1; }else
+if(($first_FM_m=='05')&&($first_FM_y==$nextyear)){ $xx1='U'; $xx2='X';  $ins_color2=$COLOR1; }else
+if(($first_FM_m=='06')&&($first_FM_y==$nextyear)){ $xx1='U'; $xx2='Y';  $ins_color2=$COLOR1; }else
+if(($first_FM_m=='07')&&($first_FM_y==$nextyear)){ $xx1='U'; $xx2='Z';  $ins_color2=$COLOR1; }else
+if(($first_FM_m=='08')&&($first_FM_y==$nextyear)){ $xx1='U'; $xx2='AA'; $ins_color2=$COLOR1; }else
+if(($first_FM_m=='09')&&($first_FM_y==$nextyear)){ $xx1='U'; $xx2='AB'; $ins_color2=$COLOR1; }else
+if(($first_FM_m=='10')&&($first_FM_y==$nextyear)){ $xx1='U'; $xx2='AC'; $ins_color2=$COLOR1; }else
+if(($first_FM_m=='11')&&($first_FM_y==$nextyear)){ $xx1='U'; $xx2='AD'; $ins_color2=$COLOR1; }else
+if(($first_FM_m=='12')&&($first_FM_y==$nextyear)){ $xx1='U'; $xx2='AE'; $ins_color2=$COLOR1; }else { $xx1='U'; $xx2='AF'; $ins_color2=''; }
+
+	
+	
+if($ins_color2){
+	
+
+	 $objPHPExcel->getActiveSheet()->getStyle($xx1.$i.':'.$xx2.$i)->getFill()->applyFromArray(array(
+        'type' => PHPExcel_Style_Fill::FILL_SOLID,
+        'startcolor' => array(
+             'rgb' => $ins_color2
+        )
+    ));
+}else{
+	
+	
+
+
+	 $objPHPExcel->getActiveSheet()->getStyle($xx1.$i.':'.$xx2.$i)->getFill()->applyFromArray(array(
+        'type' => PHPExcel_Style_Fill::FILL_SOLID,
+        'startcolor' => array(
+             'rgb' => $COLOR2
+        )
+    ));
+	
+}
+
+	
+		
+		  
+
+
+
  
  
 //Formating Cells for current year//
@@ -1065,19 +1134,17 @@ if($marker==12){ $cell='S'; }
 
 $countPayments = countPayments($row['mie_id'],$m,$year,$i);
 if($countPayments >= 1){
-$objPHPExcel->getActiveSheet()->getComment($cell.$i)->setHeight("50px")->setWidth("250px")->getText()->createTextRun(comment_months($row['mie_id'],$m,$year,$i)); 
+$objPHPExcel->getActiveSheet()->getComment($cell.$i)->setHeight("50px")->setWidth("250px")->getText()->createTextRun(comment_months_literal($row['mie_id'],$m,$year,$i)); 
 
 
 
 $commenting=comment_months($row['mie_id'],$m,$year,$i);
 //cellColor($cell.$i, 'ffff00');
-if($this_status_member == 'MC'){
+
 $color='ffff00';
-}else{
-$color='ffff00';
-}
+
 //cellColor($cell.$i, $color);
-if (strpos($commenting, 'ENERO') !== false) {
+if (strpos($commenting, 'ENERO'.$year) !== false) {
     $objPHPExcel->getActiveSheet()->getStyle('H'.$i)->getFill()->applyFromArray(array(
         'type' => PHPExcel_Style_Fill::FILL_SOLID,
         'startcolor' => array(
@@ -1085,7 +1152,7 @@ if (strpos($commenting, 'ENERO') !== false) {
         )
     ));
 }
-if (strpos($commenting, 'FEBRERO') !== false) {
+if (strpos($commenting, 'FEBRERO'.$year) !== false) {
     $objPHPExcel->getActiveSheet()->getStyle('I'.$i)->getFill()->applyFromArray(array(
         'type' => PHPExcel_Style_Fill::FILL_SOLID,
         'startcolor' => array(
@@ -1093,7 +1160,7 @@ if (strpos($commenting, 'FEBRERO') !== false) {
         )
     ));
 }
-if (strpos($commenting, 'MARZO') !== false) {
+if (strpos($commenting, 'MARZO'.$year) !== false) {
     $objPHPExcel->getActiveSheet()->getStyle('J'.$i)->getFill()->applyFromArray(array(
         'type' => PHPExcel_Style_Fill::FILL_SOLID,
         'startcolor' => array(
@@ -1102,7 +1169,7 @@ if (strpos($commenting, 'MARZO') !== false) {
     ));
 }
 
-if (strpos($commenting, 'ABRIL') !== false) {
+if (strpos($commenting, 'ABRIL'.$year) !== false) {
     $objPHPExcel->getActiveSheet()->getStyle('K'.$i)->getFill()->applyFromArray(array(
         'type' => PHPExcel_Style_Fill::FILL_SOLID,
         'startcolor' => array(
@@ -1110,7 +1177,7 @@ if (strpos($commenting, 'ABRIL') !== false) {
         )
     ));
 }
-if (strpos($commenting, 'MAYO') !== false) {
+if (strpos($commenting, 'MAYO'.$year) !== false) {
     $objPHPExcel->getActiveSheet()->getStyle('L'.$i)->getFill()->applyFromArray(array(
         'type' => PHPExcel_Style_Fill::FILL_SOLID,
         'startcolor' => array(
@@ -1118,7 +1185,7 @@ if (strpos($commenting, 'MAYO') !== false) {
         )
     ));
 }
-if (strpos($commenting, 'JUNIO') !== false) {
+if (strpos($commenting, 'JUNIO'.$year) !== false) {
     $objPHPExcel->getActiveSheet()->getStyle('M'.$i)->getFill()->applyFromArray(array(
         'type' => PHPExcel_Style_Fill::FILL_SOLID,
         'startcolor' => array(
@@ -1126,7 +1193,7 @@ if (strpos($commenting, 'JUNIO') !== false) {
         )
     ));
 }
-if (strpos($commenting, 'JULIO') !== false) {
+if (strpos($commenting, 'JULIO'.$year) !== false) {
     $objPHPExcel->getActiveSheet()->getStyle('N'.$i)->getFill()->applyFromArray(array(
         'type' => PHPExcel_Style_Fill::FILL_SOLID,
         'startcolor' => array(
@@ -1134,7 +1201,7 @@ if (strpos($commenting, 'JULIO') !== false) {
         )
     ));
 }
-if (strpos($commenting, 'AGOSTO') !== false) {
+if (strpos($commenting, 'AGOSTO'.$year) !== false) {
     $objPHPExcel->getActiveSheet()->getStyle('O'.$i)->getFill()->applyFromArray(array(
         'type' => PHPExcel_Style_Fill::FILL_SOLID,
         'startcolor' => array(
@@ -1142,7 +1209,7 @@ if (strpos($commenting, 'AGOSTO') !== false) {
         )
     ));
 }
-if (strpos($commenting, 'SEPTIEMBRE') !== false) {
+if (strpos($commenting, 'SEPTIEMBRE'.$year) !== false) {
     $objPHPExcel->getActiveSheet()->getStyle('P'.$i)->getFill()->applyFromArray(array(
         'type' => PHPExcel_Style_Fill::FILL_SOLID,
         'startcolor' => array(
@@ -1150,7 +1217,7 @@ if (strpos($commenting, 'SEPTIEMBRE') !== false) {
         )
     ));
 }
-if (strpos($commenting, 'OCTUBRE') !== false) {
+if (strpos($commenting, 'OCTUBRE'.$year) !== false) {
     $objPHPExcel->getActiveSheet()->getStyle('Q'.$i)->getFill()->applyFromArray(array(
         'type' => PHPExcel_Style_Fill::FILL_SOLID,
         'startcolor' => array(
@@ -1158,7 +1225,7 @@ if (strpos($commenting, 'OCTUBRE') !== false) {
         )
     ));
 }
-if (strpos($commenting, 'NOVIEMBRE') !== false) {
+if (strpos($commenting, 'NOVIEMBRE'.$year) !== false) {
     $objPHPExcel->getActiveSheet()->getStyle('R'.$i)->getFill()->applyFromArray(array(
         'type' => PHPExcel_Style_Fill::FILL_SOLID,
         'startcolor' => array(
@@ -1166,7 +1233,7 @@ if (strpos($commenting, 'NOVIEMBRE') !== false) {
         )
     ));
 }
-if (strpos($commenting, 'DICIEMBRE') !== false) {
+if (strpos($commenting, 'DICIEMBRE'.$year) !== false) {
     $objPHPExcel->getActiveSheet()->getStyle('S'.$i)->getFill()->applyFromArray(array(
         'type' => PHPExcel_Style_Fill::FILL_SOLID,
         'startcolor' => array(
@@ -1174,13 +1241,106 @@ if (strpos($commenting, 'DICIEMBRE') !== false) {
         )
     ));
 }
-
- $objPHPExcel->getActiveSheet()->getStyle($cell.$i)->getFill()->applyFromArray(array(
+if (strpos($commenting, 'ENERO'.$nextyear) !== false) {
+    $objPHPExcel->getActiveSheet()->getStyle('U'.$i)->getFill()->applyFromArray(array(
         'type' => PHPExcel_Style_Fill::FILL_SOLID,
         'startcolor' => array(
              'rgb' => $color
         )
     ));
+}
+if (strpos($commenting, 'FEBRERO'.$nextyear) !== false) {
+    $objPHPExcel->getActiveSheet()->getStyle('V'.$i)->getFill()->applyFromArray(array(
+        'type' => PHPExcel_Style_Fill::FILL_SOLID,
+        'startcolor' => array(
+             'rgb' => $color
+        )
+    ));
+}
+if (strpos($commenting, 'MARZO'.$nextyear) !== false) {
+    $objPHPExcel->getActiveSheet()->getStyle('W'.$i)->getFill()->applyFromArray(array(
+        'type' => PHPExcel_Style_Fill::FILL_SOLID,
+        'startcolor' => array(
+             'rgb' => $color
+        )
+    ));
+}
+
+if (strpos($commenting, 'ABRIL'.$nextyear) !== false) {
+    $objPHPExcel->getActiveSheet()->getStyle('X'.$i)->getFill()->applyFromArray(array(
+        'type' => PHPExcel_Style_Fill::FILL_SOLID,
+        'startcolor' => array(
+             'rgb' => $color
+        )
+    ));
+}
+if (strpos($commenting, 'MAYO'.$nextyear) !== false) {
+    $objPHPExcel->getActiveSheet()->getStyle('Y'.$i)->getFill()->applyFromArray(array(
+        'type' => PHPExcel_Style_Fill::FILL_SOLID,
+        'startcolor' => array(
+             'rgb' => $color
+        )
+    ));
+}
+if (strpos($commenting, 'JUNIO'.$nextyear) !== false) {
+    $objPHPExcel->getActiveSheet()->getStyle('Z'.$i)->getFill()->applyFromArray(array(
+        'type' => PHPExcel_Style_Fill::FILL_SOLID,
+        'startcolor' => array(
+             'rgb' => $color
+        )
+    ));
+}
+if (strpos($commenting, 'JULIO'.$nextyear) !== false) {
+    $objPHPExcel->getActiveSheet()->getStyle('AA'.$i)->getFill()->applyFromArray(array(
+        'type' => PHPExcel_Style_Fill::FILL_SOLID,
+        'startcolor' => array(
+             'rgb' => $color
+        )
+    ));
+}
+if (strpos($commenting, 'AGOSTO'.$nextyear) !== false) {
+    $objPHPExcel->getActiveSheet()->getStyle('AB'.$i)->getFill()->applyFromArray(array(
+        'type' => PHPExcel_Style_Fill::FILL_SOLID,
+        'startcolor' => array(
+             'rgb' => $color
+        )
+    ));
+}
+if (strpos($commenting, 'SEPTIEMBRE'.$nextyear) !== false) {
+    $objPHPExcel->getActiveSheet()->getStyle('AC'.$i)->getFill()->applyFromArray(array(
+        'type' => PHPExcel_Style_Fill::FILL_SOLID,
+        'startcolor' => array(
+             'rgb' => $color
+        )
+    ));
+}
+if (strpos($commenting, 'OCTUBRE'.$nextyear) !== false) {
+    $objPHPExcel->getActiveSheet()->getStyle('AD'.$i)->getFill()->applyFromArray(array(
+        'type' => PHPExcel_Style_Fill::FILL_SOLID,
+        'startcolor' => array(
+             'rgb' => $color
+        )
+    ));
+}
+if (strpos($commenting, 'NOVIEMBRE'.$nextyear) !== false) {
+    $objPHPExcel->getActiveSheet()->getStyle('AE'.$i)->getFill()->applyFromArray(array(
+        'type' => PHPExcel_Style_Fill::FILL_SOLID,
+        'startcolor' => array(
+             'rgb' => $color
+        )
+    ));
+}
+if (strpos($commenting, 'DICIEMBRE'.$nextyear) !== false) {
+    $objPHPExcel->getActiveSheet()->getStyle('AF'.$i)->getFill()->applyFromArray(array(
+        'type' => PHPExcel_Style_Fill::FILL_SOLID,
+        'startcolor' => array(
+             'rgb' => $color
+        )
+    ));
+}
+
+
+
 
  
 	}
@@ -1202,20 +1362,14 @@ if($marker2==12){ $cell='AF'; }
 
 $NYcountPayments = countPayments($row['mie_id'],$m,$nextyear,$i);
 if($NYcountPayments >= 1){
-$objPHPExcel->getActiveSheet()->getComment($cell.$i)->setHeight("50px")->setWidth("250px")->getText()->createTextRun(comment_months($row['mie_id'],$m,$nextyear,$i)); 
+$objPHPExcel->getActiveSheet()->getComment($cell.$i)->setHeight("50px")->setWidth("250px")->getText()->createTextRun(comment_months_literal($row['mie_id'],$m,$nextyear,$i)); //substr($members,0,-2);
 $commenting_next_year=comment_months($row['mie_id'],$m,$nextyear,$i);
-if($this_status_member == 'MC'){
 $color='ffff00';
-}else{
-$color='ffff00';
-}
+
 //cellColor($cell.$i, $color);
 
 //Comenting Next Year and Old Year//
-
-
-
-if (strpos($commenting_next_year, 'ENERO') !== false) {
+if (strpos($commenting_next_year, 'ENERO'.$nextyear) !== false) {
     $objPHPExcel->getActiveSheet()->getStyle('U'.$i)->getFill()->applyFromArray(array(
         'type' => PHPExcel_Style_Fill::FILL_SOLID,
         'startcolor' => array(
@@ -1223,7 +1377,7 @@ if (strpos($commenting_next_year, 'ENERO') !== false) {
         )
     ));
 }
-if (strpos($commenting_next_year, 'FEBRERO') !== false) {
+if (strpos($commenting_next_year, 'FEBRERO'.$nextyear) !== false) {
     $objPHPExcel->getActiveSheet()->getStyle('V'.$i)->getFill()->applyFromArray(array(
         'type' => PHPExcel_Style_Fill::FILL_SOLID,
         'startcolor' => array(
@@ -1231,7 +1385,7 @@ if (strpos($commenting_next_year, 'FEBRERO') !== false) {
         )
     ));
 }
-if (strpos($commenting_next_year, 'MARZO') !== false) {
+if (strpos($commenting_next_year, 'MARZO'.$nextyear) !== false) {
     $objPHPExcel->getActiveSheet()->getStyle('W'.$i)->getFill()->applyFromArray(array(
         'type' => PHPExcel_Style_Fill::FILL_SOLID,
         'startcolor' => array(
@@ -1240,7 +1394,7 @@ if (strpos($commenting_next_year, 'MARZO') !== false) {
     ));
 }
 
-if (strpos($commenting_next_year, 'ABRIL') !== false) {
+if (strpos($commenting_next_year, 'ABRIL'.$nextyear) !== false) {
     $objPHPExcel->getActiveSheet()->getStyle('X'.$i)->getFill()->applyFromArray(array(
         'type' => PHPExcel_Style_Fill::FILL_SOLID,
         'startcolor' => array(
@@ -1248,7 +1402,7 @@ if (strpos($commenting_next_year, 'ABRIL') !== false) {
         )
     ));
 }
-if (strpos($commenting_next_year, 'MAYO') !== false) {
+if (strpos($commenting_next_year, 'MAYO'.$nextyear) !== false) {
     $objPHPExcel->getActiveSheet()->getStyle('Y'.$i)->getFill()->applyFromArray(array(
         'type' => PHPExcel_Style_Fill::FILL_SOLID,
         'startcolor' => array(
@@ -1256,7 +1410,7 @@ if (strpos($commenting_next_year, 'MAYO') !== false) {
         )
     ));
 }
-if (strpos($commenting_next_year, 'JUNIO') !== false) {
+if (strpos($commenting_next_year, 'JUNIO'.$nextyear) !== false) {
     $objPHPExcel->getActiveSheet()->getStyle('Z'.$i)->getFill()->applyFromArray(array(
         'type' => PHPExcel_Style_Fill::FILL_SOLID,
         'startcolor' => array(
@@ -1264,7 +1418,7 @@ if (strpos($commenting_next_year, 'JUNIO') !== false) {
         )
     ));
 }
-if (strpos($commenting_next_year, 'JULIO') !== false) {
+if (strpos($commenting_next_year, 'JULIO'.$nextyear) !== false) {
     $objPHPExcel->getActiveSheet()->getStyle('AA'.$i)->getFill()->applyFromArray(array(
         'type' => PHPExcel_Style_Fill::FILL_SOLID,
         'startcolor' => array(
@@ -1272,7 +1426,7 @@ if (strpos($commenting_next_year, 'JULIO') !== false) {
         )
     ));
 }
-if (strpos($commenting_next_year, 'AGOSTO') !== false) {
+if (strpos($commenting_next_year, 'AGOSTO'.$nextyear) !== false) {
     $objPHPExcel->getActiveSheet()->getStyle('AB'.$i)->getFill()->applyFromArray(array(
         'type' => PHPExcel_Style_Fill::FILL_SOLID,
         'startcolor' => array(
@@ -1280,7 +1434,7 @@ if (strpos($commenting_next_year, 'AGOSTO') !== false) {
         )
     ));
 }
-if (strpos($commenting_next_year, 'SEPTIEMBRE') !== false) {
+if (strpos($commenting_next_year, 'SEPTIEMBRE'.$nextyear) !== false) {
     $objPHPExcel->getActiveSheet()->getStyle('AC'.$i)->getFill()->applyFromArray(array(
         'type' => PHPExcel_Style_Fill::FILL_SOLID,
         'startcolor' => array(
@@ -1288,7 +1442,7 @@ if (strpos($commenting_next_year, 'SEPTIEMBRE') !== false) {
         )
     ));
 }
-if (strpos($commenting_next_year, 'OCTUBRE') !== false) {
+if (strpos($commenting_next_year, 'OCTUBRE'.$nextyear) !== false) {
     $objPHPExcel->getActiveSheet()->getStyle('AD'.$i)->getFill()->applyFromArray(array(
         'type' => PHPExcel_Style_Fill::FILL_SOLID,
         'startcolor' => array(
@@ -1296,7 +1450,7 @@ if (strpos($commenting_next_year, 'OCTUBRE') !== false) {
         )
     ));
 }
-if (strpos($commenting_next_year, 'NOVIEMBRE') !== false) {
+if (strpos($commenting_next_year, 'NOVIEMBRE'.$nextyear) !== false) {
     $objPHPExcel->getActiveSheet()->getStyle('AE'.$i)->getFill()->applyFromArray(array(
         'type' => PHPExcel_Style_Fill::FILL_SOLID,
         'startcolor' => array(
@@ -1304,7 +1458,7 @@ if (strpos($commenting_next_year, 'NOVIEMBRE') !== false) {
         )
     ));
 }
-if (strpos($commenting_next_year, 'DICIEMBRE') !== false) {
+if (strpos($commenting_next_year, 'DICIEMBRE'.$nextyear) !== false) {
     $objPHPExcel->getActiveSheet()->getStyle('AF'.$i)->getFill()->applyFromArray(array(
         'type' => PHPExcel_Style_Fill::FILL_SOLID,
         'startcolor' => array(
@@ -1313,9 +1467,65 @@ if (strpos($commenting_next_year, 'DICIEMBRE') !== false) {
     ));
 }
 
+if (strpos($commenting_next_year, 'ENERO'.$year) !== false) {
+    $objPHPExcel->getActiveSheet()->getStyle('H'.$i)->getFill()->applyFromArray(array(
+        'type' => PHPExcel_Style_Fill::FILL_SOLID,
+        'startcolor' => array(
+             'rgb' => $color
+        )
+    ));
+}
+if (strpos($commenting_next_year, 'FEBRERO'.$year) !== false) {
+    $objPHPExcel->getActiveSheet()->getStyle('I'.$i)->getFill()->applyFromArray(array(
+        'type' => PHPExcel_Style_Fill::FILL_SOLID,
+        'startcolor' => array(
+             'rgb' => $color
+        )
 
+    ));
+}
+if (strpos($commenting_next_year, 'MARZO'.$year) !== false) {
+    $objPHPExcel->getActiveSheet()->getStyle('J'.$i)->getFill()->applyFromArray(array(
+        'type' => PHPExcel_Style_Fill::FILL_SOLID,
+        'startcolor' => array(
+             'rgb' => $color
+        )
+    ));
+}
 
-if (strpos($commenting_next_year, 'AGOSTO') !== false) {
+if (strpos($commenting_next_year, 'ABRIL'.$year) !== false) {
+    $objPHPExcel->getActiveSheet()->getStyle('K'.$i)->getFill()->applyFromArray(array(
+        'type' => PHPExcel_Style_Fill::FILL_SOLID,
+        'startcolor' => array(
+             'rgb' => $color
+        )
+    ));
+}
+if (strpos($commenting_next_year, 'MAYO'.$year) !== false) {
+    $objPHPExcel->getActiveSheet()->getStyle('L'.$i)->getFill()->applyFromArray(array(
+        'type' => PHPExcel_Style_Fill::FILL_SOLID,
+        'startcolor' => array(
+             'rgb' => $color
+        )
+    ));
+}
+if (strpos($commenting_next_year, 'JUNIO'.$year) !== false) {
+    $objPHPExcel->getActiveSheet()->getStyle('M'.$i)->getFill()->applyFromArray(array(
+        'type' => PHPExcel_Style_Fill::FILL_SOLID,
+        'startcolor' => array(
+             'rgb' => $color
+        )
+    ));
+}
+if (strpos($commenting_next_year, 'JULIO'.$year) !== false) {
+    $objPHPExcel->getActiveSheet()->getStyle('N'.$i)->getFill()->applyFromArray(array(
+        'type' => PHPExcel_Style_Fill::FILL_SOLID,
+        'startcolor' => array(
+             'rgb' => $color
+        )
+    ));
+}
+if (strpos($commenting_next_year, 'AGOSTO'.$year) !== false) {
     $objPHPExcel->getActiveSheet()->getStyle('O'.$i)->getFill()->applyFromArray(array(
         'type' => PHPExcel_Style_Fill::FILL_SOLID,
         'startcolor' => array(
@@ -1323,7 +1533,7 @@ if (strpos($commenting_next_year, 'AGOSTO') !== false) {
         )
     ));
 }
-if (strpos($commenting_next_year, 'SEPTIEMBRE') !== false) {
+if (strpos($commenting_next_year, 'SEPTIEMBRE'.$year) !== false) {
     $objPHPExcel->getActiveSheet()->getStyle('P'.$i)->getFill()->applyFromArray(array(
         'type' => PHPExcel_Style_Fill::FILL_SOLID,
         'startcolor' => array(
@@ -1331,7 +1541,7 @@ if (strpos($commenting_next_year, 'SEPTIEMBRE') !== false) {
         )
     ));
 }
-if (strpos($commenting_next_year, 'OCTUBRE') !== false) {
+if (strpos($commenting_next_year, 'OCTUBRE'.$year) !== false) {
     $objPHPExcel->getActiveSheet()->getStyle('Q'.$i)->getFill()->applyFromArray(array(
         'type' => PHPExcel_Style_Fill::FILL_SOLID,
         'startcolor' => array(
@@ -1339,7 +1549,7 @@ if (strpos($commenting_next_year, 'OCTUBRE') !== false) {
         )
     ));
 }
-if (strpos($commenting_next_year, 'NOVIEMBRE') !== false) {
+if (strpos($commenting_next_year, 'NOVIEMBRE'.$year) !== false) {
     $objPHPExcel->getActiveSheet()->getStyle('R'.$i)->getFill()->applyFromArray(array(
         'type' => PHPExcel_Style_Fill::FILL_SOLID,
         'startcolor' => array(
@@ -1347,7 +1557,7 @@ if (strpos($commenting_next_year, 'NOVIEMBRE') !== false) {
         )
     ));
 }
-if (strpos($commenting_next_year, 'DICIEMBRE') !== false) {
+if (strpos($commenting_next_year, 'DICIEMBRE'.$year) !== false) {
     $objPHPExcel->getActiveSheet()->getStyle('S'.$i)->getFill()->applyFromArray(array(
         'type' => PHPExcel_Style_Fill::FILL_SOLID,
         'startcolor' => array(
@@ -1356,27 +1566,8 @@ if (strpos($commenting_next_year, 'DICIEMBRE') !== false) {
     ));
 }
 
-
 }
 
-if(($objPHPExcel->getActiveSheet()->getCell($cell.$i)->getValue() != NULL )|| ($objPHPExcel->getActiveSheet()->getCell($cell.$i)->getValue() != '' )) {
-	
-	$objPHPExcel->getActiveSheet()->getStyle($cell.$i)->getFill()->applyFromArray(array(
-        'type' => PHPExcel_Style_Fill::FILL_SOLID,
-        'startcolor' => array(
-             'rgb' => $color
-        )
-    ));
-
-}
-
-
- $objPHPExcel->getActiveSheet()->getStyle($cell.$i)->getFill()->applyFromArray(array(
-        'type' => PHPExcel_Style_Fill::FILL_SOLID,
-        'startcolor' => array(
-             'rgb' => $color
-        )
-    ));
 	
 }//end for
 //END//
@@ -1721,11 +1912,7 @@ $objPHPExcel = PHPExcel_IOFactory::load("./excels_templates/summary.xlsx");
 $objPHPExcel->setActiveSheetIndex(0);
 $objPHPExcel->getActiveSheet()->setCellValue('A3', $report_name_for_excel);
 $objPHPExcel->getActiveSheet()->setCellValue('E5', get_IBU($userid));
-if($year < date('Y')){
-$objPHPExcel->getActiveSheet()->setCellValue('P5', "12/1/".$year);
-}else{
-$objPHPExcel->getActiveSheet()->setCellValue('P5', date('m/d/Y'));
-}
+$objPHPExcel->getActiveSheet()->setCellValue('P5', set_report_date($year));
 $objPHPExcel->getActiveSheet()->setCellValue('A26', $nextyear);
 //Consulting DataBase
 //Getting MEmber status count
