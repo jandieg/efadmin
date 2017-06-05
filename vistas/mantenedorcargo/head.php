@@ -106,8 +106,8 @@ $resultset= $objCategoria->getCategoria("A");
      $cuerpo.= generadorTablaFilas(array(
          "<center>".$cont."</center>",
          generadorLink($row['cat_descripcion'],'getDetalle('.$row['cat_id'].')'),
-         $row['cat_fecharegistro'],
-         $row['cat_fechamodificacion'])); 
+         date_format(date_create($row['cat_fecharegistro']), 'd/m/Y H:i:s'),
+         date_format(date_create($row['cat_fechamodificacion']), 'd/m/Y H:i:s') )); 
      $cont=$cont + 1;   
  }
 $boton['boton_1'] = array("color" => "btn-info" ,"click" => "getCrear()" ,"titulo" => "","icono" => "fa-plus");

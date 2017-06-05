@@ -139,7 +139,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         $tabla['t_0'] = array("t_1" => generadorNegritas("Grupo ID"), "t_2" => $row['gru_descripcion']);
 						$tabla['t_1'] = array("t_1" => generadorNegritas("Código"), "t_2" => $row['mie_codigo']);
                         $tabla['t_2'] = array("t_1" => generadorNegritas($lblNombre), "t_2" => $titulo);
-                        $tabla['t_3'] = array("t_1" => generadorNegritas($lblFNacimiento), "t_2" => $row['per_fechanacimiento']);
+                        $tabla['t_3'] = array("t_1" => generadorNegritas($lblFNacimiento), "t_2" => date_format(date_create($row['per_fechanacimiento']), 'd/m/Y'));
                         $tabla['t_4'] = array("t_1" => generadorNegritas($lblTitulo), "t_2" => $row['prof_descripcion']);
                         $tabla['t_8'] = array("t_1" => generadorNegritas($lblCorreo), "t_2" => $correo_1);
                         $tabla['t_9'] = array("t_1" => generadorNegritas($lblCorreoSecundario), "t_2" => $correo_2);

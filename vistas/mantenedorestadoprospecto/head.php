@@ -97,8 +97,8 @@ $resultset= $objEstadoProspecto->getEstadosProspecto("A");
      $cuerpo.= generadorTablaFilas(array(
          "<center>".$cont."</center>",
          generadorLink($row['estpro_descripcion'],'getDetalle('.$row['estpro_id'].')'),
-         $row['estpro_fecharegistro'],
-         $row['estpro_fechamodificacion'])); 
+         date_format(date_create($row['estpro_fecharegistro']), 'd/m/Y H:i:s'),
+         date_format(date_create($row['estpro_fechamodificacion']), 'd/m/Y H:i:s') )); 
      $cont=$cont + 1;   
  }
 $boton['boton_1'] = array("color" => "btn-info" ,"click" => "getCrear()" ,"titulo" => "","icono" => "fa-plus");

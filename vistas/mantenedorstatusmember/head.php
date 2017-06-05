@@ -107,8 +107,8 @@ $resultset= $objSM->get("A");
          "<center>".$cont."</center>",
          $row['mem_sta_codigo'],
          generadorLink($row['mem_sta_descripcion'],'getDetalle('.$row['mem_sta_id'].')'),
-         $row['mem_sta_fecharegistro'],
-         $row['mem_sta_fechamodificacion'])); 
+         date_format(date_create($row['mem_sta_fecharegistro']), 'd/m/Y H:i:s'),
+         date_format(date_create($row['mem_sta_fechamodificacion']), 'd/m/Y H:i:s'))); 
      $cont=$cont + 1;   
  }
 $boton['boton_1'] = array("color" => "btn-info" ,"click" => "getCrear()" ,"titulo" => "","icono" => "fa-plus");

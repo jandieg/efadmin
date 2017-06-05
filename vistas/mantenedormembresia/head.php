@@ -106,8 +106,8 @@ $resultset= $objMembresia->getMembresias("A");
          "<center>".$cont."</center>",
          generadorLink($row['memb_descripcion'],'getDetalle('.$row['memb_id'].')'),
          "$ ".$row['memb_valor'],
-         $row['memb_fecharegistro'],
-         $row['memb_fechamodificacion'])); 
+         date_format(date_create($row['memb_fecharegistro']),'d/m/Y H:i:s'),
+         date_format(date_create($row['memb_fechamodificacion']), 'd/m/Y H:i:s') )); 
      $cont=$cont + 1;   
  }
 $boton['boton_1'] = array("color" => "btn-info" ,"click" => "getCrear()" ,"titulo" => "","icono" => "fa-plus");

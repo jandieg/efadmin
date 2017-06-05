@@ -123,8 +123,8 @@ $resultset= $objCiudad->getCiudades("A");
          "<center>".$cont."</center>",  
          generadorLink($row['ciu_nombre'],'getDetalle('.$row['ciu_id'].')'),
          $row['est_nombre'],
-         $row['ciu_fecharegistro'],
-         $row['ciu_fechamodificacion'])); 
+         date_format(date_create($row['ciu_fecharegistro']), 'd/m/Y H:i:s'),
+         date_format(date_create($row['ciu_fechamodificacion']), 'd/m/Y H:i:s') )); 
      $cont=$cont + 1;   
  }
 $boton['boton_1'] = array("color" => "btn-info" ,"click" => "getCrear()" ,"titulo" => "","icono" => "fa-plus");

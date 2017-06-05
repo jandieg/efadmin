@@ -104,8 +104,8 @@ $resultset= $objFP->getFormaPago("A");
      $cuerpo.= generadorTablaFilas(array(
          "<center>".$cont."</center>",
          generadorLink($row['for_pag_descripcion'],'getDetalle('.$row['for_pag_id'].')'),
-         $row['for_pag_fecharegistro'],
-         $row['for_pag_fechamodificacion'])); 
+         date_format(date_create($row['for_pag_fecharegistro']), 'd/m/Y H:i:s'),
+         date_format(date_create($row['for_pag_fechamodificacion']), 'd/m/Y H:i:s'))); 
      $cont=$cont + 1;   
  }
 $boton['boton_1'] = array("color" => "btn-info" ,"click" => "getCrear()" ,"titulo" => "","icono" => "fa-plus");

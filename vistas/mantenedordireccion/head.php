@@ -230,7 +230,7 @@ $resultset= $objDireccion->getDirecciones("A");
          generadorLink($row['dir_calleprincipal'],'getDetalle('.$row['dir_id'].')'),
          $row['ciu_nombre'],
          $row['dir_identificador'],
-         $row['dir_fecharegistro'],
+         date_format(date_create($row['dir_fecharegistro']),'d/m/Y H:i:s'),
 //         $row['dir_fechamodificacion']
              )); 
      $cont=$cont + 1;   

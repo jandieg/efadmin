@@ -118,8 +118,8 @@ $resultset= $grupo->getGrupos2();
          "<center>".$cont."</center>",
          generadorLink($row['gru_descripcion'],'getDetalle('.$row['gru_id'].')'),
          $row['per_nombre'].' '.$row['per_apellido'],
-         $row['gru_fecharegistro'],
-         $row['gru_fechamodificacion'],
+         date_format(date_create($row['gru_fecharegistro']), 'd/m/Y H:i:s'),
+         date_format(date_create($row['gru_fechamodificacion']), 'd/m/Y H:i:s'),
          $row['modificador'])); 
      $cont=$cont + 1;   
  }    

@@ -62,8 +62,8 @@ $resultset= $objEstadoPresupuesto->getEstadoPresupuestos();
      $cuerpo.= generadorTablaFilas(array(
          "<center>".$cont."</center>",
          generadorLink($row['est_pre_descripcion'],'getDetalle('.$row['est_pre_id'].')'),
-         $row['est_pre_fecharegistro'],
-         $row['est_pre_fechamodificacion'])); 
+         date_format(date_create($row['est_pre_fecharegistro']), 'd/m/Y H:i:s'),
+         date_format(date_create($row['est_pre_fechamodificacion']), 'd/m/Y H:i:s'))); 
      $cont=$cont + 1;   
  }
 $boton= array();

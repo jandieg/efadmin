@@ -104,8 +104,8 @@ $resultset= $objPerfil->getPerfiles();
          "<center>".$cont."</center>",
          generadorLink($row['per_descripcion'],'getActualizar('.$row['per_id'].')'),
          $row['per_estado'],
-         $row['per_fecharegistro'],
-         $row['per_fechamodificacion'])); 
+         date_format(date_create($row['per_fecharegistro']), 'd/m/Y H:i:s'),
+         date_format(date_create($row['per_fechamodificacion']), 'd/m/Y H:i:s') )); 
      $cont=$cont + 1;  
  }    
  $t= generadorTabla_(1, "Perfiles",'getCrear()', array("N°", "Descripción","Estado",$lblFRegistro,$lblFModificacion), $cuerpo); 
