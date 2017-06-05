@@ -639,6 +639,10 @@ $objPHPExcel->getActiveSheet()->getStyle('G'.$i)->getFill()->applyFromArray(arra
 
 //Painting cell background//
 if($this_status_member!='M'){
+    if ($this_status_member == "MS") {
+       $color = '92D050';       
+    }    
+    
 	 $objPHPExcel->getActiveSheet()->getStyle('H'.$i.':'.'S'.$i)->getFill()->applyFromArray(array(
         'type' => PHPExcel_Style_Fill::FILL_SOLID,
         'startcolor' => array(
@@ -659,7 +663,7 @@ if($this_status_member!='M'){
              'rgb' => $color
         )
     ));
-	
+    
 }
  
  
