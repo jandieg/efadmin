@@ -59,6 +59,7 @@ function getDetalleUpdate($id, $recargar) {
 	}
     $lamembresia = "";
     if($row = $resultset->fetch_assoc()) { 
+        print_r($row);
         $idpersona=$row['per_id'];
          
         $objProfesion= new Profesion();                

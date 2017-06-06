@@ -720,7 +720,7 @@ $form2['form_6'] = array("elemento" => "combo + boton","change" => "",          
                  break;
             case 'KEY_GUARDAR':
 
-                 if(!empty($_POST['key_operacion']) && !empty($_POST['_nombre'] ) 
+                 if(!empty($_POST['key_operacion']) && !empty($_POST['_nombre']) 
                          && !empty($_POST['_apellido']) ){ 
 					 if($_POST['_id_empresa'] == '0'){
                         $data = array("success" => "false", "priority"=>'info', "msg" => 'Debes seleccionar una Empresa!');  
