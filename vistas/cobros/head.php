@@ -314,7 +314,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                  &&  strlen($_POST['_bandera_credito']) > 0 && strlen($_POST['_resto'])>0 ){  
                     
                
-                $fechad = $_POST['_fecha'] . " 00:00:00";
+                $fechad = date_format(date_create($_POST['_fecha']), 'Y-m-d H:i:s');
                     $lista="";
                     if(isset($_POST['_lista_id_detalle_presupuesto'])){
                         foreach($_POST['_lista_id_detalle_presupuesto'] as $valor){
