@@ -3,7 +3,7 @@ BEGIN
   DECLARE _LID_COBRO int;
   DECLARE done int DEFAULT FALSE;
   DECLARE cur1 CURSOR FOR
-    SELECT `cobro_id` FROM `cobro` WHERE `presupuesto_precobro_id` = `_id_presupuestocobro` AND `miembro_id` = `_id_miembro`;
+    SELECT `cobro_id` FROM `cobro` WHERE `presupuestocobro_precobro_id` = `_id_presupuestocobro` AND `miembro_id` = `_id_miembro`;
   DECLARE CONTINUE HANDLER FOR NOT FOUND
     SET done = TRUE;
   OPEN cur1;
