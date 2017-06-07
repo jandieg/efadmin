@@ -71,7 +71,7 @@ if($type=='price'){
 
 FROM detallepresupuestocobro AS t0
 
-WHERE ((MONTH(t0.detalleprecobro_fechavencimiento) = mes) AND (YEAR(t0.detalleprecobro_fechavencimiento) = año))
+WHERE ((MONTH(t0.detalleprecobro_fechavencimiento) = mes) AND (YEAR(t0.detalleprecobro_fechavencimiento) = aï¿½o))
 
 	*/
 
@@ -206,8 +206,13 @@ include("../../incluidos/db_config/config.php");
 		if($type=='ins'){
 
 		$sql_date=$row['mie_ins_fecharegistro'];
-
-		$data = convert_datetime($sql_date,'literal');
+		if ( substr($row['mie_ins_fecharegistro'],0,10) == "2000-01-01") {
+			$data = '-';
+			
+		} else {
+			$data = convert_datetime($sql_date,'literal');
+		}
+		
 
 		}else if($type=='ins_month'){
 
@@ -228,8 +233,12 @@ include("../../incluidos/db_config/config.php");
 		}else{
 
 		$sql_date=$row['mie_ins_fecha_cobro'];
-
-		$data = convert_datetime($sql_date,'literal');
+		if (substr($sql_date,0,10) == "2000-01-01") {
+			$data = "-";
+		} else {
+			$data = convert_datetime($sql_date,'literal');
+		}
+		
 
 		}
 
