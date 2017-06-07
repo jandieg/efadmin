@@ -326,7 +326,7 @@ list($c1, $c2, $c3, $c4) = split('[/.-]', $codigo_usuario);
                                 
                                 
                                 $form12['form_0'] = array("elemento" => "caja" ,"tipo" => "hidden" , "titulo" => "", "id" => "_ins_valor" ,"reemplazo" => $valor_ins);
-                                $form12['form_1'] = array("elemento" => "caja", "tipo" => "readonly", "titulo" => "Precio",  "id" => "_ins_valor2" ,"option" => $listaMemb);
+                                $form12['form_1'] = array("elemento" => "combo", "deshabilitado" => true, "titulo" => "Precio",  "id" => "_ins_valor2" ,"option" => $listaMemb);
                                 $form12['form_2'] = array("elemento" => "caja" ,"tipo" => "date", "titulo" => "Fecha de Cobro", "id" => "_fecha_cobro", "reemplazo" => $fecha_cobro);                        
                                 
                             } else {
