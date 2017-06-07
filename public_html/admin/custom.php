@@ -22,12 +22,19 @@ $sql = "SELECT * FROM miembro_inscripcion WHERE MONTH(mie_ins_fecha_cobro)='$i' 
 
 
 function set_report_date($year){
-		
-if($year < date('Y')){
+	$nextyear = intval($year) + 1; 
+	$fechabase = $nextyear."0430";
+	$fechabase2 = date('Ymd');
+	if (intval($fechabase) > intval($fechabase2) ) {
+		$data = date('m/d/Y');
+	} else {
+		$data = "04/30/".$nextyear;
+	}
+/*if($year < date('Y')){
 $data = "12/1/".$year;
 }else{
 $data = date('m/d/Y');
-}
+}*/
 
 
 return $data;
