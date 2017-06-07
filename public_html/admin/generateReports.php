@@ -667,6 +667,21 @@ if($ins_color){
                 'rgb' => $COLOR3
             )
         ));
+    } elseif ($this_status_member == "MC") {
+        $objPHPExcel->getActiveSheet()->getStyle($x1.$i.':'.$x2.$i)->getFill()->applyFromArray(array(
+            'type' => PHPExcel_Style_Fill::FILL_SOLID,
+            'startcolor' => array(
+                'rgb' => $COLOR1
+            )
+        ));
+
+
+        $objPHPExcel->getActiveSheet()->getStyle($xx1.$i.':'.$xx2.$i)->getFill()->applyFromArray(array(
+            'type' => PHPExcel_Style_Fill::FILL_SOLID,
+            'startcolor' => array(
+                'rgb' => $COLOR1
+            )
+        ));
     } else {
         $objPHPExcel->getActiveSheet()->getStyle($x1.$i.':'.$x2.$i)->getFill()->applyFromArray(array(
             'type' => PHPExcel_Style_Fill::FILL_SOLID,
