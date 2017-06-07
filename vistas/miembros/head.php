@@ -292,7 +292,7 @@ list($c1, $c2, $c3, $c4) = split('[/.-]', $codigo_usuario);
                     $listaP['lista_'] = array("value" => "x",  "select" => "Selected" ,"texto" => "Seleccione...");
                     krsort($listam);
                     $form10['form_1'] = array("elemento" => "combo","change" => "", "titulo" => "Precio Mensual", "id" => "_membresia_presupuesto", "option" => $listam2);
-                    $form9['form_1'] = array("elemento" => "combo","tipo" => "hidden", "titulo" => "", "id" => "_periodo_presupuesto", "reemplazo" => 1);
+                    $form9['form_1'] = array("elemento" => "caja","tipo" => "hidden", "titulo" => "", "id" => "_periodo_presupuesto", "reemplazo" => 1);
                     $form9['form_2'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_id_presup" ,"reemplazo" => 0);
                  }
 
