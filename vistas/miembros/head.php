@@ -58,8 +58,7 @@ function getDetalleUpdate($id, $recargar) {
 	$resultset= $objMiembro->getMiembro1($id);	
 	}
     $lamembresia = "";
-    if($row = $resultset->fetch_assoc()) { 
-        print_r($row);
+    if($row = $resultset->fetch_assoc()) {         
         $idpersona=$row['per_id'];
          
         $objProfesion= new Profesion();                
@@ -303,28 +302,43 @@ list($c1, $c2, $c3, $c4) = split('[/.-]', $codigo_usuario);
                 $form_10 = generadorEtiqueta($form10);
                 $id_inscripcion = 0;
                 $objMembresia3 = new Membresia();
+                $tieneinscripcion = false;
                 $listaMembValor = $objMembresia3->getListaComboMembresiaValorValor();
                         //inscripcion
                         $objInscripcion= new Inscripcion();
                         $resultset= $objInscripcion->getInscripcion($_POST['id_miembro']);  
                         if($row4 = $resultset->fetch_assoc()) {                              
-                             $fecha_ingreso= $row4['mie_ins_fecha_ingreso'];                             
-                             $id_estado_cobro= $row4['estado_cobro_id'];
-                             $valor_ins ="$ ".$row4['mie_ins_valor'];
-                             $fecha_cobro= date('Y-m-d',strtotime($row4['mie_ins_fecha_cobro'])); 
-                             $objEstadoPresupuesto= new EstadoPresupuesto();
-                             $estado_presup = "";
-                             $listaEP= array();
-                             $listaEP['lista_'] = array("value" => "x",  "select" => "" ,"texto" => "Seleccione...");
-                             $listaEP= $objEstadoPresupuesto->getListaEstadoPresupuestos($id_estado_cobro,NULL);                             
-                            $form11['form_0'] = array("elemento" => "caja" ,"tipo" => "date", "titulo" => "Fecha de Registro", "id" => "_fecha_registro", "reemplazo" => $fecha_ingreso);                        
-                            $form11['form_1'] = array("elemento" => "combo","change" => "", "titulo" => "Estado", "id" => "_estado_presupuesto", "option" => $listaEP);
-                            $form11['form_2'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_id_insc" ,"reemplazo" => $row4['mie_ins_id']);
-                            $id_inscripcion = $row4['mie_ins_id'];
-                            
-                            //$form12['form_0'] = array("elemento" => "caja" ,"tipo" => "hidden" , "titulo" => "", "id" => "_ins_valor" ,"reemplazo" => $valor_ins);
-                            $form12['form_0'] = array("elemento" => "caja" ,"tipo" => "date", "titulo" => "Fecha de Cobro", "id" => "_fecha_cobro", "reemplazo" => $fecha_cobro);                        
-                            $form12['form_1'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_ins_valor" ,"reemplazo" => 1);
+                            if ($row4['mie_ins_year'] == date('Y')) {
+                                $tieneinscripcion = true;
+                                $fecha_ingreso= $row4['mie_ins_fecha_ingreso'];                             
+                                $id_estado_cobro= $row4['estado_cobro_id'];
+                                $valor_ins ="$ ".$row4['mie_ins_valor'];
+                                $fecha_cobro= date('Y-m-d',strtotime($row4['mie_ins_fecha_cobro'])); 
+                                $objEstadoPresupuesto= new EstadoPresupuesto();
+                                $estado_presup = "";
+                                $listaEP= array();
+                                $listaEP['lista_'] = array("value" => "x",  "select" => "" ,"texto" => "Seleccione...");
+                                $listaEP= $objEstadoPresupuesto->getListaEstadoPresupuestos($id_estado_cobro,NULL);                             
+                                $form11['form_0'] = array("elemento" => "caja" ,"tipo" => "date", "titulo" => "Fecha de Registro", "id" => "_fecha_registro", "reemplazo" => $fecha_ingreso);                        
+                                $form11['form_1'] = array("elemento" => "combo","change" => "", "titulo" => "Estado", "id" => "_estado_presupuesto", "option" => $listaEP);
+                                $form11['form_2'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_id_insc" ,"reemplazo" => $row4['mie_ins_id']);
+                                $id_inscripcion = $row4['mie_ins_id'];
+                                
+                                //$form12['form_0'] = array("elemento" => "caja" ,"tipo" => "hidden" , "titulo" => "", "id" => "_ins_valor" ,"reemplazo" => $valor_ins);
+                                $form12['form_0'] = array("elemento" => "caja" ,"tipo" => "date", "titulo" => "Fecha de Cobro", "id" => "_fecha_cobro", "reemplazo" => $fecha_cobro);                        
+                                $form12['form_1'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_ins_valor" ,"reemplazo" => 1);
+                            } else {
+                                $objEstadoPresupuesto= new EstadoPresupuesto();
+                                $listaEP= array();
+                                $listaEP['lista_'] = array("value" => "x",  "select" => "" ,"texto" => "Seleccione...");
+                                $listaEP= $objEstadoPresupuesto->getListaEstadoPresupuestos("",NULL);                             
+                                $form11['form_0'] = array("elemento" => "caja" ,"tipo" => "date", "titulo" => "Fecha de Registro", "id" => "_fecha_registro", "reemplazo" => date('Y-m-d'));                            
+                                $form11['form_1'] = array("elemento" => "combo","change" => "", "titulo" => "Estado", "id" => "_estado_presupuesto", "option" => $listaEP);
+                                $form11['form_2'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_id_insc" ,"reemplazo" => 0);
+                                //$form12['form_0'] = array("elemento" => "combo", "change" => "", "titulo" => "Valor en base al Precio Mensual",  "id" => "_ins_valor" ,"option" => $$listaMemb);
+                                $form12['form_0'] = array("elemento" => "caja" ,"tipo" => "date", "titulo" => "Fecha de Cobro", "id" => "_fecha_cobro", "reemplazo" => date('Y-m-d'));                        
+                                $form12['form_1'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_ins_valor" ,"reemplazo" => 1);    
+                            }                             
                         } else {
                             $objEstadoPresupuesto= new EstadoPresupuesto();
                             $listaEP= array();
@@ -375,7 +389,7 @@ list($c1, $c2, $c3, $c4) = split('[/.-]', $codigo_usuario);
             $resultado = str_replace("{contenedor_2}", $resultado, $alerta); 
         } else{
             
-            if($id_inscripcion == "0"){  
+            if($id_inscripcion == "0" || !$tieneinscripcion){  
                 $msg="Registra la Inscripción del Miembro.</br>";
             }     
             if(strlen($id_presupuesto) == 0 || $id_presupuesto == "0" ){
@@ -604,25 +618,35 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                         //inscripcion
                         $objInscripcion= new Inscripcion();
+                        $tieneinscripcion = false;
                         $resultset= $objInscripcion->getInscripcion($_POST['id_miembro']);  
-                        if($row4 = $resultset->fetch_assoc()) {  
-                             $fecha_ingreso= $row4['mie_ins_fecha_ingreso'];                             
-                             $id_estado_cobro= $row4['estado_cobro_id'];
-                             $valor_ins ="$ ".$row4['mie_ins_valor'];
-                             $fecha_cobro= date('Y-m-d',strtotime($row4['mie_ins_fecha_cobro'])); 
-                             $objEstadoPresupuesto= new EstadoPresupuesto();
-                             $estado_presup = "";
-                             $listaEP= array();
-                             $listaEP= $objEstadoPresupuesto->getListaEstadoPresupuestos($id_estado_cobro,NULL);
-                             foreach($listaEP as $l) {
-                                 if (strlen($l['select'])) {
-                                     $estado_presup = $l['texto'];
-                                 }
-                             }
-                            $tabla7['t_0'] = array("t_1" => generadorNegritas("Fecha de Registro"), "t_2" => getFormatoFechadmy($fecha_ingreso));
-                            $tabla7['t_1'] = array("t_1" => generadorNegritas("Estado"), "t_2" => $estado_presup);
-                            $tabla8['t_0'] = array("t_1" => generadorNegritas("Precio"), "t_2" => $valor_ins);
-                            $tabla8['t_1'] = array("t_1" => generadorNegritas("Fecha de Cobro"), "t_2" => getFormatoFechadmy($fecha_cobro));
+                        if($row4 = $resultset->fetch_assoc()) { 
+                            if ($row4['mie_ins_year'] == date('Y')) {
+                                $tieneinscripcion = true;
+                                $fecha_ingreso= $row4['mie_ins_fecha_ingreso'];                             
+                                $id_estado_cobro= $row4['estado_cobro_id'];
+                                $valor_ins ="$ ".$row4['mie_ins_valor'];
+                                $fecha_cobro= date('Y-m-d',strtotime($row4['mie_ins_fecha_cobro'])); 
+                                $objEstadoPresupuesto= new EstadoPresupuesto();
+                                $estado_presup = "";
+                                $listaEP= array();
+                                $listaEP= $objEstadoPresupuesto->getListaEstadoPresupuestos($id_estado_cobro,NULL);
+                                foreach($listaEP as $l) {
+                                    if (strlen($l['select'])) {
+                                        $estado_presup = $l['texto'];
+                                    }
+                                }
+                                $tabla7['t_0'] = array("t_1" => generadorNegritas("Fecha de Registro"), "t_2" => getFormatoFechadmy($fecha_ingreso));
+                                $tabla7['t_1'] = array("t_1" => generadorNegritas("Estado"), "t_2" => $estado_presup);
+                                $tabla8['t_0'] = array("t_1" => generadorNegritas("Precio"), "t_2" => $valor_ins);
+                                $tabla8['t_1'] = array("t_1" => generadorNegritas("Fecha de Cobro"), "t_2" => getFormatoFechadmy($fecha_cobro));
+                            } else {
+                                $tabla7['t_0'] = array("t_1" => generadorNegritas("Fecha de Registro"), "t_2" => "---");
+                                $tabla7['t_1'] = array("t_1" => generadorNegritas("Estado"), "t_2" => "---");
+                                $tabla8['t_0'] = array("t_1" => generadorNegritas("Precio"), "t_2" => "---");
+                                $tabla8['t_1'] = array("t_1" => generadorNegritas("Fecha de Cobro"), "t_2" => "---");    
+                            }
+                             
                         } else {
                             $tabla7['t_0'] = array("t_1" => generadorNegritas("Fecha de Registro"), "t_2" => "---");
                             $tabla7['t_1'] = array("t_1" => generadorNegritas("Estado"), "t_2" => "---");
@@ -715,7 +739,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             $alerta = str_replace("{contenedor_1}", generadorAlertaEstatica("Alerta!",$msg,"info")  , getPage('pager_row')); 
                             $resultado = str_replace("{contenedor_2}", $resultado, $alerta); 
                         }else{
-                            if($row['inscripcion'] == ""){  
+                            if($row['inscripcion'] == "" || !$tieneinscripcion){  
                                 $msg="Registra la Inscripción del Miembro.</br>";
                             }     
                             if($id_presupuesto == "0" ){
