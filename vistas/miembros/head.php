@@ -279,8 +279,8 @@ list($c1, $c2, $c3, $c4) = split('[/.-]', $codigo_usuario);
                 
                 
                  if (strlen($id_presupuesto) > 0 && $id_presupuesto != "0") {
-                     $form9['form_1'] = array("elemento" => "combo","change" => "", "titulo" => "Periodo", "id" => "_periodo_presupuesto", "option" => $listaP);
-                    $form9['form_2'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_id_presup" ,"reemplazo" => $id_presupuesto);
+                     $form9['form_2'] = array("elemento" => "caja","tipo" => "hidden", "titulo" => "", "id" => "_periodo_presupuesto", "reemplazo" => 1);
+                    $form9['form_1'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_id_presup" ,"reemplazo" => $id_presupuesto);
                     $form10['form_1'] = array("elemento" => "combo","change" => "", "titulo" => "Precio Mensual", "id" => "_membresia_presupuesto", "option" => $listaMemb);
                  } else {
                      $listam2 = array();                     
@@ -292,14 +292,14 @@ list($c1, $c2, $c3, $c4) = split('[/.-]', $codigo_usuario);
                     $listaP['lista_'] = array("value" => "x",  "select" => "Selected" ,"texto" => "Seleccione...");
                     krsort($listam);
                     $form10['form_1'] = array("elemento" => "combo","change" => "", "titulo" => "Precio Mensual", "id" => "_membresia_presupuesto", "option" => $listam2);
-                    $form9['form_1'] = array("elemento" => "combo","change" => "", "titulo" => "Periodo", "id" => "_periodo_presupuesto", "option" => $listaP);
+                    $form9['form_1'] = array("elemento" => "combo","tipo" => "hidden", "titulo" => "", "id" => "_periodo_presupuesto", "reemplazo" => 1);
                     $form9['form_2'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_id_presup" ,"reemplazo" => 0);
                  }
 
                  
                 
-                $form_9 = generadorEtiqueta($form9);
-                $form_10 = generadorEtiqueta($form10);
+                $form_9 = generadorEtiqueta($form10);
+                $form_10 = generadorEtiqueta($form9);
                 $id_inscripcion = 0;
                 $objMembresia3 = new Membresia();
                 $tieneinscripcion = false;
@@ -324,9 +324,10 @@ list($c1, $c2, $c3, $c4) = split('[/.-]', $codigo_usuario);
                                 $form11['form_2'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_id_insc" ,"reemplazo" => $row4['mie_ins_id']);
                                 $id_inscripcion = $row4['mie_ins_id'];
                                 
-                                //$form12['form_0'] = array("elemento" => "caja" ,"tipo" => "hidden" , "titulo" => "", "id" => "_ins_valor" ,"reemplazo" => $valor_ins);
-                                $form12['form_0'] = array("elemento" => "caja" ,"tipo" => "date", "titulo" => "Fecha de Cobro", "id" => "_fecha_cobro", "reemplazo" => $fecha_cobro);                        
-                                $form12['form_1'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_ins_valor" ,"reemplazo" => 1);
+                                $form12['form_0'] = array("elemento" => "caja" ,"tipo" => "hidden" , "titulo" => "", "id" => "_ins_valor" ,"reemplazo" => $valor_ins);
+                                $form12['form_1'] = array("elemento" => "caja", "tipo" => "readonly", "titulo" => "Precio",  "id" => "_ins_valor2" ,"option" => $listaMemb);
+                                $form12['form_2'] = array("elemento" => "caja" ,"tipo" => "date", "titulo" => "Fecha de Cobro", "id" => "_fecha_cobro", "reemplazo" => $fecha_cobro);                        
+                                
                             } else {
                                 $objEstadoPresupuesto= new EstadoPresupuesto();
                                 $listaEP= array();
@@ -335,9 +336,9 @@ list($c1, $c2, $c3, $c4) = split('[/.-]', $codigo_usuario);
                                 $form11['form_0'] = array("elemento" => "caja" ,"tipo" => "date", "titulo" => "Fecha de Registro", "id" => "_fecha_registro", "reemplazo" => date('Y-m-d'));                            
                                 $form11['form_1'] = array("elemento" => "combo","change" => "", "titulo" => "Estado", "id" => "_estado_presupuesto", "option" => $listaEP);
                                 $form11['form_2'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_id_insc" ,"reemplazo" => 0);
-                                //$form12['form_0'] = array("elemento" => "combo", "change" => "", "titulo" => "Valor en base al Precio Mensual",  "id" => "_ins_valor" ,"option" => $$listaMemb);
-                                $form12['form_0'] = array("elemento" => "caja" ,"tipo" => "date", "titulo" => "Fecha de Cobro", "id" => "_fecha_cobro", "reemplazo" => date('Y-m-d'));                        
-                                $form12['form_1'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_ins_valor" ,"reemplazo" => 1);    
+                                $form12['form_0'] = array("elemento" => "combo", "change" => "", "titulo" => "Precio",  "id" => "_ins_valor" ,"option" => $listaMemb);
+                                $form12['form_1'] = array("elemento" => "caja" ,"tipo" => "date", "titulo" => "Fecha de Cobro", "id" => "_fecha_cobro", "reemplazo" => date('Y-m-d'));                        
+                                //$form12['form_1'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_ins_valor" ,"reemplazo" => 1);    
                             }                             
                         } else {
                             $objEstadoPresupuesto= new EstadoPresupuesto();
@@ -347,9 +348,9 @@ list($c1, $c2, $c3, $c4) = split('[/.-]', $codigo_usuario);
                             $form11['form_0'] = array("elemento" => "caja" ,"tipo" => "date", "titulo" => "Fecha de Registro", "id" => "_fecha_registro", "reemplazo" => date('Y-m-d'));                            
                             $form11['form_1'] = array("elemento" => "combo","change" => "", "titulo" => "Estado", "id" => "_estado_presupuesto", "option" => $listaEP);
                             $form11['form_2'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_id_insc" ,"reemplazo" => 0);
-                            //$form12['form_0'] = array("elemento" => "combo", "change" => "", "titulo" => "Valor en base al Precio Mensual",  "id" => "_ins_valor" ,"option" => $$listaMemb);
-                            $form12['form_0'] = array("elemento" => "caja" ,"tipo" => "date", "titulo" => "Fecha de Cobro", "id" => "_fecha_cobro", "reemplazo" => date('Y-m-d'));                        
-                            $form12['form_1'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_ins_valor" ,"reemplazo" => 1);
+                            //$form12['form_0'] = array("elemento" => "combo", "change" => "", "titulo" => "Valor en base al Precio Mensual",  "id" => "_ins_valor" ,"option" => $$listaMemb);                            
+                            $form12['form_0'] = array("elemento" => "combo", "change" => "", "titulo" => "Precio",  "id" => "_ins_valor" ,"option" => $listaMemb);
+                            $form12['form_1'] = array("elemento" => "caja" ,"tipo" => "date", "titulo" => "Fecha de Cobro", "id" => "_fecha_cobro", "reemplazo" => date('Y-m-d'));                        
                         }
 
                         $form_11= generadorEtiqueta($form11);
