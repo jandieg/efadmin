@@ -322,9 +322,9 @@ list($c1, $c2, $c3, $c4) = split('[/.-]', $codigo_usuario);
                             $form11['form_2'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_id_insc" ,"reemplazo" => $row4['mie_ins_id']);
                             $id_inscripcion = $row4['mie_ins_id'];
                             
-                            $form12['form_0'] = array("elemento" => "readonly" ,"tipo" => "text" , "titulo" => "Valor en base al Precio Mensual", "id" => "_ins_valor2" ,"reemplazo" => $valor_ins);
-                            $form12['form_1'] = array("elemento" => "caja" ,"tipo" => "date", "titulo" => "Fecha de Cobro", "id" => "_fecha_cobro", "reemplazo" => $fecha_cobro);                        
-                            $form12['form_2'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_ins_valor" ,"reemplazo" => $valorMembresiaOculto);
+                            //$form12['form_0'] = array("elemento" => "caja" ,"tipo" => "hidden" , "titulo" => "", "id" => "_ins_valor" ,"reemplazo" => $valor_ins);
+                            $form12['form_0'] = array("elemento" => "caja" ,"tipo" => "date", "titulo" => "Fecha de Cobro", "id" => "_fecha_cobro", "reemplazo" => $fecha_cobro);                        
+                            $form12['form_1'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_ins_valor" ,"reemplazo" => 1);
                         } else {
                             $objEstadoPresupuesto= new EstadoPresupuesto();
                             $listaEP= array();
@@ -333,8 +333,9 @@ list($c1, $c2, $c3, $c4) = split('[/.-]', $codigo_usuario);
                             $form11['form_0'] = array("elemento" => "caja" ,"tipo" => "date", "titulo" => "Fecha de Registro", "id" => "_fecha_registro", "reemplazo" => date('Y-m-d'));                            
                             $form11['form_1'] = array("elemento" => "combo","change" => "", "titulo" => "Estado", "id" => "_estado_presupuesto", "option" => $listaEP);
                             $form11['form_2'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_id_insc" ,"reemplazo" => 0);
-                            $form12['form_0'] = array("elemento" => "combo", "change" => "", "titulo" => "Valor en base al Precio Mensual",  "id" => "_ins_valor" ,"option" => $$listaMemb);
-                            $form12['form_1'] = array("elemento" => "caja" ,"tipo" => "date", "titulo" => "Fecha de Cobro", "id" => "_fecha_cobro", "reemplazo" => date('Y-m-d'));                        
+                            //$form12['form_0'] = array("elemento" => "combo", "change" => "", "titulo" => "Valor en base al Precio Mensual",  "id" => "_ins_valor" ,"option" => $$listaMemb);
+                            $form12['form_0'] = array("elemento" => "caja" ,"tipo" => "date", "titulo" => "Fecha de Cobro", "id" => "_fecha_cobro", "reemplazo" => date('Y-m-d'));                        
+                            $form12['form_1'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_ins_valor" ,"reemplazo" => 1);
                         }
 
                         $form_11= generadorEtiqueta($form11);
@@ -620,12 +621,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                              }
                             $tabla7['t_0'] = array("t_1" => generadorNegritas("Fecha de Registro"), "t_2" => getFormatoFechadmy($fecha_ingreso));
                             $tabla7['t_1'] = array("t_1" => generadorNegritas("Estado"), "t_2" => $estado_presup);
-                            $tabla8['t_0'] = array("t_1" => generadorNegritas("Valor en base al precio mensual"), "t_2" => $valor_ins);
+                            $tabla8['t_0'] = array("t_1" => generadorNegritas("Precio"), "t_2" => $valor_ins);
                             $tabla8['t_1'] = array("t_1" => generadorNegritas("Fecha de Cobro"), "t_2" => getFormatoFechadmy($fecha_cobro));
                         } else {
                             $tabla7['t_0'] = array("t_1" => generadorNegritas("Fecha de Registro"), "t_2" => "---");
                             $tabla7['t_1'] = array("t_1" => generadorNegritas("Estado"), "t_2" => "---");
-                            $tabla8['t_0'] = array("t_1" => generadorNegritas("Valor en base al precio mensual"), "t_2" => "---");
+                            $tabla8['t_0'] = array("t_1" => generadorNegritas("Precio"), "t_2" => "---");
                             $tabla8['t_1'] = array("t_1" => generadorNegritas("Fecha de Cobro"), "t_2" => "---");
                         }
                              
