@@ -1165,7 +1165,7 @@ $eventReport="eventReport()";
 $faReport="faReport()";
 $contenido = generadorMenuColor1("Crear Evento", $lista);
 $contenido.=generadorMenuColor2("Reportes", $eventReport);
-$contenido.=generadorMenuColor3("Facilitation Activity", $faReport);
+//$contenido.=generadorMenuColor3("Facilitation Activity", $faReport);
 $filtro='';
 $filtro= getFiltroGruposEvento();
 
