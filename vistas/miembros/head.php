@@ -307,8 +307,9 @@ list($c1, $c2, $c3, $c4) = split('[/.-]', $codigo_usuario);
                         //inscripcion
                         $objInscripcion= new Inscripcion();
                         $resultset= $objInscripcion->getInscripcion($_POST['id_miembro']);  
-                        if($row4 = $resultset->fetch_assoc()) {                              
-                            if ($row4['mie_ins_year'] == date('Y')) {
+                        if($row4 = $resultset->fetch_assoc()) {
+                            $id_inscripcion = $row4['mie_ins_id'];                              
+                            if ( date_format(date_create($row4['mie_ins_fecha_ingreso']),'Y') == date('Y')) {
                                 $tieneinscripcion = true;
                                 $fecha_ingreso= $row4['mie_ins_fecha_ingreso'];                             
                                 $id_estado_cobro= $row4['estado_cobro_id'];
@@ -322,7 +323,7 @@ list($c1, $c2, $c3, $c4) = split('[/.-]', $codigo_usuario);
                                 $form11['form_0'] = array("elemento" => "caja" ,"tipo" => "date", "titulo" => "Fecha de Registro", "id" => "_fecha_registro", "reemplazo" => $fecha_ingreso);                        
                                 $form11['form_1'] = array("elemento" => "combo","change" => "", "titulo" => "Estado", "id" => "_estado_presupuesto", "option" => $listaEP);
                                 $form11['form_2'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_id_insc" ,"reemplazo" => $row4['mie_ins_id']);
-                                $id_inscripcion = $row4['mie_ins_id'];
+                                
                                 
                                 $form12['form_0'] = array("elemento" => "caja" ,"tipo" => "hidden" , "titulo" => "", "id" => "_ins_valor" ,"reemplazo" => $valor_ins);
                                 $form12['form_1'] = array("elemento" => "caja", "tipo" => "readonly", "titulo" => "Precio",  "id" => "_ins_valor2" ,"option" => $listaMemb);
@@ -335,7 +336,7 @@ list($c1, $c2, $c3, $c4) = split('[/.-]', $codigo_usuario);
                                 $listaEP= $objEstadoPresupuesto->getListaEstadoPresupuestos("",NULL);                             
                                 $form11['form_0'] = array("elemento" => "caja" ,"tipo" => "date", "titulo" => "Fecha de Registro", "id" => "_fecha_registro", "reemplazo" => date('Y-m-d'));                            
                                 $form11['form_1'] = array("elemento" => "combo","change" => "", "titulo" => "Estado", "id" => "_estado_presupuesto", "option" => $listaEP);
-                                $form11['form_2'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_id_insc" ,"reemplazo" => 0);
+                                $form11['form_2'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_id_insc" ,"reemplazo" => $row4['mie_ins_id']);
                                 $form12['form_0'] = array("elemento" => "combo", "change" => "", "titulo" => "Precio",  "id" => "_ins_valor" ,"option" => $listaMemb);
                                 $form12['form_1'] = array("elemento" => "caja" ,"tipo" => "date", "titulo" => "Fecha de Cobro", "id" => "_fecha_cobro", "reemplazo" => date('Y-m-d'));                        
                                 //$form12['form_1'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_ins_valor" ,"reemplazo" => 1);    
@@ -622,7 +623,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         $tieneinscripcion = false;
                         $resultset= $objInscripcion->getInscripcion($_POST['id_miembro']);  
                         if($row4 = $resultset->fetch_assoc()) { 
-                            if ($row4['mie_ins_year'] == date('Y')) {
+                            if ( date_format(date_create($row4['mie_ins_fecha_ingreso']),'Y') == date('Y')) {
                                 $tieneinscripcion = true;
                                 $fecha_ingreso= $row4['mie_ins_fecha_ingreso'];                             
                                 $id_estado_cobro= $row4['estado_cobro_id'];
