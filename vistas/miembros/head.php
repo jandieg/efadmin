@@ -259,8 +259,9 @@ list($c1, $c2, $c3, $c4) = split('[/.-]', $codigo_usuario);
 
         //presupuesto
 
-                 $objPresupuestoCobro = new PresupuestoCobro();
-                 $result_presupuestocobro = $objPresupuestoCobro->getPresupuestoByIdMiembro($_POST['id_miembro']);
+                 $objMiembro2 = new Miembro();
+                 $result_presupuestocobro= $objMiembro2->getPresupuesto($_POST['id_miembro'],date('Y'));  
+                
                  $periodo_perio_id = "";
                  $id_presupuesto = 0;
                  $objMembresia2 = new Membresia();
