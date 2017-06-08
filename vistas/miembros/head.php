@@ -910,11 +910,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
                   if( !empty($_POST['_id_miembro']) && !empty($_POST['_id_periodo']) && !empty($_POST['_id_membresia']) && !empty($_POST['_fecha_registro'])  ){     
-                     if(date('Y',strtotime($_POST['_fecha_registro'])) > date("Y") || date('Y',strtotime($_POST['_fecha_registro'])) < date("Y")){
+                     /*if(date('Y',strtotime($_POST['_fecha_registro'])) > date("Y") || date('Y',strtotime($_POST['_fecha_registro'])) < date("Y")){
                          $data = array("success" => "false", "priority"=>'info',"msg" => "La fecha debe estar en el rango de este año!");
                          echo json_encode($data);
                          exit();
-                     }
+                     }*/
                      ////////////////////////////////////////////////////////////
                      $objPerido = new Periodo();
                      $periodoMeses= $objPerido->getPeriodoMes($_POST['_id_periodo']);
