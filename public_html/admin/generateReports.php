@@ -581,7 +581,7 @@ $g_color='ffff00';
         $color='CCCCCC';
         $g_color='CCCCCC';
     } else {
-        $color='fffff';
+        $color='FFFFFF';
         $g_color='CCCCCC';
     }
 }else{
