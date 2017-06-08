@@ -526,6 +526,7 @@ $i=8;
 $CM=date('m'); //Current Month
 $CY=date('Y'); //Current Year
 /****** BODY ******/
+$dues = true; 
 while($row = mysqli_fetch_array($res)) {
 	
 //cellColor('H'.$i.':'.'S'.$i, 'CCCCCC');
@@ -552,6 +553,11 @@ $objPHPExcel->getActiveSheet()->getStyle('D'.$i)->getAlignment()->setWrapText(tr
 $objPHPExcel->getActiveSheet()->setCellValue('E'.$i, getInscription_info($row['mie_id'],'ins'));
 $objPHPExcel->getActiveSheet()->getStyle('E'.$i)->getAlignment()->setWrapText(true);
 //Computing Dues//
+if (strlen(trim(get_Monthly_Payment($row['mie_id'],$year))) > 0) {
+    $dues = true;
+} else {
+    $dues = false;
+}
 $objPHPExcel->getActiveSheet()->setCellValue('F'.$i, get_Monthly_Payment($row['mie_id'],$year));
 $objPHPExcel->getActiveSheet()->getStyle('F'.$i)->getAlignment()->setWrapText(true);
 $this_status_member=get_status_info($row['status_member_id']);
@@ -576,6 +582,11 @@ $g_color='CCCCCC';
 }else{
 $color='CCCCCC';
 $g_color='CCCCCC';
+}
+
+if (! $dues && $this_status_member != "MS") {
+    $color='CCCCCC';
+    $g_color='CCCCCC';
 }
 
 
@@ -641,7 +652,7 @@ if(($first_FM_m=='12')&&($first_FM_y==$year)){$x1='H'; $x2='R';    $ins_color=$C
 
 
 
-
+if ($dues) {
 if($ins_color){
 	 $objPHPExcel->getActiveSheet()->getStyle($x1.$i.':'.$x2.$i)->getFill()->applyFromArray(array(
         'type' => PHPExcel_Style_Fill::FILL_SOLID,
@@ -709,6 +720,39 @@ if($ins_color){
 	
 }
 
+} else {
+    if ($this_status_member != "MS") {
+        $objPHPExcel->getActiveSheet()->getStyle($x1.$i.':'.$x2.$i)->getFill()->applyFromArray(array(
+            'type' => PHPExcel_Style_Fill::FILL_SOLID,
+            'startcolor' => array(
+                'rgb' => $COLOR1
+            )
+        ));
+
+
+        $objPHPExcel->getActiveSheet()->getStyle($xx1.$i.':'.$xx2.$i)->getFill()->applyFromArray(array(
+            'type' => PHPExcel_Style_Fill::FILL_SOLID,
+            'startcolor' => array(
+                'rgb' => $COLOR1
+            )
+        ));
+    } else {
+        $objPHPExcel->getActiveSheet()->getStyle($x1.$i.':'.$x2.$i)->getFill()->applyFromArray(array(
+            'type' => PHPExcel_Style_Fill::FILL_SOLID,
+            'startcolor' => array(
+                'rgb' => $COLOR3
+            )
+        ));
+
+        $objPHPExcel->getActiveSheet()->getStyle($xx1.$i.':'.$xx2.$i)->getFill()->applyFromArray(array(
+            'type' => PHPExcel_Style_Fill::FILL_SOLID,
+            'startcolor' => array(
+                'rgb' => $COLOR3
+            )
+        ));
+    }
+}
+
 //Next Year//
 
 if(($first_FM_m=='01')&&($first_FM_y==$nextyear)){ $xx1='U'; $xx2='U';  $ins_color2=$COLOR1; }else
@@ -725,7 +769,9 @@ if(($first_FM_m=='11')&&($first_FM_y==$nextyear)){ $xx1='U'; $xx2='AD'; $ins_col
 if(($first_FM_m=='12')&&($first_FM_y==$nextyear)){ $xx1='U'; $xx2='AE'; $ins_color2=$COLOR1; }else { $xx1='U'; $xx2='AF'; $ins_color2=''; }*/
 
 	
-	
+	if ($dues) {
+
+    
 if($ins_color2){
 	
 
@@ -747,6 +793,39 @@ if($ins_color2){
         )
     ));
 	
+}
+
+} else {
+    if ($this_status_member != "MS") {
+        $objPHPExcel->getActiveSheet()->getStyle($x1.$i.':'.$x2.$i)->getFill()->applyFromArray(array(
+            'type' => PHPExcel_Style_Fill::FILL_SOLID,
+            'startcolor' => array(
+                'rgb' => $COLOR1
+            )
+        ));
+
+        $objPHPExcel->getActiveSheet()->getStyle($xx1.$i.':'.$xx2.$i)->getFill()->applyFromArray(array(
+            'type' => PHPExcel_Style_Fill::FILL_SOLID,
+            'startcolor' => array(
+                'rgb' => $COLOR1
+            )
+        ));
+    } else {
+        $objPHPExcel->getActiveSheet()->getStyle($x1.$i.':'.$x2.$i)->getFill()->applyFromArray(array(
+            'type' => PHPExcel_Style_Fill::FILL_SOLID,
+            'startcolor' => array(
+                'rgb' => $COLOR3
+            )
+        ));
+
+        $objPHPExcel->getActiveSheet()->getStyle($xx1.$i.':'.$xx2.$i)->getFill()->applyFromArray(array(
+            'type' => PHPExcel_Style_Fill::FILL_SOLID,
+            'startcolor' => array(
+                'rgb' => $COLOR3
+            )
+        ));
+    }
+
 }
 
 	
