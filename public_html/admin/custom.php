@@ -600,32 +600,67 @@ if($month==12){ $month='DICIEMBRE'; //cellColor('S'.$pos, 'ffff00');
 		//return substr($data,0,-2);
 }
 
-function getColorPintar($mes) {
-	if ($mes == "01") {
-		return "H";
-	} else if ($mes == "02") {
-		return "I";
-	} else if ($mes == "03") {
-		return "J";
-	} else if ($mes == "04") {
-		return "K";
-	} else if ($mes == "05") {
-		return "L";
-	} else if ($mes == "06") {
-		return "M";
-	} else if ($mes == "07") {
-		return "N";
-	} else if ($mes == "08") {
-		return "O";
-	} else if ($mes == "09") {
-		return "P";
-	} else if ($mes == "10") {
-		return "Q";
-	} else if ($mes == "11") {
-		return "R";
-	} else {
-		return "S";
+function getColorPintar($mes,$anho,$anhorep) {
+	$nextyear = intval($anhorep) +1;
+	$nextyear = $nextyear *100;
+	$nextyear = $nextyear + 4;
+	$data = array();
+	$data['primeranho'] = true;
+	if (intval($anho) < intval($anhorep)) {
+		$data['value'] = "H";
 	}
+	if (intval($anho.$mes) > $nextyear) {
+		return "ZZ";
+	}
+	
+	
+	if (intval($anho) > $anhorep) {
+		$data['primeranho'] = false;
+	}
+	if ($mes == "01") {
+		if ($data['primeranho']) {
+			$data['value'] = "H";
+		} else {
+			$data['value'] = "U";
+		}
+		
+		
+	} else if ($mes == "02") {
+		if ($data['primeranho']) {
+			$data['value'] = "I";
+		} else {
+			$data['value'] = "V";
+		}		
+	} else if ($mes == "03") {
+		if ($data['primeranho']) {
+			$data['value'] = "J";
+		} else {
+			$data['value'] = "W";
+		}		
+	} else if ($mes == "04") {
+		if ($data['primeranho']) {
+			$data['value'] = "K";
+		} else {
+			$data['value'] = "X";
+		}		
+	} else if ($mes == "05") {
+		$data['value'] = "L";
+	} else if ($mes == "06") {
+		$data['value'] = "M";
+	} else if ($mes == "07") {
+		$data['value'] = "N";
+	} else if ($mes == "08") {
+		$data['value'] = "O";
+	} else if ($mes == "09") {
+		$data['value'] = "P";
+	} else if ($mes == "10") {
+		$data['value'] = "Q";
+	} else if ($mes == "11") {
+		$data['value'] = "R";
+	} else {
+		$data['value'] = "S";
+	}
+	return $data;
 }
 
 function comment_months_literal_nextyear($id,$month,$year,$pos){
