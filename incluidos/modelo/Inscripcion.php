@@ -23,7 +23,7 @@ class Inscripcion extends Conexion{
     }
 
      public function setGrabar($valor, $idMiembro,  $user, $fechaInscripcion,$estado, $fecha_cobro) {
-        $fecha= date("Y-m-d H:i:s");        
+        $fecha= date_format(date_create($fechaInscripcion),'Y-m-d H:i:s');        
         $ano= date_format(date_create($fechaInscripcion),'Y');
         $f_c= $fecha_cobro . ' ' . date("H:i:s");
         $sql="call sp_createInscripcion('$valor', '$idMiembro', '$fecha', '$user' ,'$fechaInscripcion','$estado','$ano', '$f_c')";  
