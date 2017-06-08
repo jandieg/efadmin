@@ -310,12 +310,14 @@ list($c1, $c2, $c3, $c4) = split('[/.-]', $codigo_usuario);
                         $resultset= $objInscripcion->getInscripcion($_POST['id_miembro']);  
                         if($row4 = $resultset->fetch_assoc()) {
                             $id_inscripcion = $row4['mie_ins_id'];                              
+                            $fecha_ingreso= $row4['mie_ins_fecha_ingreso'];                      
+                            $fecha_cobro= date('Y-m-d',strtotime($row4['mie_ins_fecha_cobro']));
                             if ( date_format(date_create($row4['mie_ins_fecha_ingreso']),'Y') == date('Y')) {
                                 $tieneinscripcion = true;
-                                $fecha_ingreso= $row4['mie_ins_fecha_ingreso'];                             
+                                       
                                 $id_estado_cobro= $row4['estado_cobro_id'];
                                 $valor_ins ="$ ".$row4['mie_ins_valor'];
-                                $fecha_cobro= date('Y-m-d',strtotime($row4['mie_ins_fecha_cobro'])); 
+                                 
                                 $objEstadoPresupuesto= new EstadoPresupuesto();
                                 $estado_presup = "";
                                 $listaEP= array();
@@ -335,11 +337,11 @@ list($c1, $c2, $c3, $c4) = split('[/.-]', $codigo_usuario);
                                 $listaEP= array();
                                 $listaEP['lista_'] = array("value" => "x",  "select" => "" ,"texto" => "Seleccione...");
                                 $listaEP= $objEstadoPresupuesto->getListaEstadoPresupuestos("",NULL);                             
-                                $form11['form_0'] = array("elemento" => "caja" ,"tipo" => "date", "titulo" => "Fecha de Registro", "id" => "_fecha_registro", "reemplazo" => date('Y-m-d'));                            
+                                $form11['form_0'] = array("elemento" => "caja" ,"tipo" => "date", "titulo" => "Fecha de Registro", "id" => "_fecha_registro", "reemplazo" => getFormatoFechadmy($fecha_ingreso));                            
                                 $form11['form_1'] = array("elemento" => "combo","change" => "", "titulo" => "Estado", "id" => "_estado_presupuesto", "option" => $listaEP);
                                 $form11['form_2'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_id_insc" ,"reemplazo" => $row4['mie_ins_id']);
                                 $form12['form_0'] = array("elemento" => "combo", "change" => "", "titulo" => "Precio",  "id" => "_ins_valor" ,"option" => $listaMemb);
-                                $form12['form_1'] = array("elemento" => "caja" ,"tipo" => "date", "titulo" => "Fecha de Cobro", "id" => "_fecha_cobro", "reemplazo" => date('Y-m-d'));                        
+                                $form12['form_1'] = array("elemento" => "caja" ,"tipo" => "date", "titulo" => "Fecha de Cobro", "id" => "_fecha_cobro", "reemplazo" => getFormatoFechadmy($fecha_cobro));                        
                                 //$form12['form_1'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_ins_valor" ,"reemplazo" => 1);    
                             }                             
                         } else {
