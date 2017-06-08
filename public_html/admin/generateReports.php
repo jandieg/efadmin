@@ -577,8 +577,13 @@ $g_color='92D050';
 $color='ffffff';
 $g_color='ffff00';
 }else if($this_status_member=='MC'){
-$color='CCCCCC';
-$g_color='CCCCCC';
+    if (strlen($row['mie_fecha_cambio_status']) > 0) {
+        $color='CCCCCC';
+        $g_color='CCCCCC';
+    } else {
+        $color='fffff';
+        $g_color='CCCCCC';
+    }
 }else{
 $color='CCCCCC';
 $g_color='CCCCCC';
@@ -654,6 +659,8 @@ if(($first_FM_m=='12')&&($first_FM_y==$year)){$x1='H'; $x2='R';    $ins_color=$C
 
 if ($dues) {
 if($ins_color){
+
+    
 	 $objPHPExcel->getActiveSheet()->getStyle($x1.$i.':'.$x2.$i)->getFill()->applyFromArray(array(
         'type' => PHPExcel_Style_Fill::FILL_SOLID,
         'startcolor' => array(
@@ -668,6 +675,8 @@ if($ins_color){
              'rgb' => $ins_color
         )
     ));
+
+    
 }else{
     if ($this_status_member == "MS") {
         $objPHPExcel->getActiveSheet()->getStyle($x1.$i.':'.$x2.$i)->getFill()->applyFromArray(array(
@@ -684,8 +693,10 @@ if($ins_color){
                 'rgb' => $COLOR3
             )
         ));
-    } elseif ($this_status_member == "MC") {
-        $objPHPExcel->getActiveSheet()->getStyle($x1.$i.':'.$x2.$i)->getFill()->applyFromArray(array(
+    } elseif ($this_status_member == "MC" && strlen($row['mie_fecha_cambio_status']) > 0) {
+        $elmes = date_format(date_create($row['mie_fecha_cambio_status']), 'm');
+        $pos = getColorPintar($elmes);
+        $objPHPExcel->getActiveSheet()->getStyle($pos.$i.':'.$x2.$i)->getFill()->applyFromArray(array(
             'type' => PHPExcel_Style_Fill::FILL_SOLID,
             'startcolor' => array(
                 'rgb' => $COLOR1

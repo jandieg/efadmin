@@ -600,7 +600,33 @@ if($month==12){ $month='DICIEMBRE'; //cellColor('S'.$pos, 'ffff00');
 		//return substr($data,0,-2);
 }
 
-
+function getColorPintar($mes) {
+	if ($mes == "01") {
+		return "H";
+	} else if ($mes == "02") {
+		return "I";
+	} else if ($mes == "03") {
+		return "J";
+	} else if ($mes == "04") {
+		return "K";
+	} else if ($mes == "05") {
+		return "L";
+	} else if ($mes == "06") {
+		return "M";
+	} else if ($mes == "07") {
+		return "N";
+	} else if ($mes == "08") {
+		return "O";
+	} else if ($mes == "09") {
+		return "P";
+	} else if ($mes == "10") {
+		return "Q";
+	} else if ($mes == "11") {
+		return "R";
+	} else {
+		return "S";
+	}
+}
 
 function comment_months_literal_nextyear($id,$month,$year,$pos){
 
