@@ -1367,6 +1367,7 @@ if (strpos($commenting, 'DICIEMBRE'.$nextyear) !== false) {
  
 	}
 //NEXT YEAR//
+if ($m<5) {
 $marker2=detectPayment($row['mie_id'],$m,$nextyear,$i);
 if($marker2==1){ $cell='U'; }
 if($marker2==2){ $cell='V'; }
@@ -1383,8 +1384,9 @@ if($marker2==12){ $cell='AF'; }
 */
 
 $NYcountPayments = countPayments($row['mie_id'],$m,$nextyear,$i);
-if($NYcountPayments >= 1){
-$objPHPExcel->getActiveSheet()->getComment($cell.$i)->setHeight("50px")->setWidth("250px")->getText()->createTextRun(comment_months_literal($row['mie_id'],$m,$nextyear,$i)); //substr($members,0,-2);
+if($NYcountPayments >= 1 ){
+
+$objPHPExcel->getActiveSheet()->getComment($cell.$i)->setHeight("50px")->setWidth("250px")->getText()->createTextRun(comment_months_literal_nextyear($row['mie_id'],$m,$nextyear,$i)); //substr($members,0,-2);
 $commenting_next_year=comment_months($row['mie_id'],$m,$nextyear,$i);
 $color='ffff00';
 
@@ -1523,6 +1525,7 @@ if (strpos($commenting_next_year, 'ABRIL'.$year) !== false) {
         )
     ));
 }
+/*
 if (strpos($commenting_next_year, 'MAYO'.$year) !== false) {
     $objPHPExcel->getActiveSheet()->getStyle('L'.$i)->getFill()->applyFromArray(array(
         'type' => PHPExcel_Style_Fill::FILL_SOLID,
@@ -1587,7 +1590,9 @@ if (strpos($commenting_next_year, 'DICIEMBRE'.$year) !== false) {
         )
     ));
 }
+*/
 
+}
 }
 
 	

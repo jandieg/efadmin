@@ -600,6 +600,52 @@ if($month==12){ $month='DICIEMBRE'; //cellColor('S'.$pos, 'ffff00');
 		//return substr($data,0,-2);
 }
 
+
+
+function comment_months_literal_nextyear($id,$month,$year,$pos){
+
+	include("../../incluidos/db_config/config.php");
+
+		$sql = "SELECT * FROM detallecobro WHERE miembro_mie_id='$id' AND MONTH(det_cobro_fecharegistro)='$month' AND YEAR(det_cobro_fecharegistro)='$year'";	
+
+		$res = mysqli_query($con,$sql);
+
+		$data = ' ';
+
+		while($row = mysqli_fetch_array($res)){
+
+		$sql_date = get_Paid_months($row['detallepresupuestocobro_detalleprecobro_id']);
+
+$month =  date('m', $sql_date);	
+$xyear =  date('Y', $sql_date);	
+
+if($month==1){ $month='ENERO'; //cellColor('H'.$pos, 'ffff00'); 
+
+}
+
+if($month==2){ $month='FEBRERO'; //cellColor('I'.$pos, 'ffff00'); 
+
+}
+
+if($month==3){ $month='MARZO'; //cellColor('J'.$pos, 'ffff00'); 
+
+}
+
+if($month==4){ $month='ABRIL'; //cellColor('K'.$pos, 'ffff00'); 
+
+}
+		if (strlen($month) < 3) {
+			$month = "";
+		}
+
+		$data.= $month.'  '; 
+
+		}
+
+		return $data;
+		//return substr($data,0,-2);
+}
+
 //echo comment_months(110,4,2016,99);
 
 
