@@ -142,13 +142,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     if ($esadminreg) {
                         $listaYear = array();
                         $anho = intval(date('Y'));
-                        for ($i = $anho; $i > $anho-5; $i--) {
-                            $listaYear['lista_' . $i] = array("value" => $i, "select" => "", "texto" => $i);
+                        $objPresupuestoCobro3 = new PresupuestoCobro();
+                        $resultPresup = $objPresupuestoCobro3->getPresupuestoMiembro($_POST['_id_presupuesto']);
+                        $anhopresupuesto = "";
+                        if ($row4 = $resultPresup->fetch_assoc()) {
+                            $anhopresupuesto = $row4['precobro_year'];
+                        }
+                        for ($i = $anho; $i > $anho-5; $i--) {        
+                            if ($anhopresupuesto == $i) {
+                                $listaYear['lista_' . $i] = array("value" => $i, "select" => "selected", "texto" => $i);
+                            } else {
+                                $listaYear['lista_' . $i] = array("value" => $i, "select" => "", "texto" => $i);
+                            }                                                    
                         }                        
                         
                         $form6['form_1'] = array("elemento" => "combo","change" => "cambioAnhoCobro()", "titulo" => "Año", "id" => "_anho_cobro", "option" => $listaYear);
                         $head1 = str_replace("{contenedor_2}", generadorEtiqueta($form6),  getPage('page_detalle'));
                         $head1 = str_replace("{contenedor_1}", "",  $head1);
+                        
                     }
                     
                     $objPresupuestoCobro= new PresupuestoCobro();
