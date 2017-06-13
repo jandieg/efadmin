@@ -174,7 +174,13 @@ var setCrearEvento = function(op, id_tipo_evento,opcion_contacto,opcion_acompana
     $("#_descripcion").val().toString()
 
     var fecha_hora_inicio= $("#_f_inicio").val().toString()+' '+ $("#_time_inicio").val().toString();
-    var fecha_hora_fin= $("#_f_fin").val().toString()+' '+ $("#_time_fin").val().toString(); 
+    var fecha_hora_fin = "";
+    if (id_tipo_evento == 3) {
+        // si es offsite si maneja fecha fin, en caso contrario no. 
+        fecha_hora_fin= $("#_f_fin").val().toString()+' '+ $("#_time_fin").val().toString(); 
+    } else {
+        fecha_hora_fin= $("#_f_inicio").val().toString()+' '+ $("#_time_fin").val().toString(); 
+    }    
 
     var _all_day='0';
     if( $('#_all_day').prop('checked') ) {

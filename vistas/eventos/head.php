@@ -33,21 +33,24 @@ function getCheckEventos($id,$nombre, $checked) {
 function getFiltroGruposEvento() {
     global $perVerFiltrosIDForumOp10,$perVerFiltrosIDIBPLimitadoOp10;
     $cuerpo='';
+    
     //Para que aparezcan los grupos, perfil de cobranza
     if (!in_array($perVerFiltrosIDIBPLimitadoOp10, $_SESSION['usu_permiso'])) { 
         if (!in_array($perVerFiltrosIDForumOp10, $_SESSION['usu_permiso'])) {
+            
             $cuerpo.= generadorTablaFilas(array(
                    getCheckEventos("T", "Todos los Grupos",""),
                    "Todos los Grupos",
                    ""));  
         }
-     
+        
         $cuerpo.= generadorTablaFilas(array(
                getCheckEventos("M", "Mis Grupos",""),
                "Mis Grupos",
                ""));  
     }  
     if (in_array($perVerFiltrosIDForumOp10, $_SESSION['usu_permiso'])) {  
+        
         $objGrupos= new Grupo();
         $resultset= $objGrupos->getGruposForum($_SESSION['user_id_ben']);
          while($row = $resultset->fetch_assoc()) { 
@@ -59,7 +62,7 @@ function getFiltroGruposEvento() {
         } 
     }else{//en caso que sea total el permiso
         $objGrupos= new Grupo();
-        $resultset= $objGrupos->getGrupos();
+        $resultset= $objGrupos->getGrupos();        
          while($row = $resultset->fetch_assoc()) { 
 
              $cuerpo.= generadorTablaFilas(array(
