@@ -82,11 +82,11 @@ WHERE ((MONTH(t0.detalleprecobro_fechavencimiento) = mes) AND (YEAR(t0.detallepr
 
 	*/
 
-$sql="SELECT MAX(t0.detalleprecobro_valor) AS total
+$sql="SELECT MAX(t0.precobro_valor) AS total
 
-FROM detallepresupuestocobro AS t0
+FROM presupuestocobro AS t0
 
-WHERE ((MONTH(t0.detalleprecobro_fechavencimiento) = '$month') AND (YEAR(t0.detalleprecobro_fechavencimiento) = '$year'))";
+WHERE (t0.precobro_year = '$year')";
 
 }
 
