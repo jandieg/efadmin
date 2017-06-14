@@ -558,6 +558,11 @@ if (strlen(trim(get_Monthly_Payment($row['mie_id'],$year))) > 0) {
 } else {
     $dues = false;
 }
+if (strlen(trim(get_Monthly_Payment($row['mie_id'],$nextyear))) > 0) {
+    $duesnextyear = true;
+} else {
+    $duesnextyear = false;
+}
 $objPHPExcel->getActiveSheet()->setCellValue('F'.$i, get_Monthly_Payment($row['mie_id'],$year));
 $objPHPExcel->getActiveSheet()->getStyle('F'.$i)->getAlignment()->setWrapText(true);
 $this_status_member=get_status_info($row['status_member_id']);
@@ -589,9 +594,15 @@ $color='CCCCCC';
 $g_color='CCCCCC';
 }
 
+$color_ny = $color;
+$g_color_ny= $g_color;
 if (! $dues && $this_status_member != "MS") {
     $color='CCCCCC';
     $g_color='CCCCCC';
+    if (! $duesnextyear) {
+        $color_ny = "CCCCCC";
+        $g_color_ny = "CCCCCC";
+    }
 }
 
 
@@ -613,7 +624,7 @@ $objPHPExcel->getActiveSheet()->getStyle('G'.$i)->getFill()->applyFromArray(arra
  $objPHPExcel->getActiveSheet()->getStyle('U'.$i.':'.'X'.$i)->getFill()->applyFromArray(array(
         'type' => PHPExcel_Style_Fill::FILL_SOLID,
         'startcolor' => array(
-             'rgb' => $color
+             'rgb' => $color_ny
         )
     ));
   /*$objPHPExcel->getActiveSheet()->getStyle('U'.$i.':'.'Z'.$i)->getFill()->applyFromArray(array(
@@ -653,13 +664,12 @@ if(($first_FM_m=='08')&&($first_FM_y==$year)){$x1='H'; $x2='N';    $ins_color=$C
 if(($first_FM_m=='09')&&($first_FM_y==$year)){$x1='H'; $x2='O';    $ins_color=$COLOR1; }else
 if(($first_FM_m=='10')&&($first_FM_y==$year)){$x1='H'; $x2='P';    $ins_color=$COLOR1; }else
 if(($first_FM_m=='11')&&($first_FM_y==$year)){$x1='H'; $x2='Q';    $ins_color=$COLOR1; }else
-if(($first_FM_m=='12')&&($first_FM_y==$year)){$x1='H'; $x2='R';    $ins_color=$COLOR1; }else{$x1='H'; $x2='S';  $ins_color=''; }
+if(($first_FM_m=='12')&&($first_FM_y==$year)){$x1='H'; $x2='R';    $ins_color=$COLOR1; }else{ $x1='H'; $x2='S';  $ins_color='';}
 
 
 
 if ($dues) {
-if($ins_color){
-
+if ($ins_color) {
     
 	 $objPHPExcel->getActiveSheet()->getStyle($x1.$i.':'.$x2.$i)->getFill()->applyFromArray(array(
         'type' => PHPExcel_Style_Fill::FILL_SOLID,
@@ -774,12 +784,12 @@ if($ins_color){
         ));
 
 
-        $objPHPExcel->getActiveSheet()->getStyle($xx1.$i.':'.$xx2.$i)->getFill()->applyFromArray(array(
+        /*$objPHPExcel->getActiveSheet()->getStyle($xx1.$i.':'.$xx2.$i)->getFill()->applyFromArray(array(
             'type' => PHPExcel_Style_Fill::FILL_SOLID,
             'startcolor' => array(
                 'rgb' => $COLOR1
             )
-        ));
+        ));*/
     } else {
         $objPHPExcel->getActiveSheet()->getStyle($x1.$i.':'.$x2.$i)->getFill()->applyFromArray(array(
             'type' => PHPExcel_Style_Fill::FILL_SOLID,
@@ -787,13 +797,13 @@ if($ins_color){
                 'rgb' => $COLOR3
             )
         ));
-
+/*
         $objPHPExcel->getActiveSheet()->getStyle($xx1.$i.':'.$xx2.$i)->getFill()->applyFromArray(array(
             'type' => PHPExcel_Style_Fill::FILL_SOLID,
             'startcolor' => array(
                 'rgb' => $COLOR3
             )
-        ));
+        ));*/
     }
 }
 
@@ -815,7 +825,7 @@ if(($first_FM_m=='11')&&($first_FM_y==$nextyear)){ $xx1='U'; $xx2='AD'; $ins_col
 if(($first_FM_m=='12')&&($first_FM_y==$nextyear)){ $xx1='U'; $xx2='AE'; $ins_color2=$COLOR1; }else { $xx1='U'; $xx2='AF'; $ins_color2=''; }*/
 
 	
-	if ($dues) {
+	if ($duesnextyear) {
 
     
 if($ins_color2){
