@@ -212,10 +212,9 @@ include("../../incluidos/db_config/config.php");
 
 		if($type=='ins'){
 
-		$sql_date=$row['mie_ins_fecharegistro'];
-		if ( substr($row['mie_ins_fecharegistro'],0,10) == "2000-01-01") {
-			$data = '-';
-			
+		$sql_date=$row['mie_ins_fecha_ingreso'];
+		if ( substr($row['mie_ins_fecha_ingreso'],0,10) == "2000-01-01") {
+			$data = '-';			
 		} else {
 			$data = convert_datetime($sql_date,'literal');
 		}
@@ -223,7 +222,7 @@ include("../../incluidos/db_config/config.php");
 
 		}else if($type=='ins_month'){
 
-		$str=strtotime($row['mie_ins_fecharegistro']);
+		$str=strtotime($row['mie_ins_fecha_ingreso']);
 
 		$month =  date('m', $str);
 
@@ -231,7 +230,7 @@ include("../../incluidos/db_config/config.php");
 
 		}else if($type=='ins_year'){
 
-		$str=strtotime($row['mie_ins_fecharegistro']);
+		$str=strtotime($row['mie_ins_fecha_ingreso']);
 
 		$year =  date('Y', $str);
 
