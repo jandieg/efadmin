@@ -213,14 +213,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         switch ($_POST['KEY']): 
 
             case 'KEY_DETALLE_FILTRO':
-                if(!empty($_POST['_id_grupos']) && !empty($_POST['_id_tipo_evento'])&& !empty($_POST['_tipo_asistencia']) ){ 
+                if(!empty($_POST['_id_grupos']) && !empty($_POST['_id_tipo_evento']) ){ 
                     $fecha_inicio = getPrimerDiaMes($_POST['_año'],'1');
                     $fecha_fin= getUltimoDiaMes($_POST['_año'],'12');
-                    if ($_POST['_tipo_asistencia'] == "3") {
+                    /*if ($_POST['_tipo_asistencia'] == "3") {
                          echo getCasos($_POST['_id_tipo_evento'], $_POST['_id_grupos'], $fecha_inicio, $fecha_fin);
-                    }else{
+                    }else{*/
                         echo getAsistencia($_POST['_id_tipo_evento'], $_POST['_id_grupos'], $fecha_inicio, $fecha_fin);
-                    }
+                    //}
                     
                     exit();            
                 }
@@ -297,6 +297,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 }
 
             break;
+
+            case 'KEY_FILTRO_TIPO_EVENTO':
+                if(!empty($_POST['_tipo_evento'])){   
+                    
+                    $objTipoG= new Grupo();
+                    $listaGrupos= $objTipoG->getListaByTipoEvento($_POST['_tipo_evento']);                 
+                    $listaGrupos= generadorComboSelectOption("_grupos", "",$listaGrupos); 
+                    echo $listaGrupos; 
+                    
+                
+                }  else {
+                    $data = array("success" => "false", "priority"=>'info', "msg" => 'El combo no tiene datos!');  
+                    echo json_encode($data); 
+                }
+
+            break;
                  
                  
         endswitch;    
@@ -305,17 +321,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
      exit(); 
 }
 if (in_array($perVerTodosFiltrosAsistenciaOp17, $_SESSION['usu_permiso'])) {
+    
     //$lista['lista_']=array("value" => "x",  "select" => "" ,"texto" => "Seleccione...");
     
     $objGrupo= new Grupo();
     $listaGrupos= $objGrupo->getListaGrupos2($objGrupo->getPrimerGrupo(),NULL);
     
  }  elseif (in_array($perVerFiltrosIDForumAsistenciaOp17, $_SESSION['usu_permiso'])) {
+     
     //$lista['lista_']=array("value" => "x",  "select" => "" ,"texto" => "Seleccione...");
     
     $objGrupo= new Grupo();
     $listaGrupos= $objGrupo->getListaGruposForum($_SESSION['user_id_ben'], NULL,NULL);
  }
+ 
     $objTipoE= new TipoEvento();
     $listaEventos= $objTipoE->getLista(NULL,NULL,'', '');
     
@@ -334,7 +353,7 @@ function getTablaFiltro($listaEventos= array(), $listaGrupos= array() , $tabla) 
     
     //$form2['form_1'] = array("elemento" => "caja" ,"disabled" => "","tipo" => "date" , "titulo" => "Fecha Inicio", "id" => "_fi" ,"reemplazo" => "");
     //$form3['form_1'] = array("elemento" => "caja" ,"disabled" => "","tipo" => "date" , "titulo" => "Fecha Fin", "id" => "_ff" ,"reemplazo" => "");    
-    $form4['form_1'] = array("elemento" => "combo","disabled" => "","change" => "","titulo" => "Tipos Eventos", "id" => "_tipos_eventos", "option" => $listaEventos); 
+    $form4['form_1'] = array("elemento" => "combo","disabled" => "","change" => "getGrupos()","titulo" => "Tipos Eventos", "id" => "_tipos_eventos", "option" => $listaEventos); 
     $resultado = str_replace("{contenedor_1}", generadorEtiquetaVVertical2($form4),  getPage('page_cuerpo'));     
     $resultado = str_replace("{contenedor_2}", generadorEtiquetaVVertical2($form1), $resultado); 
     $resultado = str_replace("{contenedor_3}", "", $resultado); 

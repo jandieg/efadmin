@@ -132,6 +132,23 @@ class Grupo extends Conexion{
        }
         return $listaGrupos;
     }
+
+    public function getGrupoByTipoEvento($tipo_evento_id) {
+        $sql="call sp_selectGrupoByTipoEvento('$tipo_evento_id')";
+        return parent::getConsultar($sql);   
+    }
+
+    public function getListaByTipoEvento($tipo_evento_id) {
+        $resultset = $this->getGrupoByTipoEvento($tipo_evento_id);
+
+        $listaGrupos = array();
+        while($row = $resultset->fetch_assoc()) { 
+            $listaGrupos['lista_'.$row['gru_id']] = array( "value" => $row['gru_id'],  "select" => "" ,"texto" => $row['gru_descripcion']);
+        
+            if($this->primerGrupo == ''){  $this->primerGrupo=$row['gru_id'];  }
+        }
+        return $listaGrupos;
+    }
    public function getListaGrupos2($idSeleccionado='', $listaGrupos=array()) {   
         $resultset= $this->getGrupos();
         

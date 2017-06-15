@@ -1,4 +1,5 @@
 <script> 
+
 var goToImprimir = function(){
     var _name_grupo = $("#_grupos option:selected").text();
     var _name_tipo_evento = $("#_tipos_eventos option:selected").text();
@@ -23,6 +24,23 @@ var getEventosPeriodos = function(){
          });              
 };
 
+var getGrupos = function(){
+    var parametros = {
+        KEY: 'KEY_FILTRO_TIPO_EVENTO',
+        _tipo_evento: $("#_tipos_eventos").val().toString()
+    };
+    
+    $.ajax({
+        data: parametros,
+        url: 'asistencia',
+        type: 'post',
+        success: function (mensaje) {
+            $("#_grupos").html(mensaje);
+        }
+    });
+       
+};
+
 var getDetalleFiltro = function(){
 //    alert('dfsf');
         var parametros = {
@@ -31,8 +49,8 @@ var getDetalleFiltro = function(){
 //            _fi: $("#_fi").val().toString(),
 //            _ff: $("#_ff").val().toString(),
             _año:$("#_año").val().toString(),
-            _id_tipo_evento: $("#_tipos_eventos").val().toString(),
-            _tipo_asistencia:$("#_tipo_asistencia").val().toString()
+            _id_tipo_evento: $("#_tipos_eventos").val().toString()
+            //_tipo_asistencia:$("#_tipo_asistencia").val().toString()
         };
         $.ajax({
             data:  parametros,
@@ -130,6 +148,7 @@ var getDetalleEvento = function(_nombre, _responsable, _fi, _ff, _direccion, _de
 var getRecargar = function(){
     location.reload();
 };
+window.onload = getGrupos;
 
 </script>
 
