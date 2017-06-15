@@ -1385,9 +1385,13 @@ FROM miembro_inscripcion AS t0
 
 LEFT OUTER JOIN miembro AS t1 ON(t1.mie_id = t0.miembro_id)
 
+JOIN grupos AS t2 ON (t2.gru_id = t1.grupo_id)
+
 WHERE(((t1.status_member_id = '$status')
 
 AND(t0.mie_ins_fecha_ingreso <= '$xmonth')) 
+
+AND(t2.agrup not in ('C'))
 
 AND((t1.status_member_id <> 2) AND (t1.categoria_cat_id<>4) OR(t1.mie_fecha_cambio_status >=$fmonth)))
 
@@ -1403,9 +1407,13 @@ FROM miembro_inscripcion AS t0
 
 LEFT OUTER JOIN miembro AS t1 ON(t1.mie_id = t0.miembro_id)
 
+JOIN grupos AS t2 ON (t2.gru_id = t1.grupo_id)
+
 WHERE(((t1.status_member_id = '$status')
 
 AND(t0.mie_ins_fecha_ingreso <= '$xmonth')) 
+
+AND(t2.agrup not in ('C'))
 
 AND((t1.status_member_id <> 2) OR(t1.mie_fecha_cambio_status >=$fmonth)))
 
