@@ -239,7 +239,7 @@ include("../../incluidos/db_config/config.php");
 		}else{
 
 		$sql_date=$row['mie_ins_fecha_cobro'];
-		if (substr($sql_date,0,10) == "2000-01-01") {
+		if (substr($sql_date,0,10) == "2000-01-01" || $row['estado_cobro_id'] == 1) {
 			$data = "-";
 		} else {
 			$data = convert_datetime($sql_date,'literal');
