@@ -2155,7 +2155,7 @@ $c++;
 $CM=date('m');
 $CY=date('Y');
 //Removing and Computing Next Year
-$del = (44 - $CM)-3 ;
+$del = (44 - $CM)-2 ;
 if($CY==$year){
 
 for($i = 26; $i <= 44; $i++) {
