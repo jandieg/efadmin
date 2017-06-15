@@ -825,7 +825,7 @@ if(($first_FM_m=='11')&&($first_FM_y==$nextyear)){ $xx1='U'; $xx2='AD'; $ins_col
 if(($first_FM_m=='12')&&($first_FM_y==$nextyear)){ $xx1='U'; $xx2='AE'; $ins_color2=$COLOR1; }else { $xx1='U'; $xx2='AF'; $ins_color2=''; }*/
 
 	
-	if ($duesnextyear) {
+	if ($duesnextyear || $dues) {
 
     
 if($ins_color2){
@@ -851,7 +851,7 @@ if($ins_color2){
 	
 }
 
-} else {
+} else  {
     if ($this_status_member != "MS") {        
 
         $objPHPExcel->getActiveSheet()->getStyle($xx1.$i.':'.$xx2.$i)->getFill()->applyFromArray(array(
@@ -870,8 +870,7 @@ if($ins_color2){
         ));
     }
 
-}
-
+} 
 	
 		
 		  
