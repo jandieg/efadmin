@@ -518,7 +518,11 @@ $objPHPExcel->setActiveSheetIndex($xSheet);
 $objPHPExcel->getActiveSheet();
 $s="SELECT * FROM grupos WHERE sede_id='$sedeid'";
 $r = mysqli_query($con,$s);
+$curagrup = "";
+$totalagrup = array();
 while($xrow = mysqli_fetch_array($r)) {
+    $curagrup = $xrow['agrup'];
+    $totalagrup[$curagrup]['sheet'] = $xSheet; //guardo el ultimo index de cada grupo.    
 $objPHPExcel->setActiveSheetIndex($xSheet);
 
 $objPHPExcel->getActiveSheet()->setCellValue('D3', $xrow['gru_descripcion']);
@@ -1762,6 +1766,12 @@ $objPHPExcel->getActiveSheet()->setCellValue('U'.$final_count, "=SUM(U8:U".($fin
 $objPHPExcel->getActiveSheet()->setCellValue('V'.$final_count, "=SUM(V8:V".($final_count-2).")");
 $objPHPExcel->getActiveSheet()->setCellValue('W'.$final_count, "=SUM(W8:W".($final_count-2).")");
 $objPHPExcel->getActiveSheet()->setCellValue('X'.$final_count, "=SUM(X8:X".($final_count-2).")");
+
+
+
+
+
+
 /*$objPHPExcel->getActiveSheet()->setCellValue('Y'.$final_count, "=SUM(Y8:Y".($final_count-2).")");
 $objPHPExcel->getActiveSheet()->setCellValue('Z'.$final_count, "=SUM(Z8:Z".($final_count-2).")");
 $objPHPExcel->getActiveSheet()->setCellValue('AA'.$final_count, "=SUM(AA8:AA".($final_count-2).")");
@@ -1771,6 +1781,144 @@ $objPHPExcel->getActiveSheet()->setCellValue('AD'.$final_count, "=SUM(AD8:AD".($
 $objPHPExcel->getActiveSheet()->setCellValue('AE'.$final_count, "=SUM(AE8:AE".($final_count-2).")");
 $objPHPExcel->getActiveSheet()->setCellValue('AF'.$final_count, "=SUM(AF8:AF".($final_count-2).")");
 */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//NEXT YEAR//
+
+$proxfila = intval($final_count)+1;
+$totalagrup[$curagrup]['G']['pos'] = 'G'.$proxfila;
+$totalagrup[$curagrup]['G']['value'] = "Totals: ";
+$totalagrup[$curagrup]['H']['pos'] = 'H'.$proxfila;
+$totalagrup[$curagrup]['I']['pos'] = 'I'.$proxfila;
+$totalagrup[$curagrup]['J']['pos'] = 'J'.$proxfila;
+$totalagrup[$curagrup]['K']['pos'] = 'K'.$proxfila;
+$totalagrup[$curagrup]['L']['pos'] = 'L'.$proxfila;
+$totalagrup[$curagrup]['M']['pos'] = 'M'.$proxfila;
+$totalagrup[$curagrup]['N']['pos'] = 'N'.$proxfila;
+$totalagrup[$curagrup]['O']['pos'] = 'O'.$proxfila;
+$totalagrup[$curagrup]['P']['pos'] = 'P'.$proxfila;
+$totalagrup[$curagrup]['Q']['pos'] = 'Q'.$proxfila;
+$totalagrup[$curagrup]['R']['pos'] = 'R'.$proxfila;
+$totalagrup[$curagrup]['S']['pos'] = 'S'.$proxfila;
+$totalagrup[$curagrup]['T']['pos'] = 'T'.$proxfila;
+$totalagrup[$curagrup]['U']['pos'] = 'U'.$proxfila;
+$totalagrup[$curagrup]['V']['pos'] = 'V'.$proxfila;
+$totalagrup[$curagrup]['W']['pos'] = 'W'.$proxfila;
+$totalagrup[$curagrup]['X']['pos'] = 'X'.$proxfila;
+
+if (strlen($totalagrup[$curagrup]['H']['value'])) {
+    $totalagrup[$curagrup]['H']['value'] += $objPHPExcel->getActiveSheet()->getCell('H'.$final_count)->getCalculatedValue();
+} else {
+    $totalagrup[$curagrup]['H']['value'] = $objPHPExcel->getActiveSheet()->getCell('H'.$final_count)->getCalculatedValue();
+}
+
+if (strlen($totalagrup[$curagrup]['I']['value'])) {
+    $totalagrup[$curagrup]['I']['value'] += $objPHPExcel->getActiveSheet()->getCell('I'.$final_count)->getCalculatedValue();
+} else {
+    $totalagrup[$curagrup]['I']['value'] = $objPHPExcel->getActiveSheet()->getCell('I'.$final_count)->getCalculatedValue();
+}
+
+if (strlen($totalagrup[$curagrup]['J']['value'])) {
+    $totalagrup[$curagrup]['J']['value'] += $objPHPExcel->getActiveSheet()->getCell('J'.$final_count)->getCalculatedValue();
+} else {
+    $totalagrup[$curagrup]['J']['value'] = $objPHPExcel->getActiveSheet()->getCell('J'.$final_count)->getCalculatedValue();
+}
+
+if (strlen($totalagrup[$curagrup]['K']['value'])) {
+    $totalagrup[$curagrup]['K']['value'] += $objPHPExcel->getActiveSheet()->getCell('K'.$final_count)->getCalculatedValue();
+} else {
+    $totalagrup[$curagrup]['K']['value'] = $objPHPExcel->getActiveSheet()->getCell('K'.$final_count)->getCalculatedValue();
+}
+
+if (strlen($totalagrup[$curagrup]['L']['value'])) {
+    $totalagrup[$curagrup]['L']['value'] += $objPHPExcel->getActiveSheet()->getCell('L'.$final_count)->getCalculatedValue();
+} else {
+    $totalagrup[$curagrup]['L']['value'] = $objPHPExcel->getActiveSheet()->getCell('L'.$final_count)->getCalculatedValue();
+}
+
+if (strlen($totalagrup[$curagrup]['M']['value'])) {
+    $totalagrup[$curagrup]['M']['value'] += $objPHPExcel->getActiveSheet()->getCell('M'.$final_count)->getCalculatedValue();
+} else {
+    $totalagrup[$curagrup]['M']['value'] = $objPHPExcel->getActiveSheet()->getCell('M'.$final_count)->getCalculatedValue();
+}
+
+if (strlen($totalagrup[$curagrup]['N']['value'])) {
+    $totalagrup[$curagrup]['N']['value'] += $objPHPExcel->getActiveSheet()->getCell('N'.$final_count)->getCalculatedValue();
+} else {
+    $totalagrup[$curagrup]['N']['value'] = $objPHPExcel->getActiveSheet()->getCell('N'.$final_count)->getCalculatedValue();
+}
+
+if (strlen($totalagrup[$curagrup]['O']['value'])) {
+    $totalagrup[$curagrup]['O']['value'] += $objPHPExcel->getActiveSheet()->getCell('O'.$final_count)->getCalculatedValue();
+} else {
+    $totalagrup[$curagrup]['O']['value'] = $objPHPExcel->getActiveSheet()->getCell('O'.$final_count)->getCalculatedValue();
+}
+
+if (strlen($totalagrup[$curagrup]['P']['value'])) {
+    $totalagrup[$curagrup]['P']['value'] += $objPHPExcel->getActiveSheet()->getCell('P'.$final_count)->getCalculatedValue();
+} else {
+    $totalagrup[$curagrup]['P']['value'] = $objPHPExcel->getActiveSheet()->getCell('P'.$final_count)->getCalculatedValue();
+}
+
+if (strlen($totalagrup[$curagrup]['Q']['value'])) {
+    $totalagrup[$curagrup]['Q']['value'] += $objPHPExcel->getActiveSheet()->getCell('Q'.$final_count)->getCalculatedValue();
+} else {
+    $totalagrup[$curagrup]['Q']['value'] = $objPHPExcel->getActiveSheet()->getCell('Q'.$final_count)->getCalculatedValue();
+}
+
+if (strlen($totalagrup[$curagrup]['R']['value'])) {
+    $totalagrup[$curagrup]['R']['value'] += $objPHPExcel->getActiveSheet()->getCell('R'.$final_count)->getCalculatedValue();
+} else {
+    $totalagrup[$curagrup]['R']['value'] = $objPHPExcel->getActiveSheet()->getCell('R'.$final_count)->getCalculatedValue();
+}
+
+if (strlen($totalagrup[$curagrup]['S']['value'])) {
+    $totalagrup[$curagrup]['S']['value'] += $objPHPExcel->getActiveSheet()->getCell('S'.$final_count)->getCalculatedValue();
+} else {
+    $totalagrup[$curagrup]['S']['value'] = $objPHPExcel->getActiveSheet()->getCell('S'.$final_count)->getCalculatedValue();
+}
+
+if (strlen($totalagrup[$curagrup]['T']['value'])) {
+    $totalagrup[$curagrup]['T']['value'] += $objPHPExcel->getActiveSheet()->getCell('T'.$final_count)->getCalculatedValue();
+} else {
+    $totalagrup[$curagrup]['T']['value'] = $objPHPExcel->getActiveSheet()->getCell('T'.$final_count)->getCalculatedValue();
+}
+
+if (strlen($totalagrup[$curagrup]['U']['value'])) {
+    $totalagrup[$curagrup]['U']['value'] += $objPHPExcel->getActiveSheet()->getCell('U'.$final_count)->getCalculatedValue();
+} else {
+    $totalagrup[$curagrup]['U']['value'] = $objPHPExcel->getActiveSheet()->getCell('U'.$final_count)->getCalculatedValue();
+}
+
+if (strlen($totalagrup[$curagrup]['V']['value'])) {
+    $totalagrup[$curagrup]['V']['value'] += $objPHPExcel->getActiveSheet()->getCell('V'.$final_count)->getCalculatedValue();
+} else {
+    $totalagrup[$curagrup]['V']['value'] = $objPHPExcel->getActiveSheet()->getCell('V'.$final_count)->getCalculatedValue();
+}
+
+if (strlen($totalagrup[$curagrup]['W']['value'])) {
+    $totalagrup[$curagrup]['W']['value'] += $objPHPExcel->getActiveSheet()->getCell('W'.$final_count)->getCalculatedValue();
+} else {
+    $totalagrup[$curagrup]['W']['value'] = $objPHPExcel->getActiveSheet()->getCell('W'.$final_count)->getCalculatedValue();
+}
+
+if (strlen($totalagrup[$curagrup]['X']['value'])) {
+    $totalagrup[$curagrup]['X']['value'] += $objPHPExcel->getActiveSheet()->getCell('X'.$final_count)->getCalculatedValue();
+} else {
+    $totalagrup[$curagrup]['X']['value'] = $objPHPExcel->getActiveSheet()->getCell('X'.$final_count)->getCalculatedValue();
+}
 
 $objPHPExcel->getActiveSheet()->getStyle('H'.$final_count)->applyFromArray(
     array('borders' => array(
@@ -2044,6 +2192,198 @@ $objPHPExcel->getActiveSheet()->setTitle($sheetTitle);
 // Set active sheet index to the first sheet, so Excel opens this as the first sheet
 $objPHPExcel->setActiveSheetIndex($xSheet);
 $xSheet++;
+}
+foreach ($totalagrup as $t) {
+    $objPHPExcel->setActiveSheetIndex($t['sheet']);
+    $objPHPExcel->getActiveSheet()->setCellValue($t['G']['pos'], $t['G']['value']);
+    $objPHPExcel->getActiveSheet()->setCellValue($t['H']['pos'], $t['H']['value']);
+    $objPHPExcel->getActiveSheet()->setCellValue($t['I']['pos'], $t['I']['value']);
+    $objPHPExcel->getActiveSheet()->setCellValue($t['J']['pos'], $t['J']['value']);
+    $objPHPExcel->getActiveSheet()->setCellValue($t['K']['pos'], $t['K']['value']);
+    $objPHPExcel->getActiveSheet()->setCellValue($t['L']['pos'], $t['L']['value']);
+    $objPHPExcel->getActiveSheet()->setCellValue($t['M']['pos'], $t['M']['value']);
+    $objPHPExcel->getActiveSheet()->setCellValue($t['N']['pos'], $t['N']['value']);
+    $objPHPExcel->getActiveSheet()->setCellValue($t['O']['pos'], $t['O']['value']);
+    $objPHPExcel->getActiveSheet()->setCellValue($t['P']['pos'], $t['P']['value']);
+    $objPHPExcel->getActiveSheet()->setCellValue($t['Q']['pos'], $t['Q']['value']);
+    $objPHPExcel->getActiveSheet()->setCellValue($t['R']['pos'], $t['R']['value']);
+    $objPHPExcel->getActiveSheet()->setCellValue($t['S']['pos'], $t['S']['value']);
+    $objPHPExcel->getActiveSheet()->setCellValue($t['T']['pos'], $t['T']['value']);
+    $objPHPExcel->getActiveSheet()->setCellValue($t['U']['pos'], $t['U']['value']);
+    $objPHPExcel->getActiveSheet()->setCellValue($t['V']['pos'], $t['V']['value']);
+    $objPHPExcel->getActiveSheet()->setCellValue($t['W']['pos'], $t['W']['value']);
+    $objPHPExcel->getActiveSheet()->setCellValue($t['X']['pos'], $t['X']['value']);
+
+    $objPHPExcel->getActiveSheet()->getStyle($t['H']['pos'])->applyFromArray(
+        array('borders' => array(
+            'bottom'    => array('style' =>PHPExcel_Style_Border::BORDER_MEDIUM),
+            'right'     => array('style' =>PHPExcel_Style_Border::BORDER_MEDIUM),
+            'left'      => array('style' =>PHPExcel_Style_Border::BORDER_MEDIUM),
+            'top'       => array('style' =>PHPExcel_Style_Border::BORDER_MEDIUM)
+            )
+        )
+    );
+    
+    $objPHPExcel->getActiveSheet()->getStyle($t['I']['pos'])->applyFromArray(
+        array('borders' => array(
+            'bottom'    => array('style' =>PHPExcel_Style_Border::BORDER_MEDIUM),
+            'right'     => array('style' =>PHPExcel_Style_Border::BORDER_MEDIUM),
+            'left'      => array('style' =>PHPExcel_Style_Border::BORDER_MEDIUM),
+            'top'       => array('style' =>PHPExcel_Style_Border::BORDER_MEDIUM)
+            )
+        )
+    );
+    
+    $objPHPExcel->getActiveSheet()->getStyle($t['J']['pos'])->applyFromArray(
+        array('borders' => array(
+            'bottom'    => array('style' =>PHPExcel_Style_Border::BORDER_MEDIUM),
+            'right'     => array('style' =>PHPExcel_Style_Border::BORDER_MEDIUM),
+            'left'      => array('style' =>PHPExcel_Style_Border::BORDER_MEDIUM),
+            'top'       => array('style' =>PHPExcel_Style_Border::BORDER_MEDIUM)
+            )
+        )
+    );
+    
+    $objPHPExcel->getActiveSheet()->getStyle($t['K']['pos'])->applyFromArray(
+        array('borders' => array(
+            'bottom'    => array('style' =>PHPExcel_Style_Border::BORDER_MEDIUM),
+            'right'     => array('style' =>PHPExcel_Style_Border::BORDER_MEDIUM),
+            'left'      => array('style' =>PHPExcel_Style_Border::BORDER_MEDIUM),
+            'top'       => array('style' =>PHPExcel_Style_Border::BORDER_MEDIUM)
+            )
+        )
+    );
+    
+    $objPHPExcel->getActiveSheet()->getStyle($t['L']['pos'])->applyFromArray(
+        array('borders' => array(
+            'bottom'    => array('style' =>PHPExcel_Style_Border::BORDER_MEDIUM),
+            'right'     => array('style' =>PHPExcel_Style_Border::BORDER_MEDIUM),
+            'left'      => array('style' =>PHPExcel_Style_Border::BORDER_MEDIUM),
+            'top'       => array('style' =>PHPExcel_Style_Border::BORDER_MEDIUM)
+            )
+        )
+    );
+    
+    $objPHPExcel->getActiveSheet()->getStyle($t['M']['pos'])->applyFromArray(
+        array('borders' => array(
+            'bottom'    => array('style' =>PHPExcel_Style_Border::BORDER_MEDIUM),
+            'right'     => array('style' =>PHPExcel_Style_Border::BORDER_MEDIUM),
+            'left'      => array('style' =>PHPExcel_Style_Border::BORDER_MEDIUM),
+            'top'       => array('style' =>PHPExcel_Style_Border::BORDER_MEDIUM)
+            )
+        )
+    );
+    
+    $objPHPExcel->getActiveSheet()->getStyle($t['N']['pos'])->applyFromArray(
+        array('borders' => array(
+            'bottom'    => array('style' =>PHPExcel_Style_Border::BORDER_MEDIUM),
+            'right'     => array('style' =>PHPExcel_Style_Border::BORDER_MEDIUM),
+            'left'      => array('style' =>PHPExcel_Style_Border::BORDER_MEDIUM),
+            'top'       => array('style' =>PHPExcel_Style_Border::BORDER_MEDIUM)
+            )
+        )
+    );
+    
+    $objPHPExcel->getActiveSheet()->getStyle($t['O']['pos'])->applyFromArray(
+        array('borders' => array(
+            'bottom'    => array('style' =>PHPExcel_Style_Border::BORDER_MEDIUM),
+            'right'     => array('style' =>PHPExcel_Style_Border::BORDER_MEDIUM),
+            'left'      => array('style' =>PHPExcel_Style_Border::BORDER_MEDIUM),
+            'top'       => array('style' =>PHPExcel_Style_Border::BORDER_MEDIUM)
+            )
+        )
+    );
+    
+    $objPHPExcel->getActiveSheet()->getStyle($t['P']['pos'])->applyFromArray(
+        array('borders' => array(
+            'bottom'    => array('style' =>PHPExcel_Style_Border::BORDER_MEDIUM),
+            'right'     => array('style' =>PHPExcel_Style_Border::BORDER_MEDIUM),
+            'left'      => array('style' =>PHPExcel_Style_Border::BORDER_MEDIUM),
+            'top'       => array('style' =>PHPExcel_Style_Border::BORDER_MEDIUM)
+            )
+        )
+    );
+    
+    $objPHPExcel->getActiveSheet()->getStyle($t['Q']['pos'])->applyFromArray(
+        array('borders' => array(
+            'bottom'    => array('style' =>PHPExcel_Style_Border::BORDER_MEDIUM),
+            'right'     => array('style' =>PHPExcel_Style_Border::BORDER_MEDIUM),
+            'left'      => array('style' =>PHPExcel_Style_Border::BORDER_MEDIUM),
+            'top'       => array('style' =>PHPExcel_Style_Border::BORDER_MEDIUM)
+            )
+        )
+    );
+    
+    $objPHPExcel->getActiveSheet()->getStyle($t['R']['pos'])->applyFromArray(
+        array('borders' => array(
+            'bottom'    => array('style' =>PHPExcel_Style_Border::BORDER_MEDIUM),
+            'right'     => array('style' =>PHPExcel_Style_Border::BORDER_MEDIUM),
+            'left'      => array('style' =>PHPExcel_Style_Border::BORDER_MEDIUM),
+            'top'       => array('style' =>PHPExcel_Style_Border::BORDER_MEDIUM)
+            )
+        )
+    );
+    
+    $objPHPExcel->getActiveSheet()->getStyle($t['S']['pos'])->applyFromArray(
+        array('borders' => array(
+            'bottom'    => array('style' =>PHPExcel_Style_Border::BORDER_MEDIUM),
+            'right'     => array('style' =>PHPExcel_Style_Border::BORDER_MEDIUM),
+            'left'      => array('style' =>PHPExcel_Style_Border::BORDER_MEDIUM),
+            'top'       => array('style' =>PHPExcel_Style_Border::BORDER_MEDIUM)
+            )
+        )
+    );
+    
+    $objPHPExcel->getActiveSheet()->getStyle($t['T']['pos'])->applyFromArray(
+        array('borders' => array(
+            'bottom'    => array('style' =>PHPExcel_Style_Border::BORDER_MEDIUM),
+            'right'     => array('style' =>PHPExcel_Style_Border::BORDER_MEDIUM),
+            'left'      => array('style' =>PHPExcel_Style_Border::BORDER_MEDIUM),
+            'top'       => array('style' =>PHPExcel_Style_Border::BORDER_MEDIUM)
+            )
+        )
+    );
+    
+    $objPHPExcel->getActiveSheet()->getStyle($t['U']['pos'])->applyFromArray(
+        array('borders' => array(
+            'bottom'    => array('style' =>PHPExcel_Style_Border::BORDER_MEDIUM),
+            'right'     => array('style' =>PHPExcel_Style_Border::BORDER_MEDIUM),
+            'left'      => array('style' =>PHPExcel_Style_Border::BORDER_MEDIUM),
+            'top'       => array('style' =>PHPExcel_Style_Border::BORDER_MEDIUM)
+            )
+        )
+    );
+    
+    $objPHPExcel->getActiveSheet()->getStyle($t['V']['pos'])->applyFromArray(
+        array('borders' => array(
+            'bottom'    => array('style' =>PHPExcel_Style_Border::BORDER_MEDIUM),
+            'right'     => array('style' =>PHPExcel_Style_Border::BORDER_MEDIUM),
+            'left'      => array('style' =>PHPExcel_Style_Border::BORDER_MEDIUM),
+            'top'       => array('style' =>PHPExcel_Style_Border::BORDER_MEDIUM)
+            )
+        )
+    );
+    
+    $objPHPExcel->getActiveSheet()->getStyle($t['W']['pos'])->applyFromArray(
+        array('borders' => array(
+            'bottom'    => array('style' =>PHPExcel_Style_Border::BORDER_MEDIUM),
+            'right'     => array('style' =>PHPExcel_Style_Border::BORDER_MEDIUM),
+            'left'      => array('style' =>PHPExcel_Style_Border::BORDER_MEDIUM),
+            'top'       => array('style' =>PHPExcel_Style_Border::BORDER_MEDIUM)
+            )
+        )
+    );
+    
+    $objPHPExcel->getActiveSheet()->getStyle($t['X']['pos'])->applyFromArray(
+        array('borders' => array(
+            'bottom'    => array('style' =>PHPExcel_Style_Border::BORDER_MEDIUM),
+            'right'     => array('style' =>PHPExcel_Style_Border::BORDER_MEDIUM),
+            'left'      => array('style' =>PHPExcel_Style_Border::BORDER_MEDIUM),
+            'top'       => array('style' =>PHPExcel_Style_Border::BORDER_MEDIUM)
+            )
+        )
+    );
+    
 }
 
 unset($xSheet);

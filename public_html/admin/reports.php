@@ -1153,10 +1153,9 @@ $year = $_REQUEST['year'];
 $group = $_REQUEST['group'];
 $sede_id=$_SESSION['sede_id'];
 $email=$_SESSION['user_correo'];
-$corte = "0";
-if (isset($_REQUEST['fechacorte'])) {
-	$corte = $_REQUEST['fechacorte'];
-}
+
+$corte = $_REQUEST['fechacorte'];
+
 
 //exec("php /public_html/admin/cron/sendEmail.php");
 /*
