@@ -39,10 +39,11 @@ function generadorEtiquetasFiltro($tab=array()){
             $msg.='</div>'; 
         }  
         if($valor['elemento']=='caja'){
+            $msg.='<div class="external-events">';
             $msg.='<div class="form-group">';             
-            $msg.='<div class="col-sm-9">'; 
+            $msg.='<label>'.$valor['titulo'].'</label>'; 
             $msg.='<input type="'.$valor['tipo'].'" class="form-control" id="'.$valor['id'].'" placeholder="'.$valor['titulo'].'" required="required" value="'.$valor['reemplazo'].'">'; 
-            $msg.=' </div>'; 
+            $msg.='</div>';            
             $msg.='</div>';            
         }
         if($valor['elemento']=='lista'){

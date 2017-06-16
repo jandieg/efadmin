@@ -22,18 +22,7 @@
         <div class="col-xs-4">
             {contenedor_4}
         </div>
-      </div>
-      <div class="row">    
-        <div class="col-xs-4">
-            Fecha de Corte
-        </div>
-        <div class="col-xs-4">
-            
-        </div> 
-        <div class="col-xs-4">
-            
-        </div>
-      </div>
+      </div>      
       <div class="row">    
         <div class="col-xs-4">
             {contenedor_5}
