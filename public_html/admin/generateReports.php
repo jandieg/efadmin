@@ -672,18 +672,18 @@ $COLOR3='92D050';
 
 
 //Paiting FM //
-if(($first_FM_m=='01')&&($first_FM_y==$year)){$x1='H'; $x2='H';    $ins_color=$COLOR1; }else
-if(($first_FM_m=='02')&&($first_FM_y==$year)){$x1='H'; $x2='H';    $ins_color=$COLOR1; }else
-if(($first_FM_m=='03')&&($first_FM_y==$year)){$x1='H'; $x2='I';    $ins_color=$COLOR1; }else
-if(($first_FM_m=='04')&&($first_FM_y==$year)){$x1='H'; $x2='J';    $ins_color=$COLOR1; }else
-if(($first_FM_m=='05')&&($first_FM_y==$year)){$x1='H'; $x2='K';    $ins_color=$COLOR1; }else
-if(($first_FM_m=='06')&&($first_FM_y==$year)){$x1='H'; $x2='L';    $ins_color=$COLOR1; }else
-if(($first_FM_m=='07')&&($first_FM_y==$year)){$x1='H'; $x2='M';    $ins_color=$COLOR1; }else
-if(($first_FM_m=='08')&&($first_FM_y==$year)){$x1='H'; $x2='N';    $ins_color=$COLOR1; }else
-if(($first_FM_m=='09')&&($first_FM_y==$year)){$x1='H'; $x2='O';    $ins_color=$COLOR1; }else
-if(($first_FM_m=='10')&&($first_FM_y==$year)){$x1='H'; $x2='P';    $ins_color=$COLOR1; }else
-if(($first_FM_m=='11')&&($first_FM_y==$year)){$x1='H'; $x2='Q';    $ins_color=$COLOR1; }else
-if(($first_FM_m=='12')&&($first_FM_y==$year)){$x1='H'; $x2='R';    $ins_color=$COLOR1; }else{ $x1='H'; $x2='S';  $ins_color='';}
+if(($first_FM_m=='01')&&($first_FM_y==$year)){$x1='H'; $x2='H';    $ins_color='A6A6A6'; }else
+if(($first_FM_m=='02')&&($first_FM_y==$year)){$x1='H'; $x2='H';    $ins_color='A6A6A6'; }else
+if(($first_FM_m=='03')&&($first_FM_y==$year)){$x1='H'; $x2='I';    $ins_color='A6A6A6'; }else
+if(($first_FM_m=='04')&&($first_FM_y==$year)){$x1='H'; $x2='J';    $ins_color='A6A6A6'; }else
+if(($first_FM_m=='05')&&($first_FM_y==$year)){$x1='H'; $x2='K';    $ins_color='A6A6A6'; }else
+if(($first_FM_m=='06')&&($first_FM_y==$year)){$x1='H'; $x2='L';    $ins_color='A6A6A6'; }else
+if(($first_FM_m=='07')&&($first_FM_y==$year)){$x1='H'; $x2='M';    $ins_color='A6A6A6'; }else
+if(($first_FM_m=='08')&&($first_FM_y==$year)){$x1='H'; $x2='N';    $ins_color='A6A6A6'; }else
+if(($first_FM_m=='09')&&($first_FM_y==$year)){$x1='H'; $x2='O';    $ins_color='A6A6A6'; }else
+if(($first_FM_m=='10')&&($first_FM_y==$year)){$x1='H'; $x2='P';    $ins_color='A6A6A6'; }else
+if(($first_FM_m=='11')&&($first_FM_y==$year)){$x1='H'; $x2='Q';    $ins_color='A6A6A6'; }else
+if(($first_FM_m=='12')&&($first_FM_y==$year)){$x1='H'; $x2='R';    $ins_color='A6A6A6'; }else{ $x1='H'; $x2='S';  $ins_color='';}
 
 
 
@@ -828,10 +828,10 @@ if ($ins_color) {
 
 //Next Year//
 
-if(($first_FM_m=='01')&&($first_FM_y==$nextyear)){ $xx1='U'; $xx2='U';  $ins_color2=$COLOR1; }else
-if(($first_FM_m=='02')&&($first_FM_y==$nextyear)){ $xx1='U'; $xx2='U';  $ins_color2=$COLOR1; }else
-if(($first_FM_m=='03')&&($first_FM_y==$nextyear)){ $xx1='U'; $xx2='V';  $ins_color2=$COLOR1; }else
-if(($first_FM_m=='04')&&($first_FM_y==$nextyear)){ $xx1='U'; $xx2='W';  $ins_color2=$COLOR1; } else {
+if(($first_FM_m=='01')&&($first_FM_y==$nextyear)){ $xx1='U'; $xx2='U';  $ins_color2='A6A6A6'; }else
+if(($first_FM_m=='02')&&($first_FM_y==$nextyear)){ $xx1='U'; $xx2='U';  $ins_color2='A6A6A6'; }else
+if(($first_FM_m=='03')&&($first_FM_y==$nextyear)){ $xx1='U'; $xx2='V';  $ins_color2='A6A6A6'; }else
+if(($first_FM_m=='04')&&($first_FM_y==$nextyear)){ $xx1='U'; $xx2='W';  $ins_color2='A6A6A6'; } else {
     $xx1='U'; $xx2='X'; $ins_color2='';
 } /*else
 if(($first_FM_m=='05')&&($first_FM_y==$nextyear)){ $xx1='U'; $xx2='X';  $ins_color2=$COLOR1; }else
