@@ -1393,7 +1393,7 @@ AND(t0.mie_ins_fecha_ingreso <= '$xmonth'))
 
 AND(t2.agrup not in ('C'))
 
-AND((t1.status_member_id <> 2) AND (t1.categoria_cat_id<>4) OR(t1.mie_fecha_cambio_status >=$fmonth)))
+AND((t1.cancelled = 0) AND (t1.categoria_cat_id<>4) OR(t1.mie_fecha_cambio_status >=$fmonth)))
 
 ";
 
@@ -1673,7 +1673,7 @@ $fmonth=$year.'-'.$month.'-30';
 
 if(($category=='key')&&($type=='cancels')){
 
-$sql = "SELECT count(mie_id) AS sp_members FROM miembro WHERE mie_fecha_cambio_status >= '$xmonth' AND mie_fecha_cambio_status <='$fmonth' AND status_member_id='2' AND categoria_cat_id='4' AND YEAR(mie_fecha_cambio_status)='$year'";	
+$sql = "SELECT count(mie_id) AS sp_members FROM miembro WHERE mie_fecha_cambio_status >= '$xmonth' AND mie_fecha_cambio_status <='$fmonth' AND cancelled='1' AND categoria_cat_id='4' AND YEAR(mie_fecha_cambio_status)='$year'";	
 
 }
 
@@ -1695,7 +1695,7 @@ $sql = "SELECT count(mie_id) AS sp_members FROM miembro WHERE mie_fecha_cambio_s
 
 if(($category=='top')&&($type=='cancels')){
 
-$sql = "SELECT count(mie_id) AS sp_members FROM miembro WHERE mie_fecha_cambio_status >= '$xmonth' AND mie_fecha_cambio_status <='$fmonth' AND status_member_id='2' AND categoria_cat_id<>'4' AND YEAR(mie_fecha_cambio_status)='$year'";	
+$sql = "SELECT count(mie_id) AS sp_members FROM miembro WHERE mie_fecha_cambio_status >= '$xmonth' AND mie_fecha_cambio_status <='$fmonth' AND cancelled='1' AND categoria_cat_id<>'4' AND YEAR(mie_fecha_cambio_status)='$year'";	
 
 }
 
@@ -1821,7 +1821,7 @@ WHERE(((t1.status_member_id = '$status')
 
 AND(t0.mie_ins_fecha_ingreso <= '$xmonth')) 
 
-AND((t1.status_member_id <> 2) OR(t1.mie_fecha_cambio_status >=$fmonth)))
+AND((t1.cancelled = 0) OR(t1.mie_fecha_cambio_status >=$fmonth)))
 
 ";
 
@@ -1839,7 +1839,7 @@ WHERE(((t1.status_member_id = '$status')
 
 AND(t0.mie_ins_fecha_ingreso <= '$xmonth')) 
 
-AND((t1.status_member_id <> 2) OR(t1.mie_fecha_cambio_status >=$fmonth)))
+AND((t1.cancelled = 0) OR(t1.mie_fecha_cambio_status >=$fmonth)))
 
 AND (((t1.categoria_cat_id = 4)))
 
@@ -1861,7 +1861,7 @@ if(($type=='cancels')&&($cell=='N')){
 
 //$sql = "SELECT * FROM miembro WHERE mie_fecha_cambio_status >= '$xmonth' AND mie_fecha_cambio_status <='$fmonth' AND status_member_id='2'";	
 
-	$sql = "SELECT * FROM miembro WHERE mie_fecha_cambio_status BETWEEN '$xmonth' AND '$fmonth' AND status_member_id='2' AND categoria_cat_id<>'4' AND YEAR(mie_fecha_cambio_status)='$year'";
+	$sql = "SELECT * FROM miembro WHERE mie_fecha_cambio_status BETWEEN '$xmonth' AND '$fmonth' AND cancelled='1' AND categoria_cat_id<>'4' AND YEAR(mie_fecha_cambio_status)='$year'";
 
 
 

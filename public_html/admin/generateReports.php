@@ -445,7 +445,7 @@ $objPHPExcel->getActiveSheet()->getComment('Q'.$i)->setHeight("auto")->setWidth(
 $CM=date('m');
 $CY=date('Y');
 //Removing and Computing Next Year
-$del = 31 - $CM;
+$del = 32 - $CM;
 if($CY==$year){
 
 for($i = $del; $i <= 33; $i++) {
