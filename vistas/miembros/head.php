@@ -939,7 +939,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                      $listaFechaLetrasFaltantes="";
 
                      $fechaRegistroPresupuesto= date('Y-m-d',strtotime($_POST['_fecha_registro']));
-                     $fechaPrimerDia_Registro= getPrimerDiaMes(date("Y"), date('m',strtotime($_POST['_fecha_registro'])));
+                     if (date('Y') ==  date('Y',strtotime($_POST['_fecha_registro']))) {
+                        $fechaPrimerDia_Registro= getPrimerDiaMes(date("Y"), date('m',strtotime($_POST['_fecha_registro'])));
+                     } else {
+                         $fechaPrimerDia_Registro= getPrimerDiaMes(date("Y"), '01');
+                     }
+                     
 
                      for ($index = $periodoMeses; $index <= 12; $index = $index + $periodoMeses) {
 
