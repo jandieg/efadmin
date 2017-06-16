@@ -18,12 +18,13 @@ $userid=$_GET['userid'];
 $year=$_GET['year'];
 $sede_id=$_GET['sede_id'];
 $email=$_GET['email'];
+$corte= $_GET['corte'];
 //Running Report//
 
-generate_enrollment_fees($userid,$year,$sede_id,$email); //This function will run The 1st report//	
+generate_enrollment_fees($userid,$year,$sede_id,$email, $corte); //This function will run The 1st report//	
 //generate_Dues($userid,$year,$sede_id,$email); //This function will run The 1st report//	
 
-function generate_enrollment_fees($userid,$year,$sedeid,$email){
+function generate_enrollment_fees($userid,$year,$sedeid,$email, $corte){
 		include("../../incluidos/db_config/config.php");
 
 //$group = $_REQUEST['group'];
@@ -50,7 +51,7 @@ $objPHPExcel->getActiveSheet()->setCellValue('D3', $report_name_for_excel);
 $objPHPExcel->getActiveSheet()->setCellValue('A72', $nextyear);
 //Consulting DataBase
 for ($i = 1; $i <= 12; $i++) {
-$sql = "SELECT * FROM miembro_inscripcion WHERE MONTH(mie_ins_fecha_cobro)='$i' AND YEAR(mie_ins_fecha_cobro)='$year'"; // AND YEAR(mie_ins_fecha_ingreso)='$year'	
+$sql = "SELECT * FROM miembro_inscripcion WHERE MONTH(mie_ins_fecha_cobro)='$i' AND YEAR(mie_ins_fecha_cobro)='$year' and date(mie_ins_fecha_cobro) <= '$corte'"; // AND YEAR(mie_ins_fecha_ingreso)='$year'	
 $res = mysqli_query($con,$sql);
 //$row = mysqli_fetch_array($res);
 //$response["result"] = array();
@@ -122,7 +123,7 @@ $n++;
 //Computing Next Year//
 
 for ($i = 1; $i <= 4; $i++) {
-$sql = "SELECT * FROM miembro_inscripcion WHERE MONTH(mie_ins_fecha_cobro)='$i' AND YEAR(mie_ins_fecha_cobro)='$nextyear'";	
+$sql = "SELECT * FROM miembro_inscripcion WHERE MONTH(mie_ins_fecha_cobro)='$i' AND YEAR(mie_ins_fecha_cobro)='$nextyear' AND DATE(mie_ins_fecha_cobro) <= '$corte'";	
 $res = mysqli_query($con,$sql);
 //$row = mysqli_fetch_array($res);
 //$response["result"] = array();
@@ -252,11 +253,11 @@ $objWriter->save('./reportesgenerados/'.$report_name, __FILE__);
 $callEndTime = microtime(true);
 $callTime = $callEndTime - $callStartTime;
 
-generate_Memberships($userid,$year,$sedeid); //Generating 2nd Report//
+generate_Memberships($userid,$year,$sedeid, $corte); //Generating 2nd Report//
 }//END REPORT
 
 
-function generate_Memberships($userid,$year,$sedeid){
+function generate_Memberships($userid,$year,$sedeid, $corte){
 	include("../../incluidos/db_config/config.php");
 
 $nextyear=$year+1;
@@ -282,43 +283,43 @@ $objPHPExcel->getActiveSheet()->setCellValue('A21', $nextyear);
 //Getting MEmber status count
 //Status codes 1=acive 4=Sp 3=Scholar
 for ($i = 9; $i <= 20; $i++) {
-$objPHPExcel->getActiveSheet()->setCellValue('B'.$i, get_active_members('top',1,$year,$i,$report_country));
-$objPHPExcel->getActiveSheet()->setCellValue('C'.$i, get_active_members('top',4,$year,$i,$report_country));
-$objPHPExcel->getActiveSheet()->setCellValue('D'.$i, get_active_members('top',3,$year,$i,$report_country));
+$objPHPExcel->getActiveSheet()->setCellValue('B'.$i, get_active_members('top',1,$year,$i,$report_country, $corte));
+$objPHPExcel->getActiveSheet()->setCellValue('C'.$i, get_active_members('top',4,$year,$i,$report_country, $corte));
+$objPHPExcel->getActiveSheet()->setCellValue('D'.$i, get_active_members('top',3,$year,$i,$report_country, $corte));
 
-$B=get_active_members('top',1,$year,$i,$report_country);
-$C=get_active_members('top',4,$year,$i,$report_country);
-$D=get_active_members('top',3,$year,$i,$report_country);
+$B=get_active_members('top',1,$year,$i,$report_country, $corte);
+$C=get_active_members('top',4,$year,$i,$report_country, $corte);
+$D=get_active_members('top',3,$year,$i,$report_country, $corte);
 if($B>0){
-$objPHPExcel->getActiveSheet()->getComment('B'.$i)->setHeight("auto")->setWidth("200px")->getText()->createTextRun(comment_members('top',1,'B',$year,$i,$report_country)); 
+$objPHPExcel->getActiveSheet()->getComment('B'.$i)->setHeight("auto")->setWidth("200px")->getText()->createTextRun(comment_members('top',1,'B',$year,$i,$report_country, $corte)); 
 }
 if($C>0){
-$objPHPExcel->getActiveSheet()->getComment('C'.$i)->setHeight("auto")->setWidth("200px")->getText()->createTextRun(comment_members('top',4,'C',$year,$i,$report_country)); 
+$objPHPExcel->getActiveSheet()->getComment('C'.$i)->setHeight("auto")->setWidth("200px")->getText()->createTextRun(comment_members('top',4,'C',$year,$i,$report_country, $corte)); 
 }
 if($D>0){
-$objPHPExcel->getActiveSheet()->getComment('D'.$i)->setHeight("auto")->setWidth("200px")->getText()->createTextRun(comment_members('top',3,'D',$year,$i,$report_country)); 
+$objPHPExcel->getActiveSheet()->getComment('D'.$i)->setHeight("auto")->setWidth("200px")->getText()->createTextRun(comment_members('top',3,'D',$year,$i,$report_country, $corte)); 
 }
 
 }//end for
 
 
 for ($i = 9; $i <= 20; $i++) {
-$objPHPExcel->getActiveSheet()->setCellValue('G'.$i, get_active_members('executive',1,$year,$i,$report_country));
-$objPHPExcel->getActiveSheet()->setCellValue('H'.$i, get_active_members('executive',4,$year,$i,$report_country));
-$objPHPExcel->getActiveSheet()->setCellValue('I'.$i, get_active_members('executive',3,$year,$i,$report_country));
+$objPHPExcel->getActiveSheet()->setCellValue('G'.$i, get_active_members('executive',1,$year,$i,$report_country, $corte));
+$objPHPExcel->getActiveSheet()->setCellValue('H'.$i, get_active_members('executive',4,$year,$i,$report_country, $corte));
+$objPHPExcel->getActiveSheet()->setCellValue('I'.$i, get_active_members('executive',3,$year,$i,$report_country, $corte));
 
-$G=get_active_members('executive',1,$year,$i,$report_country);
-$H=get_active_members('executive',4,$year,$i,$report_country);
-$I=get_active_members('executive',3,$year,$i,$report_country);
+$G=get_active_members('executive',1,$year,$i,$report_country, $corte);
+$H=get_active_members('executive',4,$year,$i,$report_country, $corte);
+$I=get_active_members('executive',3,$year,$i,$report_country, $corte);
 
 if($G>0){
-$objPHPExcel->getActiveSheet()->getComment('G'.$i)->setHeight("auto")->setWidth("150px")->getText()->createTextRun(comment_members('executive',1,'G',$year,$i,$report_country)); 
+$objPHPExcel->getActiveSheet()->getComment('G'.$i)->setHeight("auto")->setWidth("150px")->getText()->createTextRun(comment_members('executive',1,'G',$year,$i,$report_country, $corte)); 
 }
 if($H>0){
-$objPHPExcel->getActiveSheet()->getComment('H'.$i)->setHeight("auto")->setWidth("150px")->getText()->createTextRun(comment_members('executive',4,'H',$year,$i,$report_country)); 
+$objPHPExcel->getActiveSheet()->getComment('H'.$i)->setHeight("auto")->setWidth("150px")->getText()->createTextRun(comment_members('executive',4,'H',$year,$i,$report_country, $corte)); 
 }
 if($I>0){
-$objPHPExcel->getActiveSheet()->getComment('I'.$i)->setHeight("auto")->setWidth("150px")->getText()->createTextRun(comment_members('executive',3,'I',$year,$i,$report_country)); 
+$objPHPExcel->getActiveSheet()->getComment('I'.$i)->setHeight("auto")->setWidth("150px")->getText()->createTextRun(comment_members('executive',3,'I',$year,$i,$report_country, $corte)); 
 }
 
 
@@ -329,10 +330,10 @@ for ($i = 9; $i <= 20; $i++) {
 	//cell N for Cancels
 	//cell P for adds
 
-$N=get_member_by_status_changed('cancels','top',$year,$i,$report_country); //Top Cancels
-$P=get_member_by_status_changed('adds','top',$year,$i,$report_country);    //Top Adds
-$O=get_member_by_status_changed('cancels','key',$year,$i,$report_country); //Key Cancels
-$Q=get_member_by_status_changed('adds','key',$year,$i,$report_country);    //Key Adds
+$N=get_member_by_status_changed('cancels','top',$year,$i,$report_country, $corte); //Top Cancels
+$P=get_member_by_status_changed('adds','top',$year,$i,$report_country, $corte);    //Top Adds
+$O=get_member_by_status_changed('cancels','key',$year,$i,$report_country, $corte); //Key Cancels
+$Q=get_member_by_status_changed('adds','key',$year,$i,$report_country, $corte);    //Key Adds
 
 $objPHPExcel->getActiveSheet()->setCellValue('N'.$i, $N);
 $objPHPExcel->getActiveSheet()->setCellValue('P'.$i, $P);
@@ -341,17 +342,17 @@ $objPHPExcel->getActiveSheet()->setCellValue('Q'.$i, $Q);
 
 
 if($N>0){
-$objPHPExcel->getActiveSheet()->getComment('N'.$i)->setHeight("auto")->setWidth("150px")->getText()->createTextRun(comment_members('cancels',0,'N',$year,$i,$report_country)); 
+$objPHPExcel->getActiveSheet()->getComment('N'.$i)->setHeight("auto")->setWidth("150px")->getText()->createTextRun(comment_members('cancels',0,'N',$year,$i,$report_country, $corte)); 
 }
 if($P>0){
-$objPHPExcel->getActiveSheet()->getComment('P'.$i)->setHeight("auto")->setWidth("150px")->getText()->createTextRun(comment_members('adds',0,'P',$year,$i,$report_country)); 
+$objPHPExcel->getActiveSheet()->getComment('P'.$i)->setHeight("auto")->setWidth("150px")->getText()->createTextRun(comment_members('adds',0,'P',$year,$i,$report_country, $corte)); 
 }
 
 if($O>0){
-$objPHPExcel->getActiveSheet()->getComment('O'.$i)->setHeight("auto")->setWidth("150px")->getText()->createTextRun(comment_members('cancels',0,'O',$year,$i,$report_country)); 
+$objPHPExcel->getActiveSheet()->getComment('O'.$i)->setHeight("auto")->setWidth("150px")->getText()->createTextRun(comment_members('cancels',0,'O',$year,$i,$report_country, $corte)); 
 }
 if($Q>0){
-$objPHPExcel->getActiveSheet()->getComment('Q'.$i)->setHeight("auto")->setWidth("150px")->getText()->createTextRun(comment_members('adds',0,'Q',$year,$i,$report_country)); 
+$objPHPExcel->getActiveSheet()->getComment('Q'.$i)->setHeight("auto")->setWidth("150px")->getText()->createTextRun(comment_members('adds',0,'Q',$year,$i,$report_country, $corte)); 
 }
 
 
@@ -361,21 +362,21 @@ $objPHPExcel->getActiveSheet()->getComment('Q'.$i)->setHeight("auto")->setWidth(
 
 //Computing Next nextyear//
 for ($i = 22; $i <= 33; $i++) {
-$objPHPExcel->getActiveSheet()->setCellValue('B'.$i, get_active_members('top',1,$nextyear,$i,$report_country));
-$objPHPExcel->getActiveSheet()->setCellValue('C'.$i, get_active_members('top',4,$nextyear,$i,$report_country));
-$objPHPExcel->getActiveSheet()->setCellValue('D'.$i, get_active_members('top',3,$nextyear,$i,$report_country));
+$objPHPExcel->getActiveSheet()->setCellValue('B'.$i, get_active_members('top',1,$nextyear,$i,$report_country, $corte));
+$objPHPExcel->getActiveSheet()->setCellValue('C'.$i, get_active_members('top',4,$nextyear,$i,$report_country, $corte));
+$objPHPExcel->getActiveSheet()->setCellValue('D'.$i, get_active_members('top',3,$nextyear,$i,$report_country, $corte));
 
-$B=get_active_members('top',1,$nextyear,$i,$report_country);
-$C=get_active_members('top',4,$nextyear,$i,$report_country);
-$D=get_active_members('top',3,$nextyear,$i,$report_country);
+$B=get_active_members('top',1,$nextyear,$i,$report_country, $corte);
+$C=get_active_members('top',4,$nextyear,$i,$report_country, $corte);
+$D=get_active_members('top',3,$nextyear,$i,$report_country, $corte);
 if($B>0){
-$objPHPExcel->getActiveSheet()->getComment('B'.$i)->setHeight("auto")->setWidth("200px")->getText()->createTextRun(comment_members('top',1,'B',$nextyear,$i,$report_country)); 
+$objPHPExcel->getActiveSheet()->getComment('B'.$i)->setHeight("auto")->setWidth("200px")->getText()->createTextRun(comment_members('top',1,'B',$nextyear,$i,$report_country, $corte)); 
 }
 if($C>0){
-$objPHPExcel->getActiveSheet()->getComment('C'.$i)->setHeight("auto")->setWidth("200px")->getText()->createTextRun(comment_members('top',4,'C',$nextyear,$i,$report_country)); 
+$objPHPExcel->getActiveSheet()->getComment('C'.$i)->setHeight("auto")->setWidth("200px")->getText()->createTextRun(comment_members('top',4,'C',$nextyear,$i,$report_country, $corte)); 
 }
 if($D>0){
-$objPHPExcel->getActiveSheet()->getComment('D'.$i)->setHeight("auto")->setWidth("200px")->getText()->createTextRun(comment_members('top',3,'D',$nextyear,$i,$report_country)); 
+$objPHPExcel->getActiveSheet()->getComment('D'.$i)->setHeight("auto")->setWidth("200px")->getText()->createTextRun(comment_members('top',3,'D',$nextyear,$i,$report_country, $corte)); 
 }
 
 
@@ -384,22 +385,22 @@ $objPHPExcel->getActiveSheet()->getComment('D'.$i)->setHeight("auto")->setWidth(
 
 
 for ($i = 22; $i <= 33; $i++) {
-$objPHPExcel->getActiveSheet()->setCellValue('G'.$i, get_active_members('executive',1,$nextyear,$i,$report_country));
-$objPHPExcel->getActiveSheet()->setCellValue('H'.$i, get_active_members('executive',4,$nextyear,$i,$report_country));
-$objPHPExcel->getActiveSheet()->setCellValue('I'.$i, get_active_members('executive',3,$nextyear,$i,$report_country));
+$objPHPExcel->getActiveSheet()->setCellValue('G'.$i, get_active_members('executive',1,$nextyear,$i,$report_country, $corte));
+$objPHPExcel->getActiveSheet()->setCellValue('H'.$i, get_active_members('executive',4,$nextyear,$i,$report_country, $corte));
+$objPHPExcel->getActiveSheet()->setCellValue('I'.$i, get_active_members('executive',3,$nextyear,$i,$report_country, $corte));
 
-$G=get_active_members('executive',1,$nextyear,$i,$report_country);
-$H=get_active_members('executive',4,$nextyear,$i,$report_country);
-$I=get_active_members('executive',3,$nextyear,$i,$report_country);
+$G=get_active_members('executive',1,$nextyear,$i,$report_country, $corte);
+$H=get_active_members('executive',4,$nextyear,$i,$report_country, $corte);
+$I=get_active_members('executive',3,$nextyear,$i,$report_country, $corte);
 
 if($G>0){
-$objPHPExcel->getActiveSheet()->getComment('G'.$i)->setHeight("auto")->setWidth("150px")->getText()->createTextRun(comment_members('executive',1,'G',$nextyear,$i,$report_country)); 
+$objPHPExcel->getActiveSheet()->getComment('G'.$i)->setHeight("auto")->setWidth("150px")->getText()->createTextRun(comment_members('executive',1,'G',$nextyear,$i,$report_country, $corte)); 
 }
 if($H>0){
-$objPHPExcel->getActiveSheet()->getComment('H'.$i)->setHeight("auto")->setWidth("150px")->getText()->createTextRun(comment_members('executive',4,'H',$nextyear,$i,$report_country)); 
+$objPHPExcel->getActiveSheet()->getComment('H'.$i)->setHeight("auto")->setWidth("150px")->getText()->createTextRun(comment_members('executive',4,'H',$nextyear,$i,$report_country, $corte)); 
 }
 if($I>0){
-$objPHPExcel->getActiveSheet()->getComment('I'.$i)->setHeight("auto")->setWidth("150px")->getText()->createTextRun(comment_members('executive',3,'I',$nextyear,$i,$report_country)); 
+$objPHPExcel->getActiveSheet()->getComment('I'.$i)->setHeight("auto")->setWidth("150px")->getText()->createTextRun(comment_members('executive',3,'I',$nextyear,$i,$report_country, $corte)); 
 }
 
 
@@ -410,10 +411,10 @@ for ($i = 22; $i <= 33; $i++) {
 	//cell N for Cancels
 	//cell P for adds
 
-$N=get_member_by_status_changed('cancels','top',$nextyear,$i,$report_country); //Top Cancels
-$P=get_member_by_status_changed('adds','top',$nextyear,$i,$report_country);    //Top Adds
-$O=get_member_by_status_changed('cancels','key',$nextyear,$i,$report_country); //Key Cancels
-$Q=get_member_by_status_changed('adds','key',$nextyear,$i,$report_country);    //Key Adds
+$N=get_member_by_status_changed('cancels','top',$nextyear,$i,$report_country, $corte); //Top Cancels
+$P=get_member_by_status_changed('adds','top',$nextyear,$i,$report_country, $corte);    //Top Adds
+$O=get_member_by_status_changed('cancels','key',$nextyear,$i,$report_country, $corte); //Key Cancels
+$Q=get_member_by_status_changed('adds','key',$nextyear,$i,$report_country, $corte);    //Key Adds
 
 $objPHPExcel->getActiveSheet()->setCellValue('N'.$i, $N);
 $objPHPExcel->getActiveSheet()->setCellValue('P'.$i, $P);
@@ -422,17 +423,17 @@ $objPHPExcel->getActiveSheet()->setCellValue('Q'.$i, $Q);
 
 
 if($N>0){
-$objPHPExcel->getActiveSheet()->getComment('N'.$i)->setHeight("auto")->setWidth("150px")->getText()->createTextRun(comment_members('cancels',0,'N',$nextyear,$i,$report_country)); 
+$objPHPExcel->getActiveSheet()->getComment('N'.$i)->setHeight("auto")->setWidth("150px")->getText()->createTextRun(comment_members('cancels',0,'N',$nextyear,$i,$report_country, $corte)); 
 }
 if($P>0){
-$objPHPExcel->getActiveSheet()->getComment('P'.$i)->setHeight("auto")->setWidth("150px")->getText()->createTextRun(comment_members('adds',0,'P',$nextyear,$i,$report_country)); 
+$objPHPExcel->getActiveSheet()->getComment('P'.$i)->setHeight("auto")->setWidth("150px")->getText()->createTextRun(comment_members('adds',0,'P',$nextyear,$i,$report_country, $corte)); 
 }
 
 if($O>0){
-$objPHPExcel->getActiveSheet()->getComment('O'.$i)->setHeight("auto")->setWidth("150px")->getText()->createTextRun(comment_members('cancels',0,'O',$nextyear,$i,$report_country)); 
+$objPHPExcel->getActiveSheet()->getComment('O'.$i)->setHeight("auto")->setWidth("150px")->getText()->createTextRun(comment_members('cancels',0,'O',$nextyear,$i,$report_country, $corte)); 
 }
 if($Q>0){
-$objPHPExcel->getActiveSheet()->getComment('Q'.$i)->setHeight("auto")->setWidth("150px")->getText()->createTextRun(comment_members('adds',0,'Q',$nextyear,$i,$report_country)); 
+$objPHPExcel->getActiveSheet()->getComment('Q'.$i)->setHeight("auto")->setWidth("150px")->getText()->createTextRun(comment_members('adds',0,'Q',$nextyear,$i,$report_country, $corte)); 
 }
 
 
@@ -483,7 +484,7 @@ $objWriter = new PHPExcel_Writer_Excel2007($objPHPExcel);
 $objWriter->save('./reportesgenerados/'.$report_name, __FILE__);
 $callEndTime = microtime(true);
 $callTime = $callEndTime - $callStartTime;
-generate_Dues($userid,$year,$sedeid);
+generate_Dues($userid,$year,$sedeid, $corte);
 
 }
 
@@ -493,7 +494,7 @@ generate_Dues($userid,$year,$sedeid);
 
 // Dues //
 
-function generate_Dues($userid,$year,$sedeid){
+function generate_Dues($userid,$year,$sedeid, $corte){
 	include('../../incluidos/db_config/config.php');
 //	include('./PHPExcel/Classes/PHPExcel.php');
 //POR ALGUNA RAZON NO LAS ESTA INCLUYENDO LAS LIBRERIAS EL SCRIPT Y POR ESO EN ALGUNAS FUNCIONES LA VUELVO A LLAMAR PARA QUE FUNCIONE//
@@ -528,7 +529,12 @@ $objPHPExcel->getActiveSheet()->setCellValue('U6', $year+1);
 $xgroup=substr($xrow['gru_descripcion'], -7, 0);
 $sheetTitle = $xrow['gru_descripcion'];
 $array = array("1","2","3","4");
-$sql="SELECT miembro.*, miembro_inscripcion.* FROM miembro, miembro_inscripcion WHERE miembro.grupo_id=".$xrow['gru_id']." AND miembro.status_member_id IN (".implode(',', $array).") AND miembro.mie_id = miembro_inscripcion.miembro_id ORDER By miembro.mie_codigo ASC";// AND miembro_inscripcion.mie_ins_year='$year'
+$sql="SELECT miembro.*, miembro_inscripcion.* FROM miembro, miembro_inscripcion 
+WHERE miembro.grupo_id=".$xrow['gru_id']." 
+AND miembro.status_member_id IN (".implode(',', $array).") 
+AND miembro.mie_id = miembro_inscripcion.miembro_id  
+AND miembro_inscripcion.mie_ins_fecha_ingreso <= '$corte'  
+ORDER By miembro.mie_codigo ASC";// AND miembro_inscripcion.mie_ins_year='$year'
 $res = mysqli_query($con,$sql);
 $rcount = mysqli_num_rows($res);
 $i=8;
@@ -2048,10 +2054,10 @@ $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
 $objWriter->save('./reportesgenerados/'.$report_name, __FILE__);
 $callEndTime = microtime(true);
 $callTime = $callEndTime - $callStartTime;
-generate_Summary($userid,$year,$sedeid);
+generate_Summary($userid,$year,$sedeid, $corte);
 }
 
-function generate_Summary($userid,$year,$sedeid){
+function generate_Summary($userid,$year,$sedeid, $corte){
 	include("../../incluidos/db_config/config.php");
 
 $nextyear = $year + 1;
@@ -2088,10 +2094,10 @@ for ($i = 12; $i <= 23; $i++) {
 	}
 
 $objPHPExcel->getActiveSheet()->setCellValue('A'.$i, $m."/".$x_day."/".$year);
-$objPHPExcel->getActiveSheet()->setCellValue('B'.$i, calculate_summary_value($m,$year,'enrollment'));  //Computing Enrollment Fees
-$objPHPExcel->getActiveSheet()->setCellValue('D'.$i, calculate_summary_value($m,$year,'dues'));  //Computing Dues
-$objPHPExcel->getActiveSheet()->setCellValue('F'.$i, calculate_summary_value($m,$year,'other'));  //Computing Other Activity
-$objPHPExcel->getActiveSheet()->setCellValue('R'.$i, calculate_summary_value($m,$year,'price'));  //Computing Price
+$objPHPExcel->getActiveSheet()->setCellValue('B'.$i, calculate_summary_value($m,$year,'enrollment', $corte));  //Computing Enrollment Fees
+$objPHPExcel->getActiveSheet()->setCellValue('D'.$i, calculate_summary_value($m,$year,'dues', $corte));  //Computing Dues
+$objPHPExcel->getActiveSheet()->setCellValue('F'.$i, calculate_summary_value($m,$year,'other', $corte));  //Computing Other Activity
+$objPHPExcel->getActiveSheet()->setCellValue('R'.$i, calculate_summary_value($m,$year,'price', $corte));  //Computing Price
 $m++;
 
 }//end for 1
@@ -2107,10 +2113,10 @@ for ($n = 32; $n <= 43; $n++) {
 	}
 
 $objPHPExcel->getActiveSheet()->setCellValue('A'.$n, $m2."/".$x_day."/".$nextyear);
-$objPHPExcel->getActiveSheet()->setCellValue('D'.$n, calculate_summary_value($m2,$nextyear,'enrollment'));  //Computing Enrollment Fees
-$objPHPExcel->getActiveSheet()->setCellValue('B'.$n, calculate_summary_value($m2,$nextyear,'dues'));  //Computing Dues
-$objPHPExcel->getActiveSheet()->setCellValue('F'.$n, calculate_summary_value($m2,$nextyear,'other'));  //Computing Other Activity
-$objPHPExcel->getActiveSheet()->setCellValue('R'.$n, calculate_summary_value($m2,$nextyear,'price'));  //Computing Price
+$objPHPExcel->getActiveSheet()->setCellValue('D'.$n, calculate_summary_value($m2,$nextyear,'enrollment', $corte));  //Computing Enrollment Fees
+$objPHPExcel->getActiveSheet()->setCellValue('B'.$n, calculate_summary_value($m2,$nextyear,'dues', $corte));  //Computing Dues
+$objPHPExcel->getActiveSheet()->setCellValue('F'.$n, calculate_summary_value($m2,$nextyear,'other', $corte));  //Computing Other Activity
+$objPHPExcel->getActiveSheet()->setCellValue('R'.$n, calculate_summary_value($m2,$nextyear,'price', $corte));  //Computing Price
 
 $m2++;
 

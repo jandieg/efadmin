@@ -42,7 +42,7 @@ return $data;
 
 
 
-function calculate_summary_value($month,$year,$type){
+function calculate_summary_value($month,$year,$type, $corte){
 
 include("../../incluidos/db_config/config.php");
 
@@ -52,7 +52,7 @@ if($type=='dues'){
 
 //$sql = "SELECT sum(mie_ins_valor) AS total FROM miembro_inscripcion WHERE MONTH(mie_ins_fechamodificacion)='$month' AND YEAR(mie_ins_fechamodificacion)='$year' AND estado_cobro_id='2'";
 
-$sql="SELECT sum(cobro_total) AS total FROM cobro WHERE MONTH(cobro_fecharegistro)='$month' AND YEAR(cobro_fecharegistro)='$year'";
+$sql="SELECT sum(cobro_total) AS total FROM cobro WHERE MONTH(cobro_fecharegistro)='$month' AND YEAR(cobro_fecharegistro)='$year' AND date(cobro_fecharegistro) <= '$corte'";
 
 }
 
@@ -60,13 +60,13 @@ if($type=='enrollment'){
 
 	//AND miembro.status_member_id IN (".implode(',', $array).")
 
-$sql="SELECT miembro.*, miembro_inscripcion.*, SUM(miembro_inscripcion.mie_ins_valor) AS total FROM miembro, miembro_inscripcion WHERE YEAR(miembro_inscripcion.mie_ins_fecha_ingreso)='$year' AND MONTH(miembro_inscripcion.mie_ins_fecha_cobro)='$month' AND YEAR(miembro_inscripcion.mie_ins_fecha_cobro)='$year' AND miembro.mie_id = miembro_inscripcion.miembro_id ";
+$sql="SELECT miembro.*, miembro_inscripcion.*, SUM(miembro_inscripcion.mie_ins_valor) AS total FROM miembro, miembro_inscripcion WHERE YEAR(miembro_inscripcion.mie_ins_fecha_ingreso)='$year' AND MONTH(miembro_inscripcion.mie_ins_fecha_cobro)='$month' AND YEAR(miembro_inscripcion.mie_ins_fecha_cobro)='$year' AND DATE(miembro_inscripcion.mie_ins_fecha_cobro)='$corte' AND miembro.mie_id = miembro_inscripcion.miembro_id ";
 
 }
 
 if($type=='other'){
 
-$sql="SELECT miembro.*, miembro_inscripcion.*, SUM(miembro_inscripcion.mie_ins_valor) AS total FROM miembro, miembro_inscripcion WHERE YEAR(miembro_inscripcion.mie_ins_fecha_cobro)='$year' AND MONTH(miembro_inscripcion.mie_ins_fecha_cobro)='$month' AND miembro.status_member_id NOT IN (".implode(',', $array).") AND miembro.mie_id = miembro_inscripcion.miembro_id ";
+$sql="SELECT miembro.*, miembro_inscripcion.*, SUM(miembro_inscripcion.mie_ins_valor) AS total FROM miembro, miembro_inscripcion WHERE YEAR(miembro_inscripcion.mie_ins_fecha_cobro)='$year' AND MONTH(miembro_inscripcion.mie_ins_fecha_cobro)='$month' AND DATE(miembro_inscripcion.mie_ins_fecha_cobro)='$corte' AND miembro.status_member_id NOT IN (".implode(',', $array).") AND miembro.mie_id = miembro_inscripcion.miembro_id ";
 
 }
 
@@ -86,7 +86,7 @@ $sql="SELECT MAX(t0.precobro_valor) AS total
 
 FROM presupuestocobro AS t0
 
-WHERE (t0.precobro_year = '$year')";
+WHERE (t0.precobro_year = '$year') AND (t0.precobro_year <= YEAR('$corte'))";
 
 }
 
@@ -1313,7 +1313,7 @@ return $row['total'];
 
 //Membership Reports//
 
-function get_active_members($type,$status,$year,$month,$country){
+function get_active_members($type,$status,$year,$month,$country, $corte){
 
 include("../../incluidos/db_config/config.php");
 
@@ -1391,6 +1391,8 @@ WHERE(((t1.status_member_id = '$status')
 
 AND(t0.mie_ins_fecha_ingreso <= '$xmonth')) 
 
+AND(t0.mie_ins_fecha_ingreso <= '$corte')
+
 AND(t2.agrup not in ('C'))
 
 AND((t1.cancelled = 0) AND (t1.categoria_cat_id<>4) OR(t1.mie_fecha_cambio_status >=$fmonth)))
@@ -1412,6 +1414,8 @@ JOIN grupos AS t2 ON (t2.gru_id = t1.grupo_id)
 WHERE(((t1.status_member_id = '$status')
 
 AND(t0.mie_ins_fecha_ingreso <= '$xmonth')) 
+
+AND(t0.mie_ins_fecha_ingreso <= '$corte')
 
 AND(t2.agrup not in ('C'))
 
@@ -1619,7 +1623,7 @@ return $sc_members_count;
 
 
 
-function get_member_by_status_changed($type,$category,$year,$month,$country){
+function get_member_by_status_changed($type,$category,$year,$month,$country, $corte){
 
 include("../../incluidos/db_config/config.php");
 
@@ -1673,7 +1677,7 @@ $fmonth=$year.'-'.$month.'-30';
 
 if(($category=='key')&&($type=='cancels')){
 
-$sql = "SELECT count(mie_id) AS sp_members FROM miembro WHERE mie_fecha_cambio_status >= '$xmonth' AND mie_fecha_cambio_status <='$fmonth' AND cancelled='1' AND categoria_cat_id='4' AND YEAR(mie_fecha_cambio_status)='$year'";	
+$sql = "SELECT count(mie_id) AS sp_members FROM miembro WHERE mie_fecha_cambio_status >= '$xmonth' AND mie_fecha_cambio_status <='$fmonth' AND date(mie_fecha_cambio_status) <= '$corte' AND cancelled='1' AND categoria_cat_id='4' AND YEAR(mie_fecha_cambio_status)='$year'";	
 
 }
 
@@ -1681,7 +1685,7 @@ $sql = "SELECT count(mie_id) AS sp_members FROM miembro WHERE mie_fecha_cambio_s
 
 if(($category=='key')&&($type=='adds')){
 
-$sql = "SELECT count(mie_id) AS sp_members FROM miembro WHERE mie_fecha_cambio_status >= '$xmonth' AND mie_fecha_cambio_status <='$fmonth' AND status_member_id='1' AND categoria_cat_id='4' AND YEAR(mie_fecha_cambio_status)='$year'";	
+$sql = "SELECT count(mie_id) AS sp_members FROM miembro WHERE mie_fecha_cambio_status >= '$xmonth' AND mie_fecha_cambio_status <='$fmonth' AND date(mie_fecha_cambio_status) <= '$corte' AND status_member_id='1' AND categoria_cat_id='4' AND YEAR(mie_fecha_cambio_status)='$year'";	
 
 }
 
@@ -1695,13 +1699,13 @@ $sql = "SELECT count(mie_id) AS sp_members FROM miembro WHERE mie_fecha_cambio_s
 
 if(($category=='top')&&($type=='cancels')){
 
-$sql = "SELECT count(mie_id) AS sp_members FROM miembro WHERE mie_fecha_cambio_status >= '$xmonth' AND mie_fecha_cambio_status <='$fmonth' AND cancelled='1' AND categoria_cat_id<>'4' AND YEAR(mie_fecha_cambio_status)='$year'";	
+$sql = "SELECT count(mie_id) AS sp_members FROM miembro WHERE mie_fecha_cambio_status >= '$xmonth' AND mie_fecha_cambio_status <='$fmonth' AND date(mie_fecha_cambio_status) <= '$corte' AND cancelled='1' AND categoria_cat_id<>'4' AND YEAR(mie_fecha_cambio_status)='$year'";	
 
 }
 
 if(($category=='top')&&($type=='adds')){
 
-$sql = "SELECT count(mie_id) AS sp_members FROM miembro WHERE mie_fecha_cambio_status >= '$xmonth' AND mie_fecha_cambio_status <='$fmonth' AND status_member_id='1' AND categoria_cat_id<>'4' AND YEAR(mie_fecha_cambio_status)='$year'";	
+$sql = "SELECT count(mie_id) AS sp_members FROM miembro WHERE mie_fecha_cambio_status >= '$xmonth' AND mie_fecha_cambio_status <='$fmonth' AND date(mie_fecha_cambio_status) <= '$corte' AND status_member_id='1' AND categoria_cat_id<>'4' AND YEAR(mie_fecha_cambio_status)='$year'";	
 
 }
 
@@ -1741,7 +1745,7 @@ return $data;
 
 
 
-function comment_members($type,$status,$cell,$year,$month,$country){
+function comment_members($type,$status,$cell,$year,$month,$country, $corte){
 
 include("../../incluidos/db_config/config.php");
 
@@ -1821,6 +1825,8 @@ WHERE(((t1.status_member_id = '$status')
 
 AND(t0.mie_ins_fecha_ingreso <= '$xmonth')) 
 
+AND(t0.mie_ins_fecha_ingreso <= '$corte')
+
 AND((t1.cancelled = 0) OR(t1.mie_fecha_cambio_status >=$fmonth)))
 
 ";
@@ -1838,6 +1844,8 @@ LEFT OUTER JOIN miembro AS t1 ON(t1.mie_id = t0.miembro_id)
 WHERE(((t1.status_member_id = '$status')
 
 AND(t0.mie_ins_fecha_ingreso <= '$xmonth')) 
+
+AND(t0.mie_ins_fecha_ingreso <= '$corte')
 
 AND((t1.cancelled = 0) OR(t1.mie_fecha_cambio_status >=$fmonth)))
 
@@ -1861,7 +1869,7 @@ if(($type=='cancels')&&($cell=='N')){
 
 //$sql = "SELECT * FROM miembro WHERE mie_fecha_cambio_status >= '$xmonth' AND mie_fecha_cambio_status <='$fmonth' AND status_member_id='2'";	
 
-	$sql = "SELECT * FROM miembro WHERE mie_fecha_cambio_status BETWEEN '$xmonth' AND '$fmonth' AND cancelled='1' AND categoria_cat_id<>'4' AND YEAR(mie_fecha_cambio_status)='$year'";
+	$sql = "SELECT * FROM miembro WHERE mie_fecha_cambio_status BETWEEN '$xmonth' AND '$fmonth' AND(date(mie_fecha_cambio_status) <= '$corte') AND cancelled='1' AND categoria_cat_id<>'4' AND YEAR(mie_fecha_cambio_status)='$year'";
 
 
 
@@ -1873,7 +1881,7 @@ if(($type=='adds')&&($cell=='P')){
 
 //	$sql = "SELECT * FROM miembro WHERE mie_fecha_cambio_status >= '$xmonth' AND mie_fecha_cambio_status <='$fmonth' AND status_member_id='1'";
 
-	$sql = "SELECT * FROM miembro WHERE mie_fecha_cambio_status BETWEEN '$xmonth' AND '$fmonth' AND status_member_id='1' AND categoria_cat_id<>'4' AND YEAR(mie_fecha_cambio_status)='$year'";
+	$sql = "SELECT * FROM miembro WHERE mie_fecha_cambio_status BETWEEN '$xmonth' AND '$fmonth' AND(date(mie_fecha_cambio_status) <= '$corte') AND status_member_id='1' AND categoria_cat_id<>'4' AND YEAR(mie_fecha_cambio_status)='$year'";
 
 
 
@@ -1889,7 +1897,7 @@ if(($type=='cancels')&&($cell=='O')){
 
 //$sql = "SELECT * FROM miembro WHERE mie_fecha_cambio_status >= '$xmonth' AND mie_fecha_cambio_status <='$fmonth' AND status_member_id='2'";	
 
-	$sql = "SELECT * FROM miembro WHERE mie_fecha_cambio_status BETWEEN '$xmonth' AND '$fmonth' AND status_member_id='2' AND categoria_cat_id='4' AND YEAR(mie_fecha_cambio_status)='$year'";
+	$sql = "SELECT * FROM miembro WHERE mie_fecha_cambio_status BETWEEN '$xmonth' AND '$fmonth' AND(date(mie_fecha_cambio_status) <= '$corte') AND status_member_id='2' AND categoria_cat_id='4' AND YEAR(mie_fecha_cambio_status)='$year'";
 
 
 
@@ -1901,7 +1909,7 @@ if(($type=='adds')&&($cell=='Q')){
 
 //	$sql = "SELECT * FROM miembro WHERE mie_fecha_cambio_status >= '$xmonth' AND mie_fecha_cambio_status <='$fmonth' AND status_member_id='1'";
 
-	$sql = "SELECT * FROM miembro WHERE mie_fecha_cambio_status BETWEEN '$xmonth' AND '$fmonth' AND status_member_id='1' AND categoria_cat_id='4' AND YEAR(mie_fecha_cambio_status)='$year'";
+	$sql = "SELECT * FROM miembro WHERE mie_fecha_cambio_status BETWEEN '$xmonth' AND '$fmonth' AND(date(mie_fecha_cambio_status) <= '$corte') AND status_member_id='1' AND categoria_cat_id='4' AND YEAR(mie_fecha_cambio_status)='$year'";
 
 
 

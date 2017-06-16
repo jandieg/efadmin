@@ -17,6 +17,7 @@ require_once dirname(__FILE__) . '/PHPExcel/Classes/PHPExcel.php';
 
 $page = $_REQUEST['page'];
 
+
 if($page=='enrollment'){
 $userid = $_REQUEST['userid'];
 $year = $_REQUEST['year'];
@@ -1152,6 +1153,10 @@ $year = $_REQUEST['year'];
 $group = $_REQUEST['group'];
 $sede_id=$_SESSION['sede_id'];
 $email=$_SESSION['user_correo'];
+$corte = "0";
+if (isset($_REQUEST['fechacorte'])) {
+	$corte = $_REQUEST['fechacorte'];
+}
 
 //exec("php /public_html/admin/cron/sendEmail.php");
 /*
@@ -1166,7 +1171,7 @@ curl_close($ch);
 
 $x=escapeshellarg($userid);
 
-exec("nohup /usr/bin/php -f generateReports.php userid='$userid' year='$year' sede_id='$sede_id' email='$email'> /dev/null 2>&1 &");
+exec("nohup /usr/bin/php -f generateReports.php userid='$userid' year='$year' sede_id='$sede_id' email='$email' corte='$corte'> /dev/null 2>&1 &");
 ?>
 
 <script>

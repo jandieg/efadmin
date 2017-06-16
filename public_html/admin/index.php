@@ -172,9 +172,16 @@ function faReport(){
 function do_report(type,userid){
 	var year = $('#_año').val();
 	var group = $('#_grupo').val();
+    var fecha_corte = $("#_fecha_corte").val().toString();
 	
 		var page=type;
-	var dataString = "year=" + year + "&userid=" + userid + "&group=" + group + "&page=" + page;
+        var dataString = "";
+        if (type == "fullReport") {
+            dataString = "year=" + year + "&userid=" + userid + "&group=" + group + "&page=" + page + "&fechacorte=" + fecha_corte;
+        } else {
+            dataString = "year=" + year + "&userid=" + userid + "&group=" + group + "&page=" + page;
+        }
+	
 	$.ajax({  
 		type: "POST",  
 		url: "reports.php",  
