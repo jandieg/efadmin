@@ -361,7 +361,7 @@ $objPHPExcel->getActiveSheet()->getComment('Q'.$i)->setHeight("auto")->setWidth(
 
 
 //Computing Next nextyear//
-for ($i = 22; $i <= 33; $i++) {
+for ($i = 22; $i <= 25; $i++) {
 $objPHPExcel->getActiveSheet()->setCellValue('B'.$i, get_active_members('top',1,$nextyear,$i,$report_country, $corte));
 $objPHPExcel->getActiveSheet()->setCellValue('C'.$i, get_active_members('top',4,$nextyear,$i,$report_country, $corte));
 $objPHPExcel->getActiveSheet()->setCellValue('D'.$i, get_active_members('top',3,$nextyear,$i,$report_country, $corte));
@@ -384,7 +384,7 @@ $objPHPExcel->getActiveSheet()->getComment('D'.$i)->setHeight("auto")->setWidth(
 }//end for
 
 
-for ($i = 22; $i <= 33; $i++) {
+for ($i = 22; $i <= 25; $i++) {
 $objPHPExcel->getActiveSheet()->setCellValue('G'.$i, get_active_members('executive',1,$nextyear,$i,$report_country, $corte));
 $objPHPExcel->getActiveSheet()->setCellValue('H'.$i, get_active_members('executive',4,$nextyear,$i,$report_country, $corte));
 $objPHPExcel->getActiveSheet()->setCellValue('I'.$i, get_active_members('executive',3,$nextyear,$i,$report_country, $corte));
@@ -407,7 +407,7 @@ $objPHPExcel->getActiveSheet()->getComment('I'.$i)->setHeight("auto")->setWidth(
 }//end for
 
 
-for ($i = 22; $i <= 33; $i++) {
+for ($i = 22; $i <= 25; $i++) {
 	//cell N for Cancels
 	//cell P for adds
 
