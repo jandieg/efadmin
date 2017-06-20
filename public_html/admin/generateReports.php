@@ -688,14 +688,24 @@ if(($first_FM_m=='12')&&($first_FM_y==$year)){$x1='H'; $x2='R';    $ins_color='A
 
 
 if ($dues) {
-if ($ins_color) {
+if ($ins_color || intval($first_FM_y) > intval($year)) {
     
-	 $objPHPExcel->getActiveSheet()->getStyle($x1.$i.':'.$x2.$i)->getFill()->applyFromArray(array(
-        'type' => PHPExcel_Style_Fill::FILL_SOLID,
-        'startcolor' => array(
-             'rgb' => $ins_color
-        )
-    ));
+    if (intval($first_FM_y) > intval($year)) {
+        $objPHPExcel->getActiveSheet()->getStyle($x1.$i.':'.$x2.$i)->getFill()->applyFromArray(array(
+            'type' => PHPExcel_Style_Fill::FILL_SOLID,
+            'startcolor' => array(
+                'rgb' => 'A6A6A6'
+            )
+        ));
+    } else {
+        $objPHPExcel->getActiveSheet()->getStyle($x1.$i.':'.$x2.$i)->getFill()->applyFromArray(array(
+            'type' => PHPExcel_Style_Fill::FILL_SOLID,
+            'startcolor' => array(
+                'rgb' => $ins_color
+            )
+        ));
+    }
+	 
 /*
 
 	 $objPHPExcel->getActiveSheet()->getStyle($xx1.$i.':'.$xx2.$i)->getFill()->applyFromArray(array(
