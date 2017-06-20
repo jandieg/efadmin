@@ -1,6 +1,8 @@
 <?php 
 require_once MODELO.'Entity.php'; 
 require_once MODELO.'EntityGrupo.php';
+include_once("../../incluidos/db_config/config.php");
+		
 
 $data = json_decode(file_get_contents("php://input")); 
 
@@ -218,12 +220,25 @@ if (isset($data)) {
 
 				switch ($action) {
 					case 'correoEdit':
+                        $sql = "update correo set cor_descripcion='$value', cor_fechamodificacion=now() where Persona_per_id = 
+                        (select Persona_per_id from miembro where mie_id='$memberId')";	
+
+                        $res = mysqli_query($con,$sql);
+
 						//editar correo con $value
 						break;
 					case 'movilEdit':
+                        $sql = "update telefono set tel_descripcion='$value', tel_fechamodificacion = now() where Persona_per_id = 
+                        (select Persona_per_id from miembro where mie_id='$memberId') and tel_tipo in ('M')";	
+
+                        $res = mysqli_query($con,$sql);
 						//editar nro celular con $value
 						break;
 					case 'movil2Edit':
+                        $sql = "update telefono set tel_descripcion='$value', tel_fechamodificacion = now() where Persona_per_id = 
+                        (select Persona_per_id from miembro where mie_id='$memberId') and tel_tipo in ('C')";
+
+                        $res = mysqli_query($con,$sql);
 						//editar nro tel fijo con $value
 						break;
 				}
