@@ -804,36 +804,31 @@ if ($ins_color || intval($first_FM_y) > intval($year)) {
 }
 
 } else {
-    if ($this_status_member != "MS") {
+    if (intval($first_FM_y) > intval($year)) {
         $objPHPExcel->getActiveSheet()->getStyle($x1.$i.':'.$x2.$i)->getFill()->applyFromArray(array(
             'type' => PHPExcel_Style_Fill::FILL_SOLID,
             'startcolor' => array(
-                'rgb' => $COLOR1
+                'rgb' => 'A6A6A6'
             )
         ));
-
-
-        /*$objPHPExcel->getActiveSheet()->getStyle($xx1.$i.':'.$xx2.$i)->getFill()->applyFromArray(array(
-            'type' => PHPExcel_Style_Fill::FILL_SOLID,
-            'startcolor' => array(
-                'rgb' => $COLOR1
-            )
-        ));*/
     } else {
-        $objPHPExcel->getActiveSheet()->getStyle($x1.$i.':'.$x2.$i)->getFill()->applyFromArray(array(
-            'type' => PHPExcel_Style_Fill::FILL_SOLID,
-            'startcolor' => array(
-                'rgb' => $COLOR3
-            )
-        ));
-/*
-        $objPHPExcel->getActiveSheet()->getStyle($xx1.$i.':'.$xx2.$i)->getFill()->applyFromArray(array(
-            'type' => PHPExcel_Style_Fill::FILL_SOLID,
-            'startcolor' => array(
-                'rgb' => $COLOR3
-            )
-        ));*/
+        if ($this_status_member != "MS") {
+            $objPHPExcel->getActiveSheet()->getStyle($x1.$i.':'.$x2.$i)->getFill()->applyFromArray(array(
+                'type' => PHPExcel_Style_Fill::FILL_SOLID,
+                'startcolor' => array(
+                    'rgb' => $COLOR1
+                )
+            ));
+        } else {
+            $objPHPExcel->getActiveSheet()->getStyle($x1.$i.':'.$x2.$i)->getFill()->applyFromArray(array(
+                'type' => PHPExcel_Style_Fill::FILL_SOLID,
+                'startcolor' => array(
+                    'rgb' => $COLOR3
+                )
+            ));
+        }
     }
+    
 }
 
 //Next Year//
@@ -854,7 +849,7 @@ if(($first_FM_m=='11')&&($first_FM_y==$nextyear)){ $xx1='U'; $xx2='AD'; $ins_col
 if(($first_FM_m=='12')&&($first_FM_y==$nextyear)){ $xx1='U'; $xx2='AE'; $ins_color2=$COLOR1; }else { $xx1='U'; $xx2='AF'; $ins_color2=''; }*/
 
 	
-	if ($duesnextyear || $dues) {
+	if ($duesnextyear || $dues || $ins_color2) {
 
     
 if($ins_color2){
