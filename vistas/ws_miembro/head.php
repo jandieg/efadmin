@@ -1,6 +1,7 @@
 <?php 
 require_once MODELO.'Entity.php'; 
 require_once MODELO.'EntityGrupo.php';
+
 $data = json_decode(file_get_contents("php://input")); 
 
 if (isset($data)) {
@@ -210,6 +211,31 @@ if (isset($data)) {
                 
                 break;
 
+	case 'EDITFIELD':
+				$memberId=$data->id;
+				$action=$data->atrib;
+				$value=$data->value;
+
+				switch ($action) {
+					case 'correoEdit':
+						//editar correo con $value
+						break;
+					case 'movilEdit':
+						//editar nro celular con $value
+						break;
+					case 'movil2Edit':
+						//editar nro tel fijo con $value
+						break;
+					break;
+				}
+
+				$resultset["success"] = "1"; 
+				$resultset["data"] = "Dato actualizado!"; 
+				echo json_encode($resultset); 
+
+				exit();
+
+				break;
 	case 'UPDATE':
 				$memberCode=$data->code;
 				$encodedString=$data->foto;
