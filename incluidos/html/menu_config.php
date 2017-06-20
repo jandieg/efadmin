@@ -49,7 +49,7 @@
                     <?php } if (in_array($perMantenedorUsuarioOp5, $_SESSION['usu_permiso'])) { ?>
                     <li><a href="usuario?_tipo_usuario=1"> Usuario</a></li>
                     <?php } ?>
-                    <li><a href="mantenedorcargo">Cargo</a></li>
+                    <li><a href="mantenedorcargo">Cargo del Miembro</a></li>
                     <li><a href="mantenedorciudad">Ciudad</a></li>
                     <li><a href="mantenedordireccion">Dirección</a></li>
                     
