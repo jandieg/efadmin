@@ -21,15 +21,16 @@ $smtp_Password ='Welcome123!';// 'cdf0cff2d7e8684e0faeb484936682d2'; //OLD PWD 4
 $sql = "SELECT * FROM miembro_inscripcion WHERE MONTH(mie_ins_fecha_cobro)='$i' AND YEAR(mie_ins_fecha_cobro)='$year' AND YEAR(mie_ins_fecha_ingreso)='$year'";	
 
 
-function set_report_date($year){
-	$nextyear = intval($year) + 1; 
+function set_report_date($fecha){
+	$data = date_format(date_create($fecha), 'm/d/Y');
+	/*$nextyear = intval($year) + 1; 
 	$fechabase = $nextyear."0430";
 	$fechabase2 = date('Ymd');
 	if (intval($fechabase) > intval($fechabase2) ) {
 		$data = date('m/d/Y');
 	} else {
 		$data = "04/30/".$nextyear;
-	}
+	}*/
 /*if($year < date('Y')){
 $data = "12/1/".$year;
 }else{

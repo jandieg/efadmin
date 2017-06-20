@@ -46,7 +46,7 @@ $objPHPExcel->getProperties()->setCreator("Maarten Balliauw")
 $objPHPExcel = PHPExcel_IOFactory::load("./excels_templates/enrollment_fees.xlsx");
 $objPHPExcel->setActiveSheetIndex(0);
 //$objPHPExcel->getActiveSheet()->setCellValue('N3', "1/1/".$year);
-$objPHPExcel->getActiveSheet()->setCellValue('N3', set_report_date($year));
+$objPHPExcel->getActiveSheet()->setCellValue('N3', set_report_date($corte));
 $objPHPExcel->getActiveSheet()->setCellValue('D3', $report_name_for_excel);
 $objPHPExcel->getActiveSheet()->setCellValue('A72', $nextyear);
 //Consulting DataBase
@@ -528,7 +528,7 @@ $objPHPExcel->setActiveSheetIndex($xSheet);
 $objPHPExcel->getActiveSheet()->setCellValue('D3', $xrow['gru_descripcion']);
 $objPHPExcel->getActiveSheet()->setCellValue('D4', get_admin_details($xrow['gru_forum'],'fullname'));
 //$objPHPExcel->getActiveSheet()->setCellValue('S3', '1/1/'.$year);
-$objPHPExcel->getActiveSheet()->setCellValue('S3', set_report_date($year));
+$objPHPExcel->getActiveSheet()->setCellValue('S3', set_report_date($corte));
 $objPHPExcel->getActiveSheet()->setCellValue('U6', $year+1);
 $xgroup=substr($xrow['gru_descripcion'], -7, 0);
 $sheetTitle = $xrow['gru_descripcion'];
@@ -2418,7 +2418,7 @@ $objPHPExcel = PHPExcel_IOFactory::load("./excels_templates/summary.xlsx");
 $objPHPExcel->setActiveSheetIndex(0);
 $objPHPExcel->getActiveSheet()->setCellValue('A3', $report_name_for_excel);
 $objPHPExcel->getActiveSheet()->setCellValue('E5', get_IBU($userid));
-$objPHPExcel->getActiveSheet()->setCellValue('P5', set_report_date($year));
+$objPHPExcel->getActiveSheet()->setCellValue('P5', set_report_date($corte));
 $objPHPExcel->getActiveSheet()->setCellValue('A26', $nextyear);
 //Consulting DataBase
 //Getting MEmber status count
