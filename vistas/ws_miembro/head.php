@@ -226,7 +226,6 @@ if (isset($data)) {
 					case 'movil2Edit':
 						//editar nro tel fijo con $value
 						break;
-					break;
 				}
 
 				$resultset["success"] = "1"; 
