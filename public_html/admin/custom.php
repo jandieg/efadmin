@@ -1711,7 +1711,7 @@ if(($category=='key')&&($type=='cancels')){
 
 $sql = "SELECT count(miembro.mie_id) AS sp_members FROM miembro 
 	JOIN grupos ON (grupos.gru_id=miembro.grupo_id)
-	WHERE month(miembro.mie_fecha_cambio_status) = '$month' 
+	WHERE month(miembro.mie_fecha_cambio_status) <= '$month' 
 	AND grupos.agrup in ('B')
 	AND date(miembro.mie_fecha_cambio_status) <= '$corte' 
 	AND miembro.cancelled='1' AND miembro.categoria_cat_id='4' 
@@ -1724,7 +1724,7 @@ if(($category=='key')&&($type=='adds')){
 $sql = "SELECT count(miembro.mie_id) AS sp_members FROM miembro  
 	JOIN grupos ON (grupos.gru_id=miembro.grupo_id)
 	JOIN miembro_inscripcion ON (miembro.mie_id = miembro_inscripcion.miembro_id)
-	WHERE month(miembro_inscripcion.mie_ins_fecha_ingreso) = '$month' 
+	WHERE month(miembro_inscripcion.mie_ins_fecha_ingreso) <= '$month' 
 	AND grupos.agrup in ('B')
 	AND miembro_inscripcion.mie_ins_fecha_ingreso <= '$corte' 
 	AND miembro.status_member_id='1' AND miembro.categoria_cat_id='4' 
@@ -1736,7 +1736,7 @@ if(($category=='top')&&($type=='cancels')){
 
 $sql = "SELECT count(miembro.mie_id) AS sp_members FROM miembro 
 	JOIN grupos ON (grupos.gru_id=miembro.grupo_id)
-	WHERE month(miembro.mie_fecha_cambio_status) = '$month' 
+	WHERE month(miembro.mie_fecha_cambio_status) <= '$month' 
 	AND grupos.agrup in ('A') 
 	AND date(miembro.mie_fecha_cambio_status) <= '$corte' 
 	AND miembro.cancelled='1' AND miembro.categoria_cat_id<>'4' 
@@ -1748,7 +1748,7 @@ if(($category=='top')&&($type=='adds')){
 $sql = "SELECT count(miembro.mie_id) AS sp_members FROM miembro 
 		JOIN miembro_inscripcion ON (miembro.mie_id = miembro_inscripcion.miembro_id)
 		JOIN grupos ON (grupos.gru_id=miembro.grupo_id)
-		WHERE month(miembro_inscripcion.mie_ins_fecha_ingreso) = '$month'  
+		WHERE month(miembro_inscripcion.mie_ins_fecha_ingreso) <= '$month'  
 		AND grupos.agrup in ('A')
 		AND miembro_inscripcion.mie_ins_fecha_ingreso <= '$corte' 
 		AND miembro.status_member_id='1' AND miembro.categoria_cat_id<>'4' 
@@ -1964,7 +1964,7 @@ if(($type=='cancels')&&($cell=='N')){
 
 	$sql = "SELECT * FROM miembro  
 	JOIN grupos on (grupos.gru_id=miembro.grupo_id)
-	WHERE month(miembro.mie_fecha_cambio_status) = '$month'
+	WHERE month(miembro.mie_fecha_cambio_status) <= '$month'
 	AND grupos.agrup in ('A') 
 	AND(date(miembro.mie_fecha_cambio_status) <= '$corte') AND miembro.cancelled='1' 
 	AND miembro.categoria_cat_id<>'4' AND YEAR(miembro.mie_fecha_cambio_status)='$year'";
@@ -1980,7 +1980,7 @@ if(($type=='adds')&&($cell=='P')){
 	$sql = "SELECT * FROM miembro 
 	JOIN grupos ON (grupos.gru_id = miembro.grupo_id)
 	JOIN miembro_inscripcion ON (miembro.mie_id= miembro_inscripcion.miembro_id)
-	WHERE month(miembro_inscripcion.mie_ins_fecha_ingreso) = '$month'  
+	WHERE month(miembro_inscripcion.mie_ins_fecha_ingreso) <= '$month'  
 	AND grupos.agrup in ('A')
 	AND(miembro_inscripcion.mie_ins_fecha_ingreso <= '$corte') AND miembro.status_member_id='1' 
 	AND miembro.categoria_cat_id<>'4' AND YEAR(miembro_inscripcion.mie_ins_fecha_ingreso)='$year'";
@@ -1992,18 +1992,13 @@ if(($type=='adds')&&($cell=='P')){
 
 
 if(($type=='cancels')&&($cell=='O')){
-
-
-
 //$sql = "SELECT * FROM miembro WHERE mie_fecha_cambio_status >= '$xmonth' AND mie_fecha_cambio_status <='$fmonth' AND status_member_id='2'";	
-
 	$sql = "SELECT * FROM miembro 
 	JOIN grupos ON (grupos.gru_id = miembro.grupo_id) 
-	WHERE month(miembro.mie_fecha_cambio_status) = '$month' 
+	WHERE month(miembro.mie_fecha_cambio_status) <= '$month' 
 	AND grupos.agrup in ('B') 
 	AND(date(miembro.mie_fecha_cambio_status) <= '$corte') AND miembro.status_member_id='2' 
 	AND miembro.categoria_cat_id='4' AND YEAR(miembro.mie_fecha_cambio_status)='$year'";
-
 }
 
 
@@ -2015,10 +2010,11 @@ if(($type=='adds')&&($cell=='Q')){
 	$sql = "SELECT * FROM miembro 
 	JOIN miembro_inscripcion ON (miembro.mie_id= miembro_inscripcion.miembro_id)
 	JOIN grupos ON (grupos.gru_id=miembro.grupo_id)
-	WHERE month(miembro_inscripcion.mie_ins_fecha_ingreso) = '$month'  
+	WHERE month(miembro_inscripcion.mie_ins_fecha_ingreso) <= '$month'  
 	AND grupos.agrup in ('B') 
 	AND(miembro_inscripcion.mie_ins_fecha_ingreso <= '$corte') 
-	AND miembro.status_member_id='1' AND miembro.categoria_cat_id='4' AND YEAR(miembro_inscripcion.mie_ins_fecha_ingreso)='$year'";
+	AND miembro.status_member_id='1' AND miembro.categoria_cat_id='4' 
+	AND YEAR(miembro_inscripcion.mie_ins_fecha_ingreso)='$year'";
 
 
 
