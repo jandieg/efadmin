@@ -1399,15 +1399,14 @@ JOIN grupos AS t2 ON (t2.gru_id = t1.grupo_id)
 
 WHERE t1.status_member_id = '$status'
 
-AND year(t0.mie_ins_fecha_ingreso) = '$year'
-
-AND month(t0.mie_ins_fecha_ingreso) = '$month'
+AND ((year(t0.mie_ins_fecha_ingreso) = '$year' AND month(t0.mie_ins_fecha_ingreso) <= '$month')
+	OR (year(t0.mie_ins_fecha_ingreso) < '$year'))
 
 AND t0.mie_ins_fecha_ingreso <= '$corte'
 
 AND t2.agrup in ('A')
 
-AND((t1.cancelled = 0) AND (t1.categoria_cat_id<>4) 
+AND(((t1.cancelled = 0) AND (t1.categoria_cat_id<>4)) 
 
 OR( month(t1.mie_fecha_cambio_status) >='$month' 
 
@@ -1429,9 +1428,11 @@ JOIN grupos AS t2 ON (t2.gru_id = t1.grupo_id)
 
 WHERE t1.status_member_id = '$status'
 
-AND year(t0.mie_ins_fecha_ingreso) = '$year'
+AND ((year(t0.mie_ins_fecha_ingreso) = '$year'
 
-AND  month(t0.mie_ins_fecha_ingreso) = '$month'
+AND  month(t0.mie_ins_fecha_ingreso) <= '$month')
+
+OR ((year(t0.mie_ins_fecha_ingreso) < '$year') )
 
 AND t0.mie_ins_fecha_ingreso <= '$corte'
 
@@ -1863,9 +1864,11 @@ JOIN grupos AS t2 ON (t2.gru_id = t1.grupo_id)
 
 WHERE t1.status_member_id = '$status'
 
-AND year(t0.mie_ins_fecha_ingreso) = '$year'
+AND ((year(t0.mie_ins_fecha_ingreso) = '$year'
 
-AND month(t0.mie_ins_fecha_ingreso) = '$month'
+AND month(t0.mie_ins_fecha_ingreso) <= '$month') 
+
+OR (year(t0.mie_ins_fecha_ingreso) < '$year'))
 
 AND t0.mie_ins_fecha_ingreso <= '$corte'
 
@@ -1906,9 +1909,11 @@ JOIN grupos AS t2 ON (t2.gru_id = t1.grupo_id)
 
 WHERE t1.status_member_id = '$status'
 
-AND year(t0.mie_ins_fecha_ingreso) = '$year'
+AND ((year(t0.mie_ins_fecha_ingreso) = '$year'
 
-AND  month(t0.mie_ins_fecha_ingreso) = '$month'
+AND  month(t0.mie_ins_fecha_ingreso) <= '$month')
+
+OR (year(t0.mie_ins_fecha_ingreso) < '$year'))
 
 AND t0.mie_ins_fecha_ingreso <= '$corte'
 
