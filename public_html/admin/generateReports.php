@@ -584,7 +584,12 @@ if (strlen(trim(get_Monthly_Payment($row['mie_id'],$nextyear))) > 0) {
 }
 $objPHPExcel->getActiveSheet()->setCellValue('F'.$i, get_Monthly_Payment($row['mie_id'],$year));
 $objPHPExcel->getActiveSheet()->getStyle('F'.$i)->getAlignment()->setWrapText(true);
-$this_status_member=get_status_info($row['status_member_id']);
+if ($row['cancelled'] == 1) {
+    $this_status_member="MC";
+} else {
+    $this_status_member=get_status_info($row['status_member_id']);
+}
+
 $objPHPExcel->getActiveSheet()->getColumnDimension('G'.$i)->setAutoSize(false);
 $objPHPExcel->getActiveSheet()->getColumnDimension('G'.$i)->setWidth("15");
 $objPHPExcel->getActiveSheet()->setCellValue('G'.$i, $this_status_member);
@@ -617,10 +622,10 @@ $color_ny = $color;
 $g_color_ny= $g_color;
 if (! $dues && $this_status_member != "MS") {
     $color='CCCCCC';
-    $g_color='CCCCCC';
+   // $g_color='CCCCCC';
     if (! $duesnextyear) {
         $color_ny = "CCCCCC";
-        $g_color_ny = "CCCCCC";
+       // $g_color_ny = "CCCCCC";
     }
 }
 
