@@ -857,7 +857,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             break;
             case 'KEY_SHOW_FILTRO':
 
-                if(!empty($_POST['_key_filtro']) && !empty($_POST['_filtro'])){ 
+                if(!empty($_POST['_key_filtro']) && !empty($_POST['_filtro'])  && strlen($_POST['_canceladas']) > 0){ 
                     $permiso= "";                    
                     if (in_array($perFiltroVerMiembrosForumOp6, $_SESSION['usu_permiso'])) {
                        $permiso= $_SESSION['user_id_ben'];
@@ -866,9 +866,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     
                     $id="";           
                     if($_POST['_filtro'] == "x"){
-                        $tabla= getTablaFiltrada("","",$permiso);
+                        $tabla= getTablaFiltrada("","",$permiso, $_POST['_canceladas']);
                     }else{
-                        $tabla= getTablaFiltrada($_POST['_filtro'], $_POST['_key_filtro'],$permiso);
+                        $tabla= getTablaFiltrada($_POST['_filtro'], $_POST['_key_filtro'],$permiso, $_POST['_canceladas']);
                     }                    
                     if($_POST['_key_filtro'] == "1"){
                         $objGrupo= new Grupo();
@@ -1265,7 +1265,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         case '3'://Para Forum
                              if($_POST['_filtro'] != "x"){
                                 setDatosConexion($_POST['_base']);
-                                $tabla= getTablaFiltrada($_POST['_filtro'], '2',"");
+                                $tabla= getTablaFiltrada($_POST['_filtro'], '2',"",0);
                                 $objGrupo= new Grupo();
                                 $resultset= $objGrupo->getIDForumxGrupo($_POST['_filtro']);
                                 if($row = $resultset->fetch_assoc()) { 
@@ -1299,7 +1299,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         case '4': // Para Grupos
                             if($_POST['_filtro'] != "x"){
                                 setDatosConexion($_POST['_base']);
-                                $tabla= getTablaFiltrada($_POST['_filtro'], '1',"");
+                                $tabla= getTablaFiltrada($_POST['_filtro'], '1',"",0);
                                 $objGrupo= new Grupo();
                                 $resultset= $objGrupo->getIDGrupoxForum($_POST['_filtro']);
                                 if($row = $resultset->fetch_assoc()) { 
@@ -1321,7 +1321,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         case '5': //Para empresas
                             if($_POST['_filtro'] != "x"){
                                 setDatosConexion($_POST['_base']);
-                                $tabla= getTablaFiltrada($_POST['_filtro'], '3',"");
+                                $tabla= getTablaFiltrada($_POST['_filtro'], '3',"",0);
                                 $data = array("success" => "true", 
                                     "tabla" => $tabla);  
                                 echo json_encode($data); 
@@ -1335,7 +1335,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         case '6': //Para industrias
                             if($_POST['_filtro'] != "x"){
                                 setDatosConexion($_POST['_base']);
-                                $tabla= getTablaFiltrada($_POST['_filtro'], '4',"");
+                                $tabla= getTablaFiltrada($_POST['_filtro'], '4',"",0);
                                 $data = array("success" => "true", 
                                     "tabla" => $tabla);  
                                 echo json_encode($data);
@@ -1553,16 +1553,18 @@ setDatosConexion('bases');
 
 $t='';
 if (in_array($perFiltroVerTodoslosMiembrosOp6, $_SESSION['usu_permiso'])) {
-    $tabla= getTablaFiltrada("","","");
+    $tabla= getTablaFiltrada("","","",0);
     $resultado = str_replace("{fitros}", generadorEtiquetasFiltro(getFiltros()), generadorFiltro('Filtros','ben_contenedor_filtro')); 
     $resultado = str_replace("{cuerpo}", $tabla, $resultado);  
+    
     $t=$resultado;
       
  }  elseif (in_array($perFiltroVerMiembrosForumOp6, $_SESSION['usu_permiso'])) {
    
-    $tabla= getTablaFiltrada("","",$_SESSION['user_id_ben']);
+    $tabla= getTablaFiltrada("","",$_SESSION['user_id_ben'],0);
     $resultado = str_replace("{fitros}", generadorEtiquetasFiltro(getFiltros()), generadorFiltro('Filtros','ben_contenedor_filtro')); 
     $resultado = str_replace("{cuerpo}", $tabla, $resultado);  
+    
     $t=$resultado;
 }elseif (in_array($perGlobalMiembrosOp12, $_SESSION['usu_permiso'])) {
     $bases= '';
@@ -1570,9 +1572,10 @@ if (in_array($perFiltroVerTodoslosMiembrosOp6, $_SESSION['usu_permiso'])) {
     if($_SESSION['global_databases_temporales'] != 'x'){
         $bases= $_SESSION['global_databases_temporales'];
     }                    
-    $tabla= getGlobalTablaFiltrada("","",$bases);
+    $tabla= getGlobalTablaFiltrada("","",$bases,0);
     $resultado = str_replace("{fitros}", generadorEtiquetasFiltro(getGlobalFiltros()), generadorFiltro('Filtros','ben_contenedor_filtro')); 
     $resultado = str_replace("{cuerpo}", $tabla, $resultado);  
+    
     $t=$resultado;
 }
 
@@ -1605,17 +1608,25 @@ function getFiltros() {
     $listaIndustrias=$objIndustria->getListaIndustrias2(NULL, $lista);
     $form['form_4'] = array("elemento" => "combo","change" => "getFiltro('4')", "titulo" => "Industrias", "id" => "_industria", "option" => $listaIndustrias); 
 
+    $objStatusMember = new StatusMember();
+    $listaStatusMember = $objStatusMember->getListaMiembroStatus($lista);
+    $form['form_5'] = array("elemento" => "combo","change" => "getFiltro('5')", "titulo" => "Estado del Miembro", "id" => "_status_memb", "option" => $listaStatusMember); 
+
+    $objGrupo2 = new Grupo();
+    $listaAgrup = $objGrupo2->getListaByAgrup($lista);
+    $form['form_6'] = array("elemento" => "combo","change" => "getFiltro('6')", "titulo" => "Tipo Miembro", "id" => "_memb_type", "option" => $listaAgrup); 
+
     return $form;
     
 }
 
-function getTablaFiltrada($id, $key, $idForum) {
+function getTablaFiltrada($id, $key, $idForum, $incluyecanceladas) {
     global $perVerMiembroOp6;
     $objMiembro= new Miembro();
     $cuerpo='';
     $cont=1;
     $t='';
-    $resultset= $objMiembro->getFiltros($id,$key,$idForum);
+    $resultset= $objMiembro->getFiltros($id,$key,$idForum, $incluyecanceladas);
       while($row = $resultset->fetch_assoc()) { 
         $verDetalle='';
         if (in_array($perVerMiembroOp6, $_SESSION['usu_permiso'])) {
@@ -1625,16 +1636,17 @@ function getTablaFiltrada($id, $key, $idForum) {
              $row['mie_codigo'],
              generadorLink($row['per_apellido'].' '.$row['per_nombre'],$verDetalle),
              $row['nombre_empresa'],
-             $row['nombre_forum']));
+             $row['nombre_forum'],
+             $row['mem_sta_descripcion']));
         $cont=$cont + 1;                                                                          
      }    
-    $tabla= generadorTablaConBotones(1, "Miembros",'', array(
+    $tabla= generadorTablaConBotonesMiembros(1, "Miembros",'', array(
          "Código&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;", 
          "Nombre&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
         . "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
         . "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
         . "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
-        "Empresa","Forum_Leader"), $cuerpo,null);
+        "Empresa","Forum_Leader", "Estado"), $cuerpo,null, $incluyecanceladas);
 
    return $tabla;
     
@@ -1662,15 +1674,17 @@ function getGlobalTablaFiltrada($id, $key, $bases) {
             $row['mie_codigo'],
             generadorLink($row['per_apellido'].' '.$row['per_nombre'],$verDetalle),
             $row['nombre_empresa'],
-            $row['nombre_forum']));
+            $row['nombre_forum'],
+            $row['mem_sta_descripcion']));
         $cont=$cont + 1;                                                                          
      }    
-    $tabla= generadorTablaConBotones(1, "Miembros",'', array(
+    $tabla= generadorTablaConBotonesMiembros(1, "Miembros",'', array(
         "Código"
         . "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;", 
         "Nombre",
         "Empresa",
-        "Forum Leader"), $cuerpo,null);
+        "Forum Leader",
+        "Estado"), $cuerpo,null,0);
 
    return $tabla;
     
@@ -1720,6 +1734,14 @@ function getGlobalFiltros() {
     $listaIndustrias=$objIndustria->getListaIndustrias2(NULL, $lista);
     $form['form_4'] = array("elemento" => "combo","change" => "getFiltro('4')", "titulo" => "Industrias", "id" => "_industria", "option" => $listaIndustrias); 
 
+    $objStatusMember = new StatusMember();
+    $listaStatusMember = $objStatusMember->getListaMiembroStatus();
+    $form['form_5'] = array("elemento" => "combo","change" => "getFiltro('5')", "titulo" => "Estado del Miembro", "id" => "_status_memb", "option" => $listaStatusMember); 
+
+    $objGrupo2 = new Grupo();
+    $listaAgrup = $objGrupo2->getListaByAgrup();
+    $form['form_6'] = array("elemento" => "combo","change" => "getFiltro('6')", "titulo" => "Tipo Miembro", "id" => "_memb_type", "option" => $listaAgrup); 
+    
 
 	}
     return $form;

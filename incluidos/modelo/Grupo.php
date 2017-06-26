@@ -138,6 +138,18 @@ class Grupo extends Conexion{
         return parent::getConsultar($sql);   
     }
 
+    public function getListaByAgrup($listaAgrup = array()) {
+        $datos = array(
+            "A" => "Top",
+            "B" => "Key",
+            "C" => "Esposas"
+        );        
+        foreach ($datos as $k => $d) {
+            $listaAgrup['lista_' . $k] = array("value" => $k, "select" =>"", "texto" => $d);
+        }
+        return $listaAgrup;
+    }
+
     public function getListaByTipoEvento($tipo_evento_id) {
         $resultset = $this->getGrupoByTipoEvento($tipo_evento_id);
 

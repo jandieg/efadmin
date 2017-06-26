@@ -316,6 +316,8 @@ function ResetReports(id){
                         }
                     });    
             };
+
+         
             var getConfTabla= function (){
                 $(function () {
                     $('#tipo_personalizada').DataTable({

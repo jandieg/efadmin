@@ -191,8 +191,8 @@ public function setActualizarMiembro($idMiembro, $id_persona, $propietario, $nom
     
     
     
-    public function getFiltros($id, $key, $permiso) {
-        $sql="call sp_selectMiembroFiltros('$id','$key', '$permiso')";
+    public function getFiltros($id, $key, $permiso, $incluyecanceladas) {
+        $sql="call sp_selectMiembroFiltros('$id','$key', '$permiso', '$incluyecanceladas')";
         return parent::getConsultar($sql);   
     }
     

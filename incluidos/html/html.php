@@ -109,6 +109,83 @@ function generadorTablaConBotones($tipo, $titulo,$funcion='', $columnas=array(),
     $t.='</div>';
     return $t ;
 }
+
+function generadorTablaConBotonesMiembros($tipo, $titulo,$funcion='', $columnas=array(), $filas,$botones=array(), $checkcancel){
+    $t='<div class="box box-info">';
+    $t.='<div class="box-header">';
+    $t.='<h3 class="box-title">'.$titulo. '</h3>';
+    if ($checkcancel == 1) {
+        $t.='<div class="box-tools pull-right">';
+           $t.='&nbsp;&nbsp;<input type="checkbox" checked onChange="setCanceladas()" id="_canceladas"> Incluir Canceladas';                  
+        $t.='</div>';        
+        $t.='</div>';
+    } else {
+        $t.='<div class="box-tools pull-right">';
+           $t.='&nbsp;&nbsp;<input type="checkbox"   onChange="setCanceladas()" id="_canceladas"> Incluir Canceladas';                  
+        $t.='</div>';        
+        $t.='</div>';
+    }
+    
+    if($tipo==1){
+        $tipoDatatable='tipo_personalizada';
+    }  else {
+        $tipoDatatable='normal';
+    }
+    $t.='<div class="box-body">';  
+    $t.='<table id="'.$tipoDatatable.'" class="table table-bordered table-striped">';
+    ////////////////////////////////////////////////////////////////////////////
+    $t.='<thead><tr>'; 
+    foreach($columnas as $valor){
+        $t.= '<th>'.$valor.'</th>';
+    }
+    $t.= '</tr></thead>';
+    $t.='<tbody>';
+    $t.=$filas;
+    $t.=' </tbody>';
+    $t.='</tr></thead>';  
+    $t.='<tbody>';
+    $t.=' </table>';
+    $t.='</div>';
+    $t.='</div>';
+    return $t ;
+}
+function generadorTablaConBotones2($tipo, $titulo,$funcion='', $columnas=array(), $filas,$botones=array()){
+    $t='<div class="box box-info">';
+    $t.='<div class="box-header">';
+    $t.='<h3 class="box-title">'.$titulo. '</h3>';
+    if($funcion != ''){
+    $t.='<div class="box-tools pull-right">';
+     foreach ($botones as $boton => $val2) {
+           $t.='&nbsp;&nbsp;<button type="button"  class="btn '.$val2['color'].' " onclick="'.$val2['click'].'"><i class="fa '.$val2['icono'].'"></i> '.$val2['titulo'].'</button>';
+       
+           }
+        $t.='</div>';
+    }
+    
+    $t.='</div>';
+    if($tipo==1){
+        $tipoDatatable='tipo_personalizada2';
+    }  else {
+        $tipoDatatable='normal';
+    }
+    $t.='<div class="box-body">';  
+    $t.='<table id="'.$tipoDatatable.'" class="table table-bordered table-striped">';
+    ////////////////////////////////////////////////////////////////////////////
+    $t.='<thead><tr>'; 
+    foreach($columnas as $valor){
+        $t.= '<th>'.$valor.'</th>';
+    }
+    $t.= '</tr></thead>';
+    $t.='<tbody>';
+    $t.=$filas;
+    $t.=' </tbody>';
+    $t.='</tr></thead>';  
+    $t.='<tbody>';
+    $t.=' </table>';
+    $t.='</div>';
+    $t.='</div>';
+    return $t ;
+}
 function generadorTablaConBotones_($tipo, $titulo,$funcion='', $columnas=array(), $filas,$botones=array()){
     $t='<div class="box box-info">';
     $t.='<div class="box-header">';
@@ -482,6 +559,21 @@ function generadorEtiqueta($tab=array()){
                     $msg.='<div class="checkbox">'; 
                     $msg.='<label>'; 
                     $msg.='<input type="checkbox" '.$valor['chec'].' id="'.$valor['id'].'" class="flat-red">'; 
+                    $msg.=$valor['titulo']; 
+                    $msg.='</label>';
+                    $msg.=' </div>'; 
+                    $msg.=' </div>';
+                    $msg.='</div>'; 
+               }
+
+               if($valor['elemento']=='Checkbox-comun'){
+   
+                    $msg.='<div class="form-group">'; 
+                    $msg.='<label for="" class="col-sm-3 control-label"></label>'; 
+                    $msg.='<div class="col-sm-9">'; 
+                    $msg.='<div class="checkbox">'; 
+                    $msg.='<label>'; 
+                    $msg.='<input type="checkbox" '.$valor['chec'].' id="'.$valor['id'].'" >'; 
                     $msg.=$valor['titulo']; 
                     $msg.='</label>';
                     $msg.=' </div>'; 

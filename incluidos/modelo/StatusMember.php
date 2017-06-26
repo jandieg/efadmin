@@ -22,6 +22,19 @@ class StatusMember extends Conexion{
         $sql="call sp_selectStatus('$estado', '$isMiembroAplicante')";
         return parent::getConsultar($sql);   
     }
+
+    public function getMiembroStatus() {
+        $sql="call sp_selectMiembroStatus();";
+        return parent::getConsultar($sql);
+    }
+
+    function getListaMiembroStatus($lista = array()) {
+        $resultset = $this->getMiembroStatus();
+        while ($row = $resultset->fetch_assoc()) { 
+                $lista['lista_'.$row['mem_sta_id']] = array("value" => $row['mem_sta_id'],  "select" => "" ,"texto" =>$row['mem_sta_codigo']." - ".$row['mem_sta_descripcion']);
+        }
+        return $lista;
+    }
     
     function getLista($idSeleccionado='', $lista=array(), $isMiembroAplicante= '1') {
         $resultset= $this->get('A',$isMiembroAplicante); 

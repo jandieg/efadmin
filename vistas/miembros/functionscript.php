@@ -5,6 +5,7 @@ session_start();
 
 <script>
 
+
 var cambioMembresia = function () {
     if ($("#_status").val() == 2) {
         generarRangoFechas();        
@@ -21,39 +22,89 @@ var checkCancel = function() {
 }
 
 
-var getConfTabla= function (){
-                $(function () {
-                    $('#tipo_personalizada').DataTable({
-                                 "aLengthMenu": [[ 15, 50,75,100, -1], [ 15, 50,75,100, "All"]],
-                                 "iDisplayLength": 15, 
-                                 "iDisplayStart": 0,
-                                 "language": {
-                                     "sProcessing":    "Procesando...",
-                                     "sLengthMenu":    "Mostrar _MENU_ registros",
-                                     "sZeroRecords":   "No se encontraron resultados",
-                                     "sEmptyTable":    "Ningún dato disponible en esta tabla",
-                                     "sInfo":          "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                                     "sInfoEmpty":     "Mostrando registros del 0 al 0 de un total de 0 registros",
-                                     "sInfoFiltered":  "(filtrado de un total de _MAX_ registros)",
-                                     "sInfoPostFix":   "",
-                                     "sSearch":        "Buscar:",
-                                     "sUrl":           "",
-                                     "sInfoThousands":  ",",
-                                     "sLoadingRecords": "Cargando...",
-                                     "oPaginate": {
-                                         "sFirst":    "Primero",
-                                         "sLast":    "Último",
-                                         "sNext":    "Siguiente",
-                                         "sPrevious": "Anterior"
-                                     },
-                                     "oAria": {
-                                         "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
-                                         "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-                                     }
-                                 }
-                             });          
-                });
-            };
+var setCanceladas = function() {
+
+    var canceladas = 0;
+    var key = 'x';
+    if ($("#_canceladas").is(":checked")) {
+        canceladas = 1;
+    }
+    var filtro= "x";
+    if ($("#_grupo").val().toString() != "x") {
+        filtro = $("#_grupo").val().toString();
+        key = 1;
+    }
+
+    if ($("#_empresa").val().toString() != "x") {
+        filtro = $("#_empresa").val().toString();
+        key = 3;
+    }
+
+    if ($("#_status_memb").val().toString() != "x") {
+        filtro = $("#_status_memb").val().toString();
+        key = 5;
+    }
+
+    if ($("#_memb_type").val().toString() != "x") {
+        filtro = $("#_memb_type").val().toString();
+        key = 6;
+    }
+
+    if ($("#_forum").val().toString() != "x") {
+        filtro = $("#_memb_type").val().toString();
+        key = 2;
+    }
+
+    if ($("#_industria").val().toString() != "x") {
+        filtro = $("#_industria").val().toString();
+        key = 4;
+    }
+    
+      var parametros = {
+            KEY: 'KEY_SHOW_FILTRO',
+            _key_filtro: key,
+            _filtro: filtro,
+            _canceladas: canceladas
+        };
+        $.ajax({
+            data:  parametros,
+            url:   'miembros',
+            type:  'post',
+            dataType : 'json',
+            beforeSend: function () {
+                //$.msg({content : '<img src="public/images/loanding.gif" />', autoUnblock: false});
+            },
+            success:  function (mensaje) {
+                //$.msg('unblock');
+                    if(mensaje.success == "true"){
+                        if(key == "1"){
+                            //$('#_forum option[value="'+mensaje.id+'"]').prop('selected', true);
+                            $('#_forum').val(mensaje.id);
+                            $(".select2").select2();
+                        }
+                        if(key == "2"){
+                             //$('#_grupo option[value="'+mensaje.id+'"]').prop('selected', true);
+//                             $('#_grupo').val(mensaje.id);
+                             $('#_grupo').html(mensaje.gruposfiltro);
+                             $(".select2").select2();
+                             
+                             
+                        }
+//                        
+                        
+                        $("#ben_contenedor_filtro").html( mensaje.tabla);
+                        getConfTabla();
+                    }else{
+                    $.toaster({ priority : mensaje.priority, title : 'Alerta', message : mensaje.msg});
+                }
+            },error : function(xhr, status) {
+//                $.unblockUI();
+                //$.msg('unblock');
+                $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema' + xhr.toString() + status.toString()});
+            }
+        });
+
+}
 
 var generarRangoFechas = function () {
     var date2 = new Date().toISOString().substr(0,19).replace('T', ' ');
@@ -420,7 +471,10 @@ var getRecargar = function(){
 };
 var getFiltro = function(key){
    
-     
+     var canceladas = 0;
+     if ($("#_canceladas").is(":checked")) {
+         canceladas = 1;
+     }
     var filtro= "";
     switch(key){
         case "1":        
@@ -430,6 +484,8 @@ var getFiltro = function(key){
 //            $('#_industria option[value="x"]').prop('selected', true);
             
             $('#_empresa').val('x');
+            $('#_status_memb').val('x');
+            $('#_memb_type').val('x');
             $('#_industria').val('x');
             $(".select2").select2();
             
@@ -439,6 +495,9 @@ var getFiltro = function(key){
             //$('#_grupo option[value="x"]').prop('selected', true);
 //            $('#_empresa option[value="x"]').prop('selected', true);
 //            $('#_industria option[value="x"]').prop('selected', true);
+            $('#_grupo').val('x');
+            $('#_status_memb').val('x');
+            $('#_memb_type').val('x');
             $('#_empresa').val('x');
             $('#_industria').val('x');
             $(".select2").select2();
@@ -450,6 +509,8 @@ var getFiltro = function(key){
 //            $('#_industria option[value="x"]').prop('selected', true);
             
             $('#_grupo').val('x');
+            $('#_status_memb').val('x');
+            $('#_memb_type').val('x');
             $('#_forum').val('x');
             $('#_industria').val('x');
             $(".select2").select2();
@@ -461,9 +522,39 @@ var getFiltro = function(key){
 //            $('#_forum option[value="x"]').prop('selected', true);
 //            $('#_empresa option[value="x"]').prop('selected', true);
             $('#_grupo').val('x');
+            $('#_status_memb').val('x');
+            $('#_memb_type').val('x');
             $('#_forum').val('x');
             $('#_empresa').val('x');
             $(".select2").select2();
+            break;
+        case "5":
+        //_status_memb
+        //_memb_type
+        filtro= $('#_status_memb').val().toString();
+//            $('#_grupo option[value="x"]').prop('selected', true);
+//            $('#_forum option[value="x"]').prop('selected', true);
+//            $('#_empresa option[value="x"]').prop('selected', true);
+            $("#_industria").val("x");
+            $('#_grupo').val('x');
+            $('#_memb_type').val('x');
+            $('#_forum').val('x');
+            $('#_empresa').val('x');
+            $(".select2").select2();
+            break;
+        case "6":
+        filtro= $('#_memb_type').val().toString();
+//            $('#_grupo option[value="x"]').prop('selected', true);
+//            $('#_forum option[value="x"]').prop('selected', true);
+//            $('#_empresa option[value="x"]').prop('selected', true);
+            $('#_status_memb').val("x");
+            $("#_industria").val("x");
+            $('#_grupo').val('x');
+            $('#_status_memb').val('x');
+            $('#_forum').val('x');
+            $('#_empresa').val('x');
+            $(".select2").select2();
+            
             break;
             
           
@@ -472,7 +563,8 @@ var getFiltro = function(key){
       var parametros = {
             KEY: 'KEY_SHOW_FILTRO',
             _key_filtro: key,
-            _filtro: filtro
+            _filtro: filtro,
+            _canceladas: canceladas
         };
         $.ajax({
             data:  parametros,
