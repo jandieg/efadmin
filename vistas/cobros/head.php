@@ -68,14 +68,39 @@ function getCheckCobro($id, $idPresupuesto, $disabled, $bandera, $cobro ) {
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {    
     try{
         switch ($_POST['KEY']): 
+            case 'KEY_ACTUALIZA_FILTRO_MIEMBRO_EMPRESA':
+                $lista['lista_']= array("value" => "x",  "select" => "" ,"texto" => "Seleccione..."); 
+                $objMiembro = new Miembro();
+                $lista = $objMiembro->getListaMiembrosByEmpresa($lista, $_POST['_id']);
+                $form2['form_2'] = array("elemento" => "combo","change" => "getDetalleFiltroMiembro()","titulo" => "<h4>Miembros</h4>", "id" => "_miembros", "option" => $lista);  
+                echo generadorEtiquetasFiltro($form2);
+
+            break;
+            case 'KEY_ACTUALIZA_FILTRO_GRUPO_EMPRESA':
+                $lista['lista_']= array("value" => "x",  "select" => "" ,"texto" => "Seleccione..."); 
+                $objGrupo = new Grupo();
+                $lista = $objGrupo->getListaGruposByEmpresa($lista, $_POST['_id']);
+                $form3['form_3'] = array("elemento" => "combo","change" => "getDetalleFiltroGrupo()","titulo" => "<h4>Grupos</h4>", "id" => "_grupos", "option" => $lista); 
+                echo generadorEtiquetasFiltro($form3);
+            break;
+
+            case 'KEY_ACTUALIZA_FILTRO_MIEMBRO_GRUPO':
+                $lista['lista_']= array("value" => "x",  "select" => "" ,"texto" => "Seleccione..."); 
+                $objMiembro = new Miembro();
+                $lista = $objMiembro->getListaMiembrosByGrupo($lista, $_POST['_id']);
+                $form2['form_2'] = array("elemento" => "combo","change" => "getDetalleFiltroMiembro()","titulo" => "<h4>Miembros</h4>", "id" => "_miembros", "option" => $lista);  
+                echo generadorEtiquetasFiltro($form2);            
+            break;
+
             case 'KEY_DETALLE_FILTRO_EMPRESA':
-                if(!empty($_POST['_id']) ){ 
-                    
+                if(strlen($_POST['_id']) > 0){ 
                     $_SESSION['cobro_ultimo_id']=$_POST['_id'];
                     $_SESSION['cobro_key']=$_POST['_key_filtro'];
-
                     echo getDetalleEmpresaConMiembros($_POST['_id'],$_POST['_key_filtro'] ,$_POST['_año']);
                     exit();            
+                } else {
+                    $objGrupo = new Grupo();
+                    echo getDetalleEmpresaConMiembros($objGrupo->getPrimerGrupo(), "GRUPO", $_POST['_año']);
                 }
                 break;
 
@@ -425,15 +450,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 function getTablaFiltro($listaMiembros= array(),$listaEmpresa= array(), $listaGrupos= array(),$tabla_miembros='' ) {
     global $perVerTodosFiltrosCobrosOp13, $perVerFiltrosIDForumOp13;
     if(count($listaEmpresa) > 0 ){
-        $form1['form_1'] = array("elemento" => "combo","change" => "getDetalleFiltro('EMPRESA')","titulo" => "<h4>Empresa</h4>", "id" => "_empresa", "option" => $listaEmpresa); 
+        $form1['form_1'] = array("elemento" => "combo","change" => "getDetalleFiltroEmpresa()","titulo" => "<h4>Empresa</h4>", "id" => "_empresa", "option" => $listaEmpresa); 
     }
     if(count($listaMiembros) > 0 ){
-        $form2['form_2'] = array("elemento" => "combo","change" => "getDetalleFiltro('MIEMBRO')","titulo" => "<h4>Miembros</h4>", "id" => "_miembros", "option" => $listaMiembros);  
+        $form2['form_2'] = array("elemento" => "combo","change" => "getDetalleFiltroMiembro()","titulo" => "<h4>Miembros</h4>", "id" => "_miembros", "option" => $listaMiembros);  
     }
     if(count($listaGrupos) > 0 ){
-        $form3['form_3'] = array("elemento" => "combo","change" => "getDetalleFiltro('GRUPO')","titulo" => "<h4>Grupos</h4>", "id" => "_grupos", "option" => $listaGrupos); 
+        $form3['form_3'] = array("elemento" => "combo","change" => "getDetalleFiltroGrupo()","titulo" => "<h4>Grupos</h4>", "id" => "_grupos", "option" => $listaGrupos); 
     }
-   $form4['form_1'] = array("elemento" => "combo","disabled" => "","change" => "","titulo" => "<h4>Año</h4>", "id" => "_año", "option" => generadorComboAños(date('Y')));
+   $form4['form_1'] = array("elemento" => "combo","disabled" => "","change" => "getDetalleFiltroAnho()","titulo" => "<h4>Año</h4>", "id" => "_año", "option" => generadorComboAños(date('Y')));
     if (in_array($perVerTodosFiltrosCobrosOp13, $_SESSION['usu_permiso'])) {
         $resultado = str_replace("{contenedor_1}", generadorEtiquetasFiltro($form1),  getPage('page_detalle_filtros')); 
     }  elseif (in_array($perVerFiltrosIDForumOp13, $_SESSION['usu_permiso'])) {

@@ -195,6 +195,32 @@ public function setActualizarMiembro($idMiembro, $id_persona, $propietario, $nom
         $sql="call sp_selectMiembroFiltros('$id','$key', '$permiso', '$incluyecanceladas')";
         return parent::getConsultar($sql);   
     }
+
+    public function getMiembrosByGrupo($idGrupo) {
+        $sql = "call sp_selectMiembrosByGrupo('$idGrupo');";
+        return parent::getConsultar($sql);
+    }
+
+    public function getListaMiembrosByGrupo($lista = array(), $idGrupo) {
+        $resultset = $this->getMiembrosByGrupo($idGrupo);
+         while ($row = $resultset->fetch_assoc()) { 
+            $lista['lista_'.$row['mie_id']] = array("value" => $row['mie_id'],  "select" => "" ,"texto" => $row['per_nombre']." ".$row['per_apellido']);
+        }
+        return $lista;
+    }
+
+    public function getMiembrosByEmpresa($idEmpresa) {
+        $sql = "call sp_selectMiembrosByEmpresa('$idEmpresa');";
+        return parent::getConsultar($sql);
+    }
+
+    public function getListaMiembrosByEmpresa($lista = array(), $idEmpresa) {
+        $resultset = $this->getMiembrosByEmpresa($idEmpresa);
+         while ($row = $resultset->fetch_assoc()) { 
+            $lista['lista_'.$row['mie_id']] = array("value" => $row['mie_id'],  "select" => "" ,"texto" => $row['per_nombre']." ".$row['per_apellido']);
+        }
+        return $lista;
+    }
     
     public function getListaMiembros($idSeleccionado='', $lista= array(),$id_forum="", $is_todos_seleccionado= FALSE) {   
         if($id_forum == ""){

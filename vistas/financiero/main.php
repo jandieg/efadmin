@@ -21,12 +21,12 @@
                           <img src="public/images/cobro.jpg" alt="User Image">
                           <h2><a class="users-list-name" href="cobros">Cobros</a></h2>
                         </li>
-                    <?php } if (in_array($perPagosOp11, $_SESSION['usu_permiso'])) { ?>
+                    <?php } /*if (in_array($perPagosOp11, $_SESSION['usu_permiso'])) { ?>
                         <li>
                           <img src="public/images/pago.jpg" alt="User Image">
                           <h2><a class="users-list-name" href="pagos">Pagos</a></h2>
                         </li>
-                    <?php } if (in_array($perReportesOp11, $_SESSION['usu_permiso'])) { ?>
+                    <?php }*/ if (in_array($perReportesOp11, $_SESSION['usu_permiso'])) { ?>
                         <li>
                           <img src="public/images/reportes.jpg" alt="User Image">
                           <h2><a class="users-list-name" href="reporting">Reportes</a></h2>

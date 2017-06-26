@@ -190,9 +190,22 @@ class Grupo extends Conexion{
         $sql="call sp_selectGrupoKey('$idForum', '4')";
         return parent::getConsultar($sql);   
     }
+
+    public function getGrupoByEmpresa($idEmpresa) {
+        $sql ="call sp_selectGrupoByEmpresa('$idEmpresa');";
+        return parent::getConsultar($sql);
+    } 
+
+    public function getListaGruposByEmpresa($lista=array(),$idEmpresa) {
+        $resultset = $this->getGrupoByEmpresa($idEmpresa);
+         while($row = $resultset->fetch_assoc()) { 
+            $lista['lista_'.$row['gru_id']] = array( "value" => $row['gru_id'],  "select" => "" ,"texto" => $row['gru_descripcion']);
+            if($this->primerGrupo == ''){ $this->primerGrupo=$row['gru_id']; }
+        }
+        return $lista;
+    }
     
-    public function getListaGruposForum($idForum='', $idSeleccionado='',$list= array()) {  
-         
+    public function getListaGruposForum($idForum='', $idSeleccionado='',$list= array()) {           
         $resultset= $this->getGruposForum($idForum);
         if($idSeleccionado!=''){
             while($row = $resultset->fetch_assoc()) { 

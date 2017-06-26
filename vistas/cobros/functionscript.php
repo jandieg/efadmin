@@ -53,6 +53,191 @@ var getDetalleFiltro = function(_key_filtro){
         });
 };
 
+
+var getDetalleFiltroAnho = function(){
+    //todo
+    var _key_filtro = "";
+    var id = "";
+    if ($("#_empresa").val() != null && $("#_empresa").val().toString() != "x") {
+        _key_filtro = "EMPRESA";
+        id = $("#_empresa").val().toString();
+    }
+
+    if ($("#_grupos").val() != null && $("#_grupos").val().toString() != "x") {
+        _key_filtro = "GRUPO";
+        id = $("#_grupos").val().toString();
+    }
+
+    if ($("#_miembros").val() != null && $("#_miembros").val().toString() != "x") {
+        _key_filtro = "MIEMBRO";
+        id = $("#_miembros").val().toString();
+    }
+
+        var parametros = {
+            KEY: 'KEY_DETALLE_FILTRO_EMPRESA',
+            _id: id.toString(),
+            _key_filtro: _key_filtro.toString(),
+            _año: $("#_año").val().toString()
+        };
+        $.ajax({
+            data:  parametros,
+            url:   'cobros',
+            type:  'post',
+            beforeSend: function () {
+                $.msg({content : '<img src="public/images/loanding.gif" />', autoUnblock: false});
+            },
+            success:  function (mensaje) {
+                $.msg('unblock');
+                    $("#ben_contenedor_tabla").html(mensaje);
+                    getConfTabla();
+            },error : function(xhr, status) {
+                $.msg('unblock');
+                $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema' + status.toString()+" "+ xhr.toString()});
+            }
+        });
+};
+
+
+var getDetalleFiltroEmpresa = function(){
+        
+        var parametrosMiembro = {
+            KEY: 'KEY_ACTUALIZA_FILTRO_MIEMBRO_EMPRESA',
+            _id: $("#_empresa").val().toString()
+        }
+
+        $.ajax({
+            data:  parametrosMiembro,
+            url:   'cobros',
+            type:  'post',
+            async: false,
+            success:  function (mensaje) {
+                    $("#_miembros").html(mensaje);
+            },error : function(xhr, status) {                
+                $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema' + status.toString()+" "+ xhr.toString()});
+            }
+        });
+
+        var parametrosGrupo = {
+            KEY: 'KEY_ACTUALIZA_FILTRO_GRUPO_EMPRESA',
+            _id: $("#_empresa").val().toString()
+        }
+
+        $.ajax({
+            data:  parametrosGrupo,
+            url:   'cobros',
+            type:  'post',
+            async: false,
+            success:  function (mensaje) {
+                    $("#_grupos").html(mensaje);
+            },error : function(xhr, status) {                
+                $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema' + status.toString()+" "+ xhr.toString()});
+            }
+        });
+        
+
+        
+   
+        var parametros = {
+            KEY: 'KEY_DETALLE_FILTRO_EMPRESA',
+            _id: $("#_empresa").val().toString(),
+            _key_filtro: "EMPRESA",
+            _año: $("#_año").val().toString()
+        };
+        $.ajax({
+            data:  parametros,
+            url:   'cobros',
+            type:  'post',
+            beforeSend: function () {
+                $.msg({content : '<img src="public/images/loanding.gif" />', autoUnblock: false});
+            },
+            success:  function (mensaje) {
+                $.msg('unblock');
+                    $("#ben_contenedor_tabla").html(mensaje);
+                    getConfTabla();
+            },error : function(xhr, status) {
+                $.msg('unblock');
+                $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema' + status.toString()+" "+ xhr.toString()});
+            }
+        });
+};
+
+var getDetalleFiltroMiembro = function(){
+     
+   
+        var parametros = {
+            KEY: 'KEY_DETALLE_FILTRO_EMPRESA',
+            _id: $("#_miembros").val().toString(),
+            _key_filtro: "MIEMBRO",
+            _año: $("#_año").val().toString()
+        };
+        $.ajax({
+            data:  parametros,
+            url:   'cobros',
+            type:  'post',
+            beforeSend: function () {
+                $.msg({content : '<img src="public/images/loanding.gif" />', autoUnblock: false});
+            },
+            success:  function (mensaje) {
+                $.msg('unblock');
+                    $("#ben_contenedor_tabla").html(mensaje);
+                    getConfTabla();
+            },error : function(xhr, status) {
+                $.msg('unblock');
+                $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema' + status.toString()+" "+ xhr.toString()});
+            }
+        });
+};
+
+var getDetalleFiltroGrupo = function(){
+        var id=""; 
+         var parametrosMiembro = {
+            KEY: 'KEY_ACTUALIZA_FILTRO_MIEMBRO_GRUPO',
+            _id: $("#_grupos").val().toString()
+        }
+
+        $.ajax({
+            data:  parametrosMiembro,
+            url:   'cobros',
+            type:  'post',
+            async: false,
+            success:  function (mensaje) {
+                    $("#_miembros").html(mensaje);
+            },error : function(xhr, status) {                
+                $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema' + status.toString()+" "+ xhr.toString()});
+            }
+        });
+        id= $("#_grupos").val().toString();
+
+        $(".select2").select2();
+        
+   
+        var parametros = {
+            KEY: 'KEY_DETALLE_FILTRO_EMPRESA',
+            _id: id.toString(),
+            _key_filtro: "GRUPO",
+            _año: $("#_año").val().toString()
+        };
+        $.ajax({
+            data:  parametros,
+            url:   'cobros',
+            type:  'post',
+            beforeSend: function () {
+                $.msg({content : '<img src="public/images/loanding.gif" />', autoUnblock: false});
+            },
+            success:  function (mensaje) {
+                $.msg('unblock');
+                    $("#ben_contenedor_tabla").html(mensaje);
+                    getConfTabla();
+            },error : function(xhr, status) {
+                $.msg('unblock');
+                $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema' + status.toString()+" "+ xhr.toString()});
+            }
+        });
+};
+
+
+
+
 var cambioAnhoCobro = function() {
     var parametros = {
         KEY: 'KEY_DETALLE_COBRO_ANHO',
