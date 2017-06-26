@@ -14,6 +14,7 @@ require_once MODELO.'Ciudad.php';
 include(HTML."/html_filtros.php");
 require_once MODELO.'Industria.php';
 require_once MODELO.'ForumLeader.php';
+require_once MODELO.'PAMAsistente.php';
 include(HTML."/html.php");
 include(HTML."/html_2.php");
 
@@ -28,7 +29,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         switch ($_POST['KEY']): 
             case 'KEY_SHOW_FORM_DETALLE':
                 if(!empty($_POST['id']) ){ 
-                    
+                    $objEmpresaLocal2 = new EmpresaLocal();
+                    $resultset2 = $objEmpresaLocal2->getResenaDeMiembro($_POST['id']);
+                    $resena = "";
+                    $miembro_id = "0";
+                    if ($row2 = $resultset2->fetch_assoc()) {
+                        $resena = $row2['mie_observacion'];
+                        $miembro_id = $row2['mie_id'];
+                    }
                     $objEmpresaLocal= new EmpresaLocal();
                     $resultset= $objEmpresaLocal->getEmpresaLocal($_POST['id']);
                     if($row = $resultset->fetch_assoc()) {                     
@@ -36,14 +44,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         $modificador= $objUsuario->getNombreUser($row['emp_id_usuario']);        
                         $tabla['t_1'] = array("t_1" => generadorNegritas($lblNombre), "t_2" => $row['emp_nombre']);
                         $tabla['t_2'] = array("t_1" => generadorNegritas($lblRUC), "t_2" => $row['emp_ruc']);
-                        $tabla['t_3'] = array("t_1" => generadorNegritas($lblIngresosAnuales), "t_2" => $row['emp_imgresos']);
-                        $tabla['t_4'] = array("t_1" => generadorNegritas($lblNEmpleados), "t_2" => $row['emp_num_empleados']);
-                        $tabla['t_5'] = array("t_1" => generadorNegritas($lblFax), "t_2" => $row['emp_fax']);
+                       // $tabla['t_3'] = array("t_1" => generadorNegritas($lblIngresosAnuales), "t_2" => $row['emp_imgresos']);
+                        //$tabla['t_4'] = array("t_1" => generadorNegritas($lblNEmpleados), "t_2" => $row['emp_num_empleados']);
+                      // $tabla['t_5'] = array("t_1" => generadorNegritas($lblFax), "t_2" => $row['emp_fax']);
                         $tabla['t_6'] = array("t_1" => generadorNegritas($lblSitioWeb), "t_2" => $row['emp_sitio_web']);
 //                        $tabla['t_7'] = array("t_1" => generadorNegritas($lblEstado), "t_2" => ($row['emp_estado']=="A" ? "Activo" : "Inactivo"));
-                        $tabla['t_8'] = array("t_1" => generadorNegritas($lblCorreo), "t_2" => getFormatoFechadmyhis($row['emp_correo_principal']));
-                        $tabla['t_9'] = array("t_1" => generadorNegritas($lblTM), "t_2" =>getFormatoFechadmyhis($row['emp_movil']));
-                        $tabla['t_16'] = array("t_1" => generadorNegritas($lblResena), "t_2" =>$row['emp_resena']);
+                        //$tabla['t_8'] = array("t_1" => generadorNegritas($lblCorreo), "t_2" => getFormatoFechadmyhis($row['emp_correo_principal']));
+                      //  $tabla['t_9'] = array("t_1" => generadorNegritas($lblTM), "t_2" =>getFormatoFechadmyhis($row['emp_movil']));
+                        $tabla['t_16'] = array("t_1" => generadorNegritas($lblResena), "t_2" => $resena);
 
 //                        
                         $tabla3['t_12'] = array("t_1" => generadorNegritas($lblPais), "t_2" => $row['pai_nombre']);
@@ -87,7 +95,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     
                     $cuerpo='';
                     $cont= 1;
-                    $objEmpresaLocal= new EmpresaLocal();
+                    $objPAMAsistente = new PAMAsistente();
+                    $tablaDetalleContactos = "";
+                    $tablaDetalleContactos = $objPAMAsistente->getTablaSinEdicion($miembro_id, '1');
+                    /*$objEmpresaLocal= new EmpresaLocal();
                     $resultset= $objEmpresaLocal->getEmpresaContactos($_POST['id']);
                     while ($row = $resultset->fetch_assoc()) { 
                        //$acciones='';
@@ -116,12 +127,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             generadorNegritas($lblTM),
                             generadorNegritas($lblTF),
                             generadorNegritas($lblCorreo),
-                            generadorNegritas("Acción")), $cuerpo);
+                            generadorNegritas("Acción")), $cuerpo);*/
       
                     $boton_agregar_contacto='';
                     if (in_array($perCrearContactoOp8, $_SESSION['usu_permiso'])) {
-                        $boton2['boton_3'] = array("elemento" => "boton" ,"modal" => "#modal_getCrearContacto"  ,"color" => "btn-info" ,"click" => "getAgregarContacto(".$_POST['id'].")" ,"titulo" => $lblAgregarContacto ,"lado" => "pull-right" ,"icono" => "fa-user");
-                        $boton_agregar_contacto= generadorBoton($boton2);
+                      /*  $boton2['boton_3'] = array("elemento" => "boton" ,"modal" => "#modal_getCrearContacto"  ,"color" => "btn-info" ,"click" => "getAgregarContacto(".$_POST['id'].")" ,"titulo" => $lblAgregarContacto ,"lado" => "pull-right" ,"icono" => "fa-user");
+                        $boton_agregar_contacto= generadorBoton($boton2);*/
                         
                     }                                           
                     if (in_array($perActualizarEmpresaOp8, $_SESSION['usu_permiso'])) {
@@ -171,15 +182,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         //Formularios
                         $form['form_1'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => generadorAsterisco($lblEmpresa), "id" => "_empresa" ,"reemplazo" => $row['emp_nombre']);
                         $form['form_2'] = array("elemento" => "caja" ,"tipo" => "number" , "titulo" => "RUC", "id" => "_ruc" ,"reemplazo" => $row['emp_ruc']);
-                        $form['form_3'] = array("elemento" => "caja" ,"tipo" => "number" , "titulo" => $lblIngresosAnuales, "id" => "_ingresos" ,"reemplazo" => $row['emp_imgresos']);
-                        $form['form_4'] = array("elemento" => "caja" ,"tipo" => "number" , "titulo" => $lblNEmpleados, "id" => "_numero_empleados" ,"reemplazo" =>  $row['emp_num_empleados']);
-                        $form['form_5'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => $lblFax, "id" => "_fax" ,"reemplazo" => $row['emp_fax']);
+                        //$form['form_3'] = array("elemento" => "caja" ,"tipo" => "number" , "titulo" => $lblIngresosAnuales, "id" => "_ingresos" ,"reemplazo" => $row['emp_imgresos']);
+                        //$form['form_4'] = array("elemento" => "caja" ,"tipo" => "number" , "titulo" => $lblNEmpleados, "id" => "_numero_empleados" ,"reemplazo" =>  $row['emp_num_empleados']);
+                        //$form['form_5'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => $lblFax, "id" => "_fax" ,"reemplazo" => $row['emp_fax']);
                         $form['form_6'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => $lblSitioWeb, "id" => "_sitio_web" ,"reemplazo" => $row['emp_sitio_web']);
                         $form['form_7'] = array("elemento" => "lista-multiple",                   "titulo" => generadorAsterisco($lblIndustria), "id" => "_industria", "option" => $listaIndustria);
                         //$form['form_8'] = array("elemento" => "combo","change" => "",  "titulo" => "Estado", "id" => "_estado", "option" => generadorComboEstado(($row['emp_estado']=="A" ? "Activo" : "Inactivo"))); 
-                        $form['form_8'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => $lblCorreo, "id" => "_correo1" ,"reemplazo" => $row['emp_correo_principal']);
-                        $form['form_9'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => $lblTM, "id" => "_movil" ,"reemplazo" => $row['emp_movil']);
-                        $form['form_16'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => $lblResena, "id" => "_resena" ,"reemplazo" => $row['emp_resena']);
+                        //$form['form_8'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => $lblCorreo, "id" => "_correo1" ,"reemplazo" => $row['emp_correo_principal']);
+                        //$form['form_9'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => $lblTM, "id" => "_movil" ,"reemplazo" => $row['emp_movil']);
+                        //$form['form_16'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => $lblResena, "id" => "_resena" ,"reemplazo" => $row['emp_resena']);
 
 
                         $form['form_12'] = array("elemento" => "combo","change" => "getCargarPaises()","titulo" => $lblPais, "id" => "_pais", "option" => $listapais);
@@ -219,14 +230,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $form['form_1'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => generadorAsterisco($lblEmpresa), "id" => "_empresa" ,"reemplazo" => "");
                 $form['form_2'] = array("elemento" => "caja" ,"tipo" => "number" , "titulo" => "RUC", "id" => "_ruc" ,"reemplazo" => "");
                 
-                $form['form_4'] = array("elemento" => "caja" ,"tipo" => "number" , "titulo" => $lblIngresosAnuales, "id" => "_ingresos" ,"reemplazo" => "");
-                $form['form_5'] = array("elemento" => "caja" ,"tipo" => "number" , "titulo" => $lblNEmpleados, "id" => "_numero_empleados" ,"reemplazo" => "");
+                //$form['form_4'] = array("elemento" => "caja" ,"tipo" => "number" , "titulo" => $lblIngresosAnuales, "id" => "_ingresos" ,"reemplazo" => "");
+                //$form['form_5'] = array("elemento" => "caja" ,"tipo" => "number" , "titulo" => $lblNEmpleados, "id" => "_numero_empleados" ,"reemplazo" => "");
                 $form['form_6'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => $lblFax, "id" => "_fax" ,"reemplazo" => "");
                 $form['form_7'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => $lblSitioWeb, "id" => "_sitio_web" ,"reemplazo" => "");
                 $form['form_8'] = array("elemento" => "lista-multiple","titulo" => generadorAsterisco($lblIndustria), "id" => "_industria", "option" => $listaIndustria);
-                $form['form_9'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => $lblCorreo, "id" => "_correo1" ,"reemplazo" => "");
-                $form['form_10'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => $lblTM, "id" => "_movil" ,"reemplazo" => "");
-                $form['form_16'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => $lblResena, "id" => "_resena" ,"reemplazo" => "");
+                //$form['form_9'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => $lblCorreo, "id" => "_correo1" ,"reemplazo" => "");
+                //$form['form_10'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => $lblTM, "id" => "_movil" ,"reemplazo" => "");
+                //$form['form_16'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => $lblResena, "id" => "_resena" ,"reemplazo" => "");
 
                 
                 $form['form_12'] = array("elemento" => "combo","change" => "getCargarPaises()","titulo" => $lblPais, "id" => "_pais", "option" => $listapais);
@@ -253,10 +264,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $form['form_2'] = array("elemento" => "caja" ,"tipo" => "number" , "titulo" => "RUC", "id" => "_ruc_modal_empresa" ,"reemplazo" => "");
                 
                 $form['form_8'] = array("elemento" => "lista-multiple","titulo" => generadorAsterisco($lblIndustria), "id" => "_industria_modal_empresa", "option" => $listaIndustria);
-				  $form['form_9'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => $lblResena, "id" => "_resena_modal_empresa" ,"reemplazo" => "");
+				//  $form['form_9'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => $lblResena, "id" => "_resena_modal_empresa" ,"reemplazo" => "");
 				  
-                $form['form_16'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_correo1_modal_empresa" ,"reemplazo" => "");
-                $form['form_10'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_movil_modal_empresa" ,"reemplazo" => "");
+                //$form['form_16'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_correo1_modal_empresa" ,"reemplazo" => "");
+                //$form['form_10'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_movil_modal_empresa" ,"reemplazo" => "");
                 $form['form_15'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_calle_modal_empresa" ,"reemplazo" => "");
 				
 				
@@ -514,10 +525,10 @@ function getFiltros() {
         $listaForum=$objForum->getListaForumLeaders2(NULL,$lista);
         $form['form_2'] = array("elemento" => "combo","change" => "getFiltro('2')", "titulo" => "Forum Leader", "id" => "_forum", "option" => $listaForum); 
         
-        $objGrupo= new Grupo();
+      /*  $objGrupo= new Grupo();
         $listaGrupos= $objGrupo->getListaGrupos2(NULL,$lista);
         $form['form_1'] = array("elemento" => "combo","change" => "getFiltro('1')", "titulo" => "Grupos", "id" => "_grupo", "option" => $listaGrupos); 
-
+*/
        
     }
    
@@ -545,15 +556,14 @@ function getTablaFiltrada($id, $key, $idForum) {
         }
         $cuerpo.= generadorTablaFilas(array(
             "<center>".$cont."</center>",
-            generadorLink($row['nombre_empresa'],$verDetalle),
-            $row['emp_ruc']));   
+            generadorLink($row['nombre_empresa'],$verDetalle)));   
         $cont=$cont + 1;
     }    
     $funcion='';
     if (in_array($perCrearEmpresaOp8, $_SESSION['usu_permiso'])) {
        $funcion='getCrear()';
     }
-    $tabla= generadorTabla_(1, $lblEmpresa,$funcion, array( "<center>N°</center>",$lblEmpresa,"RUC"), $cuerpo);
+    $tabla= generadorTabla_(1, $lblEmpresa,$funcion, array( "<center>N°</center>",$lblEmpresa), $cuerpo);
     return $tabla;
     
 }

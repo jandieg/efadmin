@@ -36,6 +36,38 @@ class PAMAsistente extends Conexion{
         $sql="call sp_deletePAMAsistente('$_id_persona', '$bansera', $_id_asistente)";
         return parent::setSqlSp($sql);   
     }
+
+    public function getTablaSinEdicion($_id, $bandera= '1') {
+        global $lblNombre, $lblCategoría,$lblTM, $lblTF, $lblCorreo;
+            $cuerpo='';
+            $cont= 1;
+            $resultset= $this->get($_id,$bandera);
+            while ($row_ma = $resultset->fetch_assoc()) { 
+               $cuerpo.= generadorTablaColoresFilas("" ,
+                       array(
+                           $cont,
+                           $row_ma['per_nombre'] ." ". $row_ma['per_apellido'],
+                           $row_ma['cargo'],
+                           $row_ma['movil'],
+                           $row_ma['fijo'],
+                           $row_ma['correo']
+                           ));   
+                 $cont= $cont + 1; 
+             }
+
+
+        $tablaDetalleAsistente= generadorTablaDetalleEstadoCuenta(
+            array( "N°",
+                generadorNegritas($lblNombre),
+                generadorNegritas($lblCategoría),
+                generadorNegritas($lblTM),
+                generadorNegritas($lblTF),
+                generadorNegritas($lblCorreo)), $cuerpo);
+
+        
+        return $tablaDetalleAsistente;
+    }
+
     public function getTabla($_id, $bandera= '1') {
         global $lblNombre, $lblCategoría,$lblTM, $lblTF, $lblCorreo;
             $cuerpo='';

@@ -37,13 +37,13 @@ var setCrear = function(op, _bandera){
                 _empresa: $("#_empresa").val().toString(),
 //                _estado: $("#_estado").val().toString(),
                 _ruc: $("#_ruc").val().toString(),
-                _ingresos: $("#_ingresos").val().toString(),
-                _numero_empleados: $("#_numero_empleados").val().toString(),
+                _ingresos: '0',//$("#_ingresos").val().toString(),
+                _numero_empleados: 0,//$("#_numero_empleados").val().toString(),
                 _industria:_arrayIndustria,
-                _fax: $("#_fax").val().toString(),
+                _fax: '5555',//$("#_fax").val().toString(),
                 _sitio_web: $("#_sitio_web").val().toString(),
-                _correo1: $("#_correo1").val().toString(),
-                _movil: $("#_movil").val().toString(),
+                _correo1: 'test@test.com',//$("#_correo1").val().toString(),
+                _movil: '5555',//$("#_movil").val().toString(),
                 _ciudad: $("#_ciudad").val().toString(),
                 _calle: $("#_calle").val().toString(),
                 _bandera:_bandera
@@ -87,13 +87,13 @@ var setActualizar = function(id){
             _empresa: $("#_empresa").val().toString(),
 //            _estado: $("#_estado").val().toString(),
             _ruc: $("#_ruc").val().toString(),
-            _ingresos: $("#_ingresos").val().toString(),
-            _numero_empleados: $("#_numero_empleados").val().toString(),
+            _ingresos: '0',//$("#_ingresos").val().toString(),
+            _numero_empleados: '0',//$("#_numero_empleados").val().toString(),
             _industria:_arrayIndustria,
-            _fax: $("#_fax").val().toString(),
+            _fax: '5555',//$("#_fax").val().toString(),
             _sitio_web: $("#_sitio_web").val().toString(),
-            _correo1: $("#_correo1").val().toString(),
-            _movil: $("#_movil").val().toString(),
+            _correo1: 'test@test.com',//$("#_correo1").val().toString(),
+            _movil: '5555',//$("#_movil").val().toString(),
             _ciudad: $("#_ciudad").val().toString(),
             _calle: $("#_calle").val().toString()
         };
@@ -224,19 +224,19 @@ var getFiltro = function(key){
      
     var filtro= "";
     switch(key){
-        case "1":        
+        /*case "1":        
             filtro= $("#_grupo").val().toString();
             $('#_forum option[value="x"]').prop('selected', true);
             $('#_industria option[value="x"]').prop('selected', true);
-            break;
+            break;*/
         case "2":
             filtro= $("#_forum").val().toString();
-            $('#_grupo option[value="x"]').prop('selected', true);
+            //$('#_grupo option[value="x"]').prop('selected', true);
             $('#_industria option[value="x"]').prop('selected', true);
             break;
         case "4":
             filtro= $("#_industria").val().toString();
-            $('#_grupo option[value="x"]').prop('selected', true);
+            //$('#_grupo option[value="x"]').prop('selected', true);
             $('#_forum option[value="x"]').prop('selected', true);
             break;
             
@@ -258,9 +258,9 @@ var getFiltro = function(key){
                         if(key == "1"){
                             $('#_forum option[value="'+mensaje.id+'"]').prop('selected', true);
                         }
-                        if(key == "2"){
+                       /* if(key == "2"){
                              $('#_grupo option[value="'+mensaje.id+'"]').prop('selected', true);
-                        }
+                        }*/
  
                         $("#ben_contenedor_filtro").html( mensaje.tabla);
                         getConfTabla();
