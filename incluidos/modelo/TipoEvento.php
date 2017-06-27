@@ -28,6 +28,24 @@ class TipoEvento extends Conexion{
         $sql="call sp_selectTipoEventoParametrizada('$id', '$key')";
         return parent::getConsultar($sql);   
     } 
+
+    public function getTipoEventoAcotado() {
+        $sql = "call sp_selectTipoEventoAcotado('$id')";
+        return parent::getConsultar($sql);
+    }
+
+    function getListaAcotada($idSeleccionado='',$lista= array(), $with_periodo= '', $key= '') {
+        
+        $resultset= $this->getTipoEventoAcotado('');     
+        while ($row = $resultset->fetch_assoc()) { 
+                $lista['lista_'.$row['tip_eve_id']] = array("value" => $row['tip_eve_id'],  "select" => "" ,"texto" => $row['tip_eve_descripcion']);
+                if($this->primer == ''){
+                $this->primer=$row['tip_eve_id'];
+                }
+        }
+       return $lista;
+
+    }
     
     function getLista($idSeleccionado='',$lista= array(), $with_periodo= '', $key= '') {
         if($with_periodo == ''){

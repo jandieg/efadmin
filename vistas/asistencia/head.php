@@ -40,9 +40,9 @@ function getAsistencia($idTipoEvento, $idGrupo, $fecha_inicio, $fecha_fin) {
             if(date('Y-m-d',strtotime($row['eve_fechafin'])) <= date("Y-m-d")){
                 $disabled="";
                 if($row['asis_estado'] == '0'){
-                    $checked="checked";
-                }else{
                     $checked="";
+                }else{
+                    $checked="checked";
                 }
                 $isFalta=$row['asis_estado'];
             }else{
@@ -233,8 +233,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         echo json_encode($data);
                      }
 
+                     $checked = 1;
+                     if ($_POST['_checked'] == 1) {
+                         $checked = 0;
+                     }
+
                      $objAsistencia= new Asistencia();
-                     $comp= $objAsistencia->setActualizarAsistencia($_POST['_id_asistencia'],$_SESSION['user_id_ben'], $_POST['_checked']);  
+                     $comp= $objAsistencia->setActualizarAsistencia($_POST['_id_asistencia'],$_SESSION['user_id_ben'], $checked);  
                      if($comp == "OK"){
                         $data = array("success" => "true", "priority"=>'success',"msg" => 'El asistencia se actualizó correctamente!');  
                         echo json_encode($data);
@@ -336,7 +341,7 @@ if (in_array($perVerTodosFiltrosAsistenciaOp17, $_SESSION['usu_permiso'])) {
  }
  
     $objTipoE= new TipoEvento();
-    $listaEventos= $objTipoE->getLista(NULL,NULL,'', '');
+    $listaEventos= $objTipoE->getListaAcotada(NULL,NULL,'', '');
     
     $t=getTablaFiltro($listaEventos,$listaGrupos, getAsistencia($objTipoE->getPrimer(), '', '', ''));
 
