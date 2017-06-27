@@ -2463,8 +2463,8 @@ for ($n = 32; $n <= 43; $n++) {
 	}
 
 $objPHPExcel->getActiveSheet()->setCellValue('A'.$n, $m2."/".$x_day."/".$nextyear);
-$objPHPExcel->getActiveSheet()->setCellValue('D'.$n, calculate_summary_value($m2,$nextyear,'enrollment', $corte));  //Computing Enrollment Fees
-$objPHPExcel->getActiveSheet()->setCellValue('B'.$n, calculate_summary_value($m2,$nextyear,'dues', $corte));  //Computing Dues
+$objPHPExcel->getActiveSheet()->setCellValue('B'.$n, calculate_summary_value($m2,$nextyear,'enrollment', $corte));  //Computing Enrollment Fees
+$objPHPExcel->getActiveSheet()->setCellValue('D'.$n, calculate_summary_value($m2,$nextyear,'dues', $corte));  //Computing Dues
 $objPHPExcel->getActiveSheet()->setCellValue('F'.$n, calculate_summary_value($m2,$nextyear,'other', $corte));  //Computing Other Activity
 $objPHPExcel->getActiveSheet()->setCellValue('R'.$n, calculate_summary_value($m2,$nextyear,'price', $corte));  //Computing Price
 

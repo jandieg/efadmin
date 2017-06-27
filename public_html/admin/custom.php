@@ -53,7 +53,13 @@ if($type=='dues'){
 
 //$sql = "SELECT sum(mie_ins_valor) AS total FROM miembro_inscripcion WHERE MONTH(mie_ins_fechamodificacion)='$month' AND YEAR(mie_ins_fechamodificacion)='$year' AND estado_cobro_id='2'";
 
-$sql="SELECT sum(cobro_total) AS total FROM cobro WHERE MONTH(cobro_fecharegistro)='$month' AND YEAR(cobro_fecharegistro)='$year' AND date(cobro_fecharegistro) <= '$corte'";
+$sql="SELECT sum(cobro.cobro_total) AS total FROM cobro, miembro, grupos 
+WHERE MONTH(cobro.cobro_fecharegistro)='$month' 
+AND YEAR(cobro.cobro_fecharegistro)='$year' 
+AND date(cobro.cobro_fecharegistro) <= '$corte'
+AND miembro.mie_id = cobro.miembro_id 
+AND miembro.grupo_id = grupos.gru_id
+AND grupos.agrup in ('A','B')";
 
 }
 
@@ -61,13 +67,19 @@ if($type=='enrollment'){
 
 	//AND miembro.status_member_id IN (".implode(',', $array).")
 
-$sql="SELECT miembro.*, miembro_inscripcion.*, SUM(miembro_inscripcion.mie_ins_valor) AS total FROM miembro, miembro_inscripcion WHERE YEAR(miembro_inscripcion.mie_ins_fecha_ingreso)='$year' AND MONTH(miembro_inscripcion.mie_ins_fecha_cobro)='$month' AND YEAR(miembro_inscripcion.mie_ins_fecha_cobro)='$year' AND DATE(miembro_inscripcion.mie_ins_fecha_cobro)='$corte' AND miembro.mie_id = miembro_inscripcion.miembro_id ";
+$sql="SELECT miembro.*, miembro_inscripcion.*, SUM(miembro_inscripcion.mie_ins_valor) AS total FROM miembro, miembro_inscripcion WHERE YEAR(miembro_inscripcion.mie_ins_fecha_ingreso)='$year' AND MONTH(miembro_inscripcion.mie_ins_fecha_cobro)='$month' AND YEAR(miembro_inscripcion.mie_ins_fecha_cobro)='$year' AND DATE(miembro_inscripcion.mie_ins_fecha_cobro)<='$corte' AND miembro.mie_id = miembro_inscripcion.miembro_id ";
 
 }
 
 if($type=='other'){
 
-$sql="SELECT miembro.*, miembro_inscripcion.*, SUM(miembro_inscripcion.mie_ins_valor) AS total FROM miembro, miembro_inscripcion WHERE YEAR(miembro_inscripcion.mie_ins_fecha_cobro)='$year' AND MONTH(miembro_inscripcion.mie_ins_fecha_cobro)='$month' AND DATE(miembro_inscripcion.mie_ins_fecha_cobro)='$corte' AND miembro.status_member_id NOT IN (".implode(',', $array).") AND miembro.mie_id = miembro_inscripcion.miembro_id ";
+$sql="SELECT sum(cobro.cobro_total) AS total FROM cobro, miembro, grupos 
+WHERE MONTH(cobro.cobro_fecharegistro)='$month' 
+AND YEAR(cobro.cobro_fecharegistro)='$year' 
+AND date(cobro.cobro_fecharegistro) <= '$corte'
+AND miembro.mie_id = cobro.miembro_id 
+AND miembro.grupo_id = grupos.gru_id
+AND grupos.agrup in ('C')";
 
 }
 
