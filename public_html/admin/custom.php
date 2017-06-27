@@ -1418,7 +1418,7 @@ AND t0.mie_ins_fecha_ingreso <= '$corte'
 
 AND t2.agrup in ('A')
 
-AND(((t1.cancelled = 0) AND (t1.categoria_cat_id<>4)) 
+AND((t1.cancelled = 0) 
 
 OR (( month(t1.mie_fecha_cambio_status) >='$month' 
 
@@ -1450,7 +1450,8 @@ AND t0.mie_ins_fecha_ingreso <= '$corte'
 
 AND t2.agrup  in ('B')
 
-AND(((t1.cancelled = 0) AND (t1.categoria_cat_id=4)) 
+
+AND(((t1.cancelled = 0) ) 
 
 OR (( month(t1.mie_fecha_cambio_status) >='$month' 
 
@@ -1888,7 +1889,7 @@ AND t0.mie_ins_fecha_ingreso <= '$corte'
 
 AND t2.agrup in ('A')
 
-AND((t1.cancelled = 0) AND (t1.categoria_cat_id<>4) 
+AND((t1.cancelled = 0)  
 
 OR (( month(t1.mie_fecha_cambio_status) >='$month' 
 
@@ -1936,7 +1937,7 @@ AND t0.mie_ins_fecha_ingreso <= '$corte'
 
 AND t2.agrup in ('B')
 
-AND((t1.cancelled = 0) AND (t1.categoria_cat_id=4) 
+AND((t1.cancelled = 0)  
 
 OR (( month(t1.mie_fecha_cambio_status) >='$month' 
 
