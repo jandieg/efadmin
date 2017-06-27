@@ -58,6 +58,17 @@ function generadorEtiquetasFiltro($tab=array()){
         if($valor['elemento']=='boton'){
             $msg.='<button type="button" class="btn '.$valor['color'].' btn-block margin-bottom" onclick="'.$valor['click'].'" data-toggle="modal" data-target="'.$valor['modal'].'" >'.$valor['titulo'].'</button>'; 
         }
+        if($valor['elemento']=='Checkbox-comun'){
+   
+            $msg.='<div class="form-group">'; 
+            $msg.='<div class="checkbox">'; 
+            $msg.='<label>'; 
+            $msg.='<input type="checkbox" '.$valor['chec'].' id="'.$valor['id'].'" >'; 
+            $msg.=$valor['titulo']; 
+            $msg.='</label>';            
+            $msg.=' </div>';
+            $msg.='</div>'; 
+        }
          
     }
     return $msg;

@@ -114,17 +114,7 @@ function generadorTablaConBotonesMiembros($tipo, $titulo,$funcion='', $columnas=
     $t='<div class="box box-info">';
     $t.='<div class="box-header">';
     $t.='<h3 class="box-title">'.$titulo. '</h3>';
-    if ($checkcancel == 1) {
-        $t.='<div class="box-tools pull-right">';
-           $t.='&nbsp;&nbsp;<input type="checkbox" checked onChange="setCanceladas()" id="_canceladas"> Incluir Canceladas';                  
-        $t.='</div>';        
-        $t.='</div>';
-    } else {
-        $t.='<div class="box-tools pull-right">';
-           $t.='&nbsp;&nbsp;<input type="checkbox"   onChange="setCanceladas()" id="_canceladas"> Incluir Canceladas';                  
-        $t.='</div>';        
-        $t.='</div>';
-    }
+    
     
     if($tipo==1){
         $tipoDatatable='tipo_personalizada';
