@@ -1,8 +1,8 @@
 <script>
-var getDetalleFiltroGrupo = function(){
+var getDetalleFiltroGrupo = function(id){
     var parametros = {
             KEY: 'KEY_DETALLE_FILTRO_GRUPO',
-            idGrupo: $("#_grupo").val()
+            idGrupo: id
     };
     $.ajax({
         data:  parametros,
@@ -20,6 +20,90 @@ var getDetalleFiltroGrupo = function(){
             $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema' + status.toString()+" "+ xhr.toString()});
         }
     });
+};
+
+var getFiltroEmpresa = function() {
+    if ($("#_empresa").val().toString() != "x") {
+        $("#_forum_leader").val("x");
+        $("#_industria").val("x");
+        var parametros = {
+            KEY: 'KEY_FILTRO_EMPRESA',
+            _id: $("#_empresa").val().toString()
+        };
+
+        $.ajax({
+            data:  parametros,
+            url:   'forumgrupo',
+            type:  'post',
+            beforeSend: function () {
+                $.msg({content : '<img src="public/images/loanding.gif" />', autoUnblock: false});
+            },
+            success:  function (mensaje) {
+                $.msg('unblock');
+                    $("#ben_contenedor").html(mensaje);
+                    getConfTabla();
+            },error : function(xhr, status) {
+                $.msg('unblock');
+                $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema' + status.toString()+" "+ xhr.toString()});
+            }
+        });
+    }
+};
+
+var getFiltroForumLeader = function() {
+    if ($("#_forum_leader").val().toString() != "x") {
+        $("#_empresa").val("x");
+        $("#_industria").val("x");
+        var parametros = {
+            KEY: 'KEY_FILTRO_FORUM_LEADER',
+            _id: $("#_forum_leader").val().toString()
+        };
+
+        $.ajax({
+            data:  parametros,
+            url:   'forumgrupo',
+            type:  'post',
+            beforeSend: function () {
+                $.msg({content : '<img src="public/images/loanding.gif" />', autoUnblock: false});
+            },
+            success:  function (mensaje) {
+                $.msg('unblock');
+                    $("#ben_contenedor").html(mensaje);
+                    getConfTabla();
+            },error : function(xhr, status) {
+                $.msg('unblock');
+                $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema' + status.toString()+" "+ xhr.toString()});
+            }
+        });
+    }
+};
+
+var getFiltroIndustria = function() {
+    if ($("#_industria").val().toString() != "x") {
+        $("#_forum_leader").val("x");
+        $("#_empresa").val("x");
+        var parametros = {
+            KEY: 'KEY_FILTRO_INDUSTRIA',
+            _id: $("#_industria").val().toString()
+        };
+
+        $.ajax({
+            data:  parametros,
+            url:   'forumgrupo',
+            type:  'post',
+            beforeSend: function () {
+                $.msg({content : '<img src="public/images/loanding.gif" />', autoUnblock: false});
+            },
+            success:  function (mensaje) {
+                $.msg('unblock');
+                    $("#ben_contenedor").html(mensaje);
+                    getConfTabla();
+            },error : function(xhr, status) {
+                $.msg('unblock');
+                $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema' + status.toString()+" "+ xhr.toString()});
+            }
+        });
+    }
 };
 
 var setEnviarCorreoIndividual = function(){
@@ -149,6 +233,30 @@ var getRecargar = function(){
     location.reload();
     //window.open(url, 'perfil');
 };
+
+var getDetalleGrupo = function(id) {
+    var parametros = {
+        KEY: 'KEY_DETALLE_GRUPO',
+        _id: id
+    }
+
+    $.ajax({
+        data:  parametros,
+        url:   'forumgrupo',
+        type:  'post',
+        beforeSend: function () {
+            $.msg({content : '<img src="public/images/loanding.gif" />', autoUnblock: false});
+        },
+        success:  function (mensaje) {
+            $.msg('unblock');
+                $("#ben_contenedor").html(mensaje);
+                getConfTabla();
+        },error : function(xhr, status) {
+            $.msg('unblock');
+            $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema' + status.toString()+" "+ xhr.toString()});
+        }
+    });
+}
 //
 //var setLimpiar2 = function (){
 //    $('iframe').contents().find('.wysihtml5-editor').html('');

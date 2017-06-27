@@ -133,6 +133,11 @@ class Grupo extends Conexion{
         return $listaGrupos;
     }
 
+    public function getListaGrupos3() {
+        $sql= "call sp_selectListaGrupos()";
+        return parent::getConsultar($sql);
+    }
+
     public function getGrupoByTipoEvento($tipo_evento_id) {
         $sql="call sp_selectGrupoByTipoEvento('$tipo_evento_id')";
         return parent::getConsultar($sql);   
@@ -195,6 +200,21 @@ class Grupo extends Conexion{
         $sql ="call sp_selectGrupoByEmpresa('$idEmpresa');";
         return parent::getConsultar($sql);
     } 
+
+    public function getGrupoByIndustria($idIndustria) {
+        $sql ="call sp_selectGrupoByIndustria('$idIndustria');";
+        return parent::getConsultar($sql);
+    }
+
+    public function getGrupoByForumLeader($idForumLeader) {
+        $sql ="call sp_selectGrupoByForumLeader('$idForumLeader')";
+        return parent::getConsultar($sql);
+    }
+
+    public function getMiembrosActivosPorGrupo( $idGrupo, $key) {
+        $sql="call sp_selectMiembrosActivosxGrupo1('$idGrupo', $key)";
+        return parent::getConsultar($sql);   
+    }
 
     public function getListaGruposByEmpresa($lista=array(),$idEmpresa) {
         $resultset = $this->getGrupoByEmpresa($idEmpresa);

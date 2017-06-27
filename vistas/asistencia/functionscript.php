@@ -71,9 +71,9 @@ var getDetalleFiltro = function(){
 
 
 var setAsistencia = function(_id_asistencia){
-    var _checked="1";
+    var _checked="0";
     if($('#'+ _id_asistencia.toString()).prop('checked') ) {
-        _checked="0";
+        _checked="1";
     }
 
     //alert(_checked +'  '+ _id_asistencia);
