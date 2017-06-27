@@ -201,7 +201,7 @@ $CY=date('Y');
 //Removing and Computing Next Year
 //$del = 135 - ($CM * 4); //may jun jul sep
 //$del = 135 - ($CM * 4); //
-if($CY==$year){
+/*if($CY==$year){
 
 for($i = 72; $i <= 135; $i++) {
     $objPHPExcel->getActiveSheet()->getRowDimension($i)->setVisible(FALSE);
@@ -219,9 +219,9 @@ if(($CM==01)||($CM==02)||($CM==03)||($CM==04)||($CM==05)){
 }
 	}
 
-}else{
+}else{*/
 
-if($year < date('Y')){
+//if($year < date('Y')){
 	//do nothing
 	if(($CM==01)||($CM==02)||($CM==03)||($CM==04)||($CM==05)){
 		for($i = 94; $i <=135 ; $i++) {
@@ -234,9 +234,9 @@ if($year < date('Y')){
     $objPHPExcel->getActiveSheet()->getRowDimension($i)->setVisible(FALSE);
 }
 	}
-}
+//}
 
-}//end if
+//}//end if
 
 mysqli_close($con);
 
@@ -2512,7 +2512,7 @@ $CM=date('m');
 $CY=date('Y');
 //Removing and Computing Next Year
 $del = (44 - $CM)-2 ;
-if($CY==$year){
+/*if($CY==$year){
 
 for($i = 26; $i <= 44; $i++) {
     $objPHPExcel->getActiveSheet()->getRowDimension($i)->setVisible(FALSE);
@@ -2520,14 +2520,14 @@ for($i = 26; $i <= 44; $i++) {
 
 }else{
 
-
+*/
 for($i = $del; $i <=44 ; $i++) {
     $objPHPExcel->getActiveSheet()->getRowDimension($i)->setVisible(FALSE);
 }
 	
 
 
-}//end if
+//}//end if
 
 
 mysqli_close($con);
