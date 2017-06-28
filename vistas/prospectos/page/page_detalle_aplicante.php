@@ -26,7 +26,7 @@ session_start();
             {contenedor_4}
         </div>      
       </div>
-       <div class="row">
+       <!--<div class="row">
         <div class="col-md-6">
             
             <h2 class="page-header">                
@@ -38,7 +38,7 @@ session_start();
                 Teléfono </h2> 
             {contenedor_12}
         </div>      
-      </div>
+      </div>-->
       
       
       

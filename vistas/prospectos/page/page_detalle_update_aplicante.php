@@ -25,7 +25,7 @@ session_start();
           
       </div>
       
-       <div class="row">
+       <!--<div class="row">
         <div class="col-md-6">
             
             <h2 class="page-header">                
@@ -52,7 +52,7 @@ session_start();
         <div class="col-md-6">
             {contenedor_4}
         </div>      
-      </div>
+      </div>-->
        <div class="row" style="visibility:hidden;">    
 
         <div class="col-md-6">

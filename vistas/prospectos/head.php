@@ -214,7 +214,7 @@ function getDetalleUpdate($id, $recargar) {
 		
 			 
 		//Cargos//
-        $form2['form_8'] = array("elemento" => "combo","change" => "", "titulo" => $lblCategoría, "id" => "_categoria", "option" => $listacategoria);
+        $form2['form_8'] = array("elemento" => "caja","tipo" => "hidden", "id" => "_categoria", "reemplazo" => "1");
         $form2['form_9'] = array("elemento" => "textarea" ,"tipo" => "text" , "titulo" => "Comentario", "id" => "_observacion" ,"reemplazo" => $row['prosp_observacion']);
         $form_2= generadorEtiqueta($form2);
 		 }else{
@@ -321,7 +321,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         //$tabla['t_0'] = array("t_1" => generadorNegritas("Código"), "t_2" => $row['prosp_codigo']);
                         $tabla['t_1'] = array("t_1" => generadorNegritas($lblNombre), "t_2" => $titulo );
 			if($_SESSION['_esaplicante'] == '1'){
-                        $tabla['t_2'] = array("t_1" => generadorNegritas($lblFNacimiento), "t_2" => getFormatoFechadmy($row['per_fechanacimiento']));
+                        //$tabla['t_2'] = array("t_1" => generadorNegritas($lblFNacimiento), "t_2" => getFormatoFechadmy($row['per_fechanacimiento']));
                      //   $tabla['t_3'] = array("t_1" => generadorNegritas($lblTitulo), "t_2" => $row['prof_descripcion']);
 						if($_SESSION['_esaplicante'] == '1'){
                       //  $tabla['t_4'] = array("t_1" => generadorNegritas($lblIdentificacion), "t_2" => $row['per_identificacion']);
@@ -331,7 +331,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         $tabla['t_6'] = array("t_1" => generadorNegritas($lblGenero), "t_2" => $row['per_genero']);
                         
                         
-                        $tabla5['t_7'] = array("t_1" => generadorNegritas($lblCorreo), "t_2" => $row['correo']);
+                        //$tabla5['t_7'] = array("t_1" => generadorNegritas($lblCorreo), "t_2" => $row['correo']);
                    //     $tabla5['t_8'] = array("t_1" => generadorNegritas($lblCorreoSecundario), "t_2" => $row['correo2']);
                          
                         if($row['participacion_correo']=='1'){
@@ -339,10 +339,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         }  else {
                           $tabla5['t_10'] = array("t_1" => generadorNegritas($lblParticipacionCorreo), "t_2" => 'NO');
                         }
-
+/*
                         $tabla6['t_11'] = array("t_1" => generadorNegritas($lblTF), "t_2" => "(". $prefijoPais.") ".$row['movil2']);
                         $tabla6['t_12'] = array("t_1" => generadorNegritas($lblTM), "t_2" => "(". $prefijoPais.") ".$row['movil']);
-						
+*/						
                      //   $tabla6['t_14'] = array("t_1" => generadorNegritas($lblSkype), "t_2" => $row['skype']);
                     //    $tabla6['t_15'] = array("t_1" => generadorNegritas($lblTwitter), "t_2" => $row['twitter']);
 				}
@@ -369,7 +369,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 						$objEmpresaLocal= new EmpresaLocal();
                         $tabla2= $objEmpresaLocal->getMultiListaIndustria2($row['emp_id'],$tabla2, generadorNegritas($lblSectores));
                         
-                        $tabla2['t_9'] = array("t_1" => generadorNegritas($lblCategoría), "t_2" => $row['cat_descripcion']);
+                        //$tabla2['t_9'] = array("t_1" => generadorNegritas($lblCategoría), "t_2" => $row['cat_descripcion']);
 						
 					}
 						
@@ -384,7 +384,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         $tabla3['t_1'] = array("t_1" => generadorNegritas($lblPais),            "t_2" => $pais);
                         $tabla3['t_2'] = array("t_1" => generadorNegritas($lblProvincia),       "t_2" => $estado);
                         $tabla3['t_3'] = array("t_1" => generadorNegritas($lblCiudad),          "t_2" => $ciudad);
-                        $tabla3['t_4'] = array("t_1" => generadorNegritas($lblDireccion),       "t_2" => $direcion);
+                        //$tabla3['t_4'] = array("t_1" => generadorNegritas($lblDireccion),       "t_2" => $direcion);
                         
                         $tabla4['t_8'] = array("t_1" => generadorNegritas($lblFRegistro), "t_2" => getFormatoFechadmyhis($row['prosp_fecharegistro']));
                         $tabla4['t_9'] = array("t_1" => generadorNegritas($lblFModificacion), "t_2" => getFormatoFechadmyhis($row['prosp_fechamodificacion']));
@@ -544,15 +544,15 @@ $form['form_5'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_ide
 
 $form['form_7'] = array("elemento" => "caja","tipo" => "hidden", "id" => "_titulo", "reemplazo" => "1");
 //$form['form_8'] = array("elemento" => "caja" ,"tipo" => "date" , "titulo" => $lblFNacimiento, "id" => "_fn" ,"reemplazo" => "");
-                 $form7['form_9'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => $lblCorreo, "id" => "_correo" ,"reemplazo" => "");
+                 $form7['form_9'] = array("elemento" => "caja" ,"tipo" => "hidden" , "titulo" => $lblCorreo, "id" => "_correo" ,"reemplazo" => "");
                  $form7['form_10'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_correo_2" ,"reemplazo" => "");
                  $form7['form_11'] = array("elemento" => "Checkbox-color" ,"tipo" => "", "chec" => "checked" , "titulo" => $lblParticipacionCorreo, "id" => "_participacion" ,"reemplazo" => "");
                  $form_7= generadorEtiqueta($form7);
-                $form8['form_12'] = array("elemento" => "caja pequeña + caja" ,"titulo" => $lblTF
+                $form8['form_12'] = array("elemento" => "caja" ,"tipo" => "hidden","titulo" => $lblTF
                                                        ,"disabled_1" => "disabled","tipo_1" => "text" , "titulo_1" => "Prefijo", "id_1" => "_prefijo_telefono" ,"reemplazo_1" => $prefijoPais
                                                        ,"disabled_2" => "","tipo_2" => "text" , "titulo_2" => $lblTF, "id_2" => "_telefono" ,"reemplazo_2" => "");
                     
-                $form8['form_13'] = array("elemento" => "caja pequeña + caja" ,"titulo" => $lblTM
+                $form8['form_13'] = array("elemento" => "caja" ,"tipo" => "hidden", "titulo" => $lblTM
                                                    ,"disabled_1" => "disabled","tipo_1" => "text" , "titulo_1" => "Prefijo", "id_1" => "_prefijo_celular" ,"reemplazo_1" => $prefijoPais
                                                    ,"disabled_2" => "","tipo_2" => "text" , "titulo_2" => $lblTM, "id_2" => "_celular" ,"reemplazo_2" => "");
 }else{
@@ -610,7 +610,7 @@ $form8['form_12'] = array("elemento" => "caja pequeña + caja" ,"titulo" => $lbl
                  if($_SESSION['_esaplicante'] == '1'){
 
 $form2['form_6'] = array("elemento" => "textarea" ,"tipo" => "text" , "titulo" => "Empresa", "id" => "_id_empresa" ,"reemplazo" => $lblEmpresa);
-                 $form2['form_8'] = array("elemento" => "combo","change" => "","titulo" => $lblCategoría, "id" => "_categoria", "option" => $listacategoria);             
+                 $form2['form_8'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_categoria" ,"reemplazo" => "1");	
 
 }else{
 				 
@@ -631,8 +631,8 @@ $form2['form_6'] = array("elemento" => "textarea" ,"tipo" => "text" , "titulo" =
                  $form_2= generadorEtiqueta($form2);
 
                   //Formularios
-                 $form3['form_8'] = array("elemento" => "combo","change" => "", "titulo" => $lblCiudad, "id" => "_ciudad", "option" => $listaciudad);
-                 $form3['form_9'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" =>$lblCalle, "id" => "_calle" ,"reemplazo" => "");
+                 $form3['form_8'] = array("elemento" => "caja","tipo"=>"hidden", "change" => "", "titulo" => $lblCiudad, "id" => "_ciudad", "option" => $listaciudad, "reemplazo" => "");
+                 $form3['form_9'] = array("elemento" => "caja" ,"tipo" => "hidden" , "titulo" =>$lblCalle, "id" => "_calle" ,"reemplazo" => "");
                  $form_3= generadorEtiqueta($form3);
 
 

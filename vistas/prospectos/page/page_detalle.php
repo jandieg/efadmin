@@ -33,7 +33,7 @@ session_start();
        <?php }else{ ?>
        <div class="row">
        <?php } ?>    
-        <div class="col-md-6">
+        <!--<div class="col-md-6">
             
             <h2 class="page-header">                
                 Correos</h2>    
@@ -43,7 +43,7 @@ session_start();
             <h2 class="page-header">                
                 Teléfono / Redes Sociales</h2> 
             {contenedor_12}
-        </div>      
+        </div>-->      
       </div>
       
       
@@ -56,11 +56,11 @@ session_start();
        <?php }else{ ?>
        <div class="row" style="visibility:hidden;">
        <?php } ?>    
-        <div class="col-md-6">
+        <!--<div class="col-md-6">
              <h2 class="page-header">                
                  Dirección</h2> 
              {contenedor_5}
-        </div>
+        </div>-->
        
         <div class="col-md-6">
           <h2 class="page-header">                
