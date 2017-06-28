@@ -237,8 +237,8 @@ list($c1, $c2, $c3, $c4) = split('[/.-]', $codigo_usuario);
                         $objPAMAsistente= new PAMAsistente();
                         $tablaDetalleAsistente= $objPAMAsistente->getTabla($_GET['id_miembro'],'1');
 						
-						$boton_empresas['boton_1'] = array("elemento" => "boton" ,"modal" => "" ,"color" => "btn-info" ,"click" => "getPAMEmpresaModal('2')" ,"titulo" => "Crear Relacionar Empresa","lado" => "pull-right" ,"icono" => "fa-plus");
-                        $boton_empresas['boton_2'] = array("elemento" => "boton" ,"modal" => "" ,"color" => "btn-info" ,"click" => "getAgregarEmpresa(".$_GET['id_miembro'].")" ,"titulo" => "Relacionar Empresa Existente","lado" => "pull-right" ,"icono" => "fa-link");
+						$boton_empresas['boton_1'] = array("elemento" => "boton" ,"modal" => "" ,"color" => "btn-info" ,"click" => "getPAMEmpresaModal('2')" ,"titulo" => "Crear Empresa","lado" => "pull-right" ,"icono" => "fa-plus");
+                        $boton_empresas['boton_2'] = array("elemento" => "boton" ,"modal" => "" ,"color" => "btn-info" ,"click" => "getAgregarEmpresa(".$_GET['id_miembro'].")" ,"titulo" => "Relacionar Empresa","lado" => "pull-right" ,"icono" => "fa-link");
                         $boton_asistente['boton_6'] = array("elemento" => "boton" ,"modal" => "#modal_getPAMCrearAsistente" ,"color" => "btn-info" ,"click" => "getPAMAgregarAsistente(".$_GET['id_miembro'].")" ,"titulo" => "Agregar Asistente","lado" => "pull-right" ,"icono" => "fa-plus");
 						
 						
@@ -250,8 +250,8 @@ list($c1, $c2, $c3, $c4) = split('[/.-]', $codigo_usuario);
                         $objPAMAsistente= new PAMAsistente();
                         $tablaDetalleAsistente= $objPAMAsistente->getTabla($_POST['id_miembro'],'1');
 						
-						$boton_empresas['boton_1'] = array("elemento" => "boton" ,"modal" => "" ,"color" => "btn-info" ,"click" => "getPAMEmpresaModal('2')" ,"titulo" => "Crear Relacionar Empresa","lado" => "pull-right" ,"icono" => "fa-plus");
-                        $boton_empresas['boton_2'] = array("elemento" => "boton" ,"modal" => "" ,"color" => "btn-info" ,"click" => "getAgregarEmpresa(".$_POST['id_miembro'].")" ,"titulo" => "Relacionar Empresa Existente","lado" => "pull-right" ,"icono" => "fa-link");
+						$boton_empresas['boton_1'] = array("elemento" => "boton" ,"modal" => "" ,"color" => "btn-info" ,"click" => "getPAMEmpresaModal('2')" ,"titulo" => "Crear Empresa","lado" => "pull-right" ,"icono" => "fa-plus");
+                        $boton_empresas['boton_2'] = array("elemento" => "boton" ,"modal" => "" ,"color" => "btn-info" ,"click" => "getAgregarEmpresa(".$_POST['id_miembro'].")" ,"titulo" => "Relacionar Empresa","lado" => "pull-right" ,"icono" => "fa-link");
                         $boton_asistente['boton_6'] = array("elemento" => "boton" ,"modal" => "#modal_getPAMCrearAsistente" ,"color" => "btn-info" ,"click" => "getPAMAgregarAsistente(".$_POST['id_miembro'].")" ,"titulo" => "Agregar Asistente","lado" => "pull-right" ,"icono" => "fa-plus");
 			
 		}

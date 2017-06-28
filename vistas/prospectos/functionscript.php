@@ -104,7 +104,7 @@ var setUserCrear = function(op, _esaplicante){
                 _nombre: $("#_nombre").val().toString(),
                 _apellido: $("#_apellido").val().toString(),
                 _titulo: $("#_titulo").val().toString(),
-                _fn: $("#_fn").val().toString(),
+                _fn: '',
                 _correo: $("#_correo").val().toString(),
                 _correo_2: $("#_correo_2").val().toString(),
                 _telefono: $("#_telefono").val().toString(), 
@@ -176,7 +176,7 @@ var setUserActualizar = function(id_prospecto,  id_persona,_esaplicante){
     if( $('#_participacion').prop('checked') ) {
         participacion="1";
     }
-
+console.log("la empresa es" + $("#_id_empresa").val().toString());
         var parametros = {
                 KEY: 'KEY_ACTUALIZAR', 
                 _id_empresa: $("#_id_empresa").val().toString(),
@@ -187,7 +187,7 @@ var setUserActualizar = function(id_prospecto,  id_persona,_esaplicante){
                 _nombre: $("#_nombre").val().toString(),
                 _apellido: $("#_apellido").val().toString(),
                 _titulo: $("#_titulo").val().toString(),
-                _fn: $("#_fn").val().toString(),
+                _fn: '',
                 _correo: $("#_correo").val().toString(),
                 _correo_2: $("#_correo_2").val().toString(),
                 _telefono: $("#_telefono").val().toString(), 

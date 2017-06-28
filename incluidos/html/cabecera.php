@@ -22,10 +22,10 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
              <ul class="nav navbar-nav">
-                  <?php if (in_array($perCandidatoOp4, $_SESSION['usu_permiso'])) { ?>
+                  <?php /*if (in_array($perCandidatoOp4, $_SESSION['usu_permiso'])) { ?>
                   <li><a href="prospectos?_esaplicante=0">Prospectos</a></li>
                   
-                  <?php } if (in_array($perProspectoOp4, $_SESSION['usu_permiso'])) { ?>
+                  <?php }*/ if (in_array($perProspectoOp4, $_SESSION['usu_permiso'])) { ?>
                   <li><a href="prospectos?_esaplicante=1">Aplicantes</a></li>
                   
                   <?php } if (in_array($perMiembroOp4, $_SESSION['usu_permiso'])) { ?>

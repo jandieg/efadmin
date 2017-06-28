@@ -67,7 +67,12 @@ if($type=='enrollment'){
 
 	//AND miembro.status_member_id IN (".implode(',', $array).")
 
-$sql="SELECT miembro.*, miembro_inscripcion.*, SUM(miembro_inscripcion.mie_ins_valor) AS total FROM miembro, miembro_inscripcion WHERE YEAR(miembro_inscripcion.mie_ins_fecha_ingreso)='$year' AND MONTH(miembro_inscripcion.mie_ins_fecha_cobro)='$month' AND YEAR(miembro_inscripcion.mie_ins_fecha_cobro)='$year' AND DATE(miembro_inscripcion.mie_ins_fecha_cobro)<='$corte' AND miembro.mie_id = miembro_inscripcion.miembro_id ";
+$sql="SELECT miembro.*, miembro_inscripcion.*, 
+SUM(miembro_inscripcion.mie_ins_valor) AS total 
+FROM miembro, miembro_inscripcion WHERE  
+MONTH(miembro_inscripcion.mie_ins_fecha_cobro)='$month' 
+AND YEAR(miembro_inscripcion.mie_ins_fecha_cobro)='$year' 
+AND DATE(miembro_inscripcion.mie_ins_fecha_cobro)<='$corte' AND miembro.mie_id = miembro_inscripcion.miembro_id ";
 
 }
 
@@ -107,15 +112,15 @@ WHERE (t0.precobro_year = '$year') AND (t0.precobro_year <= YEAR('$corte'))";
 
 		$row = mysqli_fetch_array($res);
 
-		if($type=='enrollment'){
+	/*	if($type=='enrollment'){
 
 		$data = $row['total'];	
 
 		}else{
-
+*/
 		$data = $row['total'];	
 
-		}
+//		}
 
 		
 
