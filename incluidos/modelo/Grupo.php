@@ -211,6 +211,15 @@ class Grupo extends Conexion{
         return parent::getConsultar($sql);
     }
 
+    public function getListaGruposByForumLeader($idForumLeader, $lista=array()) {
+        $resultset = $this->getGrupoByForumLeader($idForumLeader);
+         while($row = $resultset->fetch_assoc()) { 
+            $lista['lista_'.$row['gru_id']] = array( "value" => $row['gru_id'],  "select" => "" ,"texto" => $row['gru_descripcion']);
+            if($this->primerGrupo == ''){ $this->primerGrupo=$row['gru_id']; }
+        }
+        return $lista; 
+    }
+
     public function getMiembrosActivosPorGrupo( $idGrupo, $key) {
         $sql="call sp_selectMiembrosActivosxGrupo1('$idGrupo', $key)";
         return parent::getConsultar($sql);   

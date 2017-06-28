@@ -111,6 +111,36 @@ $html.='</div>';
 return $html;
 }
 
+function generadorMenuColorEventos($titulo, $xfunction) {
+$html='';
+$html.='<div class="box box-solid">';
+$html.='<div class="box-header with-border">';
+$html.='<h4 class="box-title">'.$titulo.'</h4>';
+$html.='</div>';
+$html.='<div class="box-body">';  
+    $html.="<select id='month' class='form-control'>
+    <option selected value=''>--Seleccione Mes--</option>
+    <option value='cdm'>Caso del Mes</option>
+    <option value='01'>Enero</option>
+    <option value='02'>Febrero</option>
+    <option value='03'>Marzo</option>
+    <option value='04'>Abril</option>
+    <option value='05'>Mayo</option>
+    <option value='06'>Junio</option>
+    <option value='07'>Julio</option>
+    <option value='08'>Agosto</option>
+    <option value='09'>Septiembre</option>
+    <option value='10'>Octubre</option>
+    <option value='11'>Noviembre</option>
+    <option value='12'>Diciembre</option>
+    </select> ";    
+	$html.='<p></p>';
+    $html.='<div  id="excel_btn"><button class="external-event bg-blue" onclick="'.$xfunction.'" style="cursor:pointer;">Generar Reporte</button></div>';    
+$html.='</div>';
+$html.='</div>';
+return $html;
+}
+
 
 function generadorMenuColor3($titulo, $xfunction) {
 $html='';

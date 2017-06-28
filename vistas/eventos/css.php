@@ -5,4 +5,7 @@
     #mi_modal_personalizado{
       width: 60% !important;
     }
+    #ben_contenedor{
+          overflow-x: scroll;
+    }
   </style>

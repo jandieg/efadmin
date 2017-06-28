@@ -30,6 +30,102 @@ function getCheckEventos($id,$nombre, $checked) {
     $msg='<center><input  type="checkbox" '.$checked.' onclick="getAddListaEvento(\''.$id.'\',\''.$nombre.'\')"/></center>'; 
     return $msg;
 }
+
+ 
+
+function getTablaCasosDelMesByGrupo($idGrupo) {
+    $meses = array(
+        "01" => "Ene",
+        "02" => "Feb",
+        "03" => "Mar",
+        "04" => "Abr",
+        "05" => "May",
+        "06" => "Jun",
+        "07" => "Jul",
+        "08" => "Ago",
+        "09" => "Sep",
+        "10" => "Oct",
+        "11" => "Nov",
+        "12" => "Dic"
+    );
+    $anho_inicio = intval(date('Y'))-3;
+    $start    = new DateTime(date($anho_inicio.'-m-01'));
+    $start->modify('first day of this month');
+    $end      = new DateTime(date('Y-m-d'));
+    $end->modify('first day of next month');
+    $interval = DateInterval::createFromDateString('1 month');
+    $period   = new DatePeriod($start, $interval, $end);    
+    $objEvento = new Evento();
+    $objEvento2 = new Evento();
+    $resultset = $objEvento->getMiembrosPendientesxGrupo($idGrupo); 
+    $listaPendientes = array();
+    while ($row = $resultset->fetch_assoc()) {
+        $listaPendientes[] = $row['mie_id'];
+    }
+    $tabla="<div='myDiv' style=' width: 900px !important; overflow-x: scroll !important;'>
+    <div class='row'><div class ='span2'>&nbsp;</div><div class ='span2'>&nbsp;</div><div class ='span2'>&nbsp;</div><div class ='span2 btn btn-primary' onClick='getRecargar()' style='margin-left:20px;'>Regresar</div></div>";
+    $tabla .= "<table class='table table-bordered' style='border: 1px solid black; border-collapse: collapse;'>";
+    $tabla.= "<thead>";
+    $tabla.= "<tr><th style='border: 1px solid black; border-collapse: collapse;'>&nbsp;</th><th style='border: 1px solid black; border-collapse: collapse;'>&nbsp;</th>";
+
+    $resultset2 = $objEvento2->getEventosByGrupo($idGrupo);
+    $anhoact = "";                        
+    foreach ($period as $dt) {
+        if ($anhoact != $dt->format('Y')) {
+            $anhoact = $dt->format('Y');
+            $tabla.="<th style='border: 1px solid black; border-collapse: collapse;'><strong>".$dt->format('Y')."</strong></th>";
+        } else {
+            $tabla.="<th>&nbsp;</th>";
+        }        
+    }
+    $tabla.="</tr>";
+    $tabla.= "<tr><th style='border: 1px solid black; border-collapse: collapse;'>&nbsp;</th><th style='border: 1px solid black; border-collapse: collapse;'>&nbsp;</th>";
+    foreach ($period as $dt) {
+        $tabla.="<th style='border: 1px solid black; border-collapse: collapse;'><strong>".$meses[$dt->format('m')]."</strong></th>";        
+    }
+    $tabla.="</tr>";
+    $tabla.="<tr><th style='border: 1px solid black; border-collapse: collapse;'>&nbsp;</th><th>Forum 1</th>";
+    foreach ($period as $dt) {
+        $tabla.="<th style='border: 1px solid black; border-collapse: collapse;'>&nbsp;</th>";        
+    }
+    $tabla.="</tr>";
+    $tabla.="</thead><tbody>";
+
+    $data = array();
+    $patron = array();
+    foreach($period as $dt) {
+        $patron[$dt->format('Y')][intval($dt->format('m'))] = "<td style='border: 1px solid black; border-collapse: collapse;'>&nbsp;</td>";
+    } 
+
+    while ($row2 = $resultset2->fetch_assoc()) {
+        if (! isset($data[$row2['mie_id']])) {
+            $data[$row2['mie_id']] = $patron;
+            $data[$row2['mie_id']]['nombre'] = $row2['nombre'];            
+        }
+
+        $data[$row2['mie_id']][$row2['anho']][$row2['mes']] = "<td style='background-color: yellow; border: 1px solid black; border-collapse: collapse;'><strong>C</strong></td>";        
+        
+    }
+
+    foreach ($listaPendientes as $l) {
+        $data[$l][date('Y')][intval(date('m'))] = "<td style='background-color: green; border: 1px solid black; border-collapse: collapse;'><strong>n</strong></td>";
+    }
+    $nombreact = "";
+    $i = 1;
+    foreach ($data as $d) {        
+        $tabla.="<tr>";
+        $tabla.="<td style='border: 1px solid black; border-collapse: collapse;'><strong>".$i."</strong></td>";
+        $tabla.="<td style='border: 1px solid black; border-collapse: collapse;'><strong>".$d['nombre']."</strong></td>";
+        foreach($period as $dt) {
+            $tabla.=$d[$dt->format('Y')][intval($dt->format('m'))];
+        }
+        $tabla.="</tr>";
+        $i++;
+    }
+
+    $tabla.="</tbody></table></div>";
+    return $tabla;
+}
 function getFiltroGruposEvento() {
     global $perVerFiltrosIDForumOp10,$perVerFiltrosIDIBPLimitadoOp10;
     $cuerpo='';
@@ -313,6 +409,22 @@ function getRecordarEvento($idEvento, $doAsistencia= false) {
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {    
     try{
         switch ($_POST['KEY']):
+            case 'KEY_CASO_DEL_MES':
+                if (! empty($_POST['_id'])) {
+                    echo getTablaCasosDelMesByGrupo($_POST['_id']);
+                }                
+                break;
+
+            case 'KEY_DETALLE_GRUPO_FORUM_LEADER':
+            //todo codigo 
+                if (! empty($_POST['_id'])) {
+                    $objGrupo = new Grupo();
+                    $lista= array();
+                    $listado=$objGrupo->getListaGruposByForumLeader($_POST['_id'], $lista);
+                    $form['form_3'] = array("elemento" => "combo","change" => "", "titulo" => "Grupos", "id" => "_grupos", "option" => $listado);
+                    echo generadorEtiquetasFiltro($form);   
+                }            
+                break;
             case 'KEY_ENVIAR_CORREO_INDIVIDUAL':
                  
                 if( !empty($_POST['_email_asunto'])  && !empty($_POST['_email_mensaje'])) {
@@ -497,6 +609,8 @@ $form['form_7'] = array("elemento" => "fecha + tiempo" ,"tipo_date" => "hidden" 
 					}else
 					if($_POST['_id_te']=='4'){
 					$form['form_11'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_descripcion" ,"reemplazo" => $row['eve_descripcion']);
+					}else if ($_POST['_id_te'] == '2'){
+					$form['form_11'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => "Componente Educacional", "id" => "_descripcion" ,"reemplazo" => $row['eve_descripcion']);	
 					}else{
 					$form['form_11'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => "Expositor", "id" => "_descripcion" ,"reemplazo" => $row['eve_descripcion']);	
 					}
@@ -807,6 +921,8 @@ $form['form_7'] = array("elemento" => "fecha + tiempo" ,"tipo_date" => "hidden" 
 					}else
 					if($row['tipo_evento_id']=='4'){
 					$form['form_11'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_descripcion" ,"reemplazo" => $row['eve_descripcion']);
+					}else if ($row['tipo_evento_id'] == '2'){
+					$form['form_11'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => "Componente Educacional", "id" => "_descripcion" ,"reemplazo" => $row['eve_descripcion']);	
 					}else{
 					$form['form_11'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => "Expositor", "id" => "_descripcion" ,"reemplazo" => $row['eve_descripcion']);	
 					}
@@ -1157,6 +1273,20 @@ function getGCalendarUrl($event){
 
 
 $objTipoEvento= new TipoEvento(); 
+$lista3 = array();
+$objForumLeader = new ForumLeader();
+$listaForumLeaders = $objForumLeader->getListaForumLeaders2("", $lista3);
+if (in_array($perVertodoslosGruposOp7, $_SESSION['usu_permiso'])) {    
+    $objGrupo= new Grupo();
+    $listaGrupos= $objGrupo->getListaGrupos(NULL);   
+ }  elseif (in_array($perVerGruposIDForumOp7, $_SESSION['usu_permiso'])) {    
+    $objGrupo= new Grupo();
+    $listaGrupos= $objGrupo->getListaGruposForum($_SESSION['user_id_ben'], NULL, NULL); 
+}
+$form['form_2'] = array("elemento" => "combo","change" => "getFiltroForumLeader()", "titulo" => "Forum Leader", "id" => "_forum_leader", "option" => $listaForumLeaders);   
+$form['form_3'] = array("elemento" => "combo","change" => "", "titulo" => "Grupos", "id" => "_grupos", "option" => $listaGrupos);   
+
+
 $contenido="";
 $resultset= $objTipoEvento->getTipoEvento();
 while($row = $resultset->fetch_assoc()) { 
@@ -1164,10 +1294,12 @@ while($row = $resultset->fetch_assoc()) {
     $lista[$row['tip_eve_id']] = array("texto_color" => "bg-".$row['tip_eve_texto_color'] ,"id" => $row['tip_eve_id'] ,"codigo_color" => $row['tip_eve_codigo_color'] ,"funcion" => $funcion ,"texto" => $row['tip_eve_descripcion'] );  
 }
 
+
 $eventReport="eventReport()";
 $faReport="faReport()";
 $contenido = generadorMenuColor1("Crear Evento", $lista);
-$contenido.=generadorMenuColor2("Reportes", $eventReport);
+$contenido.=generadorEtiquetasFiltro($form);
+$contenido.=generadorMenuColorEventos("Reportes", $eventReport);
 //$contenido.=generadorMenuColor3("Facilitation Activity", $faReport);
 $filtro='';
 $filtro= getFiltroGruposEvento();

@@ -124,25 +124,52 @@ function export_to_excel(sourceid){
 
 
 function eventReport(){
-	var month = $('#month').val();
-	if (confirm("Esta seguro de generar un reporte del mes seleccionado?")) {
-	var dataString = "month=" + month + "&page=eventReport";
-	$.ajax({  
-		type: "POST",  
-		url: "export_to_excel.php",  
-		data: dataString,
-		beforeSend: function() 
-		{
-		$('html, body').animate({scrollTop:0}, 'slow');
-			$("#excel_btn").html('Generando....');
-		},  
-		success: function(response)
-		{
-		//	$("#excel").html('Descargar');
-			$("#excel_btn").html(response);
-		}
-	});
-}
+    if ($("#month").val() != 'cdm') {
+        var month = $('#month').val();
+        if (confirm("Esta seguro de generar un reporte del mes seleccionado?")) {
+            var dataString = "month=" + month + "&page=eventReport";
+            $.ajax({  
+                type: "POST",  
+                url: "export_to_excel.php",  
+                data: dataString,
+                beforeSend: function() 
+                {
+                $('html, body').animate({scrollTop:0}, 'slow');
+                    $("#excel_btn").html('Generando....');
+                },  
+                success: function(response)
+                {
+                //	$("#excel").html('Descargar');
+                    $("#excel_btn").html(response);
+                }
+            });
+        }
+    } else {
+        if ($("#_grupos").val() != null) {        
+            var parametros = {
+                KEY: 'KEY_CASO_DEL_MES',
+                _id: $("#_grupos").val().toString()
+            };
+            $.ajax({
+                type: "POST",
+                url: 'eventos',
+                data: parametros,
+                beforeSend: function () {
+                    $.msg({content : '<img src="public/images/loanding.gif" />', autoUnblock: false});
+                },
+                success:  function (mensaje) {
+                    $.msg('unblock');
+                        $("#ben_contenedor").html(mensaje);                    
+                },error : function(xhr, status) {
+                    $.msg('unblock');
+                    $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema' + status.toString()+" "+ xhr.toString()});
+                }                
+            });
+        } else {
+            alert("disculpe debe seleccionar un grupo");
+        }
+    }
+	
 	
 }
 function faReport(){

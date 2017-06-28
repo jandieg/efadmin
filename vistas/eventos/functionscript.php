@@ -26,6 +26,26 @@ var loadgroups = function(){
 	
 };
 
+var getFiltroForumLeader = function() {
+    var parametros =  {
+        KEY: 'KEY_DETALLE_GRUPO_FORUM_LEADER',
+        _id: $("#_forum_leader").val().toString()
+    };
+
+    $.ajax({
+        data:  parametros,
+        url:   'eventos',
+        type:  'post',
+        async: false,
+        success:  function (mensaje) {
+                $("#_grupos").html(mensaje);
+        },error : function(xhr, status) {                
+            $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema' + status.toString()+" "+ xhr.toString()});
+        }
+    });
+
+}
+
 var getRecargar = function(){
     location.reload();
     //window.open(url, 'perfil');
@@ -34,10 +54,10 @@ var getRecargar = function(){
 //Eventos
 ////////////////////////////////////////////////////////////////////////////////
 var getCrearEvento = function(id_evento){
+    
      $.post("eventos", {
             KEY: 'KEY_SHOW_FORM_GUARDAR_EVENTO',
-            _id_te: id_evento.toString()
-          
+            _id_te: id_evento.toString()          
         }, function(mensaje) {
             $("#ben_contenedor").html(mensaje);
             $(".select2").select2();
