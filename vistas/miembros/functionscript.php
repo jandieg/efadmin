@@ -560,6 +560,8 @@ var getFiltro = function(key){
             
           
     }
+
+    
     
       var parametros = {
             KEY: 'KEY_SHOW_FILTRO',

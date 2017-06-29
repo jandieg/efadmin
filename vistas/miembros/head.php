@@ -1629,19 +1629,19 @@ function getTablaFiltrada($id, $key, $idForum, $incluyecanceladas) {
     $cont=1;
     $t='';
     $resultset= $objMiembro->getFiltros($id,$key,$idForum, $incluyecanceladas);
-      while($row = $resultset->fetch_assoc()) { 
+    while($row = $resultset->fetch_assoc()) { 
         $verDetalle='';
         if (in_array($perVerMiembroOp6, $_SESSION['usu_permiso'])) {
             $verDetalle="getDetalle(".$row['mie_id'].",'')";
-        }
-         $cuerpo.= generadorTablaFilas(array(
+        }        
+        $cuerpo.= generadorTablaFilas(array(
              $row['mie_codigo'],
              generadorLink($row['per_apellido'].' '.$row['per_nombre'],$verDetalle),
              $row['nombre_empresa'],
              $row['nombre_forum'],
              $row['mem_sta_descripcion']));
         $cont=$cont + 1;                                                                          
-     }    
+    }    
     $tabla= generadorTablaConBotonesMiembros(1, "Miembros",'', array(
          "Código&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;", 
          "Nombre&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
