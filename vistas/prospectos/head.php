@@ -330,6 +330,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                          //if($row['per_tipo']=='N'){$tabla['t_5'] = array("t_1" => generadorNegritas($lblTipoPersona), "t_2" => "Natural");} 
 						}
                         $tabla['t_6'] = array("t_1" => generadorNegritas($lblGenero), "t_2" => $row['per_genero']);
+                        $tabla['t_7'] = array("t_1" => generadorNegritas($lblEmpresa), "t_2" => $row['prosp_empresa']);
+                        $tabla['t_10'] = array("t_1" => generadorNegritas($lblEstadoProspecto), "t_2" => $row['estpro_descripcion']);  
                         
                         
                         //$tabla5['t_7'] = array("t_1" => generadorNegritas($lblCorreo), "t_2" => $row['correo']);
@@ -349,6 +351,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 				}
                         if($_SESSION['_esaplicante'] == '1'){
                             $tabla2['t_1'] = array("t_1" => generadorNegritas($lblAprobado), "t_2" => $row['prosp_aprobado']);
+                            $tabla2['t_2'] = array("t_1" => generadorNegritas($lblForumLeader), "t_2" => $row['nombre_forum']);
                         }else{
                          //   $tabla2['t_2'] = array("t_1" => generadorNegritas($lblForumLeader), "t_2" => $row['nombre_forum']);
                          //   $tabla2['t_3'] = array("t_1" => generadorNegritas("Última Fecha de asignación de Forum Leader"), "t_2" => getFormatoFechadmyhis($row['prosp_fechacambioforum']) );
@@ -364,7 +367,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 					$tabla2['t_7'] = array("t_1" => generadorNegritas($lblEmpresa), "t_2" => $row['skype']);
 						}
 				if($_SESSION['_esaplicante'] == '1'){
-					$tabla2['t_7'] = array("t_1" => generadorNegritas($lblEmpresa), "t_2" => $row['prosp_empresa']);
+					
                         //$tabla2['t_8'] = array("t_1" => generadorNegritas($lblRUC), "t_2" => $row['emp_ruc']);
 				
 						$objEmpresaLocal= new EmpresaLocal();
@@ -376,7 +379,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 						
                         if($_SESSION['_esaplicante'] == '1'){
 							
-                            $tabla2['t_10'] = array("t_1" => generadorNegritas($lblEstadoProspecto), "t_2" => $row['estpro_descripcion']);  
+                            
                         }
 				
                        // $tabla2['t_11'] = array("t_1" => generadorNegritas("Comentario"), "t_2" => $row['prosp_observacion']);
