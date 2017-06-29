@@ -155,7 +155,7 @@ list($c1, $c2, $c3, $c4) = split('[/.-]', $codigo_usuario);
       $form['form_4'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_tipo_p" ,"reemplazo" => $row['per_tipo']);
       $form['form_5'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_identificacion" ,"reemplazo" => $row['per_identificacion']);
 		
-		$form['form_6'] = array("elemento" => "combo","change" => "","titulo" => $lblGenero, "id" => "_genero", "option" => generadorComboGenero($row['per_genero']));
+		//$form['form_6'] = array("elemento" => "combo","change" => "","titulo" => $lblGenero, "id" => "_genero", "option" => generadorComboGenero($row['per_genero']));
         
       $form['form_7'] = array("elemento" => "caja", "tipo" => "hidden","id" => "_titulo", "reemplazo" => "1");
 		//$form['form_7'] = array("elemento" => "combo","change" => "", "titulo" => $lblTitulo, "id" => "_titulo", "option" => $listaprofe);
@@ -520,7 +520,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                        // if($row['per_tipo']=='J'){$tabla['t_6'] = array("t_1" => generadorNegritas($lblTipoPersona), "t_2" => "Jurídica");} 
                        // if($row['per_tipo']=='N'){$tabla['t_6'] = array("t_1" => generadorNegritas($lblTipoPersona), "t_2" => "Natural");} 
-                        $tabla['t_7'] = array("t_1" => generadorNegritas($lblGenero), "t_2" => $row['per_genero']);
+                        //$tabla['t_7'] = array("t_1" => generadorNegritas($lblGenero), "t_2" => $row['per_genero']);
 
                         
                     //    $tabla2['t_1'] = array("t_1" => generadorNegritas("Precio Mensual"), "t_2" => $row['memb_descripcion']);

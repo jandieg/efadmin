@@ -386,7 +386,7 @@ var setUserActualizar = function(  id_persona, id_miembro){
 				_codigo: $("#_cod_1").val().toString() +"-"+ $("#_cod_2").val().toString() +"-"+ $("#_cod_3").val().toString() +"-"+ $("#_cod_4").val().toString() ,
                 _tipo_p: $("#_tipo_p").val().toString(),
                 _identificacion: $("#_identificacion").val().toString(),
-                _genero: $("#_genero").val().toString(),
+                _genero: 'M',
                 _status: $("#_status").val().toString(),
                 
                 _membresia: $("#_membresia").val().toString(),

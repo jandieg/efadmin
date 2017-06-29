@@ -121,7 +121,7 @@ function getDetalleUpdate($id, $recargar) {
         if($_SESSION['_esaplicante'] == '1'){
         $form7['form_4'] = array("elemento" => "caja" ,"tipo" => "hidden" ,  "id" => "_tipo_p" ,"reemplazo" => $row['per_tipo']);      
         $form['form_5'] = array("elemento" => "caja" ,"tipo" => "hidden" ,  "id" => "_identificacion" ,"reemplazo" => $row['per_identificacion']);      
-        $form['form_6'] = array("elemento" => "combo","change" => "", "titulo" => $lblGenero, "id" => "_genero", "option" => generadorComboGenero($row['per_genero']));
+        //$form['form_6'] = array("elemento" => "combo","change" => "", "titulo" => $lblGenero, "id" => "_genero", "option" => generadorComboGenero($row['per_genero']));
         
         $form['form_7'] = array("elemento" => "caja", "tipo" => "hidden","id" => "_titulo", "reemplazo" => "1");
         //$form['form_8'] = array("elemento" => "caja" ,"tipo" => "date" , "titulo" => $lblFNacimiento, "id" => "_fn" ,"reemplazo" => $row['per_fechanacimiento']);
@@ -157,7 +157,7 @@ function getDetalleUpdate($id, $recargar) {
 //	$form['form_4'] = array("elemento" => "combo","change" => "", "titulo" => $lblTipoPersona, "id" => "_tipo_p", "option" => generadorComboTipoPersona_($row['per_tipo']));          
         $form7['form_4'] = array("elemento" => "caja" ,"tipo" => "hidden" ,  "id" => "_tipo_p" ,"reemplazo" => $row['per_tipo']);      
         $form['form_5'] = array("elemento" => "caja" ,"tipo" => "hidden" ,  "id" => "_identificacion" ,"reemplazo" => $row['per_identificacion']);      
-        $form['form_6'] = array("elemento" => "caja","tipo" => "hidden",  "id" => "_genero", "reemplazo" => $row['per_genero']);
+        //$form['form_6'] = array("elemento" => "caja","tipo" => "hidden",  "id" => "_genero", "reemplazo" => $row['per_genero']);
         
         $form['form_7'] = array("elemento" => "caja", "tipo" => "hidden", "id" => "_titulo", "reemplazo" => "1");
         //$form['form_8'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_fn" ,"reemplazo" => $row['per_fechanacimiento']);
@@ -329,7 +329,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                        // if($row['per_tipo']=='J'){$tabla['t_5'] = array("t_1" => generadorNegritas($lblTipoPersona), "t_2" => "Jurídica");} 
                          //if($row['per_tipo']=='N'){$tabla['t_5'] = array("t_1" => generadorNegritas($lblTipoPersona), "t_2" => "Natural");} 
 						}
-                        $tabla['t_6'] = array("t_1" => generadorNegritas($lblGenero), "t_2" => $row['per_genero']);
+                        //$tabla['t_6'] = array("t_1" => generadorNegritas($lblGenero), "t_2" => $row['per_genero']);
                         $tabla['t_7'] = array("t_1" => generadorNegritas($lblEmpresa), "t_2" => $row['prosp_empresa']);
                         $tabla['t_10'] = array("t_1" => generadorNegritas($lblEstadoProspecto), "t_2" => $row['estpro_descripcion']);  
                         
@@ -545,7 +545,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 if($_SESSION['_esaplicante'] == '1'){
 //$form['form_4'] = array("elemento" => "caja" ,"tipo" => "hidden", "id" => "_tipo_p", "reemplazo" => generadorComboTipoPersona_('J'));                 
 $form['form_5'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_identificacion" ,"reemplazo" => "");
-                 $form['form_6'] = array("elemento" => "combo","change" => "", "titulo" => $lblGenero, "id" => "_genero", "option" => generadorComboGenero('MASCULINO'));
+                 //$form['form_6'] = array("elemento" => "combo","change" => "", "titulo" => $lblGenero, "id" => "_genero", "option" => generadorComboGenero('MASCULINO'));
 
 $form['form_7'] = array("elemento" => "caja","tipo" => "hidden", "id" => "_titulo", "reemplazo" => "1");
 //$form['form_8'] = array("elemento" => "caja" ,"tipo" => "date" , "titulo" => $lblFNacimiento, "id" => "_fn" ,"reemplazo" => "");
@@ -565,7 +565,7 @@ $form['form_7'] = array("elemento" => "caja","tipo" => "hidden", "id" => "_titul
 
 $form['form_4'] = array("elemento" => "caja" ,"tipo" => "hidden", "id" => "_tipo_p", "reemplazo" => generadorComboTipoPersona_('J'));                 
 $form['form_5'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_identificacion" ,"reemplazo" => "");
-$form['form_6'] = array("elemento" => "caja","tipo" => "hidden", "id" => "_genero", "reemplazo" => generadorComboGenero('MASCULINO'));
+//$form['form_6'] = array("elemento" => "caja","tipo" => "hidden", "id" => "_genero", "reemplazo" => generadorComboGenero('MASCULINO'));
 $form['form_7'] = array("elemento" => "caja","tipo" => "hidden", "id" => "_titulo", "reemplazo" => "1");
 $form['form_8'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_fn" ,"reemplazo" => "");
 $form7['form_9'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_correo" ,"reemplazo" => "");
