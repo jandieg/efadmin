@@ -472,8 +472,9 @@ var getRecargar = function(){
 var getFiltro = function(key){
    
      var canceladas = 0;
-     if ($("#_status_memb").val().toString() == "2") {
+     if ($("#_status_memb").val() != null && $("#_status_memb").val().toString() == "2") {
          canceladas = 1;
+         console.log('incluir cancelados');
      }
      
     var filtro= "";

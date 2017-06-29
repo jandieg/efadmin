@@ -41,6 +41,7 @@ BEGIN
             prospecto.prosp_observacion,
             prospecto.prosp_esaplicante, 
             member_status.mem_sta_descripcion,
+            member_status.mem_sta_codigo,
             prospecto.prosp_esaplicanteesmiembro, prospecto.prospecto_id, prospecto.prosp_aprobado,
             (SELECT  `cor_descripcion`  FROM `correo` WHERE Persona_per_id=persona.per_id and cor_tipo='Personal' LIMIT 1) as 'correo',
             (SELECT  `tel_descripcion` FROM `telefono` WHERE Persona_per_id=persona.per_id and tel_tipo= 'M' LIMIT 1 ) as 'movil',
@@ -98,12 +99,14 @@ BEGIN
                 prospecto.prosp_observacion,
                 prospecto.prosp_esaplicante, 
                 prospecto.prosp_esaplicanteesmiembro, prospecto.prospecto_id, prospecto.prosp_aprobado,
+                member_status.mem_sta_codigo,
                 (SELECT  `cor_descripcion`  FROM `correo` WHERE Persona_per_id=persona.per_id and cor_tipo='Personal' LIMIT 1) as 'correo',
                 (SELECT  `tel_descripcion` FROM `telefono` WHERE Persona_per_id=persona.per_id and tel_tipo= 'M' LIMIT 1 ) as 'movil',
                 (SELECT  concat (persona.per_nombre ,' ', persona.per_apellido) as 'nombre_forum'  FROM persona, perfil, usuario 
                     WHERE usuario.usu_id= prospecto.forum_usu_id and usuario.Persona_per_id= persona.per_id and usuario.perfil_per_id= perfil.per_id LIMIT 1) as 'nombre_forum' 
                 FROM  prospecto  
                 INNER join persona on prospecto.Persona_per_id = persona.per_id
+                left join member_status on (member_status.mem_sta_id=prospecto.status_member_id)
                 where prosp_esaplicante = _esaplicante 
                 and prosp_esaplicanteesmiembro = '0'
                 and prospecto.forum_usu_id = _id
@@ -151,6 +154,7 @@ BEGIN
                 prospecto.participacion_correo,
                 prospecto.prosp_observacion,
                 prospecto.prosp_esaplicante, 
+                member_status.mem_sta_codigo,
                 prospecto.prosp_esaplicanteesmiembro, prospecto.prospecto_id, prospecto.prosp_aprobado,
                 (SELECT  `cor_descripcion`  FROM `correo` WHERE Persona_per_id=persona.per_id and cor_tipo='Personal' LIMIT 1) as 'correo',
                 (SELECT  `tel_descripcion` FROM `telefono` WHERE Persona_per_id=persona.per_id and tel_tipo= 'M' LIMIT 1 ) as 'movil',
@@ -158,6 +162,7 @@ BEGIN
                     WHERE usuario.usu_id= prospecto.forum_usu_id and usuario.Persona_per_id= persona.per_id and usuario.perfil_per_id= perfil.per_id LIMIT 1) as 'nombre_forum' 
                 FROM  prospecto  
                 INNER join persona on prospecto.Persona_per_id = persona.per_id
+                 left join member_status on (member_status.mem_sta_id=prospecto.status_member_id)
                 where prosp_esaplicante = _esaplicante 
                 and prosp_esaplicanteesmiembro = '0'
                  and (prospecto.pro_id in (SELECT  `prospecto_prosp_id` FROM `prospecto_empresa` WHERE empresalocal_emp_id= _id) or prospecto.empresalocal_emp_id = _id)
@@ -207,6 +212,7 @@ BEGIN
                 prospecto.participacion_correo,
                 prospecto.prosp_observacion,
                 prospecto.prosp_esaplicante, 
+                member_status.mem_sta_codigo,
                 prospecto.prosp_esaplicanteesmiembro, prospecto.prospecto_id, prospecto.prosp_aprobado,
                 (SELECT  `cor_descripcion`  FROM `correo` WHERE Persona_per_id=persona.per_id and cor_tipo='Personal' LIMIT 1) as 'correo',
                 (SELECT  `tel_descripcion` FROM `telefono` WHERE Persona_per_id=persona.per_id and tel_tipo= 'M' LIMIT 1 ) as 'movil',
@@ -214,6 +220,7 @@ BEGIN
                     WHERE usuario.usu_id= prospecto.forum_usu_id and usuario.Persona_per_id= persona.per_id and usuario.perfil_per_id= perfil.per_id LIMIT 1) as 'nombre_forum' 
                 FROM  prospecto  
                 INNER join persona on prospecto.Persona_per_id = persona.per_id
+                left join member_status on (member_status.mem_sta_id=prospecto.status_member_id)
                 where prosp_esaplicante = _esaplicante 
                 and prosp_esaplicanteesmiembro = '0'
                 and (prospecto.pro_id in (SELECT  `prospecto_prosp_id` FROM `prospecto_empresa` WHERE empresalocal_emp_id in (SELECT `empresalocal_emp_id` FROM `empresa_industria` WHERE industria_ind_id= _id)) 
@@ -264,6 +271,7 @@ BEGIN
                 prospecto.participacion_correo,
                 prospecto.prosp_observacion,
                 prospecto.prosp_esaplicante, 
+                member_status.mem_sta_codigo,
                 prospecto.prosp_esaplicanteesmiembro, prospecto.prospecto_id, prospecto.prosp_aprobado,
                 (SELECT  `cor_descripcion`  FROM `correo` WHERE Persona_per_id=persona.per_id and cor_tipo='Personal' LIMIT 1) as 'correo',
                 (SELECT  `tel_descripcion` FROM `telefono` WHERE Persona_per_id=persona.per_id and tel_tipo= 'M' LIMIT 1 ) as 'movil',
@@ -271,6 +279,7 @@ BEGIN
                     WHERE usuario.usu_id= prospecto.forum_usu_id and usuario.Persona_per_id= persona.per_id and usuario.perfil_per_id= perfil.per_id LIMIT 1) as 'nombre_forum' 
                 FROM  prospecto  
                 INNER join persona on prospecto.Persona_per_id = persona.per_id
+                left join member_status on (member_status.mem_sta_id=prospecto.status_member_id)
                 where prosp_esaplicante = _esaplicante 
                 and prosp_esaplicanteesmiembro = '0'
                 and status_member_id = _id

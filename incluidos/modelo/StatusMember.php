@@ -35,6 +35,16 @@ class StatusMember extends Conexion{
         }
         return $lista;
     }
+
+    function getListaAplicante($lista = array()) {
+        $resultset= $this->get('A','0');         
+        while ($row = $resultset->fetch_assoc()) { 
+                $lista['lista_'.$row['mem_sta_id']] = array("value" => $row['mem_sta_id'],  "select" => "" ,"texto" =>$row['mem_sta_codigo']);
+        }
+    
+       return $lista;
+
+    }
     
     function getLista($idSeleccionado='', $lista=array(), $isMiembroAplicante= '1') {
         $resultset= $this->get('A',$isMiembroAplicante); 

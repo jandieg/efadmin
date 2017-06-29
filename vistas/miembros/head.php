@@ -1740,7 +1740,7 @@ function getGlobalFiltros() {
     $listaStatusMember = $objStatusMember->getListaMiembroStatus();
     $form['form_5'] = array("elemento" => "combo","change" => "getFiltro('5')", "titulo" => "Estado del Miembro", "id" => "_status_memb", "option" => $listaStatusMember); 
 
-    $form['form_6'] = array("elemento" => "Checkbox-comun", "chec" => "onChange='setCanceladas()'", "id" => "_canceladas", "titulo" => "Incluir Canceladas");
+    //$form['form_6'] = array("elemento" => "Checkbox-comun", "chec" => "onChange='setCanceladas()'", "id" => "_canceladas", "titulo" => "Incluir Canceladas");
     $objGrupo2 = new Grupo();
     $listaAgrup = $objGrupo2->getListaByAgrup();
     $form['form_7'] = array("elemento" => "combo","change" => "getFiltro('6')", "titulo" => "Tipo Miembro", "id" => "_memb_type", "option" => $listaAgrup); 

@@ -57,14 +57,14 @@ function getDetalleUpdate($id, $recargar) {
         
         $estadoprospecto='';
          if($_SESSION['_esaplicante'] == '1'){
-//            $listaStatus['lista_'] = array("value" => "x",  "select" => "" ,"texto" => "Seleccionar...");
+            $listaStatus['lista_'] = array("value" => "x",  "select" => "" ,"texto" => "Seleccionar...");
             $objStatus= new StatusMember();
-            $listaStatus= $objStatus->getLista($row['status_member_id'],NULL, '0');
+            $listaStatus= $objStatus->getListaAplicante($listaStatus);
             $estadoprospecto='Estado del Aplicante';
          }else{
-//            $listaStatus['lista_'] = array("value" => "x",  "select" => "" ,"texto" => "Seleccionar...");
+            $listaStatus['lista_'] = array("value" => "x",  "select" => "" ,"texto" => "Seleccionar...");
             $objStatus= new StatusMember();
-            $listaStatus= $objStatus->getLista($row['status_member_id'],NULL, '2');
+            $listaStatus= $objStatus->getListaAplicante($listaStatus);
             $estadoprospecto='Estado del Prospecto';
          }
         
@@ -215,7 +215,7 @@ function getDetalleUpdate($id, $recargar) {
 			 
 		//Cargos//
         $form2['form_8'] = array("elemento" => "caja","tipo" => "hidden", "id" => "_categoria", "reemplazo" => "1");
-        $form2['form_9'] = array("elemento" => "textarea" ,"tipo" => "text" , "titulo" => "Comentario", "id" => "_observacion" ,"reemplazo" => $row['prosp_observacion']);
+        //$form2['form_9'] = array("elemento" => "textarea" ,"tipo" => "text" , "titulo" => "Comentario", "id" => "_observacion" ,"reemplazo" => $row['prosp_observacion']);
         $form_2= generadorEtiqueta($form2);
 		 }else{
  $form2['form_6'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => "Empresa", "id" => "_id_skype" ,"reemplazo" => $redSkype);       
@@ -224,7 +224,7 @@ function getDetalleUpdate($id, $recargar) {
 	   //Cargos//
         $form2['form_8'] = array("elemento" => "caja","tipo" => "hidden", "id" => "_categoria", "reemplazo" => "1");
         //$form2['form_9'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_observacion" ,"reemplazo" => $row['prosp_observacion']);
-		 $form2['form_9'] = array("elemento" => "textarea" ,"tipo" => "text" , "titulo" => "Comentario", "id" => "_observacion" ,"reemplazo" => $row['prosp_observacion']);
+		 //$form2['form_9'] = array("elemento" => "textarea" ,"tipo" => "text" , "titulo" => "Comentario", "id" => "_observacion" ,"reemplazo" => $row['prosp_observacion']);
         $form_2= generadorEtiqueta($form2);
 		 }
 
@@ -378,7 +378,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             $tabla2['t_10'] = array("t_1" => generadorNegritas($lblEstadoProspecto), "t_2" => $row['estpro_descripcion']);  
                         }
 				
-                        $tabla2['t_11'] = array("t_1" => generadorNegritas("Comentario"), "t_2" => $row['prosp_observacion']);
+                       // $tabla2['t_11'] = array("t_1" => generadorNegritas("Comentario"), "t_2" => $row['prosp_observacion']);
 				
                  
                         $tabla3['t_1'] = array("t_1" => generadorNegritas($lblPais),            "t_2" => $pais);
@@ -525,11 +525,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                  //$listaStatus['lista_'] = array("value" => "x",  "select" => "" ,"texto" => "Seleccionar...");
                  if($_SESSION['_esaplicante'] == '1'){
                     $objStatus= new StatusMember();
-                    $listaStatus= $objStatus->getLista(NULL,NULL, '0');
+                    $listaStatus= $objStatus->getListaAplicante();
                     $estadoprospecto='Estado del Aplicante';
                  }else{
                     $objStatus= new StatusMember();
-                    $listaStatus= $objStatus->getLista(NULL,NULL, '2');
+                    $listaStatus= $objStatus->getListaAplicante();
                     $estadoprospecto='Estado del Prospecto';
                  }
                  //Formularios
@@ -933,7 +933,8 @@ function getTablaFiltrada($id, $key, $esaplicante) {
             $cuerpo.= generadorTablaFilas(array(
                 "<center>".$cont."</center>",	
                 generadorLink($row['per_apellido'].' '.$row['per_nombre'],$verDetalle),
-                $row['aprobado']));
+                $row['aprobado'],
+                $row['mem_sta_codigo']));
                
         }else{
              $verDetalle='';
@@ -943,7 +944,7 @@ function getTablaFiltrada($id, $key, $esaplicante) {
             $cuerpo.= generadorTablaFilas(array(
                 "<center>".$cont."</center>",
                 generadorLink($row['per_apellido'].' '.$row['per_nombre'],$verDetalle),
-                $row['nombre_forum'],$row['mem_sta_descripcion']));
+                $row['nombre_forum'],$row['mem_sta_codigo']));
         }
         $cont=$cont + 1; 
     } 
@@ -992,15 +993,13 @@ function getFiltros() {
 		         if($_SESSION['_esaplicante'] == '1'){
             $listaStatus['lista_'] = array("value" => "x",  "select" => "" ,"texto" => "Seleccionar...");
             $objStatus= new StatusMember();
-            $listaStatus= $objStatus->getLista($row['status_member_id'],NULL, '0');
+            $listaStatus= $objStatus->getListaAplicante($listaStatus);
             $form['form_5'] = array("elemento" => "combo","change" => "getFiltro('5')", "titulo" => "Estado del Aplicante", "id" => "_estado", "option" => $listaStatus); 
-
          }else{
            $listaStatus['lista_'] = array("value" => "x",  "select" => "" ,"texto" => "Seleccionar...");			
 			$objStatus= new StatusMember();
-            $listaStatus= $objStatus->getLista($row['status_member_id'],NULL, '2');
+            $listaStatus= $objStatus->getListaAplicante($listaStatus);
             $form['form_5'] = array("elemento" => "combo","change" => "getFiltro('5')", "titulo" => "Estado del Prospecto", "id" => "_estado", "option" => $listaStatus); 
-
          }
 
 //        $listaEP['lista_'] = array("value" => "0",  "select" => "" ,"texto" => "Seleccionar...");
