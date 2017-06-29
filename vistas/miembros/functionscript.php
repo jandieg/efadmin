@@ -472,9 +472,10 @@ var getRecargar = function(){
 var getFiltro = function(key){
    
      var canceladas = 0;
-     if ($("#_canceladas").is(":checked")) {
+     if ($("#_status_memb").val().toString() == "2") {
          canceladas = 1;
      }
+     
     var filtro= "";
     switch(key){
         case "1":        
@@ -550,7 +551,6 @@ var getFiltro = function(key){
             $('#_status_memb').val("x");
             $("#_industria").val("x");
             $('#_grupo').val('x');
-            $('#_status_memb').val('x');
             $('#_forum').val('x');
             $('#_empresa').val('x');
             $(".select2").select2();

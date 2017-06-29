@@ -1612,7 +1612,7 @@ function getFiltros() {
     $listaStatusMember = $objStatusMember->getListaMiembroStatus($lista);
     $form['form_5'] = array("elemento" => "combo","change" => "getFiltro('5')", "titulo" => "Estado del Miembro", "id" => "_status_memb", "option" => $listaStatusMember); 
 
-    $form['form_6'] = array("elemento" => "Checkbox-comun", "chec" => "onChange='setCanceladas()'", "id" => "_canceladas", "titulo" => "Incluir Canceladas");
+    //$form['form_6'] = array("elemento" => "Checkbox-comun", "chec" => "onChange='setCanceladas()'", "id" => "_canceladas", "titulo" => "Incluir Canceladas");
     
     $objGrupo2 = new Grupo();
     $listaAgrup = $objGrupo2->getListaByAgrup($lista);
