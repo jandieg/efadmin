@@ -117,6 +117,7 @@ function getDetalleUpdate($id, $recargar) {
         //$form['form_1'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => "Código", "id" => "_codigo" ,"reemplazo" => $row['prosp_codigo']);
         $form['form_2'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => generadorAsterisco($lblNombre), "id" => "_nombre" ,"reemplazo" => $row['per_nombre']);
         $form['form_3'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => generadorAsterisco($lblApellido), "id" => "_apellido" ,"reemplazo" => $row['per_apellido']);
+        $form['form_4'] = array("elemento" => "caja", "titulo" => generadorAsterisco($lblEmpresa), "id" => "_id_empresa", "reemplazo" => "");
         if($_SESSION['_esaplicante'] == '1'){
         $form7['form_4'] = array("elemento" => "caja" ,"tipo" => "hidden" ,  "id" => "_tipo_p" ,"reemplazo" => $row['per_tipo']);      
         $form['form_5'] = array("elemento" => "caja" ,"tipo" => "hidden" ,  "id" => "_identificacion" ,"reemplazo" => $row['per_identificacion']);      
@@ -209,7 +210,7 @@ function getDetalleUpdate($id, $recargar) {
 			$form2['form_5'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_estado_propietario" ,"reemplazo" => '1');
          
 //        $form2['form_7'] = array("elemento" => "combo","combo","change" => "", "titulo" => "Empresa", "id" => "_id_empresa", "option" => $listaEmpresas);
-        $form2['form_6'] = array("elemento" => "caja", "titulo" => "Empresa", "id" => "_id_empresa", "reemplazo" => $lblEmpresa);
+        
 		
 		
 			 
@@ -527,18 +528,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $objStatus= new StatusMember();
                     $listaStatus= $objStatus->getListaAplicante();
                     $estadoprospecto='Estado del Aplicante';
-                 }else{
+                 }/*else{
                     $objStatus= new StatusMember();
                     $listaStatus= $objStatus->getListaAplicante();
                     $estadoprospecto='Estado del Prospecto';
-                 }
+                 }*/
                  //Formularios
                  //$form['form_1'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => "Código", "id" => "_codigo" ,"reemplazo" => '');
                  $form['form_2'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => generadorAsterisco($lblNombre), "id" => "_nombre" ,"reemplazo" => "");
                  $form['form_3'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => generadorAsterisco($lblApellido), "id" => "_apellido" ,"reemplazo" => "");
+                 $form['form_4'] = array("elemento" => "textarea" ,"tipo" => "text" , "titulo" => generadorAsterisco($lblEmpresa), "id" => "_id_empresa" ,"reemplazo" => "");
 
 if($_SESSION['_esaplicante'] == '1'){
-$form['form_4'] = array("elemento" => "caja" ,"tipo" => "hidden", "id" => "_tipo_p", "reemplazo" => generadorComboTipoPersona_('J'));                 
+//$form['form_4'] = array("elemento" => "caja" ,"tipo" => "hidden", "id" => "_tipo_p", "reemplazo" => generadorComboTipoPersona_('J'));                 
 $form['form_5'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_identificacion" ,"reemplazo" => "");
                  $form['form_6'] = array("elemento" => "combo","change" => "", "titulo" => $lblGenero, "id" => "_genero", "option" => generadorComboGenero('MASCULINO'));
 
@@ -609,7 +611,7 @@ $form8['form_12'] = array("elemento" => "caja pequeña + caja" ,"titulo" => $lbl
                  $form2['form_5'] = array("elemento" => "caja","tipo" => "hidden", "id" => "_estado_propietario", "reemplazo" => $listaestadoprospecto);
                  if($_SESSION['_esaplicante'] == '1'){
 
-$form2['form_6'] = array("elemento" => "textarea" ,"tipo" => "text" , "titulo" => "Empresa", "id" => "_id_empresa" ,"reemplazo" => $lblEmpresa);
+
                  $form2['form_8'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_categoria" ,"reemplazo" => "1");	
 
 }else{
@@ -624,7 +626,7 @@ $form2['form_6'] = array("elemento" => "textarea" ,"tipo" => "text" , "titulo" =
                  
                  //$form2['form_7'] = array("elemento" => "combo","combo","change" => "", "titulo" =>  generadorAsterisco("Empresa"), "id" => "_id_empresa", "option" => $listaEmpresas); 
            //      $form2['form_8'] = array("elemento" => "combo","change" => "","titulo" => $lblCategoría, "id" => "_categoria", "option" => $listacategoria);             
-                 $form2['form_9'] = array("elemento" => "textarea" ,"tipo" => "text" , "titulo" => "Comentario", "id" => "_observacion" ,"reemplazo" => '');
+                 //$form2['form_9'] = array("elemento" => "textarea" ,"tipo" => "text" , "titulo" => "Comentario", "id" => "_observacion" ,"reemplazo" => '');
 
                  
 
