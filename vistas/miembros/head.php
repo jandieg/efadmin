@@ -886,7 +886,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         //+++++++++++++++++++++++++++++++++++++++++++++++++++++
                         $lista["0"]= array("value" => "x",  "select" => "selected" ,"texto" => "Seleccione...");                                
                         $objGrupo= new Grupo();
-                        $listaGrupos= $objGrupo->getListaGruposForum($_POST['_filtro'],NULL, $lista);                   
+                        if ($_POST['_filtro'] == "x") {
+                            $listaGrupos= $objGrupo->getListaGrupos2(NULL,$lista);                   
+                        } else {
+                            $listaGrupos= $objGrupo->getListaGruposForum($_POST['_filtro'],NULL, $lista);                   
+                        }
+                        
                         $gruposfiltro= generadorComboSelectOption("_grupo", "getFiltro('1')",$listaGrupos);
                         $data = array("success" => "true", 
                         "tabla" => $tabla,
