@@ -330,7 +330,13 @@
                           $meses[10] = "Octubre";
                           $meses[11] = "Noviembre";
                           $meses[12] = "Diciembre";
-                          echo $meses[intval(date('m'))] . " (incluido " . $meses[intval(date('m'))] . ")"; ?></span></label>
+                          $elmes = intval(date('m'));
+                          if ($elmes-2 < 1) {
+                              $elmes = $elmes + 10;
+                          } else {
+                              $elmes = $elmes - 2;
+                          }
+                          echo $meses[$elmes] . " (incluido " . $meses[$elmes] . ")"; ?></span></label>
                         </div>                                                                                    
                     </div>
                 </div>

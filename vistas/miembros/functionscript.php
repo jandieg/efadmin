@@ -110,11 +110,11 @@ var generarRangoFechas = function () {
     var date2 = new Date().toISOString().substr(0,19).replace('T', ' ');
     var month = date2.substr(5,2);
     var year  = date2.substr(0,4);
-    if (month == "01") {
-        month = month + 10;
+    if (month == "01" || month == "02") {
+        month = month + 9;
         year  = year - 1;
     } else {
-        month = month - 2;
+        month = month - 3;
     }
     var meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 
@@ -130,29 +130,10 @@ var generarRangoFechas = function () {
         minDate: fechaInicial,
         defaultDate: fechaInicial,
         onChangeMonthYear: function(y,m,i) {
-            if (year == y && month > m) {
-                //se valida que no caiga en bug del datepicker
-                
-                if (month+1 == 12) {
-                    $("#mesact").html(meses[0]+" (incluido " + meses[0] + ")");
-                } else {
-                    $("#mesact").html(meses[month+1]+" (incluido " + meses[month+1] + ")");
-                }
-                $("#_seleccion_del_mes").val( (month+1) + '/' + y);
-            } else {
-                if (m.length < 2) { 
-                    $("#mesact").html(meses[m]+" (incluido " + meses[m] + ")");
-                    $("#_seleccion_del_mes").val('0' + m.toString() + '/' + y);
-                } else {
-                    if (m == 12) {  
-                        $("#mesact").html(meses[0]+" (incluido " + meses[0] + ")");
-                    } else {
-                        $("#mesact").html(meses[m]+" (incluido " + meses[m] + ")");
-                    }
-                    
-                    $("#_seleccion_del_mes").val(m + '/' + y);
-                }
-            }
+            
+            $("#mesact").html(meses[m-1]+" (incluido " + meses[m-1] + ")");
+            $("#_seleccion_del_mes").val(m + '/' + y);
+           
             
             
         },
@@ -331,6 +312,7 @@ var setActualizarCancelacion = function(){
                         respuesta = "<div class='col-md-3'><div class='callout callout-success'><h4>Alerta:</h4><p>"+mensaje.msg+"</p></div></div>";
                         $.toaster({ priority : mensaje.priority, title : 'Alerta', message : mensaje.msg});
                     }else{
+                        
                         respuesta = "<div class='col-md-3'><div class='callout callout-info'><h4>Alerta:</h4><p>"+mensaje.msg+"</p></div></div>";
                         //$.toaster({ priority : mensaje.priority, title : 'Alerta', message : mensaje.msg});
                     }
@@ -474,7 +456,7 @@ var getFiltro = function(key){
      var canceladas = 0;
      if ($("#_status_memb").val() != null && $("#_status_memb").val().toString() == "2") {
          canceladas = 1;
-         console.log('incluir cancelados');
+         
      }
      
     var filtro= "";
