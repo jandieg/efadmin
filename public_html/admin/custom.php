@@ -1425,7 +1425,7 @@ AND t2.agrup in ('A')
 
 AND((t1.cancelled = 0) 
 
-OR (( month(t1.mie_fecha_cambio_status) >='$month' 
+OR (( month(t1.mie_fecha_cambio_status) >'$month' 
 
 AND year(t1.mie_fecha_cambio_status) = '$year' ) 
 
@@ -1458,7 +1458,7 @@ AND t2.agrup  in ('B')
 
 AND(((t1.cancelled = 0) ) 
 
-OR (( month(t1.mie_fecha_cambio_status) >='$month' 
+OR (( month(t1.mie_fecha_cambio_status) >'$month' 
 
 AND year(t1.mie_fecha_cambio_status) = '$year' ) 
 
@@ -1896,7 +1896,7 @@ AND t2.agrup in ('A')
 
 AND((t1.cancelled = 0)  
 
-OR (( month(t1.mie_fecha_cambio_status) >='$month' 
+OR (( month(t1.mie_fecha_cambio_status) >'$month' 
 
 AND year(t1.mie_fecha_cambio_status) = '$year')
 
@@ -1944,7 +1944,7 @@ AND t2.agrup in ('B')
 
 AND((t1.cancelled = 0)  
 
-OR (( month(t1.mie_fecha_cambio_status) >='$month' 
+OR (( month(t1.mie_fecha_cambio_status) >'$month' 
 
 AND year(t1.mie_fecha_cambio_status) = '$year' )
 OR (year(t1.mie_fecha_cambio_status) > '$year')
