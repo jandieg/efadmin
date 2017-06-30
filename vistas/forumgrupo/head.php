@@ -33,7 +33,7 @@ function getTablaGrupos() {
         $cont = $cont + 1;         
         
     }
-    $tabla_grupos= generadorTablaConBotones_(1,"Grupos ",'', array( "N°", "Grupo"), $cuerpo, $datos);      
+    $tabla_grupos= generadorTablaConBotones_Grupos(1,"Grupos ",'', array( "N°", "Grupo"), $cuerpo, $datos);      
     return $tabla_grupos;
 }
 

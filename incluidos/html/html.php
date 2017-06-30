@@ -8,6 +8,22 @@
     return $t ;
 }
 
+function generadorTablaFilasGrupos($columnas=array()){
+    $t='<tr>'; 
+    $i = 0;
+    foreach($columnas as $valor){
+        if ($i=0) {
+            $t.= '<th style="width: 10%;">'.$valor.'</th>';
+        } else {
+            $t.= '<th>'.$valor.'</th>';
+        }
+        $i++;
+        
+    }
+    $t.= '</tr>';
+    return $t ;
+}
+
 
 function generadorTabla_($tipo, $titulo,$funcion='', $columnas=array(), $filas){
     $t='<div class="box box-info">';
@@ -176,6 +192,56 @@ function generadorTablaConBotones2($tipo, $titulo,$funcion='', $columnas=array()
     $t.='</div>';
     return $t ;
 }
+
+function generadorTablaConBotones_Grupos($tipo, $titulo,$funcion='', $columnas=array(), $filas,$botones=array()){
+    $t='<div class="box box-info">';
+    $t.='<div class="box-header">';
+    $t.='<h3 class="box-title">'.$titulo. '</h3>';
+    if($funcion != ''){
+    $t.='<div class="box-tools pull-right">';
+     foreach ($botones as $boton => $val2) {
+           $t.='&nbsp;&nbsp;<button type="button"  data-toggle="modal" data-target="'.$val2['modal'].'" class="btn '.$val2['color'].' " onclick="'.$val2['click'].'"><i class="fa '.$val2['icono'].'"></i> '.$val2['titulo'].'</button>';
+        //$msg.='&nbsp;&nbsp;<button type="button" data-toggle="modal" data-target="'.$val2['modal'].'" class="btn '.$val2['color'].' btn-sm" onclick="'.$val2['click'].'"><i class="fa '.$val2['icono'].'"></i> '.$val2['titulo'].'</button>';
+           }
+        $t.='</div>';
+    }
+    
+    $i=0;
+    
+    
+    $t.='</div>';
+    if($tipo==1){
+        $tipoDatatable='tipo_personalizada';
+    }  else {
+        $tipoDatatable='normal';
+    }
+    $t.='<div class="box-body">';  
+    $t.='<table id="'.$tipoDatatable.'" class="table table-bordered table-striped">';
+    ////////////////////////////////////////////////////////////////////////////
+    $t.='<thead><tr>'; 
+    foreach($columnas as $valor){
+        if ($i==0) {
+            $t.= '<th style="width: 10%;">'.$valor.'</th>';
+        } else {
+            $t.= '<th>'.$valor.'</th>';
+        }
+        $i++;
+        
+    }
+    $t.= '</tr></thead>';
+    $t.='<tbody>';
+    $t.=$filas;
+    $t.=' </tbody>';
+    $t.='</tr></thead>';  
+    $t.='<tbody>';
+    $t.=' </table>';
+    $t.='</div>';
+    $t.='</div>';
+    return $t ;
+}
+
+
+
 function generadorTablaConBotones_($tipo, $titulo,$funcion='', $columnas=array(), $filas,$botones=array()){
     $t='<div class="box box-info">';
     $t.='<div class="box-header">';
