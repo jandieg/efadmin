@@ -1734,7 +1734,7 @@ $sql = "SELECT count(miembro.mie_id) AS sp_members FROM miembro
 	WHERE month(miembro.mie_fecha_cambio_status) <= '$month' 
 	AND grupos.agrup in ('B')
 	AND date(miembro.mie_fecha_cambio_status) <= '$corte' 
-	AND miembro.cancelled='1' AND miembro.categoria_cat_id='4' 
+	AND miembro.cancelled='1'  
 	AND YEAR(miembro.mie_fecha_cambio_status)='$year'";	
 }
 
@@ -1747,7 +1747,7 @@ $sql = "SELECT count(miembro.mie_id) AS sp_members FROM miembro
 	WHERE month(miembro_inscripcion.mie_ins_fecha_ingreso) <= '$month' 
 	AND grupos.agrup in ('B')
 	AND miembro_inscripcion.mie_ins_fecha_ingreso <= '$corte' 
-	AND miembro.status_member_id='1' AND miembro.categoria_cat_id='4' 
+	AND miembro.status_member_id='1' 
 	AND YEAR(miembro_inscripcion.mie_ins_fecha_ingreso)='$year'";	
 
 }	
@@ -1759,7 +1759,7 @@ $sql = "SELECT count(miembro.mie_id) AS sp_members FROM miembro
 	WHERE month(miembro.mie_fecha_cambio_status) <= '$month' 
 	AND grupos.agrup in ('A') 
 	AND date(miembro.mie_fecha_cambio_status) <= '$corte' 
-	AND miembro.cancelled='1' AND miembro.categoria_cat_id<>'4' 
+	AND miembro.cancelled='1'  
 	AND YEAR(miembro.mie_fecha_cambio_status)='$year'";	
 }
 
@@ -1771,7 +1771,7 @@ $sql = "SELECT count(miembro.mie_id) AS sp_members FROM miembro
 		WHERE month(miembro_inscripcion.mie_ins_fecha_ingreso) <= '$month'  
 		AND grupos.agrup in ('A')
 		AND miembro_inscripcion.mie_ins_fecha_ingreso <= '$corte' 
-		AND miembro.status_member_id='1' AND miembro.categoria_cat_id<>'4' 
+		AND miembro.status_member_id='1' 
 		AND year(miembro_inscripcion.mie_ins_fecha_ingreso)='$year'";	
 }
 
@@ -1989,7 +1989,7 @@ if(($type=='cancels')&&($cell=='N')){
 	WHERE month(miembro.mie_fecha_cambio_status) <= '$month'
 	AND grupos.agrup in ('A') 
 	AND(date(miembro.mie_fecha_cambio_status) <= '$corte') AND miembro.cancelled='1' 
-	AND miembro.categoria_cat_id<>'4' AND YEAR(miembro.mie_fecha_cambio_status)='$year'";
+	 AND YEAR(miembro.mie_fecha_cambio_status)='$year'";
 
 }
 
@@ -2005,7 +2005,7 @@ if(($type=='adds')&&($cell=='P')){
 	WHERE month(miembro_inscripcion.mie_ins_fecha_ingreso) <= '$month'  
 	AND grupos.agrup in ('A')
 	AND(miembro_inscripcion.mie_ins_fecha_ingreso <= '$corte') AND miembro.status_member_id='1' 
-	AND miembro.categoria_cat_id<>'4' AND YEAR(miembro_inscripcion.mie_ins_fecha_ingreso)='$year'";
+	 AND YEAR(miembro_inscripcion.mie_ins_fecha_ingreso)='$year'";
 
 }
 
@@ -2019,8 +2019,8 @@ if(($type=='cancels')&&($cell=='O')){
 	JOIN grupos ON (grupos.gru_id = miembro.grupo_id) 
 	WHERE month(miembro.mie_fecha_cambio_status) <= '$month' 
 	AND grupos.agrup in ('B') 
-	AND(date(miembro.mie_fecha_cambio_status) <= '$corte') AND miembro.status_member_id='2' 
-	AND miembro.categoria_cat_id='4' AND YEAR(miembro.mie_fecha_cambio_status)='$year'";
+	AND(date(miembro.mie_fecha_cambio_status) <= '$corte') AND miembro.cancelled='1' 
+	 AND YEAR(miembro.mie_fecha_cambio_status)='$year'";
 }
 
 
@@ -2035,7 +2035,7 @@ if(($type=='adds')&&($cell=='Q')){
 	WHERE month(miembro_inscripcion.mie_ins_fecha_ingreso) <= '$month'  
 	AND grupos.agrup in ('B') 
 	AND(miembro_inscripcion.mie_ins_fecha_ingreso <= '$corte') 
-	AND miembro.status_member_id='1' AND miembro.categoria_cat_id='4' 
+	AND miembro.status_member_id='1'  
 	AND YEAR(miembro_inscripcion.mie_ins_fecha_ingreso)='$year'";
 
 
