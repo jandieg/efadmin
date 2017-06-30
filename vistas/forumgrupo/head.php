@@ -54,7 +54,7 @@ function getTablaGruposByEmpresa($idEmpresa) {
         $cont = $cont + 1;         
         
     }
-    $tabla_grupos= generadorTablaConBotones_(1,"Grupos ",'', array( "N°", "Grupo"), $cuerpo, $datos);      
+    $tabla_grupos= generadorTablaConBotones_Grupos(1,"Grupos ",'', array( "N°", "Grupo"), $cuerpo, $datos);      
     return $tabla_grupos;
 }
 
@@ -75,7 +75,7 @@ function getTablaGruposByIndustria($idIndustria) {
         $cont = $cont + 1;                 
     }
 
-    $tabla_grupos= generadorTablaConBotones_(1,"Grupos ",'', array( "N°", "Grupo"), $cuerpo, $datos);      
+    $tabla_grupos= generadorTablaConBotones_Grupos(1,"Grupos ",'', array( "N°", "Grupo"), $cuerpo, $datos);      
     return $tabla_grupos;
 }
 
@@ -96,7 +96,7 @@ function getTablaGruposByForumLeader($idForumLeader) {
         $cont = $cont + 1;                 
     }
 
-    $tabla_grupos= generadorTablaConBotones_(1,"Grupos ",'', array( "N°", "Grupo"), $cuerpo, $datos);      
+    $tabla_grupos= generadorTablaConBotones_Grupos(1,"Grupos ",'', array( "N°", "Grupo"), $cuerpo, $datos);      
     return $tabla_grupos;
 }
 
