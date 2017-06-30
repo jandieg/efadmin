@@ -317,6 +317,18 @@ class EmpresaLocal extends Conexion{
 
 
 
+    public function getFiltros2($id, $key, $permiso, $todas) {
+
+        $sql="call sp_selectEmpresaLocalFiltros2('$id','$key', '$permiso','$todas')";
+
+        return parent::getConsultar($sql);   
+
+    }
+
+    
+
+
+
     public function setCrearEmpresaContacto($idEmpresa, $nombre, $apellido, $id_user, $correo, $celular, $funcion,$convencional) {
 
         $fecha= date("Y-m-d H:i:s");

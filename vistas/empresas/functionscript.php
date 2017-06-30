@@ -218,10 +218,62 @@ var setActualizarContacto = function(){
             }
         });
 };
+
+var getMostrarTodas = function() {
+    var key = 9;
+    var filtro = "x";
+    var _mostrar_todas = 0;
+    
+    if ($("#_mostrar_todas").is(":checked")) {
+        _mostrar_todas = 1;
+    }
+    if ($("#_forum").val().toString() != "x") {
+        key = 2;
+        filtro = $("#_forum").val().toString();
+    }
+
+    if ($("#_industria").val().toString() != "x") {
+        key = 4;
+        filtro = $("#_industria").val().toString();
+    }
+
+    var parametros = {
+            KEY: 'KEY_SHOW_FILTRO',
+            _key_filtro: key,
+            _filtro: filtro,
+            _mostrar_todas: _mostrar_todas
+        };
+        $.ajax({
+            data:  parametros,
+            url:   'empresas',
+            type:  'post',
+            dataType : 'json',
+            success:  function (mensaje) {
+                    if(mensaje.success == "true"){
+                        if(key == "1"){
+                            $('#_forum option[value="'+mensaje.id+'"]').prop('selected', true);
+                        }
+                       /* if(key == "2"){
+                             $('#_grupo option[value="'+mensaje.id+'"]').prop('selected', true);
+                        }*/
+ 
+                        $("#ben_contenedor_filtro").html( mensaje.tabla);
+                        getConfTabla();
+                    }else{
+                    $.toaster({ priority : mensaje.priority, title : 'Alerta', message : mensaje.msg});
+                }
+            },error : function(xhr, status) {
+                $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema' + xhr.toString() + status.toString()});
+            }
+        });
+};
 	
 var getFiltro = function(key){
    
-     
+     var _mostrar_todas = 0;
+     if ($("#_mostrar_todas").is(":checked")) {
+         _mostrar_todas = 1;
+     }
     var filtro= "";
     switch(key){
         /*case "1":        
@@ -238,15 +290,14 @@ var getFiltro = function(key){
             filtro= $("#_industria").val().toString();
             //$('#_grupo option[value="x"]').prop('selected', true);
             $('#_forum option[value="x"]').prop('selected', true);
-            break;
-            
-          
+            break;                      
     }
    
       var parametros = {
             KEY: 'KEY_SHOW_FILTRO',
             _key_filtro: key,
-            _filtro: filtro
+            _filtro: filtro,
+            _mostrar_todas: _mostrar_todas
         };
         $.ajax({
             data:  parametros,

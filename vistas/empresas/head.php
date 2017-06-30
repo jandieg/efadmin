@@ -412,7 +412,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                break;
                
             case 'KEY_SHOW_FILTRO':
-                if(!empty($_POST['_key_filtro']) && !empty($_POST['_filtro'])){ 
+                if(!empty($_POST['_key_filtro']) && !empty($_POST['_filtro']) && strlen($_POST['_mostrar_todas']) > 0){ 
                     $permiso= $_SESSION['user_id_ben'];                    
                     if (in_array($perVerTodosEmpresasOp8, $_SESSION['usu_permiso'])) {
                        $permiso= '';
@@ -421,9 +421,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     
                     $id="";           
                     if($_POST['_filtro'] == "x"){
-                         $tabla= getTablaFiltrada("","",$permiso);
+                         $tabla= getTablaFiltrada("","",$permiso,$_POST['_mostrar_todas']);
                     }else{
-                        $tabla= getTablaFiltrada($_POST['_filtro'], $_POST['_key_filtro'],$permiso);
+                        $tabla= getTablaFiltrada($_POST['_filtro'], $_POST['_key_filtro'],$permiso,$_POST['_mostrar_todas']);
                     }                    
                     if($_POST['_key_filtro'] == "1"){
                         $objGrupo= new Grupo();
@@ -502,14 +502,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 ////////////////////////////////////////////////////////////////////////////////
 $t='';
 if (in_array($perVerTodosEmpresasOp8, $_SESSION['usu_permiso'])) {
-    $tabla= getTablaFiltrada("","","");
+    $tabla= getTablaFiltrada("","","",0);
     $resultado = str_replace("{fitros}", generadorEtiquetasFiltro(getFiltros()), generadorFiltro('Filtros','ben_contenedor_filtro')); 
     $resultado = str_replace("{cuerpo}", $tabla, $resultado);  
     $t=$resultado;
       
 }  elseif (in_array($perVerEmpresasIDForumOp8, $_SESSION['usu_permiso'])) {
    
-    $tabla= getTablaFiltrada("","",$_SESSION['user_id_ben']);
+    $tabla= getTablaFiltrada("","",$_SESSION['user_id_ben'],0);
     $resultado = str_replace("{fitros}", generadorEtiquetasFiltro(getFiltros()), generadorFiltro('Filtros','ben_contenedor_filtro')); 
     $resultado = str_replace("{cuerpo}", $tabla, $resultado);  
     $t=$resultado;
@@ -535,20 +535,22 @@ function getFiltros() {
     $objIndustria = new Industria();
     $listaIndustrias=$objIndustria->getListaIndustrias2(NULL, $lista);
     $form['form_4'] = array("elemento" => "combo","change" => "getFiltro('4')", "titulo" => "Industrias", "id" => "_industria", "option" => $listaIndustrias); 
+    $form['form_5'] = array("elemento" => "Checkbox-comun", "id" => "_mostrar_todas", 
+    "chec" => "onChange='getMostrarTodas()'", "titulo" => "Mostrar todas las empresas");
     
     return $form;
     
 }
 
 
-function getTablaFiltrada($id, $key, $idForum) {
+function getTablaFiltrada($id, $key, $idForum, $mostrarTodas) {
     global $lblEmpresa,$lblFRegistro,$lblFModificacion;
     global $perCrearEmpresaOp8, $perVerDetalleOp8;
     
     $objEmpresaLocal= new EmpresaLocal();
     $cuerpo='';
     $cont=1;
-    $resultset= $objEmpresaLocal->getFiltros($id, $key,$idForum);//getFiltros($id, $key, $permiso)
+    $resultset= $objEmpresaLocal->getFiltros2($id, $key,$idForum,$mostrarTodas);//getFiltros($id, $key, $permiso)
     while($row = $resultset->fetch_assoc()) { 
         $verDetalle='';
         if (in_array($perVerDetalleOp8, $_SESSION['usu_permiso'])) {
