@@ -104,6 +104,14 @@ function getDetalleUpdate($id, $recargar) {
         
         $objGrupo= new Grupo();
         $listaGrupos= $objGrupo->getListaGruposForum_by_Sede($_SESSION['sede_id'], $row['grupo_id'], NULL);
+        $listacod = array();
+        if ($recargar) {
+            $objGrupo3 = new Grupo();
+            $resultset4 = $objGrupo3->getGruposForumSede($_SESSION['sede_id']);
+            if ($row4 = $resultset4->fetch_assoc()) {
+                $listacod = explode('-',$row4['gru_descripcion']);
+            }
+        }
                // $listaGrupos= $objGrupo->getListaGruposForum($_SESSION['sede_id'], $row['grupo_id'], '6');
 				
         $listaStatus['lista_'] = array("value" => "x",  "select" => "" ,"texto" => "Seleccionar...");
@@ -139,13 +147,22 @@ list($c1, $c2, $c3, $c4) = split('[/.-]', $codigo_usuario);
   $cod3 =$c3;
   $cod4 =$c4;
 
+  if ($recargar) {
+      $form['form_0'] = array("elemento" => "smallcode" ,"titulo" => generadorAsterisco("Código")
+            ,"disabled_1" => "","tipo_1" => "text" , "id_1" => "_cod_1" ,"reemplazo_1" => $listacod[0]
+            ,"disabled_2" => "","tipo_2" => "text" , "id_2" => "_cod_2" ,"reemplazo_2" => $listacod[1]
+            ,"disabled_3" => "","tipo_3" => "text" , "id_3" => "_cod_3" ,"reemplazo_3" => ""
+            ,"disabled_4" => "","tipo_4" => "text" , "id_4" => "_cod_4" ,"reemplazo_4" => "");
   
-        $form['form_0'] = array("elemento" => "smallcode" ,"titulo" => generadorAsterisco("Código")
-                                                       ,"disabled_1" => "","tipo_1" => "text" , "id_1" => "_cod_1" ,"reemplazo_1" => $cod1
-                                                       ,"disabled_2" => "","tipo_2" => "text" , "id_2" => "_cod_2" ,"reemplazo_2" => $cod2
-													   ,"disabled_3" => "","tipo_3" => "text" , "id_3" => "_cod_3" ,"reemplazo_3" => $cod3
-													   ,"disabled_4" => "","tipo_4" => "text" , "id_4" => "_cod_4" ,"reemplazo_4" => $cod4);
+  } else {
+      $form['form_0'] = array("elemento" => "smallcode" ,"titulo" => generadorAsterisco("Código")
+            ,"disabled_1" => "","tipo_1" => "text" , "id_1" => "_cod_1" ,"reemplazo_1" => $cod1
+            ,"disabled_2" => "","tipo_2" => "text" , "id_2" => "_cod_2" ,"reemplazo_2" => $cod2
+            ,"disabled_3" => "","tipo_3" => "text" , "id_3" => "_cod_3" ,"reemplazo_3" => $cod3
+            ,"disabled_4" => "","tipo_4" => "text" , "id_4" => "_cod_4" ,"reemplazo_4" => $cod4);
   
+  }
+      
   
 		$form['form_1'] = array("elemento" => "combo","change" => "","titulo" => generadorAsterisco("Asignar Grupo"), "id" => "_grupo_asignar", "option" => $listaGrupos);
         $form['form_2'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => generadorAsterisco($lblNombre), "id" => "_nombre" ,"reemplazo" => $row['per_nombre']);
