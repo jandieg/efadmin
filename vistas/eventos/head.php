@@ -462,9 +462,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $resultset= $objTipoEvento->getTipoEvento($_POST['_id_te']);
                 if($row = $resultset->fetch_assoc()) {
                     //tip_eve_dia_rango_fin
-                    $objDireccion= new Direccion();
+                  /*  $objDireccion= new Direccion();
                     $lista= $objDireccion->getListaDireccion($row['tip_eve_opcion_direccion'], NULL);
-					
+					*/
 					
                   $objForum= new ForumLeader();
                   $listaPerfil= $objForum->getListaForumLeadersEVENTOS(NULL);
@@ -522,9 +522,10 @@ $form['form_1'] = array("elemento" => "combo","change" => "loadgroups();","titul
                   
                     
 
-                    $form['form_4'] = array("elemento" => "combo + boton","change" => "",                   "titulo" => "Ubicación", "id" => "_ubicacion", "option" => $lista, 
+                    /*$form['form_4'] = array("elemento" => "combo + boton","change" => "",                   "titulo" => "Ubicación", "id" => "_ubicacion", "option" => $lista, 
                                             "modal" => "#modal_getCrearDireccion","boton_click" => "getTipoDireccion('".$row['tip_eve_opcion_direccion']."')", "boton_icono" => "fa fa-map","boton_nombre" => "", "boton_title" =>"Crear Dirección"
-                                            ,"boton_tipo" => "btn-info");
+                                            ,"boton_tipo" => "btn-info");*/
+                    $form['form_4'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => "Ubicacion", "id" => "_ubicacion" ,"reemplazo" => "");
 					
 					
 					
@@ -835,9 +836,10 @@ $form['form_7'] = array("elemento" => "fecha + tiempo" ,"tipo_date" => "hidden" 
 		
 
                         
-						$form['form_4'] = array("elemento" => "combo + boton","change" => "",                   "titulo" => "Ubicación", "id" => "_ubicacion", "option" => $lista, 
+						/*$form['form_4'] = array("elemento" => "combo + boton","change" => "",                   "titulo" => "Ubicación", "id" => "_ubicacion", "option" => $lista, 
                                             "modal" => "#modal_getCrearDireccion","boton_click" => "getTipoDireccion('".$row['tip_eve_opcion_direccion']."')", "boton_icono" => "fa fa-map","boton_nombre" => "", "boton_title" =>"Crear Dirección"
-                                            ,"boton_tipo" => "btn-info");
+                                            ,"boton_tipo" => "btn-info");*/
+                        $form['form_4'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => "Ubicacion", "id" => "_ubicacion" ,"reemplazo" => $row['direccion']);
 						
                         //$form['form_4'] = array("elemento" => "combo","change" => "",                   "titulo" => "Ubicación", "id" => "_ubicacion", "option" => $lista);
                
