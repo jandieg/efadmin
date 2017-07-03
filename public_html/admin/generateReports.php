@@ -537,6 +537,7 @@ $sql="SELECT miembro.*, miembro_inscripcion.* FROM miembro, miembro_inscripcion
 WHERE miembro.grupo_id=".$xrow['gru_id']." 
 AND miembro.status_member_id IN (".implode(',', $array).") 
 AND miembro.mie_id = miembro_inscripcion.miembro_id  
+AND miembro.cancelled = 0 
 AND miembro_inscripcion.mie_ins_fecha_ingreso <= '$corte'  
 ORDER By miembro.mie_codigo ASC";// AND miembro_inscripcion.mie_ins_year='$year'
 $res = mysqli_query($con,$sql);
@@ -2414,7 +2415,8 @@ $nextyear = $year + 1;
 $country = get_country_by_user($userid);	
 $report_country = strtoupper(substr($country,0,2));
 $report_name="Summary-".$userid.'.xlsx';
-$report_name_for_excel="GROSS REVENUE REPORT FOR: ".get_IBU($userid).' ('.get_admin_details($userid,'fullname').')';
+//$report_name_for_excel="GROSS REVENUE REPORT FOR: ".get_IBU($userid).' ('.get_admin_details($userid,'fullname').')';
+$report_name_for_excel="GROSS REVENUE REPORT FOR:  (".get_IBU($userid).")";
 
 $objPHPExcel = new PHPExcel();
 $objPHPExcel->getProperties()->setCreator("Maarten Balliauw")

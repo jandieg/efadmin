@@ -1100,27 +1100,21 @@ function get_IBU($id){
 
 include("../../incluidos/db_config/config.php");
 
-	    $sql = "SELECT * FROM grupos WHERE gru_id_usuario='$id'";	
+	    $sql = "SELECT * FROM usuario WHERE usu_id='$id'";	
 
 		$res = mysqli_query($con,$sql);
 
-		$row = mysqli_fetch_array($res);
-
-		
+		$row = mysqli_fetch_array($res);		
 
 		$sede_id = $row['sede_id'];
-
 		
-
-        $s = "SELECT * FROM ciudad WHERE sede_id='$sede_id'";	
+        $s = "SELECT * FROM sede WHERE sede_id='$sede_id'";	
 
 		$r = mysqli_query($con,$s);
 
-		$p = mysqli_fetch_array($r);
+		$p = mysqli_fetch_array($r);		
 
-		
-
-		return strtoupper($p['nombre_IBU']);	
+		return strtoupper($p['sede_administrador']);	
 
 }
 
