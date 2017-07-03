@@ -1755,6 +1755,7 @@ $sql = "SELECT count(miembro.mie_id) AS sp_members FROM miembro
 	AND date(miembro.mie_fecha_cambio_status) <= '$corte' 
 	AND miembro.cancelled='1'  
 	AND YEAR(miembro.mie_fecha_cambio_status)='$year'";	
+	
 }
 
 if(($category=='top')&&($type=='adds')){
@@ -1789,7 +1790,24 @@ return $data;
 
 //echo get_member_by_status_changed('adds','2017','04',$country);
 
+function old_dues_comment($idMiembro, $year) {
+	include("../../incluidos/db_config/config.php");
+	$sql = "select date_format(detallepresupuestocobro.detalleprecobro_fechavencimiento, '%b %Y') as fecha 
+	from presupuestocobro join detallepresupuestocobro  
+	on (presupuestocobro.precobro_id = detallepresupuestocobro.presupuestocobro_precobro_id)
+	where detallepresupuestocobro.estado_presupuesto_est_pre_id = 1 and 
+	presupuestocobro.miembro_mie_id = '$idMiembro' and 
+	year(detallepresupuestocobro.detalleprecobro_fechavencimiento) < '$year'";
 
+	$res = mysqli_query($con,$sql);
+	$fechas = array();
+	while($row = mysqli_fetch_array($res)) {
+		$fechas[] = $row['fecha'];
+	}
+	return $fechas;
+
+
+}
 
 function comment_members($type,$status,$cell,$year,$month,$country, $corte){
 

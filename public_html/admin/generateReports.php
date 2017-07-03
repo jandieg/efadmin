@@ -539,6 +539,10 @@ AND miembro.status_member_id IN (".implode(',', $array).")
 AND miembro.mie_id = miembro_inscripcion.miembro_id  
 AND miembro.cancelled = 0 
 AND miembro_inscripcion.mie_ins_fecha_ingreso <= '$corte'  
+AND miembro.mie_id in (select presupuestocobro.miembro_mie_id from presupuestocobro join 
+detallepresupuestocobro  on (presupuestocobro.precobro_id = detallepresupuestocobro.presupuestocobro_precobro_id)
+where detallepresupuestocobro.estado_presupuesto_est_pre_id = 1 and 
+year(detallepresupuestocobro.detalleprecobro_fechavencimiento) < '$year')
 ORDER By miembro.mie_codigo ASC";// AND miembro_inscripcion.mie_ins_year='$year'
 $res = mysqli_query($con,$sql);
 $rcount = mysqli_num_rows($res);
@@ -568,6 +572,12 @@ $objPHPExcel->getActiveSheet()->getColumnDimension('C'.$i)->setAutoSize(false);
 $objPHPExcel->getActiveSheet()->getColumnDimension('C'.$i)->setWidth("25");
 //$objPHPExcel->getActiveSheet()->getStyle('C'.$i)->getAlignment()->setWrapText(true);
 $objPHPExcel->getActiveSheet()->setCellValue('C'.$i, get_details_by_user($row['Persona_per_id']));
+$lasfechas = old_dues_comment($row['mie_id'], $year);
+if (count($lasfechas) > 0) {
+    $objPHPExcel->getActiveSheet()->getComment('C'.$i)->setHeight("50px")->setWidth("250px")->getText()->createTextRun("Deuda mes: " . implode(', ', $lasfechas)); 
+}
+
+
 $objPHPExcel->getActiveSheet()->setCellValue('D'.$i, getInscription_info($row['mie_id'],'cob'));
 $objPHPExcel->getActiveSheet()->getStyle('D'.$i)->getAlignment()->setWrapText(true);
 $objPHPExcel->getActiveSheet()->setCellValue('E'.$i, getInscription_info($row['mie_id'],'ins'));
