@@ -1314,9 +1314,9 @@ if($marker==9){ $cell='P'; }
 if($marker==10){ $cell='Q'; }
 if($marker==11){ $cell='R'; }
 if($marker==12){ $cell='S'; }
-
-$countPayments = countPayments($row['mie_id'],$m,$year,$i);
-if($countPayments >= 1){
+$pagosMes = tiene_pagos($row['mie_id'],$m,$year);
+//$countPayments = countPayments($row['mie_id'],$m,$year,$i);
+if($pagosMes > 0){
 $objPHPExcel->getActiveSheet()->getComment($cell.$i)->setHeight("50px")->setWidth("250px")->getText()->createTextRun(comment_months_literal($row['mie_id'],$m,$year,$i)); 
 
 
@@ -1544,9 +1544,9 @@ if($marker2==10){ $cell='AD'; }
 if($marker2==11){ $cell='AE'; }
 if($marker2==12){ $cell='AF'; }
 */
-
-$NYcountPayments = countPayments($row['mie_id'],$m,$nextyear,$i);
-if($NYcountPayments >= 1 ){
+$pagosMesNY = tiene_pagos($row['mie_id'],$m,$nextyear);
+//$NYcountPayments = countPayments($row['mie_id'],$m,$nextyear,$i);
+if($pagosMesNY >  0){
 
 $objPHPExcel->getActiveSheet()->getComment($cell.$i)->setHeight("50px")->setWidth("250px")->getText()->createTextRun(comment_months_literal($row['mie_id'],$m,$nextyear,$i)); //substr($members,0,-2);
 $commenting_next_year=comment_months($row['mie_id'],$m,$nextyear,$i);

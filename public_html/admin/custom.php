@@ -408,6 +408,44 @@ function get_paid_month_info($id,$month,$year){
 
 }
 
+function tiene_pagos($id,$month,$year){
+
+	include("../../incluidos/db_config/config.php");
+
+	
+
+		$sql = "SELECT ifnull(sum(cobro_total),0) AS TOTAL FROM cobro WHERE miembro_id='$id' 
+		AND MONTH(cobro_fecharegistro)='$month' AND YEAR(cobro_fecharegistro)='$year'";	
+
+		$res = mysqli_query($con,$sql);
+
+		$row = mysqli_fetch_array($res);
+
+		
+
+		$total = $row['TOTAL'];
+
+		
+
+		if($total){
+
+			$total = $row['TOTAL'];
+
+		}else{
+
+		    $total=0;	
+
+		}
+
+		
+
+		return $total;
+
+
+
+}
+
+
 
 
 //echo comment_months('37','01','2016');
