@@ -368,6 +368,74 @@ if($type=='price'){
 }
 
 
+function get_meses_cobros($id,$month, $year) {
+	include("../../incluidos/db_config/config.php");
+	$sql = "SELECT MONTH(detallepresupuestocobro.detalleprecobro_fechavencimiento) as mes 	 
+	FROM cobro, detallecobro, detallepresupuestocobro 
+	WHERE cobro.miembro_id = '$id' 
+	AND MONTH(cobro.cobro_fecharegistro)='$month' 
+	AND YEAR(cobro.cobro_fecharegistro)='$year' 
+	AND detallecobro.cobro_cobro_id = cobro.cobro_id 
+	AND detallecobro.detallepresupuestocobro_detalleprecobro_id = detallepresupuestocobro.detalleprecobro_id";
+	
+	$meses = array();
+	$res = mysqli_query($con,$sql);
+	$month = "";
+	while ($row = mysqli_fetch_array($res)) {
+		$month = $row['mes'];
+		if ($month == 1) {
+			$meses[] = "Enero";
+		}
+
+		if ($month == 2) {
+			$meses[] = "Febrero";
+		}
+
+		if ($month == 3) {
+			$meses[] = "Marzo";
+		}
+
+		if ($month == 4) {
+			$meses[] = "Abril";
+		}
+
+		if ($month == 5) {
+			$meses[] = "Mayo";
+		}
+
+		if ($month == 6) {
+			$meses[] = "Junio";
+		}
+
+		if ($month == 7) {
+			$meses[] = "Julio";
+		}
+
+		if ($month == 8) {
+			$meses[] = "Agosto";
+		}
+
+		if ($month == 9) {
+			$meses[] = "Septiembre";
+		}
+
+		if ($month == 10) {
+			$meses[] = "Octubre";
+		}
+
+		if ($month == 11) {
+			$meses[] = "Noviembre";
+		}
+
+		if ($month == 12) {
+			$meses[] = "Diciembre";
+		}
+
+	}
+
+	return implode(" ", $meses);
+
+}
 
 
 
