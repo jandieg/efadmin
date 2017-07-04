@@ -61,7 +61,11 @@ class Prospecto extends Conexion{
     }
 
 //******************************************************************************
-    
+    public function setEstadoProspecto($id, $estado) {
+        $sql = "call sp_UpdateStatusProspecto('$id','$estado')";
+        return parent::setSqlSp($sql);
+    }
+
     public function getProspectosFiltros($id, $key,$esaplicante) {
         $sql="call sp_selectProspectoFiltros('$id', '$key', '$esaplicante')";
         return parent::getConsultar($sql);   

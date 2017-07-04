@@ -680,6 +680,8 @@ $form8['form_12'] = array("elemento" => "caja pequeña + caja" ,"titulo" => $lbl
                  exit();
 
                 break;
+
+
             case 'KEY_ACTUALIZAR':
                  if(  !empty($_POST['_nombre'] )  && !empty($_POST['_apellido'] )){     
                     
@@ -719,6 +721,25 @@ $form8['form_12'] = array("elemento" => "caja pequeña + caja" ,"titulo" => $lbl
                  }
 
                  break;
+            case 'KEY_SET_ESTADO':
+                if(  !empty($_POST['_id_prospecto'] )  && !empty($_POST['_estado'] )){     
+                    
+                    
+                     $objProspesto= new Prospecto();
+                     $comp= $objProspesto->setEstadoProspecto($_POST['_id_prospecto'],$_POST['_estado']);  
+//                 
+                    if($comp == "OK"){
+                        $data = array("success" => "true", "priority"=>'success',"msg" => 'El estado del Prospecto se actualizo correctamente!');  
+                        echo json_encode($data);
+                    }else{
+                        $data = array("success" => "false", "priority"=>'info',"msg" => $comp); 
+                        echo json_encode($data);
+                    }
+                 }  else {
+                     $data = array("success" => "false", "priority"=>'info', "msg" => 'Faltan campos por llenar!');  
+                     echo json_encode($data); 
+                 }
+            break;
             case 'KEY_GUARDAR':
 
                  if(!empty($_POST['key_operacion']) && !empty($_POST['_nombre']) 
@@ -921,12 +942,30 @@ $form8['form_12'] = array("elemento" => "caja pequeña + caja" ,"titulo" => $lbl
 //}
 
 
+function setSeleccionadoAplicante($lista = array(), $idSeleccionado = "") {
+    $listaAux = array();
+    $listaAux = $lista;
+
+    foreach ($lista as $k => $l) {
+        if ($l['value'] == $idSeleccionado) {
+            $listaAux[$k]['select'] = "selected";
+        }
+    }
+
+    return $listaAux;
+
+}
+
+
 function getTablaFiltrada($id, $key, $esaplicante) {
    global $perCrearProspectoOp3, $perVerProspectoOp3, $perVerCandidatoOp2;
    $objProspesto= new Prospecto();
     $cuerpo='';
     $cont=1;
     $resultset= $objProspesto->getProspectosFiltros($id, $key, $esaplicante);
+    $objStatus= new StatusMember();
+    $listaStatus2= array();
+    $listaStatus2= $objStatus->getListaAplicante($listaStatus2);
     while($row = $resultset->fetch_assoc()) { 
         
         //prospecto.prosp_esaplicante,  prospecto.prosp_esaplicanteesmiembro, prospecto.prospecto_id, prospecto.prosp_aprobado
@@ -943,13 +982,19 @@ function getTablaFiltrada($id, $key, $esaplicante) {
                
         }else{
              $verDetalle='';
+             $listaTemp = array();
+             $listaTemp = setSeleccionadoAplicante($listaStatus2, $row['mem_sta_id']);
             if (in_array($perVerProspectoOp3, $_SESSION['usu_permiso'])) {
                $verDetalle='getDetalle('.$row['_id_prospecto'].')';
             }
+            //print_r($listaTemp);
+            
+            $arreglo = array("change" => "setEstado(".$row['_id_prospecto'].")", 
+            "id" => "_".$row['_id_prospecto'], "option" => $listaTemp); 
             $cuerpo.= generadorTablaFilas(array(
                 "<center>".$cont."</center>",
                 generadorLink($row['per_apellido'].' '.$row['per_nombre'],$verDetalle),
-                $row['nombre_forum'],$row['mem_sta_codigo']));
+                $row['nombre_forum'],generadorEtiquetasFiltroTabla($arreglo) ));
         }
         $cont=$cont + 1; 
     } 

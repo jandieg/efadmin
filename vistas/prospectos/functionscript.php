@@ -243,6 +243,35 @@ var getConvertirProspecto = function(id, estado_aplicante, forum, nombre_forum, 
         $('#modal_getConvertirProspecto').modal('toggle');
     }   
 };
+
+var setEstado = function(_id_prospecto) {
+    var estado = $("#_"+_id_prospecto).val().toString();
+    var parametros = {
+        KEY: 'KEY_SET_ESTADO',
+        _id_prospecto: _id_prospecto,
+        _estado: estado
+    };
+    $.ajax({
+            data:  parametros,
+            url:   'prospectos',
+             type:  'post',
+            dataType : 'json',
+            beforeSend: function () {
+                    $.msg({content : '<img src="public/images/loanding.gif" />', autoUnblock: false});
+            },success:  function (mensaje) {
+                    $.msg('unblock');
+                    if(mensaje.success == "true"){
+                        $.toaster({ priority : mensaje.priority, title : 'Alerta', message : "Se cambio el estado del aplicante exitosamente"});
+                    }else{
+                        $.toaster({ priority : mensaje.priority, title : 'Alerta', message : mensaje.msg});
+                    }
+            },error : function(xhr, status) {
+                $.msg('unblock');
+                $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema'});
+            }
+        });
+
+}
 var setConvertirAplicante = function(){
         var parametros = {
                 KEY: 'KEY_CONVERTIR_APLICANTE',

@@ -73,6 +73,17 @@ function generadorEtiquetasFiltro($tab=array()){
     }
     return $msg;
 } 
+
+function generadorEtiquetasFiltroTabla($tab=array()) {
+   $msg = "";
+   $msg.= "<select id ='".$tab['id']."' onChange='".$tab['change']."'>"; 
+   foreach($tab['option'] as $option => $val) {
+       $msg.='<option value="'.$val['value'].'" '.$val['select'].'>'.$val['texto'].'</option>';
+   }
+   $msg.=' </select>';  
+
+   return $msg;
+}
     
 function generadorEtiquetasFiltroSencillo($tab=array()){ 
     $msg='';
