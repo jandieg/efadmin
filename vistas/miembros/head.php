@@ -433,6 +433,21 @@ list($c1, $c2, $c3, $c4) = split('[/.-]', $codigo_usuario);
 }
 
 
+function setSeleccionadoMiembro($lista = array(), $idSeleccionado = "") {
+    $listaAux = array();
+    $listaAux = $lista;
+
+    foreach ($lista as $k => $l) {
+        if ($l['value'] == $idSeleccionado) {
+            $listaAux[$k]['select'] = "selected";
+        }
+    }
+
+    return $listaAux;
+
+}
+
+
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {    
     try{
@@ -472,6 +487,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   
                 
 
+            break;
+
+            case 'KEY_SET_ESTADO_MIEMBRO':
+                if (! empty($_POST['_id_miembro']) && ! empty($_POST['_id_status'])) {
+                    $objMiembro = new Miembro();
+                    $comp=$objMiembro->setEstadoMiembro($_POST['_id_miembro'], $_POST['_id_status']);
+                    if ($comp == "OK") {
+                        $data = array("success" => "true", "priority"=>'success',"msg" => 'El Estado del miembro fue actualizado exitosamente');
+                        echo json_encode($data);
+                    } else {
+                        $data = array("success" => "false", "priority"=>'info',"msg" => $comp); 
+                        echo json_encode($data);
+                    }
+                }  else {
+                    $data = array("success" => "false", "priority"=>'info', "msg" => 'Faltan campos por llenar!');  
+                    echo json_encode($data); 
+                }                            
             break;
             case 'KEY_SHOW_FORM_DETALLE'://///////////////////////////////////////////////////////// 
                  if( !empty($_POST['id_miembro'])){ 
@@ -1650,18 +1682,29 @@ function getTablaFiltrada($id, $key, $idForum, $incluyecanceladas) {
     $cuerpo='';
     $cont=1;
     $t='';
+    $lista = array();
+    $objStatusMember = new StatusMember();
+    $listaStatusMember = $objStatusMember->getListaMiembroStatus($lista);
+
     $resultset= $objMiembro->getFiltros($id,$key,$idForum, $incluyecanceladas);
     while($row = $resultset->fetch_assoc()) { 
         $verDetalle='';
         if (in_array($perVerMiembroOp6, $_SESSION['usu_permiso'])) {
             $verDetalle="getDetalle(".$row['mie_id'].",'')";
         }        
+        //empieza
+        $listaTemp = array();
+        $listaTemp = setSeleccionadoMiembro($listaStatusMember, $row['mem_sta_id']);
+        $arreglo = array("change" => "setEstado(".$row['mie_id'].")", 
+        "id" => "_".$row['mie_id'], "option" => $listaTemp); 
+        //termina
         $cuerpo.= generadorTablaFilas(array(
              $row['mie_codigo'],
              generadorLink($row['per_apellido'].' '.$row['per_nombre'],$verDetalle),
              $row['nombre_empresa'],
              $row['nombre_forum'],
-             $row['mem_sta_descripcion']));
+             generadorEtiquetasFiltroTabla($arreglo)
+        ));
         $cont=$cont + 1;                                                                          
     }    
     $tabla= generadorTablaConBotonesMiembros(1, "Miembros",'', array(

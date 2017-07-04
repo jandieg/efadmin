@@ -21,6 +21,50 @@ var checkCancel = function() {
     }
 }
 
+var checkCancel2 = function() {
+    if ($("#_chequea_cancelacion2").is(":checked")) {
+        $("#btnActualizarCancelacion2").attr("disabled", false);
+    } else {
+        $("#btnActualizarCancelacion2").attr("disabled", true);
+    }
+}
+
+var setEstado = function(_id_miembro) {
+    var estado = $("#_" + _id_miembro).val().toString();
+    var parametros = {
+        KEY: 'KEY_SET_ESTADO_MIEMBRO',
+        _id_miembro: _id_miembro,
+        _id_status: estado
+    };
+    if (estado == 2) {
+        setGuardarCancelacion2(_id_miembro);
+    }
+    
+
+    $.ajax({
+        data:  parametros,
+        url:   'miembros',
+        type:  'post',
+        dataType : 'json',
+        beforeSend: function () {
+            $.msg({content : '<img src="public/images/loanding.gif" />', autoUnblock: false});
+        },
+        success:  function (mensaje) {
+            $.msg('unblock');
+                if(mensaje.success == "true"){
+                    $.toaster({ priority : mensaje.priority, title : 'Alerta', message : mensaje.msg});
+                } else {
+                    $.toaster({ priority : mensaje.priority, title : 'Alerta', message : mensaje.msg});
+                }
+        },error : function(xhr, status) {
+//                $.unblockUI();
+            $.msg('unblock');
+            $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema' + xhr.toString() + status.toString()});
+        }
+    });
+
+}
+
 
 var setCanceladas = function() {
 
@@ -133,6 +177,45 @@ var generarRangoFechas = function () {
             
             $("#mesact").html(meses[m-1]+" (incluido " + meses[m-1] + ")");
             $("#_seleccion_del_mes").val(m + '/' + y);
+           
+            
+            
+        },
+       
+    });
+
+
+
+    
+}
+
+var generarRangoFechas2 = function () {
+    var date2 = new Date().toISOString().substr(0,19).replace('T', ' ');
+    var month = date2.substr(5,2);
+    var year  = date2.substr(0,4);
+    if (month == "01" || month == "02") {
+        month = month + 9;
+        year  = year - 1;
+    } else {
+        month = month - 3;
+    }
+    var meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+
+    var fechaInicial = new Date(year, month, 1);
+
+    $('.date-picker-meses').datepicker(
+    {
+        dateFormat: "mm/yy",
+        monthNamesShort: meses,
+        changeMonth: true,
+        changeYear: true,
+        showButtonPanel: false,
+        minDate: fechaInicial,
+        defaultDate: fechaInicial,
+        onChangeMonthYear: function(y,m,i) {
+            
+            $("#mesact2").html(meses[m-1]+" (incluido " + meses[m-1] + ")");
+            $("#_seleccion_del_mes2").val(m + '/' + y);
            
             
             
@@ -288,6 +371,48 @@ var setGuardarCancelacion = function() {
     $("#_id_miembro_cancelar").val($("#_id_miembro_cancel").val());
     $('#modal_getCancelarMiembro').modal('toggle');
 }
+
+var setGuardarCancelacion2 = function(_id_miembro) {
+    $("#_id_miembro_cancelar2").val(_id_miembro);
+    generarRangoFechas2();
+    $('#modal_getCancelarMiembro2').modal('toggle');
+}
+
+var setActualizarCancelacion2 = function(){
+    var respuesta = '';
+    if ($("#_id_miembro_cancelar2").val() > 0) {
+        $.msg({content : '<img src="public/images/loanding.gif" />', autoUnblock: false});
+        var parametros = {
+                KEY: 'KEY_CANCELAR_MEMBRESIA_MIEMBRO',
+                _id_miembro: $("#_id_miembro_cancelar2").val().toString(),
+                _mes_elegido: $("#_seleccion_del_mes2").val().toString()
+        };
+        $.ajax({
+            data:  parametros,
+            url:   'miembros',
+            type:  'post',
+            async: false,
+            dataType : 'json',
+            success:  function (mensaje) { 
+                    $("#_id_miembro_cancelar2").val(0);
+                    
+                    $.msg('unblock');
+                    if(mensaje.success == "true"){                        
+                        $.toaster({ priority : mensaje.priority, title : 'Alerta', message : mensaje.msg});
+                    }else{        
+                        $.toaster({ priority : mensaje.priority, title : 'Alerta', message : mensaje.msg});
+                    }
+
+            },error : function(xhr, status) {
+                $.msg('unblock');
+                $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema'});
+            }
+        });
+        $('#modal_getCancelarMiembro2').modal('toggle');
+    }
+
+    
+};
 
 var setActualizarCancelacion = function(){
     var respuesta = '';

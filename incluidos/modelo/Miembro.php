@@ -189,7 +189,10 @@ public function setActualizarMiembro($idMiembro, $id_persona, $propietario, $nom
 //    } 
     
     
-    
+    public function setEstadoMiembro($id, $status) {
+        $sql = "call sp_updateEstadoMiembro('$id', '$status')";
+        return parent::setSqlSp($sql);
+    }
     
     public function getFiltros($id, $key, $permiso, $incluyecanceladas) {
         $sql="call sp_selectMiembroFiltros('$id','$key', '$permiso', '$incluyecanceladas')";

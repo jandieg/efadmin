@@ -372,6 +372,84 @@
     </style>
 </div>
 
+<div class="modal fade" id="modal_getCancelarMiembro2" role="dialog" area-labelledby="myModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static" >
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Cancelar Miembro</h4>
+            </div>
+            <div class="modal-body">
+             <div id="frm_perfilUsuario" class="form-medium" >
+                    <div id="respuesta_modal" class="form-medium" >
+                        <div class="form-group">
+                            <input type="hidden" class="form-control" id="_seleccion_del_mes2" value="<?php echo date('m/Y',strtotime('-1 month')); ?>">
+                            <input type="hidden" class="form-control" id="_id_miembro_cancelar2" value="0">
+                        </div>                                          
+                         <div class="form-group">      
+                         <label>Indicar la fecha en la cual el miembro es cancelado:</label>                    
+                            <div class="date-picker-meses" id="_seleccion_mes" /></div>                            
+                        </div>
+                        <div class="form-group">
+                            <input type="checkbox" id="_chequea_cancelacion2" onclick="checkCancel2()"/><label> Se eliminar&aacute;n los cobros no pagados a partir del mes de 
+                          <span id="mesact2">
+                          <?php 
+                          $meses = array();
+                          $meses[1]  = "Enero";
+                          $meses[2]  = "Febrero";
+                          $meses[3]  = "Marzo";
+                          $meses[4]  = "Abril";
+                          $meses[5]  = "Mayo";
+                          $meses[6]  = "Junio";
+                          $meses[7]  = "Julio";
+                          $meses[8]  = "Agosto";
+                          $meses[9]  = "Septiembre";
+                          $meses[10] = "Octubre";
+                          $meses[11] = "Noviembre";
+                          $meses[12] = "Diciembre";
+                          $elmes = intval(date('m'));
+                          if ($elmes-2 < 1) {
+                              $elmes = $elmes + 10;
+                          } else {
+                              $elmes = $elmes - 2;
+                          }
+                          echo $meses[$elmes] . " (incluido " . $meses[$elmes] . ")"; ?></span></label>
+                        </div>                                                                                    
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnActualizarCancelacion2" disabled="true" onclick="setActualizarCancelacion2()">Guardar</button>
+            </div>
+        </div>
+    </div>
+    <style>
+        .ui-datepicker-calendar, .ui-datepicker-next, .ui-datepicker-prev{
+            display: none;
+        }
+
+        .ui-widget.ui-widget-content{
+            border: 0px;
+        }
+        .ui-datepicker-header{
+            background: white;
+            border: 0px;
+        }
+        .ui-datepicker-title{
+            margin-left: 0px !important;
+            margin-right: 0px !important;
+        }
+        .ui-datepicker select.ui-datepicker-month, .ui-datepicker select.ui-datepicker-year{
+            width: 110px;
+            height: 30px;
+        }
+        .ui-datepicker select.ui-datepicker-month b, .ui-datepicker select.ui-datepicker-year b{
+            border-color: #888;
+        }
+    </style>
+</div>
+
+
 <div class="modal fade" id="modal_getActualizarEmpresa"  role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content">
