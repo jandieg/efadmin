@@ -1604,8 +1604,6 @@ $valorcorte = intval(date_format(date_create($corte),'Ym'));
 
 $valorfecha = (intval($year) * 100) + $month;
 
-
-
 if ($act && $valorfecha <= $valorcorte) {
 	$active_members_count=$act['active_members'];
 } else {

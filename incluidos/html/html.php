@@ -88,6 +88,42 @@ function generadorTablaModal($tipo, $titulo,$funcion='', $columnas=array(), $fil
  
     return $t ;
 }
+
+function cargarImagen($src) {
+    $msg="";
+    $msg.='<div class="row">
+            <div class="col-md-5">
+            <div id="targetLayer"><img src="'.$src.'" id="foto" height="150" alt="Image preview..."></div>
+            </div>
+            </div>
+     ';
+
+     return $msg;
+}
+
+function getFormImagen() {
+    $msg = "";
+   
+    $msg .= '
+    <div class="row">
+            <div class="col-md-5">
+            <div id="targetLayer"><img src="" id="foto" height="200" alt="Image preview..."></div>
+            </div>
+            <div class="col-md-7">
+        <form id="uploadForm" action="" method="post" enctype="multipart/form-data">                        
+            <div id="uploadFormLayer">
+            <input name="codigo" id="el_codigo" type="hidden" />
+            <input name="userImage" type="file" id="archivo" class="inputFile" /><br/>
+        </form>
+        <div class="btn btn-primary" onClick="subirFoto()">Cargar Foto</div>
+        </div>
+        </div>
+        
+    
+    ';
+    return $msg;
+}
+
 function generadorTablaConBotones($tipo, $titulo,$funcion='', $columnas=array(), $filas,$botones=array()){
     $t='<div class="box box-info">';
     $t.='<div class="box-header">';
@@ -599,6 +635,8 @@ function generadorFormularios($id_oculto = '', $valor_oculto= '', $tab=array(), 
         }
         return $msg;
     }   
+
+
 function generadorEtiqueta($tab=array()){ 
           
     $msg='';
@@ -619,6 +657,15 @@ function generadorEtiqueta($tab=array()){
                     $msg.='</label>';
                     $msg.=' </div>'; 
                     $msg.=' </div>';
+                    $msg.='</div>'; 
+               }
+
+               if($valor['elemento']=='subir-imagen'){
+   
+                    $msg.='<div class="form-group">';
+                    $msg.='<div class="col-sm-9">'; 
+                    $msg.=getFormImagen();
+                    $msg.='</div>'; 
                     $msg.='</div>'; 
                }
 

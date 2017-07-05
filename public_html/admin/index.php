@@ -814,6 +814,11 @@ function ResetReports(id){
         ?>
   
         <script>
+
+
+           
+
+
            $(".select2").select2();
            getConfTabla();
         </script>

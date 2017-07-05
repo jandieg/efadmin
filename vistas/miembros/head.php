@@ -162,7 +162,7 @@ list($c1, $c2, $c3, $c4) = split('[/.-]', $codigo_usuario);
   
   }
       
-  
+        $form_20['form_0'] = array("elemento" => "subir-imagen");
 		$form['form_1'] = array("elemento" => "combo","change" => "","titulo" => generadorAsterisco("Asignar Grupo"), "id" => "_grupo_asignar", "option" => $listaGrupos);
         $form['form_2'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => generadorAsterisco($lblNombre), "id" => "_nombre" ,"reemplazo" => $row['per_nombre']);
         $form['form_3'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => generadorAsterisco($lblApellido), "id" => "_apellido" ,"reemplazo" => $row['per_apellido']);
@@ -380,6 +380,7 @@ list($c1, $c2, $c3, $c4) = split('[/.-]', $codigo_usuario);
 
                         $form_11= generadorEtiqueta($form11);
                         $form_12= generadorEtiqueta($form12);
+                        $form_22 = generadorEtiqueta($form_20);
                              
                              
 
@@ -391,6 +392,7 @@ list($c1, $c2, $c3, $c4) = split('[/.-]', $codigo_usuario);
         
         $resultado = str_replace("{contenedor_1}", $form_1,  getPage('page_detalle_update'));
         $resultado = str_replace("{contenedor_2}", $form_2, $resultado); 
+        $resultado = str_replace("{contenedor_0}", getFormImagen(), $resultado); 
         $resultado = str_replace("{contenedor_3}", $form_4, $resultado); 
         $resultado = str_replace("{contenedor_4}", $form_3, $resultado); 
         $resultado = str_replace("{contenedor_5}", $form_6, $resultado); 
@@ -469,7 +471,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			}
                
                 break;     
-
+            case 'KEY_ARCHIVO':
+                
+                
+                if(is_array($_FILES)) {
+                if(is_uploaded_file($_FILES['archivo']['tmp_name'])) {
+                $sourcePath = $_FILES['archivo']['tmp_name'];                
+                $targetPath = "../../public_html/i/".$_POST['codigo'].".jpg";
+                move_uploaded_file($sourcePath,$targetPath);
+                }}
+                
+                
+                //echo '<img class="image-preview" src="'."../../public_html/i/".$_POST['codigo'].".jpg".'" class="upload-preview" />';
+            break;
             case 'KEY_CANCELAR_MEMBRESIA_MIEMBRO':
 
              if( !empty($_POST['_id_miembro']) && !empty($_POST['_mes_elegido'])){
@@ -793,7 +807,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 .'</div>';
                         //table-hover
                         $resultado = str_replace("{contenedor_1}", "",  getPage('page_detalle') );//generadorContMultipleRow($colum)); 
-                        $resultado = str_replace("{contenedor_2}", "", $resultado); 
+                        $resultado = str_replace("{contenedor_2}", "", $resultado);   
+                        if (strlen($row['mie_codigo']) == 11) {
+                            $resultado = str_replace("{contenedor_0}", cargarImagen("../../public_html/i/".$row['mie_codigo'].".jpg"), $resultado);                             
+                        } else {
+                            $resultado = str_replace("{contenedor_0}", "", $resultado);                             
+                        }
+                        
                         $resultado = str_replace("{contenedor_3}", generadorTabla_2($tabla, "table-striped"), $resultado); 
                         $resultado = str_replace("{contenedor_4}", generadorTabla_2($tabla2, "table-striped"), $resultado); 
                         $resultado = str_replace("{contenedor_5}", generadorTabla_2( $tabla3, "table-striped"), $resultado); 

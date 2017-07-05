@@ -4,6 +4,63 @@ session_start();
 ?>
 
 <script>
+if (document.querySelector("#uploadForm")!=null)
+document.querySelector("#uploadForm").addEventListener("submit", function(e){
+    
+        e.preventDefault();    //stop form from submitting
+    
+});
+var subirFoto = function() {
+    console.log('si esta cargando');
+    
+    $("#el_codigo").val($("#_cod_1").val().toString() +"-"+ $("#_cod_2").val().toString() +"-"+ $("#_cod_3").val().toString() +"-"+ $("#_cod_4").val().toString());
+    if ($("#el_codigo").val().toString().length == 11) {
+
+    
+    var reader = new FileReader();
+
+reader.readAsDataURL(document.getElementById('archivo').files[0]);
+    var parametros= {
+        codigo: $("#el_codigo").val(),
+        archivo: reader
+    };
+
+    var data = new FormData();
+
+        
+
+    reader.onloadend = function () {
+        $("#foto").attr("src", reader.result);
+        //var blob = new Blob(document.getElementById('archivo').files[0], {type: 'image/jpeg'});
+        data.append("codigo", $("#el_codigo").val());
+        data.append("archivo", document.getElementById('archivo').files[0]);
+        data.append("KEY", "KEY_ARCHIVO");
+        $.ajax({
+            url: "miembros",
+            type: "POST",
+            data:  data,
+            contentType: false,
+            cache: false,
+            processData:false,
+            success: function(data)
+            {
+                console.log(data);
+            },
+            error: function() 
+            {
+            } 	        
+        });
+
+    }
+
+    } else {
+        alert("Disculpe, el codigo es incorrecto");
+    }
+    
+    
+
+
+}
 
 
 var cambioMembresia = function () {
@@ -454,6 +511,9 @@ var setActualizarCancelacion = function(){
     return respuesta;
     
 };
+
+
+
 
 var setUserActualizar = function(  id_persona, id_miembro){
 
