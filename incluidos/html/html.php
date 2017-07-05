@@ -95,7 +95,7 @@ function cargarImagen($src) {
     <div class="form-group">
         
             <div class="col-sm-5">
-                <div id="targetLayer"><img src="'.$src.'" id="foto" height="90" alt="FOTO..."></div>
+                <div id="targetLayer"><img src="'.$src.'" id="foto" height="100"  width="110" alt="FOTO..."></div>
             </div>
         
     </div>
@@ -109,17 +109,22 @@ function getFormImagen() {
    
     $msg .= '
             <div class="col-sm-3">
-            <div id="targetLayer"><img src="" id="foto" height="90" alt="FOTO..."></div>
+            <div id="targetLayer"><img src="" id="foto" height="110" width="100" alt="FOTO..."></div>
             </div>
             <div class="col-sm-9">
-        <form id="uploadForm" action="" method="post" enctype="multipart/form-data">                        
-            <div id="uploadFormLayer">
-            <input name="codigo" id="el_codigo" type="hidden" />
-            <input name="userImage" type="file" id="archivo" class="inputFile" /><br/>
-            </div>
-        </form>
-        <div class="btn btn-primary" onClick="subirFoto()">Cargar Foto</div>
-        
+            <div class="row">
+                <div class="col-sm-9" style="font-size:12px !important;">
+                    <form id="uploadForm" action="" method="post" enctype="multipart/form-data">                        
+                        <div id="uploadFormLayer" class="row">
+                        <input name="codigo" id="el_codigo" type="hidden" />
+                        <input name="userImage" type="file" id="archivo" class="inputFile" /><br/>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-sm-3" style="padding-top: 20px !important;">
+                    <div class="btn btn-primary" style="font-size:12px !important;" onClick="subirFoto()">Cargar Foto</div>
+                </div>
+            </div>        
         </div>            
     ';
     return $msg;

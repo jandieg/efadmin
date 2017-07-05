@@ -30,7 +30,14 @@ reader.readAsDataURL(document.getElementById('archivo').files[0]);
         
 
     reader.onloadend = function () {
-        $("#foto").attr("src", reader.result);
+        $("#targetLayer").css('background-image', 'url('+reader.result+')');
+        $("#targetLayer").css('background-size', '100px 110px');
+        $("#targetLayer").css('background-repeat', 'no-repeat');
+        $("#foto").hide();
+
+
+
+        //$("#foto").attr("src", reader.result);
         //var blob = new Blob(document.getElementById('archivo').files[0], {type: 'image/jpeg'});
         data.append("codigo", $("#el_codigo").val());
         data.append("archivo", document.getElementById('archivo').files[0]);
