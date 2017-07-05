@@ -91,11 +91,14 @@ function generadorTablaModal($tipo, $titulo,$funcion='', $columnas=array(), $fil
 
 function cargarImagen($src) {
     $msg="";
-    $msg.='<div class="row">
-            <div class="col-md-5">
-            <div id="targetLayer"><img src="'.$src.'" id="foto" height="150" alt="Image preview..."></div>
+    $msg.='
+    <div class="form-group">
+        
+            <div class="col-sm-5">
+                <div id="targetLayer"><img src="'.$src.'" id="foto" height="90" alt="FOTO..."></div>
             </div>
-            </div>
+        
+    </div>
      ';
 
      return $msg;
@@ -105,21 +108,19 @@ function getFormImagen() {
     $msg = "";
    
     $msg .= '
-    <div class="row">
-            <div class="col-md-5">
-            <div id="targetLayer"><img src="" id="foto" height="200" alt="Image preview..."></div>
+            <div class="col-sm-3">
+            <div id="targetLayer"><img src="" id="foto" height="90" alt="FOTO..."></div>
             </div>
-            <div class="col-md-7">
+            <div class="col-sm-9">
         <form id="uploadForm" action="" method="post" enctype="multipart/form-data">                        
             <div id="uploadFormLayer">
             <input name="codigo" id="el_codigo" type="hidden" />
             <input name="userImage" type="file" id="archivo" class="inputFile" /><br/>
+            </div>
         </form>
         <div class="btn btn-primary" onClick="subirFoto()">Cargar Foto</div>
-        </div>
-        </div>
         
-    
+        </div>            
     ';
     return $msg;
 }
@@ -661,12 +662,9 @@ function generadorEtiqueta($tab=array()){
                }
 
                if($valor['elemento']=='subir-imagen'){
-   
-                    $msg.='<div class="form-group">';
-                    $msg.='<div class="col-sm-9">'; 
-                    $msg.=getFormImagen();
-                    $msg.='</div>'; 
-                    $msg.='</div>'; 
+                    $msg.='<div class="form-group">'; 
+                    $msg.=getFormImagen(); 
+                    $msg.="</div>";
                }
 
                if($valor['elemento']=='Checkbox-comun'){

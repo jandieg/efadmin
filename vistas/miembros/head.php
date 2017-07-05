@@ -145,31 +145,31 @@ list($c1, $c2, $c3, $c4) = split('[/.-]', $codigo_usuario);
   $cod2 =$c2;
   $cod3 =$c3;
   $cod4 =$c4;
+$form['form_0'] = array("elemento" => "subir-imagen");
 
   if ($recargar) {
-      $form['form_0'] = array("elemento" => "smallcode" ,"titulo" => generadorAsterisco("Código")
+      $form['form_1'] = array("elemento" => "smallcode" ,"titulo" => generadorAsterisco("Código")
             ,"disabled_1" => "","tipo_1" => "text" , "id_1" => "_cod_1" ,"reemplazo_1" => $listacod[0]
             ,"disabled_2" => "","tipo_2" => "text" , "id_2" => "_cod_2" ,"reemplazo_2" => $listacod[1]
             ,"disabled_3" => "","tipo_3" => "text" , "id_3" => "_cod_3" ,"reemplazo_3" => ""
             ,"disabled_4" => "","tipo_4" => "text" , "id_4" => "_cod_4" ,"reemplazo_4" => "");
   
   } else {
-      $form['form_0'] = array("elemento" => "smallcode" ,"titulo" => generadorAsterisco("Código")
+      $form['form_1'] = array("elemento" => "smallcode" ,"titulo" => generadorAsterisco("Código")
             ,"disabled_1" => "","tipo_1" => "text" , "id_1" => "_cod_1" ,"reemplazo_1" => $cod1
             ,"disabled_2" => "","tipo_2" => "text" , "id_2" => "_cod_2" ,"reemplazo_2" => $cod2
             ,"disabled_3" => "","tipo_3" => "text" , "id_3" => "_cod_3" ,"reemplazo_3" => $cod3
             ,"disabled_4" => "","tipo_4" => "text" , "id_4" => "_cod_4" ,"reemplazo_4" => $cod4);
   
   }
-      
-        $form_20['form_0'] = array("elemento" => "subir-imagen");
-		$form['form_1'] = array("elemento" => "combo","change" => "","titulo" => generadorAsterisco("Asignar Grupo"), "id" => "_grupo_asignar", "option" => $listaGrupos);
-        $form['form_2'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => generadorAsterisco($lblNombre), "id" => "_nombre" ,"reemplazo" => $row['per_nombre']);
-        $form['form_3'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => generadorAsterisco($lblApellido), "id" => "_apellido" ,"reemplazo" => $row['per_apellido']);
+              
+		$form['form_2'] = array("elemento" => "combo","change" => "","titulo" => generadorAsterisco("Asignar Grupo"), "id" => "_grupo_asignar", "option" => $listaGrupos);
+        $form['form_3'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => generadorAsterisco($lblNombre), "id" => "_nombre" ,"reemplazo" => $row['per_nombre']);
+        $form['form_4'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => generadorAsterisco($lblApellido), "id" => "_apellido" ,"reemplazo" => $row['per_apellido']);
         /*
         $form['form_4'] = array("elemento" => "combo","change" => "","titulo" => $lblTipoPersona, "id" => "_tipo_p", "option" => generadorComboTipoPersona_($row['per_tipo']));        $form['form_5'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => $lblIdentificacion, "id" => "_identificacion" ,"reemplazo" => $row['per_identificacion']);       */
-      $form['form_4'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_tipo_p" ,"reemplazo" => $row['per_tipo']);
-      $form['form_5'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_identificacion" ,"reemplazo" => $row['per_identificacion']);
+      $form['form_5'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_tipo_p" ,"reemplazo" => $row['per_tipo']);
+      $form['form_6'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_identificacion" ,"reemplazo" => $row['per_identificacion']);
 		
 		//$form['form_6'] = array("elemento" => "combo","change" => "","titulo" => $lblGenero, "id" => "_genero", "option" => generadorComboGenero($row['per_genero']));
         
@@ -199,11 +199,13 @@ list($c1, $c2, $c3, $c4) = split('[/.-]', $codigo_usuario);
         $form7['form_10'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => $lblCorreo, "id" => "_correo" ,"reemplazo" => $row['correo']);
        // $form7['form_11'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => $lblCorreoSecundario, "id" => "_correo_2" ,"reemplazo" => $row['correo2']);
 	    $form7['form_11'] = array("elemento" => "caja" ,"tipo" => "hidden" ,"id" => "_correo_2" ,"reemplazo" => $row['correo2']);
+
         if($row['mie_participacion_correo']=='1'){
             $form7['form_12'] = array("elemento" => "Checkbox-color" ,"tipo" => "" ,"chec" => "checked", "titulo" => $lblParticipacionCorreo, "id" => "_participacion" ,"reemplazo" => '');
         }  else {
             $form7['form_12'] = array("elemento" => "Checkbox-color" ,"tipo" => "" ,"chec" => "", "titulo" => $lblParticipacionCorreo, "id" => "_participacion" ,"reemplazo" => '');
         }
+
         $form7['form_17'] = array("elemento" => "caja" ,"tipo" => "hidden" ,"id" => "_id_miembro_cancel", "reemplazo" => $row['mie_id']);
         $form_7= generadorEtiqueta($form7);
         
@@ -391,8 +393,7 @@ list($c1, $c2, $c3, $c4) = split('[/.-]', $codigo_usuario);
 						
         
         $resultado = str_replace("{contenedor_1}", $form_1,  getPage('page_detalle_update'));
-        $resultado = str_replace("{contenedor_2}", $form_2, $resultado); 
-        $resultado = str_replace("{contenedor_0}", getFormImagen(), $resultado); 
+        $resultado = str_replace("{contenedor_2}", $form_2, $resultado);         
         $resultado = str_replace("{contenedor_3}", $form_4, $resultado); 
         $resultado = str_replace("{contenedor_4}", $form_3, $resultado); 
         $resultado = str_replace("{contenedor_5}", $form_6, $resultado); 
@@ -596,11 +597,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 //                        }
                         
                    
-
-                        $tabla['t_0'] = array("t_1" => generadorNegritas("Código"), "t_2" => $row['mie_codigo']);
-						$tabla['t_1'] = array("t_1" => generadorNegritas("Grupo"), "t_2" => $row['gru_descripcion']);
-                        $tabla['t_2'] = array("t_1" => generadorNegritas($lblNombre), "t_2" => $titulo);
-                        $tabla['t_3'] = array("t_1" => generadorNegritas($lblFNacimiento), "t_2" => getFormatoFechadmy($row['per_fechanacimiento']));
+                        if (strlen($row['mie_codigo']) == 11 && file_exists("../../public_html/i/".$row['mie_codigo'].".jpg")) {
+                            $tabla['t_0'] = array("t_1" => cargarImagen("../../public_html/i/".$row['mie_codigo'].".jpg"), "t_2" => "");                            
+                        } else {
+                            $tabla['t_0'] = array("t_1" => cargarImagen(""), "t_2" => "");
+                            
+                        }
+                      
+                        $tabla['t_1'] = array("t_1" => generadorNegritas("Código"), "t_2" => $row['mie_codigo']);
+						$tabla['t_2'] = array("t_1" => generadorNegritas("Grupo"), "t_2" => $row['gru_descripcion']);
+                        $tabla['t_3'] = array("t_1" => generadorNegritas($lblNombre), "t_2" => $titulo);
+                        $tabla['t_4'] = array("t_1" => generadorNegritas($lblFNacimiento), "t_2" => getFormatoFechadmy($row['per_fechanacimiento']));
                   //      $tabla['t_4'] = array("t_1" => generadorNegritas($lblTitulo), "t_2" => $row['prof_descripcion']);
                    //     $tabla['t_5'] = array("t_1" => generadorNegritas($lblIdentificacion), "t_2" => $row['per_identificacion']);
 
@@ -808,11 +815,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         //table-hover
                         $resultado = str_replace("{contenedor_1}", "",  getPage('page_detalle') );//generadorContMultipleRow($colum)); 
                         $resultado = str_replace("{contenedor_2}", "", $resultado);   
-                        if (strlen($row['mie_codigo']) == 11) {
-                            $resultado = str_replace("{contenedor_0}", cargarImagen("../../public_html/i/".$row['mie_codigo'].".jpg"), $resultado);                             
-                        } else {
-                            $resultado = str_replace("{contenedor_0}", "", $resultado);                             
-                        }
                         
                         $resultado = str_replace("{contenedor_3}", generadorTabla_2($tabla, "table-striped"), $resultado); 
                         $resultado = str_replace("{contenedor_4}", generadorTabla_2($tabla2, "table-striped"), $resultado); 

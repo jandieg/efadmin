@@ -15,20 +15,19 @@
 
       </div>
 
-  <div class="row">
+  <!--<div class="row">
         <div class="col-md-4">
              {contenedor_0}
         </div>
-        <div class="col-md-8">
-            {contenedor_4}            
+        <div class="col-md-8">                   
         </div>      
-      </div>
+      </div>-->
        <div class="row">
         <div class="col-md-6">
              {contenedor_3}
         </div>
         <div class="col-md-6">
-            
+            {contenedor_4}     
         </div>      
       </div>
 

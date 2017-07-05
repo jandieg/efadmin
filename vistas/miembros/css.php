@@ -15,10 +15,10 @@
     }
     #targetLayer{
       float:left;
-      width:150px;
-      height:150px;
+      width:100px;
+      height:110px;
       text-align:center;
-      line-height:150px;
+      line-height:100px;
       font-weight: bold;
       color: #C0C0C0;
       background-color: #F0E8E0;
@@ -44,8 +44,8 @@
       border-radius: 4px;
     }
     .image-preview {	
-      width:150px;
-      height:150px;
+      width:90px;
+      height:90px;
       border-bottom-left-radius: 4px;
       border-top-left-radius: 4px;
     }
