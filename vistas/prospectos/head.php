@@ -204,7 +204,7 @@ function getDetalleUpdate($id, $recargar) {
         
         $form2['form_2'] = array("elemento" => "combo","change" => "","titulo" => generadorAsterisco($estadoprospecto), "id" => "_status", "option" => $listaStatus);
         $form2['form_3'] = array("elemento" => "combo", "change" => "",  "titulo" => generadorAsterisco($lblFuente), "id" => "_fuente", "option" => $listafuente);
-        $form2['form_4'] = array("elemento" => "textarea" ,"tipo" => "text" , "titulo" => "Persona que Refiere", "id" => "_lafuente" ,"reemplazo" => '');
+        $form2['form_4'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => "Persona que Refiere", "id" => "_lafuente" ,"reemplazo" => '');
         if($_SESSION['_esaplicante'] == '1'){
          //   $form2['form_5'] = array("elemento" => "combo", "change" => "",  "titulo" => generadorAsterisco($lblEstadoProspecto), "id" => "_estado_propietario", "option" => $listaestadoprospecto); 
 			$form2['form_5'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_estado_propietario" ,"reemplazo" => '1');
@@ -540,7 +540,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                  //$form['form_1'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => "Código", "id" => "_codigo" ,"reemplazo" => '');
                  $form['form_2'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => generadorAsterisco($lblNombre), "id" => "_nombre" ,"reemplazo" => "");
                  $form['form_3'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => generadorAsterisco($lblApellido), "id" => "_apellido" ,"reemplazo" => "");
-                 $form['form_4'] = array("elemento" => "textarea" ,"tipo" => "text" , "titulo" => generadorAsterisco($lblEmpresa), "id" => "_id_empresa" ,"reemplazo" => "");
+                 $form['form_4'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => generadorAsterisco($lblEmpresa), "id" => "_id_empresa" ,"reemplazo" => "");
 
 if($_SESSION['_esaplicante'] == '1'){
 //$form['form_4'] = array("elemento" => "caja" ,"tipo" => "hidden", "id" => "_tipo_p", "reemplazo" => generadorComboTipoPersona_('J'));                 
@@ -609,7 +609,7 @@ $form8['form_12'] = array("elemento" => "caja pequeña + caja" ,"titulo" => $lbl
                  $form2['form_2'] = array("elemento" => "combo","change" => "","titulo" => $estadoprospecto, "id" => "_status", "option" => $listaStatus);
                  
                  $form2['form_3'] = array("elemento" => "combo","change" => "","titulo" => $lblFuente, "id" => "_fuente", "option" => $listafuente);
-                 $form2['form_4'] = array("elemento" => "textarea" ,"tipo" => "text" , "titulo" => "Persona que Refiere", "id" => "_lafuente" ,"reemplazo" => '');
+                 $form2['form_4'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => "Persona que Refiere", "id" => "_lafuente" ,"reemplazo" => '');
             
                  $form2['form_5'] = array("elemento" => "caja","tipo" => "hidden", "id" => "_estado_propietario", "reemplazo" => $listaestadoprospecto);
                  if($_SESSION['_esaplicante'] == '1'){
