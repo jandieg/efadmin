@@ -185,7 +185,7 @@ list($c1, $c2, $c3, $c4) = split('[/.-]', $codigo_usuario);
 		
         $form2['form_0'] = array("elemento" => "combo","change" => "getComboCargarGrupos()","titulo" => generadorAsterisco($lblForumLeader), "id" => "_propietario", "option" => $listaForumLeader);
        // $form2['form_2'] = array("elemento" => "combo","change" => "","titulo" => generadorAsterisco("Asignar Grupo"), "id" => "_grupo_asignar", "option" => $listaGrupos);
-        $form2['form_1'] = array("elemento" => "combo","change" => "cambioMembresia()","titulo" => generadorAsterisco("Member Status"), "id" => "_status", "option" => $listaStatus);
+        $form2['form_1'] = array("elemento" => "combo","change" => "cambioMembresia()","titulo" => generadorAsterisco("Estado del Miembro"), "id" => "_status", "option" => $listaStatus);
         $form2['form_2'] = array("elemento" => "combo + boton","change" => "",                   "titulo" => "Empresa", "id" => "_id_empresa", "option" => $listaEmpresas, 
                                             "modal" => "","boton_click" => "getPAMEmpresaModal('1')", "boton_icono" => "fa fa-industry","boton_nombre" => "", "boton_title" =>"Crear Empresa"
                                             ,"boton_tipo" => "btn-info");
@@ -611,7 +611,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         
                         
                         $tabla2['t_6'] = array("t_1" => generadorNegritas($lblCategoría), "t_2" => $row['cat_descripcion']);
-                        $tabla2['t_7'] = array("t_1" => generadorNegritas("Member Status"), "t_2" => $row['status']);
+                        $tabla2['t_7'] = array("t_1" => generadorNegritas("Estado del miembro"), "t_2" => $row['status']);
                         $tabla2['t_8'] = array("t_1" => generadorNegritas("Comentario"), "t_2" => $row['mie_observacion']);
                         
                         
