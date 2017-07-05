@@ -106,12 +106,13 @@ function cargarImagen($src) {
 
 function getFormImagen($valor="") {
     $msg = "";
-    
+    $placeholder = utf8_encode("../../i/placeholder.png");
     if (strlen($valor) == 11) {
-        $foto = '../../i/'.$valor.'.jpg';
+        $foto = utf8_encode("../../i/".$valor.".jpg");
+        
         $msg .= '
             <div class="col-sm-3">
-            <div id="targetLayer" style="background-image: url("'.$foto.'"), url("../../i/placeholder.png");
+            <div id="targetLayer" style="background-image: url('.$foto.'), url('.$placeholder.');
             background-size: 100px 110px; 
             background-repeat: no-repeat; "></div>
             </div>
@@ -135,7 +136,7 @@ function getFormImagen($valor="") {
     } else {
         $msg .= '
             <div class="col-sm-3">
-            <div id="targetLayer" style="background-image:url("../../i/placeholder.png");
+            <div id="targetLayer" style="background-image:url('.$placeholder.');
             background-size: 100px 110px; 
             background-repeat: no-repeat; "></div>
             </div>
