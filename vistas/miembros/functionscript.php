@@ -32,10 +32,7 @@ reader.readAsDataURL(document.getElementById('archivo').files[0]);
     reader.onloadend = function () {
         $("#targetLayer").css('background-image', 'url('+reader.result+')');
         $("#targetLayer").css('background-size', '100px 110px');
-        $("#targetLayer").css('background-repeat', 'no-repeat');
-        $("#foto").hide();
-
-
+        $("#targetLayer").css('background-repeat', 'no-repeat');        
 
         //$("#foto").attr("src", reader.result);
         //var blob = new Blob(document.getElementById('archivo').files[0], {type: 'image/jpeg'});

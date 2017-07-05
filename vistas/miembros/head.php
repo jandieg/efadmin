@@ -145,7 +145,7 @@ list($c1, $c2, $c3, $c4) = split('[/.-]', $codigo_usuario);
   $cod2 =$c2;
   $cod3 =$c3;
   $cod4 =$c4;
-$form['form_0'] = array("elemento" => "subir-imagen");
+$form['form_0'] = array("elemento" => "subir-imagen", "valor" => $cod1."-".$cod2."-". $cod3. "-". $cod4);
 
   if ($recargar) {
       $form['form_1'] = array("elemento" => "smallcode" ,"titulo" => generadorAsterisco("Código")
@@ -598,7 +598,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         
                    
                         if (strlen($row['mie_codigo']) == 11 && file_exists("../../public_html/i/".$row['mie_codigo'].".jpg")) {
-                            $tabla['t_0'] = array("t_1" => cargarImagen("../../public_html/i/".$row['mie_codigo'].".jpg"), "t_2" => "");                            
+                            $tabla['t_0'] = array("t_1" => cargarImagen("../../i/".$row['mie_codigo'].".jpg"), "t_2" => "");                            
                         } else {
                             $tabla['t_0'] = array("t_1" => cargarImagen(""), "t_2" => "");
                             

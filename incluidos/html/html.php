@@ -104,12 +104,16 @@ function cargarImagen($src) {
      return $msg;
 }
 
-function getFormImagen() {
+function getFormImagen($valor="") {
     $msg = "";
-   
-    $msg .= '
+    
+    if (strlen($valor) == 11) {
+        $foto = '../../i/'.$valor.'.jpg';
+        $msg .= '
             <div class="col-sm-3">
-            <div id="targetLayer"><img src="" id="foto" height="110" width="100" alt="FOTO..."></div>
+            <div id="targetLayer" style="background-image: url("'.$foto.'"), url("../../i/placeholder.png");
+            background-size: 100px 110px; 
+            background-repeat: no-repeat; "></div>
             </div>
             <div class="col-sm-9">
             <div class="row">
@@ -126,8 +130,34 @@ function getFormImagen() {
                 </div>
             </div>        
         </div>            
-    ';
-    return $msg;
+        ';
+        return $msg;    
+    } else {
+        $msg .= '
+            <div class="col-sm-3">
+            <div id="targetLayer" style="background-image:url("../../i/placeholder.png");
+            background-size: 100px 110px; 
+            background-repeat: no-repeat; "></div>
+            </div>
+            <div class="col-sm-9">
+            <div class="row">
+                <div class="col-sm-9" style="font-size:12px !important;">
+                    <form id="uploadForm" action="" method="post" enctype="multipart/form-data">                        
+                        <div id="uploadFormLayer" class="row">
+                        <input name="codigo" id="el_codigo" type="hidden" />
+                        <input name="userImage" type="file" id="archivo" class="inputFile" /><br/>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-sm-3" style="padding-top: 20px !important;">
+                    <div class="btn btn-primary" style="font-size:12px !important;" onClick="subirFoto()">Cargar Foto</div>
+                </div>
+            </div>        
+        </div>            
+        ';
+        return $msg;
+    }
+    
 }
 
 function generadorTablaConBotones($tipo, $titulo,$funcion='', $columnas=array(), $filas,$botones=array()){
@@ -668,7 +698,7 @@ function generadorEtiqueta($tab=array()){
 
                if($valor['elemento']=='subir-imagen'){
                     $msg.='<div class="form-group">'; 
-                    $msg.=getFormImagen(); 
+                    $msg.=getFormImagen($valor['valor']); 
                     $msg.="</div>";
                }
 
