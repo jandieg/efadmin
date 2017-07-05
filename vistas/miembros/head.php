@@ -163,37 +163,39 @@ $form['form_0'] = array("elemento" => "subir-imagen", "valor" => $cod1."-".$cod2
   
   }
               
-		$form['form_2'] = array("elemento" => "combo","change" => "","titulo" => generadorAsterisco("Asignar Grupo"), "id" => "_grupo_asignar", "option" => $listaGrupos);
+		
         $form['form_3'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => generadorAsterisco($lblNombre), "id" => "_nombre" ,"reemplazo" => $row['per_nombre']);
         $form['form_4'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => generadorAsterisco($lblApellido), "id" => "_apellido" ,"reemplazo" => $row['per_apellido']);
+        $form['form_5'] = array("elemento" => "caja" ,"tipo" => "date" , "titulo" => $lblFNacimiento, "id" => "_fn" ,"reemplazo" => $row['per_fechanacimiento']);
         /*
         $form['form_4'] = array("elemento" => "combo","change" => "","titulo" => $lblTipoPersona, "id" => "_tipo_p", "option" => generadorComboTipoPersona_($row['per_tipo']));        $form['form_5'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => $lblIdentificacion, "id" => "_identificacion" ,"reemplazo" => $row['per_identificacion']);       */
-      $form['form_5'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_tipo_p" ,"reemplazo" => $row['per_tipo']);
-      $form['form_6'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_identificacion" ,"reemplazo" => $row['per_identificacion']);
+      $form['form_6'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_tipo_p" ,"reemplazo" => $row['per_tipo']);
+      $form['form_7'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_identificacion" ,"reemplazo" => $row['per_identificacion']);
 		
 		//$form['form_6'] = array("elemento" => "combo","change" => "","titulo" => $lblGenero, "id" => "_genero", "option" => generadorComboGenero($row['per_genero']));
         
-      $form['form_7'] = array("elemento" => "caja", "tipo" => "hidden","id" => "_titulo", "reemplazo" => "1");
+      
 		//$form['form_7'] = array("elemento" => "combo","change" => "", "titulo" => $lblTitulo, "id" => "_titulo", "option" => $listaprofe);
-        $form['form_8'] = array("elemento" => "caja" ,"tipo" => "date" , "titulo" => $lblFNacimiento, "id" => "_fn" ,"reemplazo" => $row['per_fechanacimiento']);
+        
+        $form['form_8'] = array("elemento" => "caja", "tipo" => "hidden","id" => "_titulo", "reemplazo" => "1");
         $form_1= generadorEtiqueta($form);
         
         //Formularios
         
  //$form2['form_0'] = array("elemento" => "combo","change" => "Show_Esp_Price()", 'deshabilitado' => true, "titulo" => generadorAsterisco("Precio"), "id" => "_membresia", "option" => $listaM);
 	   
-		
-        $form2['form_0'] = array("elemento" => "combo","change" => "getComboCargarGrupos()","titulo" => generadorAsterisco($lblForumLeader), "id" => "_propietario", "option" => $listaForumLeader);
+		$form2['form_0'] = array("elemento" => "combo","change" => "","titulo" => generadorAsterisco("Asignar Grupo"), "id" => "_grupo_asignar", "option" => $listaGrupos);
+        $form2['form_1'] = array("elemento" => "combo","change" => "getComboCargarGrupos()","titulo" => generadorAsterisco($lblForumLeader), "id" => "_propietario", "option" => $listaForumLeader);
        // $form2['form_2'] = array("elemento" => "combo","change" => "","titulo" => generadorAsterisco("Asignar Grupo"), "id" => "_grupo_asignar", "option" => $listaGrupos);
-        $form2['form_1'] = array("elemento" => "combo","change" => "cambioMembresia()","titulo" => generadorAsterisco("Estado del Miembro"), "id" => "_status", "option" => $listaStatus);
-        $form2['form_2'] = array("elemento" => "combo + boton","change" => "",                   "titulo" => "Empresa", "id" => "_id_empresa", "option" => $listaEmpresas, 
+        $form2['form_2'] = array("elemento" => "combo","change" => "cambioMembresia()","titulo" => generadorAsterisco("Estado del Miembro"), "id" => "_status", "option" => $listaStatus);
+        $form2['form_3'] = array("elemento" => "combo + boton","change" => "",                   "titulo" => "Empresa", "id" => "_id_empresa", "option" => $listaEmpresas, 
                                             "modal" => "","boton_click" => "getPAMEmpresaModal('1')", "boton_icono" => "fa fa-industry","boton_nombre" => "", "boton_title" =>"Crear Empresa"
                                             ,"boton_tipo" => "btn-info");
 //        $form2['form_6'] = array("elemento" => "combo","combo","change" => "", "titulo" => "Empresa", "id" => "_id_empresa", "option" => $listaEmpresas); 
-        $form2['form_3'] = array("elemento" => "combo","change" => "", "titulo" => $lblCategoría, "id" => "_categoria", "option" => $listacategoria);    
-        $form2['form_4'] = array("elemento" => "textarea" ,"tipo" => "text" , "titulo" => "Comentario", "id" => "_observacion" ,"reemplazo" => $row['mie_observacion']);
-        $form2['form_5'] = array("elemento" => "caja", "tipo" => "hidden","id" => "_membresia", "reemplazo" => $valorMembresiaOculto);
-        $form2['form_6'] = array("elemento" => "caja" ,"tipo" => "hidden" , "titulo" => " ","id" => "_precio_esp","reemplazo" => $row['precio_esp']);
+        $form2['form_4'] = array("elemento" => "combo","change" => "", "titulo" => $lblCategoría, "id" => "_categoria", "option" => $listacategoria);    
+        $form2['form_5'] = array("elemento" => "textarea" ,"tipo" => "text" , "titulo" => "Comentario", "id" => "_observacion" ,"reemplazo" => $row['mie_observacion']);
+        $form2['form_6'] = array("elemento" => "caja", "tipo" => "hidden","id" => "_membresia", "reemplazo" => $valorMembresiaOculto);
+        $form2['form_7'] = array("elemento" => "caja" ,"tipo" => "hidden" , "titulo" => " ","id" => "_precio_esp","reemplazo" => $row['precio_esp']);
         $form_2= generadorEtiqueta($form2);
         
         $form7['form_10'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => $lblCorreo, "id" => "_correo" ,"reemplazo" => $row['correo']);
