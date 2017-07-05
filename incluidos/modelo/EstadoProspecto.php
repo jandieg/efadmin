@@ -20,6 +20,11 @@ class EstadoProspecto extends Conexion{
         $sql="call sp_selectEstadosProspectos('$estado')";
         return parent::getConsultar($sql);   
     }  
+
+    public function getEstadosAplicante($estado) {
+        $sql="call sp_selectEstadosAplicantes('$estado')";
+        return parent::getConsultar($sql);   
+    }  
     public function getListaEstadoProspecto($idSeleccionado='', $listaestadoprospecto= array()) {   
         $resultset_estadoprospecto= $this->getEstadosProspecto('A'); 
 //        $listaestadoprospecto=array();

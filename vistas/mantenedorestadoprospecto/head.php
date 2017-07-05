@@ -92,14 +92,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 $objEstadoProspecto= new EstadoProspecto();
 $cuerpo='';
 $cont=1;
-$resultset= $objEstadoProspecto->getEstadosProspecto("A");
+$resultset= $objEstadoProspecto->getEstadosAplicante("A");
  while($row = $resultset->fetch_assoc()) { 
      $cuerpo.= generadorTablaFilas(array(
          "<center>".$cont."</center>",
-         generadorLink($row['estpro_descripcion'],'getDetalle('.$row['estpro_id'].')'),
-         date_format(date_create($row['estpro_fecharegistro']), 'd/m/Y H:i:s'),
-         date_format(date_create($row['estpro_fechamodificacion']), 'd/m/Y H:i:s') )); 
+         generadorLink($row['mem_sta_descripcion'],'getDetalle('.$row['mem_sta_id'].')'),
+         date_format(date_create($row['mem_sta_fecharegistro']), 'd/m/Y H:i:s'),
+         date_format(date_create($row['mem_sta_fechamodificacion']), 'd/m/Y H:i:s') )); 
      $cont=$cont + 1;   
  }
 $boton['boton_1'] = array("color" => "btn-info" ,"click" => "getCrear()" ,"titulo" => "","icono" => "fa-plus");
-$t= generadorTablaConBotones(1, "Estados de Prospectos",'getCrear()', array("N°", "Descripción","Fecha de Registro", "Última Modificación"), $cuerpo, $boton);
+$t= generadorTablaConBotones(1, "Estados de Aplicantes",'getCrear()', array("N°", "Descripción","Fecha de Registro", "Última Modificación"), $cuerpo, $boton);

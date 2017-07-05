@@ -187,7 +187,23 @@ public function setActualizarMiembro($idMiembro, $id_persona, $propietario, $nom
 //        $sql="SELECT `pro_id`,  `Persona_per_id`,participacion_correo, `forum_usu_id`, `categoria_cat_id`, `Profesion_prof_id` FROM `prospecto`";
 //        return parent::getConsultar($sql);   
 //    } 
-    
+
+    public function getMiembroByCodigo($codigo) {
+        $sql = "call sp_selectMiembroByCodigo('$codigo')";
+        return parent::getConsultar($sql);        
+    }
+    public function isCodigoRepetido($id, $codigo) {
+        $resultset = $this->getMiembroByCodigo($codigo);
+        if ($row = $resultset->fetch_assoc()) {
+            if ($row['mie_id'] == $id) {
+                return false;
+            } else {
+                return true;
+            }
+        } else {
+            return false;
+        }
+    }
     
     public function setEstadoMiembro($id, $status) {
         $sql = "call sp_updateEstadoMiembro('$id', '$status')";
