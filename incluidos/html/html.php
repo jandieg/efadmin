@@ -90,12 +90,18 @@ function generadorTablaModal($tipo, $titulo,$funcion='', $columnas=array(), $fil
 }
 
 function cargarImagen($src) {
+
+    $placeholder = utf8_encode("../../i/placeholder.png");
     $msg="";
     $msg.='
+    
+
     <div class="form-group">
         
             <div class="col-sm-5">
-                <div id="targetLayer"><img src="'.$src.'" id="foto" height="100"  width="110" alt="FOTO..."></div>
+                <div id="targetLayer" style="background-image: url('.$src.'), url('.$placeholder.');
+            background-size: 100px 110px; 
+            background-repeat: no-repeat; "></div>
             </div>
         
     </div>

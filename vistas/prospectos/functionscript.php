@@ -223,19 +223,21 @@ console.log("la empresa es" + $("#_id_empresa").val().toString());
                     }
             },error : function(xhr, status) {
                 $.msg('unblock');
-                $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema'});
+                $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema' +xhr.toString() + status.toString()});
             }
         });
 
 };
 var getConvertirProspecto = function(id, estado_aplicante, forum, nombre_forum, nombre_pa){
-//    alert(id + estado_aplicante + forum + nombre_forum);
+    //alert(id + estado_aplicante + forum + nombre_forum);
+    
     var msg = ''; 
     $("#convertir_id").val(id);
     $("#pro_prospecto").val(nombre_pa);
     $("#convertir_id_forum").val(forum);
     $("#convertir_nombre_forum").val(nombre_forum);
     
+
     if(estado_aplicante == 'AC - Applicant Cancel'){
         //$("#convertir_respuesta_modal").html('<center><h1>Debes cambiar el Member Status a Applicant!</h1></center>');
         $('#modal_getSeleccionarStatus').modal('toggle');
@@ -298,7 +300,7 @@ var setConvertirAplicante = function(){
                     }
             },error : function(xhr, status) {
                 $.msg('unblock');
-                $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema'});
+                $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema'+ xhr.toString() + status.toString()});
             }
         });
 };
