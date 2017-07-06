@@ -108,7 +108,7 @@ class Evento extends Conexion{
 
             array_push($response, $row);     
         } 
-        return json_encode($response); 
+        return json_encode(json_encode($response)); 
     }
     
     

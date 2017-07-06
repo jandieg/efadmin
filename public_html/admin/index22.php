@@ -23,6 +23,8 @@ include(LENGUAJE."/lenguaje_2.php");
 include(E_LIB."custom_functions.php");
 date_default_timezone_set ("America/Guayaquil");
 include_once("../../incluidos/db_config/config.php");
+
+
 $_SITE_PAGES = listaDir(E_VISTAS,"dir");
                    
 if(isset($_REQUEST['url'])){
@@ -43,6 +45,7 @@ if(isset($_REQUEST['url'])){
 }else {//cuando escribe la url /
     isset($_SESSION['user_id_ben'])? redirect("sede") : redirect("login");       
 }
+
 if(file_exists(E_VISTAS.E_PAGE."/head.php")){
             include(E_VISTAS.E_PAGE."/head.php");
 }
@@ -118,8 +121,10 @@ function export_to_excel(sourceid){
 }
 	
 }
+
+
 function eventReport(){
-    if ($("#month").val() != 'cdm') {
+    
         var month = $('#month').val();
         if (confirm("Esta seguro de generar un reporte del mes seleccionado?")) {
             var dataString = "month=" + month + "&page=eventReport";
@@ -139,31 +144,7 @@ function eventReport(){
                 }
             });
         }
-    } else {
-        if ($("#_grupos").val() != null) {        
-            var parametros = {
-                KEY: 'KEY_CASO_DEL_MES',
-                _id: $("#_grupos").val().toString()
-            };
-            $.ajax({
-                type: "POST",
-                url: 'eventos',
-                data: parametros,
-                beforeSend: function () {
-                    $.msg({content : '<img src="public/images/loanding.gif" />', autoUnblock: false});
-                },
-                success:  function (mensaje) {
-                    $.msg('unblock');
-                        $("#ben_contenedor").html(mensaje);                    
-                },error : function(xhr, status) {
-                    $.msg('unblock');
-                    $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema' + status.toString()+" "+ xhr.toString()});
-                }                
-            });
-        } else {
-            alert("disculpe debe seleccionar un grupo");
-        }
-    }
+    
 	
 	
 }
@@ -189,6 +170,8 @@ function faReport(){
 }
 	
 }
+
+
 function do_report(type,userid){
 	var year = $('#_año').val();
 	var group = $('#_grupo').val();
@@ -221,6 +204,10 @@ function do_report(type,userid){
     async: false
 	});
 }
+
+
+
+
 function ResetReports(id){
 	
 	var dataString = "id=" + id + "&page=ResetReports";
@@ -236,7 +223,10 @@ function ResetReports(id){
 		}
 	});
 }
+
 	
+
+
 		</script>
        <script>
             var getCargarCiudades = function(){
@@ -317,6 +307,7 @@ function ResetReports(id){
                                     $("#_prefijo_telefono").val( mensaje.prefijo);
                                     $("#_prefijo_celular").val( mensaje.prefijo);
                                     //$("#_sede").html( mensaje.sede);
+
                                     $(".select2").select2();
                                 }else{
                                 $.toaster({ priority : mensaje.priority, title : 'Alerta', message : mensaje.msg});
@@ -328,6 +319,7 @@ function ResetReports(id){
                         }
                     });    
             };
+
          
             var getConfTabla= function (){
                 $(function () {
@@ -463,6 +455,7 @@ function ResetReports(id){
                 $("#btnAddEmpresa").html('Agregando Empresa ...');
                 $('#btnAddEmpresa').attr("disabled", true);
                 $.msg({content : '<img src="public/images/loanding.gif" />', autoUnblock: false});
+
                 var parametros = {
                             KEY: 'KEY_ADD_EMPRESA',
                             _id_miembro: $("#_id_miembro_empresa").val().toString(),
@@ -470,6 +463,7 @@ function ResetReports(id){
                             _empresas: $("#_empresas").val().toString(),
                             _bandera:_bandera,
                             _tipo: '1'//$("#_tipo_empresas_pam").val().toString()
+
                     };
                     $.ajax({
                         data:  parametros,
@@ -488,6 +482,7 @@ function ResetReports(id){
                                     $("#btnAddEmpresa").html('Guardar');
                                     $.toaster({ priority : mensaje.priority, title : 'Alerta', message : mensaje.msg});
                                 }
+
                         },error : function(xhr, status) {
                            $.msg('unblock');
                            $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema'});
@@ -516,6 +511,7 @@ function ResetReports(id){
                                     
                                     $("#_lista_empresa_u").html( mensaje._lista_empresa);
                                     $("#_empresas_u").val(_id_empresa);
+
                                     $(".select2").select2();
                                     $('#modal_getActualizarEmpresa').modal('toggle');
                                 }else{
@@ -530,6 +526,7 @@ function ResetReports(id){
                 $("#setActualizarEmpresa").html('Actualizar Empresa ...');
                 $('#setActualizarEmpresa').attr("disabled", true);
                 $.msg({content : '<img src="public/images/loanding.gif" />', autoUnblock: false});
+
                 var parametros = {
                             KEY: 'KEY_ACTUALIZAR_MIEMBRO_EMPRESA',
                             _id_miembro_empresa: $("#_id_mie_emp_empresa_u").val().toString(),
@@ -537,6 +534,7 @@ function ResetReports(id){
                             _empresas: $("#_empresas_u").val().toString(),
                             _bandera:_bandera,
                             _tipo: '1'//$("#_tipo_empresas_pam_u").val().toString()
+
                     };
                     $.ajax({
                         data:  parametros,
@@ -555,6 +553,7 @@ function ResetReports(id){
                                     $("#setActualizarEmpresa").html('Guardar');
                                     $.toaster({ priority : mensaje.priority, title : 'Alerta', message : mensaje.msg});
                                 }
+
                         },error : function(xhr, status) {
                            $.msg('unblock');
                            $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema'});
@@ -563,6 +562,7 @@ function ResetReports(id){
             };
             var setEliminarEmpresa = function(_id_miembro_empresa,_id_miembro,_bandera){
                 $.msg({content : '<img src="public/images/loanding.gif" />', autoUnblock: false});
+
                 var parametros = {
                             KEY: 'KEY_DELETE_EMPRESA',
                             _id_miembro_empresa: _id_miembro_empresa,
@@ -580,6 +580,7 @@ function ResetReports(id){
                                 }else{
                                     $.toaster({ priority : mensaje.priority, title : 'Alerta', message : mensaje.msg});
                                 }
+
                         },error : function(xhr, status) {
                            $.msg('unblock');
                            $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema'});
@@ -596,6 +597,7 @@ function ResetReports(id){
                 $("#_correo_asistente").val('');
                 $("#_movil_asistente").val('');
                 $("#_apellido_asistente").val('');
+
                 $("#_fijo_asistente").val('');
                 $('#btnAddAsistente').attr("disabled", false);
                 $("#btnAddAsistente").html('Guardar');
@@ -605,6 +607,7 @@ function ResetReports(id){
                 $("#btnAddAsistente").html('Agregando Asistente ...');
                 $('#btnAddAsistente').attr("disabled", true);
                 $.msg({content : '<img src="public/images/loanding.gif" />', autoUnblock: false});
+
                 var parametros = {
                             KEY: 'KEY_GUARDAR_ASISTENTE',
                             _id_asistente: $("#_id_asistente").val().toString(),
@@ -627,11 +630,14 @@ function ResetReports(id){
                                   $('#modal_getPAMCrearAsistente').modal('toggle');
                                   getDetalle($("#_id_asistente").val().toString());
                                   getPAMLimpiar();
+
                             }else{
                                 $.toaster({ priority : mensaje.priority, title : 'Alerta', message : mensaje.msg});
                                 $('#btnAddAsistente').attr("disabled", false);
                                 $("#btnAddAsistente").html('Guardar');
                             }
+
+
                         },error : function(xhr, status) {
                            $.msg('unblock');
                            $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema'});
@@ -639,6 +645,7 @@ function ResetReports(id){
                     });
             };
             var getPAMActualizarAsistente = function(id_miembro, id, nombre, apellido, movil, correo, funcion, fijo){
+
                 $("#_id_miembro_u").val(id_miembro.toString());
                 $("#_id_asistente_u").val(id.toString());
                 $("#_nombre_asistente_u").val(nombre.toString());
@@ -654,6 +661,7 @@ function ResetReports(id){
                 $("#btnActAsistente").html('Actualizando Asistente ...');
                 $('#btnActAsistente').attr("disabled", true);
                 $.msg({content : '<img src="public/images/loanding.gif" />', autoUnblock: false});
+
                 var parametros = {
                             KEY: 'KEY_ACTUALIZAR_ASISTENTE',
                             _id_asistente: $("#_id_asistente_u").val().toString(),
@@ -682,6 +690,7 @@ function ResetReports(id){
                                     $("#btnActAsistente").html('Guardar');
                                     $.toaster({ priority : mensaje.priority, title : 'Alerta', message : mensaje.msg});
                                 }
+
                         },error : function(xhr, status) {
                            $.msg('unblock');
                            $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema'});
@@ -691,6 +700,7 @@ function ResetReports(id){
             var setPAMEliminarAsistente = function(_id_miembro, _id_persona, _bandera, _id_tabla){
             //alert(_id_persona);
                 $.msg({content : '<img src="public/images/loanding.gif" />', autoUnblock: false});
+
                 var parametros = {
                             KEY: 'KEY_DELETE_ASISTENTE',
                             _id_persona: _id_persona,
@@ -709,6 +719,7 @@ function ResetReports(id){
                                 }else{
                                     $.toaster({ priority : mensaje.priority, title : 'Alerta', message : mensaje.msg});
                                 }
+
                         },error : function(xhr, status) {
                            $.msg('unblock');
                            $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema'});
@@ -779,6 +790,11 @@ function ResetReports(id){
         ?>
   
         <script>
+
+
+           
+
+
            $(".select2").select2();
            getConfTabla();
         </script>

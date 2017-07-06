@@ -10,7 +10,6 @@ require_once MODELO.'EmpresariosMes.php';
 require_once MODELO.'TipoEvento.php';
 require_once MODELO.'GeneradorID.php';
 require_once MODELO.'ForumLeader.php';
-
 require_once MODELO.'Pais.php';
 require_once MODELO.'Provincia.php';
 require_once MODELO.'Ciudad.php';
