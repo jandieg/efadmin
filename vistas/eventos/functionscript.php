@@ -26,6 +26,31 @@ var loadgroups = function(){
 	
 };
 
+
+var getComponenteEducacional = function () {
+    var parametros = {
+        KEY: 'KEY_COMPONENTE_EDUCACIONAL'
+    };
+
+    $.ajax({
+        type: "POST",
+        url: 'eventos',
+        data: parametros,
+        async: false,
+        beforeSend: function () {
+            $.msg({content : '<img src="public/images/loanding.gif" />', autoUnblock: false});
+        },
+        success:  function (mensaje) {
+            $.msg('unblock');
+                $("#ben_contenedor").html(mensaje);                    
+        },error : function(xhr, status) {
+            $.msg('unblock');
+            $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema' + status.toString()+" "+ xhr.toString()});
+        }                
+    });
+}
+
+
 var getFiltroForumLeader = function() {
     var parametros =  {
         KEY: 'KEY_DETALLE_GRUPO_FORUM_LEADER',

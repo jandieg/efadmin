@@ -74,6 +74,11 @@ class Evento extends Conexion{
         return parent::getConsultar($sql);
 
     }
+
+    public function getEventosByYearPeriod($anhoinicial, $anhofinal) {
+        $sql="call sp_selectEventosByYearPeriod('$anhoinicial', '$anhofinal')";
+        return parent::getConsultar($sql);
+    }
     
      public function getEventoRecordarNotificar($id) {
         $sql="call sp_selectEventoRecordarNotificar('$id')";  
