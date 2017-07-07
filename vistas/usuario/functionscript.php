@@ -235,11 +235,11 @@ var subirFoto = function() {
 
             //$("#foto").attr("src", reader.result);
             //var blob = new Blob(document.getElementById('archivo').files[0], {type: 'image/jpeg'});
-            data.append("codigo", $("#el_codigo").val());
+            data.append("codigo", $("#_usu_id").val().toString());
             data.append("archivo", document.getElementById('archivo').files[0]);
             data.append("KEY", "KEY_ARCHIVO");
             $.ajax({
-                url: "miembros",
+                url: "usuario",
                 type: "POST",
                 data:  data,
                 contentType: false,

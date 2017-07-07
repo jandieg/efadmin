@@ -113,7 +113,7 @@ function cargarImagen($src) {
 function getFormImagen($valor="") {
     $msg = "";
     $placeholder = utf8_encode("../../i/placeholder.png");
-    if (strlen($valor) == 11) {
+    if (strlen($valor) > 0) {
         $foto = utf8_encode("../../i/".$valor.".jpg");
         
         $msg .= '
