@@ -36,6 +36,14 @@ class StatusMember extends Conexion{
         return $lista;
     }
 
+    function getListaMiembroStatus2($lista = array()) {
+        $resultset = $this->getMiembroStatus();
+        while ($row = $resultset->fetch_assoc()) { 
+                $lista['lista_'.$row['mem_sta_id']] = array("value" => $row['mem_sta_id'],  "select" => "" ,"texto" =>$row['mem_sta_codigo']);
+        }
+        return $lista;
+    }
+
     function getListaAplicante($lista = array()) {
         $resultset= $this->get('A','0');         
         while ($row = $resultset->fetch_assoc()) { 
@@ -91,6 +99,13 @@ class StatusMember extends Conexion{
         $fecha= date("Y-m-d H:i:s");
         $sql="call sp_createStatusMember('$codigo','$descripcion', '$user','$fecha')";
         return parent::setSqlSp($sql);   
+    }
+
+    public function setGrabarAplicante($codigo, $descripcion, $user) {
+        $fecha= date("Y-m-d H:i:s");
+        $sql="call sp_createStatusMemberAplicante('$codigo','$descripcion', '$user','$fecha')";
+        return parent::setSqlSp($sql);   
+        
     }
     public function getStatus($id) {
         $sql="call sp_selectStatuMember('$id')";

@@ -4,6 +4,67 @@ session_start();
 ?>
 
 <script>
+if (document.querySelector("#uploadForm")!=null)
+document.querySelector("#uploadForm").addEventListener("submit", function(e){
+    
+        e.preventDefault();    //stop form from submitting
+    
+});
+var subirFoto = function() {
+    console.log('si esta cargando');
+    
+    $("#el_codigo").val($("#_cod_1").val().toString() +"-"+ $("#_cod_2").val().toString() +"-"+ $("#_cod_3").val().toString() +"-"+ $("#_cod_4").val().toString());
+    if ($("#el_codigo").val().toString().length == 11) {
+
+    
+    var reader = new FileReader();
+
+reader.readAsDataURL(document.getElementById('archivo').files[0]);
+    var parametros= {
+        codigo: $("#el_codigo").val(),
+        archivo: reader
+    };
+
+    var data = new FormData();
+
+        
+
+    reader.onloadend = function () {
+        $("#targetLayer").css('background-image', 'url('+reader.result+')');
+        $("#targetLayer").css('background-size', '100px 110px');
+        $("#targetLayer").css('background-repeat', 'no-repeat');        
+
+        //$("#foto").attr("src", reader.result);
+        //var blob = new Blob(document.getElementById('archivo').files[0], {type: 'image/jpeg'});
+        data.append("codigo", $("#el_codigo").val());
+        data.append("archivo", document.getElementById('archivo').files[0]);
+        data.append("KEY", "KEY_ARCHIVO");
+        $.ajax({
+            url: "miembros",
+            type: "POST",
+            data:  data,
+            contentType: false,
+            cache: false,
+            processData:false,
+            success: function(data)
+            {
+                console.log(data);
+            },
+            error: function() 
+            {
+            } 	        
+        });
+
+    }
+
+    } else {
+        alert("Disculpe, el codigo es incorrecto");
+    }
+    
+    
+
+
+}
 
 
 var cambioMembresia = function () {
@@ -455,8 +516,26 @@ var setActualizarCancelacion = function(){
     
 };
 
+
+
+
 var setUserActualizar = function(  id_persona, id_miembro){
 
+    var parametrosMiembro = {
+        KEY: 'KEY_VERIFICAR_CODIGO',
+        _id_miembro: id_miembro.toString(),
+        _codigo: $("#_cod_1").val().toString() +"-"+ $("#_cod_2").val().toString() +"-"+ $("#_cod_3").val().toString() +"-"+ $("#_cod_4").val().toString()        
+    };
+
+    $.ajax({
+        data:  parametrosMiembro,
+        url:   'miembros',
+        type:  'post',
+        async: false,
+        dataType : 'json',
+        success:  function (mensaje) {                        
+            if (mensaje.success == "true") {
+                //empieza
     var textoalertas = '';
     
     var _lista_hobbies = []; 
@@ -509,8 +588,18 @@ var setUserActualizar = function(  id_persona, id_miembro){
                 _lista_hobbies:_lista_hobbies,
                 _grupo_asignar:$("#_grupo_asignar").val().toString()
         };
-
-        textoalertas += setAgregarInscripcionEnPrincipal(
+        if ($("#_fecha_cobro").val().toString().length >0 ) {
+            textoalertas += setAgregarInscripcionEnPrincipal(
+            $("#_id_insc").val().toString(), 
+            id_miembro.toString(), 
+            $("#_fecha_registro").val().toString(), 
+            $("#_ins_valor").val().toString(), 
+            2, 
+            $("#_fecha_cobro").val().toString()
+        );
+       
+        } else {
+            textoalertas += setAgregarInscripcionEnPrincipal(
             $("#_id_insc").val().toString(), 
             id_miembro.toString(), 
             $("#_fecha_registro").val().toString(), 
@@ -519,6 +608,8 @@ var setUserActualizar = function(  id_persona, id_miembro){
             $("#_fecha_cobro").val().toString()
         );
        
+        }
+        
     
 
         if ($("#_periodo_presupuesto").val().toString() != "x" && $("#_membresia_presupuesto").val().toString() != "x") {
@@ -564,8 +655,16 @@ var setUserActualizar = function(  id_persona, id_miembro){
                     $("#alertas").append(textoalertas + "<div class='col-md-3'><div class='callout callout-danger'><h4>Alerta:</h4><p>Disculpe, existió un problema</p></div></div>");
                     //$.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema'});
                 }
-            }); 
-        
+            });         
+//termina
+            } else {
+                $.toaster({ priority : 'danger', title : 'Alerta', message : mensaje.msg});
+            }
+        },error : function(xhr, status) {            
+            $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema'});
+        }
+    });
+
 
                
 

@@ -88,6 +88,85 @@ function generadorTablaModal($tipo, $titulo,$funcion='', $columnas=array(), $fil
  
     return $t ;
 }
+
+function cargarImagen($src) {
+
+    $placeholder = utf8_encode("../../i/placeholder.png");
+    $msg="";
+    $msg.='
+    
+
+    <div class="form-group">
+        
+            <div class="col-sm-5">
+                <div id="targetLayer" style="background-image: url('.$src.'), url('.$placeholder.');
+            background-size: 100px 110px; 
+            background-repeat: no-repeat; "></div>
+            </div>
+        
+    </div>
+     ';
+
+     return $msg;
+}
+
+function getFormImagen($valor="") {
+    $msg = "";
+    $placeholder = utf8_encode("../../i/placeholder.png");
+    if (strlen($valor) > 0) {
+        $foto = utf8_encode("../../i/".$valor.".jpg");
+        
+        $msg .= '
+            <div class="col-sm-3">
+            <div id="targetLayer" style="background-image: url('.$foto.'), url('.$placeholder.');
+            background-size: 100px 110px; 
+            background-repeat: no-repeat; "></div>
+            </div>
+            <div class="col-sm-9">
+            <div class="row">
+                <div class="col-sm-9" style="font-size:12px !important;">
+                    <form id="uploadForm" action="" method="post" enctype="multipart/form-data">                        
+                        <div id="uploadFormLayer" class="row">
+                        <input name="codigo" id="el_codigo" type="hidden" />
+                        <input name="userImage" type="file" id="archivo" class="inputFile" /><br/>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-sm-3" style="padding-top: 20px !important;">
+                    <div class="btn btn-primary" style="font-size:12px !important;" onClick="subirFoto()">Cargar Foto</div>
+                </div>
+            </div>        
+        </div>            
+        ';
+        return $msg;    
+    } else {
+        $msg .= '
+            <div class="col-sm-3">
+            <div id="targetLayer" style="background-image:url('.$placeholder.');
+            background-size: 100px 110px; 
+            background-repeat: no-repeat; "></div>
+            </div>
+            <div class="col-sm-9">
+            <div class="row">
+                <div class="col-sm-9" style="font-size:12px !important;">
+                    <form id="uploadForm" action="" method="post" enctype="multipart/form-data">                        
+                        <div id="uploadFormLayer" class="row">
+                        <input name="codigo" id="el_codigo" type="hidden" />
+                        <input name="userImage" type="file" id="archivo" class="inputFile" /><br/>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-sm-3" style="padding-top: 20px !important;">
+                    <div class="btn btn-primary" style="font-size:12px !important;" onClick="subirFoto()">Cargar Foto</div>
+                </div>
+            </div>        
+        </div>            
+        ';
+        return $msg;
+    }
+    
+}
+
 function generadorTablaConBotones($tipo, $titulo,$funcion='', $columnas=array(), $filas,$botones=array()){
     $t='<div class="box box-info">';
     $t.='<div class="box-header">';
@@ -599,6 +678,8 @@ function generadorFormularios($id_oculto = '', $valor_oculto= '', $tab=array(), 
         }
         return $msg;
     }   
+
+
 function generadorEtiqueta($tab=array()){ 
           
     $msg='';
@@ -620,6 +701,18 @@ function generadorEtiqueta($tab=array()){
                     $msg.=' </div>'; 
                     $msg.=' </div>';
                     $msg.='</div>'; 
+               }
+
+               if($valor['elemento']=='subir-imagen'){
+                    $msg.='<div class="form-group">'; 
+                    $msg.=getFormImagen($valor['valor']); 
+                    $msg.="</div>";
+               }
+
+               if($valor['elemento']=='subir-imagen-oc'){
+                    $msg.='<div class="form-group imagen">'; 
+                    $msg.=getFormImagen($valor['valor']); 
+                    $msg.="</div>";
                }
 
                if($valor['elemento']=='Checkbox-comun'){
@@ -693,6 +786,15 @@ function generadorEtiqueta($tab=array()){
                
                if($valor['elemento']=='caja'){
                    $msg.='<div class="form-group">'; 
+                    $msg.='<label for="" class="col-sm-3 control-label">'.$valor['titulo'].'</label>'; 
+                    $msg.='<div class="col-sm-9">'; 
+                    $msg.='<input type="'.$valor['tipo'].'" class="form-control" id="'.$valor['id'].'" placeholder="'.$valor['titulo'].'" required="required" value="'.$valor['reemplazo'].'">'; 
+                    $msg.=' </div>'; 
+                    $msg.='</div>';            
+               }
+
+               if($valor['elemento']=='cajaoc'){
+                   $msg.='<div class="form-group '.$valor['id'].'">'; 
                     $msg.='<label for="" class="col-sm-3 control-label">'.$valor['titulo'].'</label>'; 
                     $msg.='<div class="col-sm-9">'; 
                     $msg.='<input type="'.$valor['tipo'].'" class="form-control" id="'.$valor['id'].'" placeholder="'.$valor['titulo'].'" required="required" value="'.$valor['reemplazo'].'">'; 

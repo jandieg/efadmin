@@ -55,7 +55,7 @@
                     
                    
                     <li><a href="mantenedorprovincia">Estado / Provincia</a></li>
-                    <!--<li><a href="mantenedorestadoprospecto">Estado Prospecto</a></li>-->
+                    <li><a href="mantenedorestadoprospecto">Estado Aplicante</a></li>
                     <li><a href="mantenedorestadopresupuesto">Estado Monetario</a></li>
                     <li><a href="mantenedorformapago">Forma Pago</a></li>
                     <li><a href="mantenedormembresia">Membresia</a></li>

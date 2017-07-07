@@ -74,6 +74,11 @@ class Evento extends Conexion{
         return parent::getConsultar($sql);
 
     }
+
+    public function getEventosByYearPeriod($anhoinicial, $anhofinal) {
+        $sql="call sp_selectEventosByYearPeriod('$anhoinicial', '$anhofinal')";
+        return parent::getConsultar($sql);
+    }
     
      public function getEventoRecordarNotificar($id) {
         $sql="call sp_selectEventoRecordarNotificar('$id')";  
@@ -90,11 +95,21 @@ class Evento extends Conexion{
         $sql = "call sp_selectEventosByGrupo('$idGrupo')";
         return parent::getConsultar($sql);
     }
+
+    public function getEventosByForumLeader($idForumLeader) {
+        $sql = "call sp_selectEventosByForumLeader('$idForumLeader')";
+        return parent::getConsultar($sql);
+    }
       
     public function getMiembrosPendientesxGrupo($idGrupo) {
         $sql = "call sp_selectMiembrosPendientesxGrupo('$idGrupo')";
         return parent::getConsultar($sql);
     }  
+
+    public function getMiembrosPendientesxForumLeader($idMiembro) {
+        $sql = "call sp_selectMiembrosPendientesxForumLeader('$idMiembro')";
+        return parent::getConsultar($sql);
+    }
 
     public function getJSONEventosCalendar($id){
         $resultset= $this->getEventos($id);
@@ -103,7 +118,7 @@ class Evento extends Conexion{
 
             array_push($response, $row);     
         } 
-        return json_encode($response); 
+        return json_encode(json_encode($response)); 
     }
     
     

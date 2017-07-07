@@ -16,6 +16,7 @@ $(document).ready(function() {
         type: 'POST', // Send post data
         data: 'KEY=KEY_DATA_CALENDARIO',
         async: false,
+        dataType: 'json',
         success: function(s){
             json_events = s;
         }

@@ -260,6 +260,23 @@ class Grupo extends Conexion{
         $sql="call sp_selectGrupoKey('$idForum', '6')";
         return parent::getConsultar($sql);   
     }
+
+    public function getGruposAndForumLeaders() {
+        $sql="call sp_selectGruposAndForumLeaders()";
+        return parent::getConsultar($sql);
+    }
+
+    public function getListaGruposAndForumLeaders() {
+        $resultset = $this->getGruposAndForumLeaders();
+        $lista = array();
+        $i = 0;
+        while ($row = $resultset->fetch_assoc()) {
+            $lista[$i]['id'] = $row['gru_id'];
+            $lista[$i]['nombre'] = $row['usu_user'];
+            $i++;
+        }
+        return $lista;
+    }
     
 	
 	 public function getListaGruposForum_by_Sede($idForum='', $idSeleccionado='',$list= array()) {  

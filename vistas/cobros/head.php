@@ -161,7 +161,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $cont=1;
                     $credito = 0;
                     $esadminreg = false;                    
-                    if (in_array(trim($_SESSION['user_perfil']), array('Administrador Regional'))) {
+                    if (in_array(trim($_SESSION['user_perfil']), array('Administrador Regional', 'IBP'))) {
                         $esadminreg = true;
                     }
                     if ($esadminreg) {

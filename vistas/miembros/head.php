@@ -50,7 +50,6 @@ $objUsuario;$objForum;$objHobby;$objMiembro;$tabla_desafios=array();$objEmpresaL
 $titulo='';$idpersona='';$empresa='';$direcion='';$ciudad='';$estado='';$pais='';$nombreGrupo='';
 
 function getDetalleUpdate($id, $recargar) {
-
     $objMiembro= new Miembro();
 	if(isset($_GET['id_miembro'])){
 	$resultset= $objMiembro->getMiembro2($id);	
@@ -146,65 +145,69 @@ list($c1, $c2, $c3, $c4) = split('[/.-]', $codigo_usuario);
   $cod2 =$c2;
   $cod3 =$c3;
   $cod4 =$c4;
+$form['form_0'] = array("elemento" => "subir-imagen", "valor" => $cod1."-".$cod2."-". $cod3. "-". $cod4);
 
   if ($recargar) {
-      $form['form_0'] = array("elemento" => "smallcode" ,"titulo" => generadorAsterisco("Código")
+      $form['form_1'] = array("elemento" => "smallcode" ,"titulo" => generadorAsterisco("Código")
             ,"disabled_1" => "","tipo_1" => "text" , "id_1" => "_cod_1" ,"reemplazo_1" => $listacod[0]
             ,"disabled_2" => "","tipo_2" => "text" , "id_2" => "_cod_2" ,"reemplazo_2" => $listacod[1]
             ,"disabled_3" => "","tipo_3" => "text" , "id_3" => "_cod_3" ,"reemplazo_3" => ""
             ,"disabled_4" => "","tipo_4" => "text" , "id_4" => "_cod_4" ,"reemplazo_4" => "");
   
   } else {
-      $form['form_0'] = array("elemento" => "smallcode" ,"titulo" => generadorAsterisco("Código")
+      $form['form_1'] = array("elemento" => "smallcode" ,"titulo" => generadorAsterisco("Código")
             ,"disabled_1" => "","tipo_1" => "text" , "id_1" => "_cod_1" ,"reemplazo_1" => $cod1
             ,"disabled_2" => "","tipo_2" => "text" , "id_2" => "_cod_2" ,"reemplazo_2" => $cod2
             ,"disabled_3" => "","tipo_3" => "text" , "id_3" => "_cod_3" ,"reemplazo_3" => $cod3
             ,"disabled_4" => "","tipo_4" => "text" , "id_4" => "_cod_4" ,"reemplazo_4" => $cod4);
   
   }
-      
-  
-		$form['form_1'] = array("elemento" => "combo","change" => "","titulo" => generadorAsterisco("Asignar Grupo"), "id" => "_grupo_asignar", "option" => $listaGrupos);
-        $form['form_2'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => generadorAsterisco($lblNombre), "id" => "_nombre" ,"reemplazo" => $row['per_nombre']);
-        $form['form_3'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => generadorAsterisco($lblApellido), "id" => "_apellido" ,"reemplazo" => $row['per_apellido']);
+              
+		
+        $form['form_3'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => generadorAsterisco($lblNombre), "id" => "_nombre" ,"reemplazo" => $row['per_nombre']);
+        $form['form_4'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => generadorAsterisco($lblApellido), "id" => "_apellido" ,"reemplazo" => $row['per_apellido']);
+        $form['form_5'] = array("elemento" => "caja" ,"tipo" => "date" , "titulo" => $lblFNacimiento, "id" => "_fn" ,"reemplazo" => $row['per_fechanacimiento']);
         /*
         $form['form_4'] = array("elemento" => "combo","change" => "","titulo" => $lblTipoPersona, "id" => "_tipo_p", "option" => generadorComboTipoPersona_($row['per_tipo']));        $form['form_5'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => $lblIdentificacion, "id" => "_identificacion" ,"reemplazo" => $row['per_identificacion']);       */
-      $form['form_4'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_tipo_p" ,"reemplazo" => $row['per_tipo']);
-      $form['form_5'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_identificacion" ,"reemplazo" => $row['per_identificacion']);
+      $form['form_6'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_tipo_p" ,"reemplazo" => $row['per_tipo']);
+      $form['form_7'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_identificacion" ,"reemplazo" => $row['per_identificacion']);
 		
 		//$form['form_6'] = array("elemento" => "combo","change" => "","titulo" => $lblGenero, "id" => "_genero", "option" => generadorComboGenero($row['per_genero']));
         
-      $form['form_7'] = array("elemento" => "caja", "tipo" => "hidden","id" => "_titulo", "reemplazo" => "1");
+      
 		//$form['form_7'] = array("elemento" => "combo","change" => "", "titulo" => $lblTitulo, "id" => "_titulo", "option" => $listaprofe);
-        $form['form_8'] = array("elemento" => "caja" ,"tipo" => "date" , "titulo" => $lblFNacimiento, "id" => "_fn" ,"reemplazo" => $row['per_fechanacimiento']);
+        
+        $form['form_8'] = array("elemento" => "caja", "tipo" => "hidden","id" => "_titulo", "reemplazo" => "1");
         $form_1= generadorEtiqueta($form);
         
         //Formularios
         
  //$form2['form_0'] = array("elemento" => "combo","change" => "Show_Esp_Price()", 'deshabilitado' => true, "titulo" => generadorAsterisco("Precio"), "id" => "_membresia", "option" => $listaM);
 	   
-		
-        $form2['form_0'] = array("elemento" => "combo","change" => "getComboCargarGrupos()","titulo" => generadorAsterisco($lblForumLeader), "id" => "_propietario", "option" => $listaForumLeader);
+		$form2['form_0'] = array("elemento" => "combo","change" => "","titulo" => generadorAsterisco("Asignar Grupo"), "id" => "_grupo_asignar", "option" => $listaGrupos);
+        $form2['form_1'] = array("elemento" => "combo","change" => "getComboCargarGrupos()","titulo" => generadorAsterisco($lblForumLeader), "id" => "_propietario", "option" => $listaForumLeader);
        // $form2['form_2'] = array("elemento" => "combo","change" => "","titulo" => generadorAsterisco("Asignar Grupo"), "id" => "_grupo_asignar", "option" => $listaGrupos);
-        $form2['form_1'] = array("elemento" => "combo","change" => "cambioMembresia()","titulo" => generadorAsterisco("Member Status"), "id" => "_status", "option" => $listaStatus);
-        $form2['form_2'] = array("elemento" => "combo + boton","change" => "",                   "titulo" => "Empresa", "id" => "_id_empresa", "option" => $listaEmpresas, 
+        $form2['form_2'] = array("elemento" => "combo","change" => "cambioMembresia()","titulo" => generadorAsterisco("Estado del Miembro"), "id" => "_status", "option" => $listaStatus);
+        $form2['form_3'] = array("elemento" => "combo + boton","change" => "",                   "titulo" => "Empresa", "id" => "_id_empresa", "option" => $listaEmpresas, 
                                             "modal" => "","boton_click" => "getPAMEmpresaModal('1')", "boton_icono" => "fa fa-industry","boton_nombre" => "", "boton_title" =>"Crear Empresa"
                                             ,"boton_tipo" => "btn-info");
 //        $form2['form_6'] = array("elemento" => "combo","combo","change" => "", "titulo" => "Empresa", "id" => "_id_empresa", "option" => $listaEmpresas); 
-        $form2['form_3'] = array("elemento" => "combo","change" => "", "titulo" => $lblCategoría, "id" => "_categoria", "option" => $listacategoria);    
-        $form2['form_4'] = array("elemento" => "textarea" ,"tipo" => "text" , "titulo" => "Comentario", "id" => "_observacion" ,"reemplazo" => $row['mie_observacion']);
-        $form2['form_5'] = array("elemento" => "caja", "tipo" => "hidden","id" => "_membresia", "reemplazo" => $valorMembresiaOculto);
-        $form2['form_6'] = array("elemento" => "caja" ,"tipo" => "hidden" , "titulo" => " ","id" => "_precio_esp","reemplazo" => $row['precio_esp']);
+        $form2['form_4'] = array("elemento" => "combo","change" => "", "titulo" => $lblCategoría, "id" => "_categoria", "option" => $listacategoria);    
+        $form2['form_5'] = array("elemento" => "textarea" ,"tipo" => "text" , "titulo" => "Comentario", "id" => "_observacion" ,"reemplazo" => $row['mie_observacion']);
+        $form2['form_6'] = array("elemento" => "caja", "tipo" => "hidden","id" => "_membresia", "reemplazo" => $valorMembresiaOculto);
+        $form2['form_7'] = array("elemento" => "caja" ,"tipo" => "hidden" , "titulo" => " ","id" => "_precio_esp","reemplazo" => $row['precio_esp']);
         $form_2= generadorEtiqueta($form2);
         
         $form7['form_10'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => $lblCorreo, "id" => "_correo" ,"reemplazo" => $row['correo']);
        // $form7['form_11'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => $lblCorreoSecundario, "id" => "_correo_2" ,"reemplazo" => $row['correo2']);
 	    $form7['form_11'] = array("elemento" => "caja" ,"tipo" => "hidden" ,"id" => "_correo_2" ,"reemplazo" => $row['correo2']);
+
         if($row['mie_participacion_correo']=='1'){
             $form7['form_12'] = array("elemento" => "Checkbox-color" ,"tipo" => "" ,"chec" => "checked", "titulo" => $lblParticipacionCorreo, "id" => "_participacion" ,"reemplazo" => '');
         }  else {
             $form7['form_12'] = array("elemento" => "Checkbox-color" ,"tipo" => "" ,"chec" => "", "titulo" => $lblParticipacionCorreo, "id" => "_participacion" ,"reemplazo" => '');
         }
+
         $form7['form_17'] = array("elemento" => "caja" ,"tipo" => "hidden" ,"id" => "_id_miembro_cancel", "reemplazo" => $row['mie_id']);
         $form_7= generadorEtiqueta($form7);
         
@@ -341,7 +344,8 @@ list($c1, $c2, $c3, $c4) = split('[/.-]', $codigo_usuario);
                                 $listaEP['lista_'] = array("value" => "x",  "select" => "" ,"texto" => "Seleccione...");
                                 $listaEP= $objEstadoPresupuesto->getListaEstadoPresupuestos($id_estado_cobro,NULL);                             
                                 $form11['form_0'] = array("elemento" => "caja" ,"tipo" => "date", "titulo" => "Fecha de Registro", "id" => "_fecha_registro", "reemplazo" => $fecha_ingreso);                        
-                                $form11['form_1'] = array("elemento" => "combo","change" => "", "titulo" => "Estado", "id" => "_estado_presupuesto", "option" => $listaEP);
+                                //$form11['form_1'] = array("elemento" => "combo","change" => "", "titulo" => "Estado", "id" => "_estado_presupuesto", "option" => $listaEP);
+                                $form11['form_1'] = array("elemento" => "caja","tipo" => "hidden", "titulo" => "", "id" => "_estado_presupuesto", "reemplazo" => 2);
                                 $form11['form_2'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_id_insc" ,"reemplazo" => $row4['mie_ins_id']);
                                 
                                 
@@ -355,10 +359,12 @@ list($c1, $c2, $c3, $c4) = split('[/.-]', $codigo_usuario);
                                 $listaEP['lista_'] = array("value" => "x",  "select" => "" ,"texto" => "Seleccione...");
                                 $listaEP= $objEstadoPresupuesto->getListaEstadoPresupuestos("",NULL);                             
                                 $form11['form_0'] = array("elemento" => "caja" ,"tipo" => "date", "titulo" => "Fecha de Registro", "id" => "_fecha_registro", "reemplazo" => $fecha_ingreso);                            
-                                $form11['form_1'] = array("elemento" => "combo","change" => "", "titulo" => "Estado", "id" => "_estado_presupuesto", "option" => $listaEP);
+                                //$form11['form_1'] = array("elemento" => "combo","change" => "", "titulo" => "Estado", "id" => "_estado_presupuesto", "option" => $listaEP);
+                                $form11['form_1'] = array("elemento" => "caja","tipo" => "hidden", "titulo" => "", "id" => "_estado_presupuesto", "reemplazo" => 1);
                                 $form11['form_2'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_id_insc" ,"reemplazo" => $row4['mie_ins_id']);
                                 $form12['form_0'] = array("elemento" => "combo", "change" => "", "titulo" => "Precio",  "id" => "_ins_valor" ,"option" => $listaMemb);
-                                $form12['form_1'] = array("elemento" => "caja" ,"tipo" => "date", "titulo" => "Fecha de Cobro", "id" => "_fecha_cobro", "reemplazo" => $fecha_cobro);                        
+                                //$form12['form_1'] = array("elemento" => "caja" ,"tipo" => "date", "titulo" => "Fecha de Cobro", "id" => "_fecha_cobro", "reemplazo" => $fecha_cobro);                        
+                                $form12['form_1'] = array("elemento" => "caja" ,"tipo" => "date", "titulo" => "Fecha de Cobro", "id" => "_fecha_cobro", "reemplazo" => "");                        
                                 //$form12['form_1'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_ins_valor" ,"reemplazo" => 1);    
                             }                             
                         } else {
@@ -367,15 +373,18 @@ list($c1, $c2, $c3, $c4) = split('[/.-]', $codigo_usuario);
                             $listaEP['lista_'] = array("value" => "x",  "select" => "" ,"texto" => "Seleccione...");
                             $listaEP= $objEstadoPresupuesto->getListaEstadoPresupuestos("",NULL);                             
                             $form11['form_0'] = array("elemento" => "caja" ,"tipo" => "date", "titulo" => "Fecha de Registro", "id" => "_fecha_registro", "reemplazo" => date('Y-m-d'));                            
-                            $form11['form_1'] = array("elemento" => "combo","change" => "", "titulo" => "Estado", "id" => "_estado_presupuesto", "option" => $listaEP);
+                            //$form11['form_1'] = array("elemento" => "combo","change" => "", "titulo" => "Estado", "id" => "_estado_presupuesto", "option" => $listaEP);
+                            $form11['form_1'] = array("elemento" => "caja","tipo" => "hidden", "titulo" => "", "id" => "_estado_presupuesto", "reemplazo" => 1);
                             $form11['form_2'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_id_insc" ,"reemplazo" => 0);
                             //$form12['form_0'] = array("elemento" => "combo", "change" => "", "titulo" => "Valor en base al Precio Mensual",  "id" => "_ins_valor" ,"option" => $$listaMemb);                            
                             $form12['form_0'] = array("elemento" => "combo", "change" => "", "titulo" => "Precio",  "id" => "_ins_valor" ,"option" => $listaMemb);
-                            $form12['form_1'] = array("elemento" => "caja" ,"tipo" => "date", "titulo" => "Fecha de Cobro", "id" => "_fecha_cobro", "reemplazo" => date('Y-m-d'));                        
+                            //$form12['form_1'] = array("elemento" => "caja" ,"tipo" => "date", "titulo" => "Fecha de Cobro", "id" => "_fecha_cobro", "reemplazo" => date('Y-m-d'));                        
+                            $form12['form_1'] = array("elemento" => "caja" ,"tipo" => "date", "titulo" => "Fecha de Cobro", "id" => "_fecha_cobro", "reemplazo" => "");                        
                         }
 
                         $form_11= generadorEtiqueta($form11);
                         $form_12= generadorEtiqueta($form12);
+                        $form_22 = generadorEtiqueta($form_20);
                              
                              
 
@@ -386,7 +395,7 @@ list($c1, $c2, $c3, $c4) = split('[/.-]', $codigo_usuario);
 						
         
         $resultado = str_replace("{contenedor_1}", $form_1,  getPage('page_detalle_update'));
-        $resultado = str_replace("{contenedor_2}", $form_2, $resultado); 
+        $resultado = str_replace("{contenedor_2}", $form_2, $resultado);         
         $resultado = str_replace("{contenedor_3}", $form_4, $resultado); 
         $resultado = str_replace("{contenedor_4}", $form_3, $resultado); 
         $resultado = str_replace("{contenedor_5}", $form_6, $resultado); 
@@ -465,7 +474,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			}
                
                 break;     
-
+            case 'KEY_ARCHIVO':
+                
+                
+                if(is_array($_FILES)) {
+                if(is_uploaded_file($_FILES['archivo']['tmp_name'])) {
+                $sourcePath = $_FILES['archivo']['tmp_name'];                
+                $targetPath = "../../public_html/i/".$_POST['codigo'].".jpg";
+                move_uploaded_file($sourcePath,$targetPath);
+                }}
+                
+                
+                //echo '<img class="image-preview" src="'."../../public_html/i/".$_POST['codigo'].".jpg".'" class="upload-preview" />';
+            break;
             case 'KEY_CANCELAR_MEMBRESIA_MIEMBRO':
 
              if( !empty($_POST['_id_miembro']) && !empty($_POST['_mes_elegido'])){
@@ -487,6 +508,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   
                 
 
+            break;
+
+            case 'KEY_VERIFICAR_CODIGO':
+                
+             if( !empty($_POST['_id_miembro']) && !empty($_POST['_codigo'])){
+                    $objMiembro = new Miembro();
+                    $estaRepetido = $objMiembro->isCodigoRepetido($_POST['_id_miembro'], $_POST['_codigo']);                    
+                    if (! $estaRepetido) {
+                        $data = array("success" => "true", "priority"=>'success',"msg" => '');
+                        echo json_encode($data);
+                    } else {
+                        $data = array("success" => "false", "priority"=>'info',"msg" => 'Disculpe el codigo esta repetido'); 
+                        echo json_encode($data);
+                    }
+                }  else {
+                    $data = array("success" => "false", "priority"=>'info', "msg" => 'Faltan campos por llenar!');  
+                    echo json_encode($data); 
+                }
+                                
             break;
 
             case 'KEY_SET_ESTADO_MIEMBRO':
@@ -559,11 +599,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 //                        }
                         
                    
-
-                        $tabla['t_0'] = array("t_1" => generadorNegritas("Código"), "t_2" => $row['mie_codigo']);
-						$tabla['t_1'] = array("t_1" => generadorNegritas("Grupo"), "t_2" => $row['gru_descripcion']);
-                        $tabla['t_2'] = array("t_1" => generadorNegritas($lblNombre), "t_2" => $titulo);
-                        $tabla['t_3'] = array("t_1" => generadorNegritas($lblFNacimiento), "t_2" => getFormatoFechadmy($row['per_fechanacimiento']));
+                        if (strlen($row['mie_codigo']) == 11 && file_exists("../../public_html/i/".$row['mie_codigo'].".jpg")) {
+                            $tabla['t_0'] = array("t_1" => cargarImagen("../../i/".$row['mie_codigo'].".jpg"), "t_2" => "");                            
+                        } else {
+                            $tabla['t_0'] = array("t_1" => cargarImagen(""), "t_2" => "");
+                            
+                        }
+                      
+                        $tabla['t_1'] = array("t_1" => generadorNegritas("Código"), "t_2" => $row['mie_codigo']);
+						$tabla['t_2'] = array("t_1" => generadorNegritas("Grupo"), "t_2" => $row['gru_descripcion']);
+                        $tabla['t_3'] = array("t_1" => generadorNegritas($lblNombre), "t_2" => $titulo);
+                        $tabla['t_4'] = array("t_1" => generadorNegritas($lblFNacimiento), "t_2" => getFormatoFechadmy($row['per_fechanacimiento']));
                   //      $tabla['t_4'] = array("t_1" => generadorNegritas($lblTitulo), "t_2" => $row['prof_descripcion']);
                    //     $tabla['t_5'] = array("t_1" => generadorNegritas($lblIdentificacion), "t_2" => $row['per_identificacion']);
 
@@ -588,7 +634,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         
                         
                         $tabla2['t_6'] = array("t_1" => generadorNegritas($lblCategoría), "t_2" => $row['cat_descripcion']);
-                        $tabla2['t_7'] = array("t_1" => generadorNegritas("Member Status"), "t_2" => $row['status']);
+                        $tabla2['t_7'] = array("t_1" => generadorNegritas("Estado del miembro"), "t_2" => $row['status']);
                         $tabla2['t_8'] = array("t_1" => generadorNegritas("Comentario"), "t_2" => $row['mie_observacion']);
                         
                         
@@ -770,7 +816,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 .'</div>';
                         //table-hover
                         $resultado = str_replace("{contenedor_1}", "",  getPage('page_detalle') );//generadorContMultipleRow($colum)); 
-                        $resultado = str_replace("{contenedor_2}", "", $resultado); 
+                        $resultado = str_replace("{contenedor_2}", "", $resultado);   
+                        
                         $resultado = str_replace("{contenedor_3}", generadorTabla_2($tabla, "table-striped"), $resultado); 
                         $resultado = str_replace("{contenedor_4}", generadorTabla_2($tabla2, "table-striped"), $resultado); 
                         $resultado = str_replace("{contenedor_5}", generadorTabla_2( $tabla3, "table-striped"), $resultado); 
@@ -1684,7 +1731,7 @@ function getTablaFiltrada($id, $key, $idForum, $incluyecanceladas) {
     $t='';
     $lista = array();
     $objStatusMember = new StatusMember();
-    $listaStatusMember = $objStatusMember->getListaMiembroStatus($lista);
+    $listaStatusMember = $objStatusMember->getListaMiembroStatus2($lista);
 
     $resultset= $objMiembro->getFiltros($id,$key,$idForum, $incluyecanceladas);
     while($row = $resultset->fetch_assoc()) { 

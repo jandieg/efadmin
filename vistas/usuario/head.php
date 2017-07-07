@@ -34,14 +34,21 @@ function enviarCorreoForumLeader( $asunto,  $mensaje) {
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {    
     try{
         switch ($_POST['KEY']):   
+
+            case 'KEY_ARCHIVO':             
+                if(is_array($_FILES)) {
+                if(is_uploaded_file($_FILES['archivo']['tmp_name'])) {
+                $sourcePath = $_FILES['archivo']['tmp_name'];                
+                $targetPath = "../../public_html/i/".$_POST['codigo'].".jpg";
+                move_uploaded_file($sourcePath,$targetPath);
+                }}               
+            break;
             case 'KEY_SHOW_FORM_ACTUALIZAR':///////////////////////////////////////////////////////////             
                     if(isset($_POST['id'])){ 
                         $objUsuario= new Usuario();
                         $resultset= $objUsuario->getUser($_POST['id'], '');
-                        if($row = $resultset->fetch_assoc()) {
-                             
-                            $idpersona= $row['per_id'];
-                            
+                        if($row = $resultset->fetch_assoc()) {                             
+                            $idpersona= $row['per_id'];                            
                             $objPerfil= new Perfil();
                             $listaPerfil= $objPerfil->getListaPerfiles($row['perfil_per_id'], NULL, $_SESSION['_tipo_usuario']);
 							
@@ -66,13 +73,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             $form['form_5'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => $lblIdentificacion, "id" => "_identificacion" ,"reemplazo" => $row['per_identificacion']);         
                             $form['form_6'] = array("elemento" => "caja" ,"tipo" => "date" , "titulo" => $lblFNacimiento, "id" => "_fn", "reemplazo" => $row['per_fechanacimiento']); 
                             $form['form_7'] = array("elemento" => "combo","change" => "",  "titulo" => $lblGenero, "id" => "_genero", "option" => generadorComboGenero($row['per_genero']));
-                            $form['form_8'] = array("elemento" => "combo","change" => "","titulo" => generadorAsterisco($lblPerfil), "id" => "_perfil", "option" => $listaPerfil);  
+                            $form['form_8'] = array("elemento" => "combo","change" => "cambioPerfil()","titulo" => generadorAsterisco($lblPerfil), "id" => "_perfil", "option" => $listaPerfil);  
                             $form['form_15'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" =>generadorAsterisco( $lblCorreo), "id" => "_correo" ,"reemplazo" => $row['correo']);
                             $form['form_16'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => generadorAsterisco($lblTF), "id" => "_telefono" ,"reemplazo" => $row['fijo']);
                             $form['form_17'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => generadorAsterisco($lblTM), "id" => "_celular" ,"reemplazo" => $row['movil']);     
                             $form['form_11'] = array("elemento" => "combo","change" => "","titulo" => $lblEstado, "id" => "_estado", "option" => generadorComboEstado(($row['usu_estado']=="A" ? "Activo" : "Inactivo")));  
 						//   $form['form_12'] = array("elemento" => "combo", "change" => "",                  "titulo" => "Sede", "id" => "_sede", "option" => $listaSedes);
 						   $form['form_12'] =  array("elemento" => "combo","change" => "","titulo" => $lblPais, "id" => "_pais", "option" => $listapais);
+                           $form['form_13'] = array("elemento" => "cajaoc" ,"tipo" => "text" , "titulo" => generadorAsterisco("Esposa"), "id" => "_esposa" ,"reemplazo" => $row['per_esposa']);
+                           $form['form_14'] = array("elemento" => "cajaoc" ,"tipo" => "text" , "titulo" => generadorAsterisco("Hijos"), "id" => "_hijos" ,"reemplazo" => $row['per_hijos']);
+                           $form['form_18'] = array("elemento" => "subir-imagen-oc", "valor" => $row['usu_id']);
+                           $form['form_19'] = array("elemento" => "caja", "tipo" => "hidden", "id" => "_usu_id", "reemplazo" => $row['usu_id']);
                            $resultado = str_replace("{contenedor_1}", generadorEtiqueta($form),  getPage('page_detalle_update') );//generadorContMultipleRow($colum));      
                            $resultado = str_replace("{boton}", generadorBoton($boton), $resultado);  
                            $resultado = str_replace("{cabecera}", "Actualizar Usuario", $resultado);
@@ -113,7 +124,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $form2['form_13'] = array("elemento" => "caja" ,"tipo" => "Password" , "titulo" => generadorAsterisco("Contraseña"), "id" => "_contraseña" ,"reemplazo" =>'');
                 $form2['form_14'] = array("elemento" => "caja" ,"tipo" => "Password" , "titulo" => generadorAsterisco("Confirmar"), "id" => "_confirmar" ,"reemplazo" => ''); 
                 $form['form_11'] = array("elemento" => "combo","change" => "","titulo" => $lblEstado, "id" => "_estado", "option" => generadorComboEstado('Activo'));   
-                   $form['form_12'] =  array("elemento" => "combo","change" => "","titulo" => $lblPais, "id" => "_pais", "option" => $listapais);
+                $form['form_12'] =  array("elemento" => "combo","change" => "","titulo" => $lblPais, "id" => "_pais", "option" => $listapais);
+                $form['form_18'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => generadorAsterisco("Esposa"), "id" => "_esposa" ,"reemplazo" => '');
+                $form['form_19'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => generadorAsterisco("Hijos"), "id" => "_hijos" ,"reemplazo" => '');
                 //echo $formDatosPersonales= generadorFormularios(NULL,NULL,$form, $boton,$cabecera);
                 
                 $resultado = str_replace("{contenedor_1}", generadorEtiqueta($form),  getPage('page_detalle_crear') );//generadorContMultipleRow($colum));      
@@ -135,9 +148,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 //                        }   
                           
                         $objUsuario= new Usuario();
-                        $comp= $objUsuario->setActualizarUsuario($_POST['_id'] ,$_POST['_nombre'], $_POST['_apellido'], $_POST['_tipo_p'] ,
+                        $comp= $objUsuario->setActualizarUsuario2($_POST['_id'] ,$_POST['_nombre'], $_POST['_apellido'], $_POST['_tipo_p'] ,
                                 $_POST['_identificacion'], $_POST['_fn'], $_POST['_genero'], $_POST['_perfil'], $_POST['_estado'], $_SESSION['user_id_ben'], $_POST['_correo']
-                                ,$_POST['_telefono'], $_POST['_celular'], '1', $_POST['_pais']); 
+                                ,$_POST['_telefono'], $_POST['_celular'], '1', $_POST['_pais'], $_POST['_esposa'], $_POST['_hijos']); 
                         
                         if($comp == "OK"){
                             $data = array("success" => "true", "priority"=>'success',"msg" => 'El usuario se actualizó correctamente!');  

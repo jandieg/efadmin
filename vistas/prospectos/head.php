@@ -57,9 +57,9 @@ function getDetalleUpdate($id, $recargar) {
         
         $estadoprospecto='';
          if($_SESSION['_esaplicante'] == '1'){
-            $listaStatus['lista_'] = array("value" => "x",  "select" => "" ,"texto" => "Seleccionar...");
+            $listaStatus = array(); //['lista_'] = array("value" => "x",  "select" => "" ,"texto" => "Seleccionar...");
             $objStatus= new StatusMember();
-            $listaStatus= $objStatus->getListaAplicante($listaStatus);
+            $listaStatus= $objStatus->getListaAplicante2($listaStatus, $row['status_member_id']);
             $estadoprospecto='Estado del Aplicante';
          }else{
             $listaStatus['lista_'] = array("value" => "x",  "select" => "" ,"texto" => "Seleccionar...");
@@ -117,7 +117,7 @@ function getDetalleUpdate($id, $recargar) {
         //$form['form_1'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => "Código", "id" => "_codigo" ,"reemplazo" => $row['prosp_codigo']);
         $form['form_2'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => generadorAsterisco($lblNombre), "id" => "_nombre" ,"reemplazo" => $row['per_nombre']);
         $form['form_3'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => generadorAsterisco($lblApellido), "id" => "_apellido" ,"reemplazo" => $row['per_apellido']);
-        $form['form_4'] = array("elemento" => "caja", "titulo" => generadorAsterisco($lblEmpresa), "id" => "_id_empresa", "reemplazo" => "");
+        $form['form_4'] = array("elemento" => "caja", "titulo" => generadorAsterisco($lblEmpresa), "id" => "_id_empresa", "reemplazo" => $row['prosp_empresa']);
         if($_SESSION['_esaplicante'] == '1'){
         $form7['form_4'] = array("elemento" => "caja" ,"tipo" => "hidden" ,  "id" => "_tipo_p" ,"reemplazo" => $row['per_tipo']);      
         $form['form_5'] = array("elemento" => "caja" ,"tipo" => "hidden" ,  "id" => "_identificacion" ,"reemplazo" => $row['per_identificacion']);      
@@ -204,7 +204,7 @@ function getDetalleUpdate($id, $recargar) {
         
         $form2['form_2'] = array("elemento" => "combo","change" => "","titulo" => generadorAsterisco($estadoprospecto), "id" => "_status", "option" => $listaStatus);
         $form2['form_3'] = array("elemento" => "combo", "change" => "",  "titulo" => generadorAsterisco($lblFuente), "id" => "_fuente", "option" => $listafuente);
-        $form2['form_4'] = array("elemento" => "textarea" ,"tipo" => "text" , "titulo" => "Persona que Refiere", "id" => "_lafuente" ,"reemplazo" => '');
+        $form2['form_4'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => "Persona que Refiere", "id" => "_lafuente" ,"reemplazo" => $row['prosp_txtadicional']);
         if($_SESSION['_esaplicante'] == '1'){
          //   $form2['form_5'] = array("elemento" => "combo", "change" => "",  "titulo" => generadorAsterisco($lblEstadoProspecto), "id" => "_estado_propietario", "option" => $listaestadoprospecto); 
 			$form2['form_5'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_estado_propietario" ,"reemplazo" => '1');
@@ -331,7 +331,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 						}
                         //$tabla['t_6'] = array("t_1" => generadorNegritas($lblGenero), "t_2" => $row['per_genero']);
                         $tabla['t_7'] = array("t_1" => generadorNegritas($lblEmpresa), "t_2" => $row['prosp_empresa']);
-                        $tabla['t_10'] = array("t_1" => generadorNegritas($lblEstadoProspecto), "t_2" => $row['estpro_descripcion']);  
+                        $tabla['t_10'] = array("t_1" => generadorNegritas($lblEstadoProspecto), "t_2" => $row['status']);  
                         
                         
                         //$tabla5['t_7'] = array("t_1" => generadorNegritas($lblCorreo), "t_2" => $row['correo']);
@@ -417,11 +417,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         }else{
                             if($row['prosp_esaplicanteesmiembro'] != '1'){
                                 if (in_array($perCovertirProspectoOp3, $_SESSION['usu_permiso'])) {
-                                    $boton['boton_3'] = array("elemento" => "boton" ,"modal" => "" ,"color" => "btn-info" ,"click" => "getConvertirProspecto(".$_POST['id'].",'".$row['status']."',".$row['forum_usu_id'].",'".$row['nombre_forum']."','".$titulo."')" ,"titulo" => $lblbtnConvertir ,"lado" => "pull-right" ,"icono" => "");
+                                    $el_status = explode('-',$row['status']); 
+                                    $el_valor_status = $el_status[0];
+                                    $boton['boton_3'] = array("elemento" => "boton" ,"modal" => "" ,"color" => "btn-info" ,"click" => "getConvertirProspecto(".$_POST['id'].",'".trim($el_valor_status)."',".
+                                    $row['forum_usu_id'].",'".utf8_encode($row['nombre_forum'])."','".utf8_encode($titulo)."')" 
+                                    ,"titulo" => $lblbtnConvertir ,"lado" => "pull-right" ,"icono" => "");
                                 }
-                                if (in_array($perEnviarCorreoOp3, $_SESSION['usu_permiso'])) {
+                                /*if (in_array($perEnviarCorreoOp3, $_SESSION['usu_permiso'])) {
                                     $boton['boton_4'] = array("elemento" => "boton" ,"modal" => "#modal_enviarCorreo"  ,"color" => "btn-info" ,"click" => "getEnviarCorreoIndividual('".$row['correo']."','".$titulo."')" ,"titulo" => $lblbtnEnviarCorreo,"lado" => "pull-right" ,"icono" => "");
-                                }
+                                }*/
 
                                 if (in_array($perActualizarProspectoOp3, $_SESSION['usu_permiso'])) {
                                     $boton['boton_5'] = array("elemento" => "boton" ,"modal" => "" ,"color" => "btn-info" ,"click" => "getUserEditar(".$_POST['id'].")" ,"titulo" => $lblbtnEditar ,"lado" => "pull-right" ,"icono" => "");        
@@ -540,7 +544,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                  //$form['form_1'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => "Código", "id" => "_codigo" ,"reemplazo" => '');
                  $form['form_2'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => generadorAsterisco($lblNombre), "id" => "_nombre" ,"reemplazo" => "");
                  $form['form_3'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => generadorAsterisco($lblApellido), "id" => "_apellido" ,"reemplazo" => "");
-                 $form['form_4'] = array("elemento" => "textarea" ,"tipo" => "text" , "titulo" => generadorAsterisco($lblEmpresa), "id" => "_id_empresa" ,"reemplazo" => "");
+                 $form['form_4'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => generadorAsterisco($lblEmpresa), "id" => "_id_empresa" ,"reemplazo" => "");
 
 if($_SESSION['_esaplicante'] == '1'){
 //$form['form_4'] = array("elemento" => "caja" ,"tipo" => "hidden", "id" => "_tipo_p", "reemplazo" => generadorComboTipoPersona_('J'));                 
@@ -609,7 +613,7 @@ $form8['form_12'] = array("elemento" => "caja pequeña + caja" ,"titulo" => $lbl
                  $form2['form_2'] = array("elemento" => "combo","change" => "","titulo" => $estadoprospecto, "id" => "_status", "option" => $listaStatus);
                  
                  $form2['form_3'] = array("elemento" => "combo","change" => "","titulo" => $lblFuente, "id" => "_fuente", "option" => $listafuente);
-                 $form2['form_4'] = array("elemento" => "textarea" ,"tipo" => "text" , "titulo" => "Persona que Refiere", "id" => "_lafuente" ,"reemplazo" => '');
+                 $form2['form_4'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => "Persona que Refiere", "id" => "_lafuente" ,"reemplazo" => '');
             
                  $form2['form_5'] = array("elemento" => "caja","tipo" => "hidden", "id" => "_estado_propietario", "reemplazo" => $listaestadoprospecto);
                  if($_SESSION['_esaplicante'] == '1'){
@@ -749,20 +753,20 @@ $form8['form_12'] = array("elemento" => "caja pequeña + caja" ,"titulo" => $lbl
                      	echo json_encode($data); 
 						 exit();
                     }*/
-                     
+                     header("Content-type: application/json");
                     $listaHobbies="";
-                    if(isset($_POST['_lista_hobbies'])){
+                   /* if(isset($_POST['_lista_hobbies'])){
                         foreach($_POST['_lista_hobbies'] as $valor){
                             $listaHobbies.= $valor.",";
                         }
-                    }
+                    }*/
                     
                     $listadesafios="";
-                    if(isset($_POST['_lista_desafio'])){
+                    /*if(isset($_POST['_lista_desafio'])){
                         foreach($_POST['_lista_desafio'] as $valor){
                             $listadesafios.= $valor.",";
                         } 
-                    }
+                    }*/
               
                 
                      $objProspesto= new Prospecto();
@@ -775,19 +779,19 @@ $form8['form_12'] = array("elemento" => "caja pequeña + caja" ,"titulo" => $lbl
                     if($comp == "OK"){
                         if($_POST['key_operacion']=='gn'){
                             $data = array("success" => "true_gn", "priority"=>'success',"msg" => 'El Prospecto se creo correctamente!');  
-                            echo json_encode($data);              
+                            echo json_encode(json_encode($data));              
                         }  else {
                            $data = array("success" => "true_g", "priority"=>'success',"msg" => 'El Prospecto se creo correctamente!');  
-                           echo json_encode($data); 
+                           echo json_encode(json_encode($data)); 
                         }
                     }else{
                         $data = array("success" => "false", "priority"=>'info',"msg" => $comp); 
-                        echo json_encode($data);
+                        echo json_encode(json_encode($data));
                     }
 
                  }  else {
                      $data = array("success" => "false", "priority"=>'info', "msg" => 'Faltan campos por llenar!');  
-                     echo json_encode($data); 
+                     echo json_encode(json_encode($data)); 
                  }
 
                  break;
@@ -802,12 +806,12 @@ $form8['form_12'] = array("elemento" => "caja pequeña + caja" ,"titulo" => $lbl
                       //( $id_prospecto= '',  $id_user= '', $grupo= '', $membresia= '', $status= '')
                      if($comp == "OK"){
                         $correo_forum='';
-                        $objForum= new ForumLeader(); 
+                       /* $objForum= new ForumLeader(); 
                         try {
                         $correo_forum= $objForum->getCorreo( $_POST['_convertir_id_forum'], 'Personal');
-                        } catch (Exception $ex) { 
+                        } catch (Exception $ex) { */
                             $correo_forum='';
-                        }
+                        //}
                         
                         $destinatarios= array();
                         $destinatarios[1]= $correo_forum; 

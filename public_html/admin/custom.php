@@ -1600,16 +1600,14 @@ $res = mysqli_query($con,$sql);
 
 $act = mysqli_fetch_array($res);
 
+$valorcorte = intval(date_format(date_create($corte),'Ym'));
 
+$valorfecha = (intval($year) * 100) + $month;
 
-if($act){
-
+if ($act && $valorfecha <= $valorcorte) {
 	$active_members_count=$act['active_members'];
-
-}else{
-
+} else {
 	$active_members_count=0;
-
 }
 
 
@@ -1880,9 +1878,13 @@ $res2 = mysqli_query($con,$sql);
 
 $sp = mysqli_fetch_array($res2);
 
+$valorcorte = intval(date_format(date_create($corte),'Ym'));
+
+$valorfecha = (intval($year) * 100) + $month;
+
 	$data = $sp_members_count=$sp['sp_members'];
 
-	if(!$data){
+	if(!$data || $valorfecha > $valorcorte){
 
 		$data = '0';
 
@@ -2172,23 +2174,20 @@ $members='';
 
 $i=1;
 
-while($row = mysqli_fetch_array($res)) {
+$valorcorte = intval(date_format(date_create($corte),'Ym'));
 
-	
-if (strlen($row['Persona_per_id']) > 0)
-$members.=' '.get_details_by_user($row['Persona_per_id']).', ';
+$valorfecha = (intval($year) * 100) + $month;
+if ($valorcorte >= $valorfecha) {
+	while($row = mysqli_fetch_array($res)) {		
+		if (strlen($row['Persona_per_id']) > 0)
+			$members.=' '.get_details_by_user($row['Persona_per_id']).', ';
+	}//end loop
+}
+if (strlen($members) > 0) {
+	return substr($members,0,-2);
+}  
 
-
-
-}//end loop
-
-
-
-
-
-return substr($members,0,-2);
-
-	
+return '';
 
 }
 

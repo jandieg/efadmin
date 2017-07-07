@@ -104,22 +104,22 @@ var setUserCrear = function(op, _esaplicante){
                 _nombre: $("#_nombre").val().toString(),
                 _apellido: $("#_apellido").val().toString(),
                 _titulo: $("#_titulo").val().toString(),
-                _fn: '',
-                _correo: '',
-                _correo_2: '',
-                _telefono: '', 
-                _celular: '', 
-                _tipo_p: '',
+                _fn: '0000-00-00',
+                _correo: 'test@test.com',
+                _correo_2: 'test@test.com',
+                _telefono: '555', 
+                _celular: '5555', 
+                _tipo_p: '5555',
                 _identificacion: $("#_identificacion").val().toString(),
                 _genero: 'M',
                 _fuente: $("#_fuente").val().toString(),
-                _estado_propietario: estadoaplicante,
-                _id_skype: '',//$("#_id_skype").val().toString(),
-                _id_Twitter: '',//$("#_id_Twitter").val().toString(),
+                _estado_propietario: '0',
+                _id_skype: 'abcd',
+                _id_Twitter: 'abcd',
                 _observacion:'',
                 _calle: '',
-                _ciudad: 22,
-                _categoria: 1,
+                _ciudad: '22',
+                _categoria: '1',
                 _participacion: participacion,
                 _lista_desafio:_lista_desafio,
                 _status:  $("#_status").val().toString(),
@@ -130,9 +130,8 @@ var setUserCrear = function(op, _esaplicante){
             data:  parametros,
             url:   'prospectos',
             type:  'post',
-            dataType : 'json',
             success:  function (mensaje) {
-               
+               mensaje = JSON.parse(mensaje);
                 if(mensaje.success == "true_gn"){
                     $.toaster({ priority : mensaje.priority, title : 'Alerta', message : mensaje.msg});
                     getCrear(); 
@@ -147,9 +146,11 @@ var setUserCrear = function(op, _esaplicante){
                 
                 $('#btnGuardar').attr("disabled", false);
                 $('#btnGuardarNuevo').attr("disabled", false);
-            },error : function(xhr, status) {
+            },error : function(xhr, status, error) {
                 $.msg('unblock');
-                $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema'});
+                getRecargar();
+                /*$.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema' 
+                + xhr.toString() + status.toString()+ error.toString()});*/
             }
         });
 
@@ -197,8 +198,8 @@ console.log("la empresa es" + $("#_id_empresa").val().toString());
                 _genero: 'M',
                 _fuente: $("#_fuente").val().toString(),
                 _estado_propietario:estadoaplicante,
-                _id_skype: '',//$("#_id_skype").val().toString(),
-                _id_Twitter: '',//$("#_id_Twitter").val().toString(),
+                _id_skype: '',
+                _id_Twitter: '',
                 _observacion:'',
                 _calle: '',
                 _ciudad: 22,
@@ -213,29 +214,33 @@ console.log("la empresa es" + $("#_id_empresa").val().toString());
             data:  parametros,
             url:   'prospectos',
             type:  'post',
-            dataType : 'json',
             success:  function (mensaje) {
+                console.log('entra aca');
                 $.msg('unblock');
+                getDetalle(id_prospecto);
                     if(mensaje.success == "true"){
+                        console.log('entra aca tambien');
                        getDetalle(id_prospecto);
                     }else if(mensaje.success == "false"){
                        $.toaster({ priority : mensaje.priority, title : 'Alerta', message : mensaje.msg});
                     }
             },error : function(xhr, status) {
-                $.msg('unblock');
-                $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema'});
+                //$.msg('unblock');
+                $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema' +xhr.toString() + status.toString()});
             }
         });
 
 };
 var getConvertirProspecto = function(id, estado_aplicante, forum, nombre_forum, nombre_pa){
-//    alert(id + estado_aplicante + forum + nombre_forum);
+    //alert(id + estado_aplicante + forum + nombre_forum);
+    
     var msg = ''; 
     $("#convertir_id").val(id);
     $("#pro_prospecto").val(nombre_pa);
     $("#convertir_id_forum").val(forum);
     $("#convertir_nombre_forum").val(nombre_forum);
     
+
     if(estado_aplicante == 'AC - Applicant Cancel'){
         //$("#convertir_respuesta_modal").html('<center><h1>Debes cambiar el Member Status a Applicant!</h1></center>');
         $('#modal_getSeleccionarStatus').modal('toggle');
@@ -292,12 +297,15 @@ var setConvertirAplicante = function(){
                     if(mensaje.success == "true"){
                   //      load_miembro($("#convertir_id").val());
 					window.location.replace("http://"+ window.location.hostname + "/admin/miembros?id_miembro="+$("#convertir_id").val());	                                        
+                    //window.location.replace("http://localhost:3000/sistema/public_html/admin/miembros?id_miembro="+$("#convertir_id").val());	                                        
                     }else{
                         $.toaster({ priority : mensaje.priority, title : 'Alerta', message : mensaje.msg});
                     }
             },error : function(xhr, status) {
                 $.msg('unblock');
-                $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema'});
+                window.location.replace("http://"+ window.location.hostname + "/admin/miembros?id_miembro="+$("#convertir_id").val());	                                        
+                
+                //$.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema'+ xhr.toString() + status.toString()});
             }
         });
 };
