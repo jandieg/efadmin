@@ -66,6 +66,13 @@ var getActualizar = function(id){
         }, function(mensaje) {
             $("#ben_contenedor").html(mensaje);
          });
+    if ($("#_perfil").val() != undefined 
+    && $("#_perfil").val().toString() != "2" 
+    && $("#_perfil").val().toString() != "3") {
+        $("._esposa").hide();
+        $("._hijos").hide();
+        $(".imagen").hide();
+    }       
 };
 var getCrear = function(){
      $.post("usuario", {
@@ -110,6 +117,14 @@ var setActualizarUserPass = function(){
 };
 var setActualizarDatos = function(id){
     $.msg({content : '<img src="public/images/loanding.gif" />', autoUnblock: false});
+    var esposa = "";
+    var hijos = "";
+    if ($("#_esposa").val() != undefined) {
+        esposa = $("#_esposa").val().toString();
+    }
+    if ($("#_hijos").val() != undefined) {
+        hijos = $("#_hijos").val().toString();
+    }
     var parametros = {
             KEY: 'KEY_ACTUALIZAR',  
             _id: id.toString(),
@@ -124,7 +139,9 @@ var setActualizarDatos = function(id){
             _correo: $("#_correo").val().toString(), 
             _telefono: $("#_telefono").val().toString(), 
             _celular: $("#_celular").val().toString(),
-			_pais: $("#_pais").val().toString()
+			_pais: $("#_pais").val().toString(),
+            _esposa: esposa,
+            _hijos: hijos
 //            _sede: $("#_sede").val().toString()
         };
         $.ajax({
@@ -194,6 +211,67 @@ var setUserCrear = function(op){
         });
 
 };
+
+var subirFoto = function() {
+    console.log('si esta cargando');
+    
+    $("#el_codigo").val($("#_usu_id").val().toString());
+        var reader = new FileReader();
+
+        reader.readAsDataURL(document.getElementById('archivo').files[0]);
+        var parametros= {
+            codigo: $("#el_codigo").val(),
+            archivo: reader
+        };
+
+        var data = new FormData();
+
+            
+
+        reader.onloadend = function () {
+            $("#targetLayer").css('background-image', 'url('+reader.result+')');
+            $("#targetLayer").css('background-size', '100px 110px');
+            $("#targetLayer").css('background-repeat', 'no-repeat');        
+
+            //$("#foto").attr("src", reader.result);
+            //var blob = new Blob(document.getElementById('archivo').files[0], {type: 'image/jpeg'});
+            data.append("codigo", $("#el_codigo").val());
+            data.append("archivo", document.getElementById('archivo').files[0]);
+            data.append("KEY", "KEY_ARCHIVO");
+            $.ajax({
+                url: "miembros",
+                type: "POST",
+                data:  data,
+                contentType: false,
+                cache: false,
+                processData:false,
+                success: function(data)
+                {
+                    console.log(data);
+                },
+                error: function() 
+                {
+                } 	        
+            });
+
+        }
+
+    
+}
+
+var cambioPerfil = function() {
+    var perfil = $("#_perfil").val().toString();
+    if (perfil == "2" || perfil == "3") {
+        //es ibp o forum 
+        $("._esposa").show();
+        $("._hijos").show();
+        $(".imagen").show();        
+    } else {
+        $(".imagen").hide();
+        $("._esposa").hide();
+        $("._hijos").hide();
+    }
+}
 
 var getAsignarUserClave = function(id, user){
     $("#_id_credenciales").val(id.toString());

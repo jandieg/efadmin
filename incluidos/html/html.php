@@ -709,6 +709,12 @@ function generadorEtiqueta($tab=array()){
                     $msg.="</div>";
                }
 
+               if($valor['elemento']=='subir-imagen-oc'){
+                    $msg.='<div class="form-group imagen">'; 
+                    $msg.=getFormImagen($valor['valor']); 
+                    $msg.="</div>";
+               }
+
                if($valor['elemento']=='Checkbox-comun'){
    
                     $msg.='<div class="form-group">'; 
@@ -780,6 +786,15 @@ function generadorEtiqueta($tab=array()){
                
                if($valor['elemento']=='caja'){
                    $msg.='<div class="form-group">'; 
+                    $msg.='<label for="" class="col-sm-3 control-label">'.$valor['titulo'].'</label>'; 
+                    $msg.='<div class="col-sm-9">'; 
+                    $msg.='<input type="'.$valor['tipo'].'" class="form-control" id="'.$valor['id'].'" placeholder="'.$valor['titulo'].'" required="required" value="'.$valor['reemplazo'].'">'; 
+                    $msg.=' </div>'; 
+                    $msg.='</div>';            
+               }
+
+               if($valor['elemento']=='cajaoc'){
+                   $msg.='<div class="form-group '.$valor['id'].'">'; 
                     $msg.='<label for="" class="col-sm-3 control-label">'.$valor['titulo'].'</label>'; 
                     $msg.='<div class="col-sm-9">'; 
                     $msg.='<input type="'.$valor['tipo'].'" class="form-control" id="'.$valor['id'].'" placeholder="'.$valor['titulo'].'" required="required" value="'.$valor['reemplazo'].'">'; 
