@@ -48,7 +48,8 @@ var setCrear = function(op){
     var parametros = {
             KEY: 'KEY_GUARDAR',
             key_operacion: op.toString(),        
-            _descripcion: $("#_descripcion").val().toString()
+            _sm: $("#_sm").val().toString(),
+            _codigo: $("#_codigo").val().toString()
 
     };
     $.ajax({

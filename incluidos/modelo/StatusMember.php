@@ -100,6 +100,13 @@ class StatusMember extends Conexion{
         $sql="call sp_createStatusMember('$codigo','$descripcion', '$user','$fecha')";
         return parent::setSqlSp($sql);   
     }
+
+    public function setGrabarAplicante($codigo, $descripcion, $user) {
+        $fecha= date("Y-m-d H:i:s");
+        $sql="call sp_createStatusMemberAplicante('$codigo','$descripcion', '$user','$fecha')";
+        return parent::setSqlSp($sql);   
+        
+    }
     public function getStatus($id) {
         $sql="call sp_selectStatuMember('$id')";
         return parent::getConsultar($sql);   
