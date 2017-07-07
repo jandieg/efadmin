@@ -120,6 +120,7 @@ function getListaNombres($lista= array()) {
     foreach($lista as $l) {
         if ($l['nombre'] != $nombreact) {
             $i = 1;
+            $nombreact = $l['nombre'];
         }
         $listado[] = $l['nombre'].'-'.$i;
         $listado[] = "#";
