@@ -417,7 +417,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         }else{
                             if($row['prosp_esaplicanteesmiembro'] != '1'){
                                 if (in_array($perCovertirProspectoOp3, $_SESSION['usu_permiso'])) {
-                                    $boton['boton_3'] = array("elemento" => "boton" ,"modal" => "" ,"color" => "btn-info" ,"click" => "getConvertirProspecto(".$_POST['id'].",'".trim(explode('-',$row['status'])[0])."',".$row['forum_usu_id'].",'".utf8_encode($row['nombre_forum'])."','".utf8_encode($titulo)."')" ,"titulo" => $lblbtnConvertir ,"lado" => "pull-right" ,"icono" => "");
+                                    $el_status = explode('-',$row['status']); 
+                                    $el_valor_status = $el_status[0];
+                                    $boton['boton_3'] = array("elemento" => "boton" ,"modal" => "" ,"color" => "btn-info" ,"click" => "getConvertirProspecto(".$_POST['id'].",'".trim($el_valor_status)."',".
+                                    $row['forum_usu_id'].",'".utf8_encode($row['nombre_forum'])."','".utf8_encode($titulo)."')" 
+                                    ,"titulo" => $lblbtnConvertir ,"lado" => "pull-right" ,"icono" => "");
                                 }
                                 /*if (in_array($perEnviarCorreoOp3, $_SESSION['usu_permiso'])) {
                                     $boton['boton_4'] = array("elemento" => "boton" ,"modal" => "#modal_enviarCorreo"  ,"color" => "btn-info" ,"click" => "getEnviarCorreoIndividual('".$row['correo']."','".$titulo."')" ,"titulo" => $lblbtnEnviarCorreo,"lado" => "pull-right" ,"icono" => "");

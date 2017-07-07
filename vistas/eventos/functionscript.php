@@ -88,6 +88,28 @@ var getCrearEvento = function(id_evento){
             $(".select2").select2();
         });
 };
+
+var getCasoDelMes = function(id) {
+    var parametros = {
+        KEY: 'KEY_CASO_DEL_MES',
+        _id: id
+    };
+      $.ajax({
+            data:  parametros,
+            url:   'eventos',
+            type:  'post',
+            success:  function (mensaje) { 
+                
+                $("#ben_contenedor").html(mensaje);
+               
+                  
+            },error : function(xhr, status) {                
+               
+               $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema'+status.toString()});
+            }
+        });
+
+}
 var getAddListaEvento = function( id, nombre){
     var bandera = false; 
      

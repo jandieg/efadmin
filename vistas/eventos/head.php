@@ -128,6 +128,127 @@ function getListaNombres($lista= array()) {
     return $listado;
 }
 
+function getTablaCasosDelMesByForumLeader($idForumLeader) {
+    $meses = array(
+        "01" => "Ene",
+        "02" => "Feb",
+        "03" => "Mar",
+        "04" => "Abr",
+        "05" => "May",
+        "06" => "Jun",
+        "07" => "Jul",
+        "08" => "Ago",
+        "09" => "Sep",
+        "10" => "Oct",
+        "11" => "Nov",
+        "12" => "Dic"
+    );
+    $anho_inicio = intval(date('Y'))-3;
+    $start    = new DateTime(date($anho_inicio.'-m-01'));
+    $start->modify('first day of this month');
+    $end      = new DateTime(date('Y-m-d'));
+    $end->modify('first day of next month');
+    $interval = DateInterval::createFromDateString('1 month');
+    $period   = new DatePeriod($start, $interval, $end);    
+
+
+    $objEvento = new Evento();
+    $objEvento2 = new Evento();
+    $resultset = $objEvento->getMiembrosPendientesxForumLeader($idForumLeader); 
+    $listaPendientes = array();
+    $gruact = "";
+    $cont = 1;
+    while ($row = $resultset->fetch_assoc()) {
+        if ($gruact != $row['grupo_id']) {
+            $cont = 1;
+            $gruact = $row['grupo_id'];
+        }
+        if ($cont < 6) {
+            $listaPendientes[$row['grupo_id']] = $row['mie_id'];
+        }        
+        $cont++;
+    }
+    $tabla="<div='myDiv' style=' width: 900px !important; overflow-x: scroll !important;'>
+    <div class='row'><div class ='span2'>&nbsp;</div><div class ='span2'>&nbsp;</div><div class ='span2'>&nbsp;</div><div class ='span2 btn btn-primary' onClick='getRecargar()' style='margin-left:20px;'>Regresar</div></div>";
+    $tabla .= "<table class='table table-bordered' style='border: 1px solid black; border-collapse: collapse;'>";
+    $tabla.= "<thead>";
+    $tabla.= "<tr><th style='border: 1px solid black; border-collapse: collapse;'>&nbsp;</th><th style='border: 1px solid black; border-collapse: collapse;'>&nbsp;</th>";
+
+    $resultset2 = $objEvento2->getEventosByForumLeader($idForumLeader);
+    $anhoact = "";                        
+    foreach ($period as $dt) {
+        if ($anhoact != $dt->format('Y')) {
+            $anhoact = $dt->format('Y');
+            $tabla.="<th style='border: 1px solid black; border-collapse: collapse;'><strong>".$dt->format('Y')."</strong></th>";
+        } else {
+            $tabla.="<th>&nbsp;</th>";
+        }        
+    }
+    $tabla.="</tr>";
+    $tabla.= "<tr><th style='border: 1px solid black; border-collapse: collapse;'>&nbsp;</th><th style='border: 1px solid black; border-collapse: collapse;'>&nbsp;</th>";
+    foreach ($period as $dt) {
+        $tabla.="<th style='border: 1px solid black; border-collapse: collapse;'><strong>".$meses[$dt->format('m')]."</strong></th>";        
+    }
+    $tabla.="</tr>";
+    $tabla.="</thead><tbody>";
+
+    $patron = array();
+    foreach($period as $dt) {
+        $patron[$dt->format('Y')][intval($dt->format('m'))] = "<td style='border: 1px solid black; border-collapse: collapse;'>&nbsp;</td>";
+    } 
+
+    //logica lista!
+    $data = array();
+    
+    $grupoactlista = "";
+    $nroforum = 0;
+    while ($row2 = $resultset2->fetch_assoc()) {
+        
+        if (! isset($data[$row2['grupo_id']][$row2['mie_id']]) && strlen($row2['nombre']) > 0) {
+            $data[$row2['grupo_id']][$row2['mie_id']] = $patron;
+            $data[$row2['grupo_id']][$row2['mie_id']]['nombre'] = $row2['nombre'];            
+        }
+
+        $data[$row2['grupo_id']][$row2['mie_id']][$row2['anho']][$row2['mes']] = "<td style='background-color: yellow; border: 1px solid black; border-collapse: collapse;'><strong>C</strong></td>";        
+        
+    }
+
+    foreach ($listaPendientes as $k => $l) {
+        $data[$k][$l][date('Y')][intval(date('m'))] = "<td style='background-color: green; border: 1px solid black; border-collapse: collapse;'><strong>n</strong></td>";
+    }
+    $nombreact = "";
+    $i = 1;
+    $j = 1;
+    foreach ($data as $k => $d) {    
+        
+        if ($grupoactlista != $k) {
+            $j = 1;
+            $grupoactlista = $k;
+            $tabla.="<tr><td style='border: 1px solid black; border-collapse: collapse;'>&nbsp;</td><td>Forum ".$i."</td>";
+            foreach ($period as $dt) {
+                $tabla.="<td style='border: 1px solid black; border-collapse: collapse;'>&nbsp;</td>";        
+            }
+            $tabla.="</tr>";
+            $i++;
+        }  
+        foreach ($d as $dd) {
+            if (strlen(trim($dd['nombre'])) > 0) {
+                $tabla.="<tr>";
+                $tabla.="<td style='border: 1px solid black; border-collapse: collapse;'><strong>".$j."</strong></td>";
+                $tabla.="<td style='border: 1px solid black; border-collapse: collapse;'><strong>".$dd['nombre']."</strong></td>";
+                foreach($period as $dt) {
+                    $tabla.=$dd[$dt->format('Y')][intval($dt->format('m'))];
+                }
+                $tabla.="</tr>";
+                $j++;
+            }
+        }                
+    }
+
+    $tabla.="</tbody></table></div>";
+    return $tabla;
+}
+
 function getTablaCasosDelMesByGrupo($idGrupo) {
     $meses = array(
         "01" => "Ene",
@@ -506,7 +627,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         switch ($_POST['KEY']):
             case 'KEY_CASO_DEL_MES':
                 if (! empty($_POST['_id'])) {
-                    echo getTablaCasosDelMesByGrupo($_POST['_id']);
+                    echo getTablaCasosDelMesByForumLeader($_POST['_id']);
                 }                
                 break;
 
@@ -1384,6 +1505,11 @@ if (in_array($perVertodoslosGruposOp7, $_SESSION['usu_permiso'])) {
     $listaGrupos= $objGrupo->getListaGruposForum($_SESSION['user_id_ben'], NULL, NULL); 
 }
 //$form['form_2'] = array("elemento" => "combo","change" => "getFiltroForumLeader()", "titulo" => "Forum Leader", "id" => "_forum_leader", "option" => $listaForumLeaders);   
+
+if (in_array(trim($_SESSION['user_perfil']), array('Forum Leader'))) {
+$form['form_1'] = array("elemento" => "boton","color" => "", "click" => "getCasoDelMes(".$_SESSION['user_id_ben'].")", "modal" => "", "titulo" => "Caso del Mes");   
+
+}
 $form['form_2'] = array("elemento" => "boton","color" => "", "click" => "getComponenteEducacional()", "modal" => "", "titulo" => "Componente Educacional");   
 if($valor['elemento']=='boton'){
             $msg.='<button type="button" class="btn '.$valor['color'].' btn-block margin-bottom" onclick="'.$valor['click'].'" data-toggle="modal" data-target="'.$valor['modal'].'" >'.$valor['titulo'].'</button>'; 

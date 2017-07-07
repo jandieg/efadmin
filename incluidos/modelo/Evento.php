@@ -95,11 +95,21 @@ class Evento extends Conexion{
         $sql = "call sp_selectEventosByGrupo('$idGrupo')";
         return parent::getConsultar($sql);
     }
+
+    public function getEventosByForumLeader($idForumLeader) {
+        $sql = "call sp_selectEventosByForumLeader('$idForumLeader')";
+        return parent::getConsultar($sql);
+    }
       
     public function getMiembrosPendientesxGrupo($idGrupo) {
         $sql = "call sp_selectMiembrosPendientesxGrupo('$idGrupo')";
         return parent::getConsultar($sql);
     }  
+
+    public function getMiembrosPendientesxForumLeader($idMiembro) {
+        $sql = "call sp_selectMiembrosPendientesxForumLeader('$idMiembro')";
+        return parent::getConsultar($sql);
+    }
 
     public function getJSONEventosCalendar($id){
         $resultset= $this->getEventos($id);
