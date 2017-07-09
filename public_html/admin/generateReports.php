@@ -500,6 +500,8 @@ function generate_Dues($userid,$year,$sedeid, $corte){
 //POR ALGUNA RAZON NO LAS ESTA INCLUYENDO LAS LIBRERIAS EL SCRIPT Y POR ESO EN ALGUNAS FUNCIONES LA VUELVO A LLAMAR PARA QUE FUNCIONE//
 //FOR SOME REASON LIBRARIES ARE NOT INCLUDED IN THE SCRIPT AND WE'LL NEED TO RECALL ONCE AGAIN, IN ORDER TO MAKE THE SCRIPT WORKS//
 //	include('custom.php');
+
+$valorcorte = intval(date_format(date_create($corte),'Ym'));
 $nextyear=$year + 1;
 $country = get_country_by_user($userid);	
 $report_country = strtoupper(substr($country,0,2));
@@ -1240,25 +1242,61 @@ $objPHPExcel->getActiveSheet()->getStyle('AF'.$i)->applyFromArray(
 );*/
 //end
 		
-$objPHPExcel->getActiveSheet()->setCellValue('H'.$i, get_paid_month_info($row['mie_id'],'01',$year));
-$objPHPExcel->getActiveSheet()->setCellValue('I'.$i, get_paid_month_info($row['mie_id'],'02',$year));
-$objPHPExcel->getActiveSheet()->setCellValue('J'.$i, get_paid_month_info($row['mie_id'],'03',$year));
-$objPHPExcel->getActiveSheet()->setCellValue('K'.$i, get_paid_month_info($row['mie_id'],'04',$year));
-$objPHPExcel->getActiveSheet()->setCellValue('L'.$i, get_paid_month_info($row['mie_id'],'05',$year));
-$objPHPExcel->getActiveSheet()->setCellValue('M'.$i, get_paid_month_info($row['mie_id'],'06',$year));
-$objPHPExcel->getActiveSheet()->setCellValue('N'.$i, get_paid_month_info($row['mie_id'],'07',$year));
-$objPHPExcel->getActiveSheet()->setCellValue('O'.$i, get_paid_month_info($row['mie_id'],'08',$year));
-$objPHPExcel->getActiveSheet()->setCellValue('P'.$i, get_paid_month_info($row['mie_id'],'09',$year));
-$objPHPExcel->getActiveSheet()->setCellValue('Q'.$i, get_paid_month_info($row['mie_id'],'10',$year));
-$objPHPExcel->getActiveSheet()->setCellValue('R'.$i, get_paid_month_info($row['mie_id'],'11',$year));
-$objPHPExcel->getActiveSheet()->setCellValue('S'.$i, get_paid_month_info($row['mie_id'],'12',$year));
+        if ($valorcorte >= intval($year.'01') ) {
+            $objPHPExcel->getActiveSheet()->setCellValue('H'.$i, get_paid_month_info($row['mie_id'],'01',$year));
+        }
 
+        if ($valorcorte >= intval($year.'02') ) {
+            $objPHPExcel->getActiveSheet()->setCellValue('I'.$i, get_paid_month_info($row['mie_id'],'02',$year));
+        }
+        if ($valorcorte >= intval($year.'03') ) {
+            $objPHPExcel->getActiveSheet()->setCellValue('J'.$i, get_paid_month_info($row['mie_id'],'03',$year));
+        }
+        if ($valorcorte >= intval($year.'04') ) {
+            $objPHPExcel->getActiveSheet()->setCellValue('K'.$i, get_paid_month_info($row['mie_id'],'04',$year));
+        }
+        if ($valorcorte >= intval($year.'05') ) {
+            $objPHPExcel->getActiveSheet()->setCellValue('L'.$i, get_paid_month_info($row['mie_id'],'05',$year));
+        }
+        if ($valorcorte >= intval($year.'06') ) {
+            $objPHPExcel->getActiveSheet()->setCellValue('M'.$i, get_paid_month_info($row['mie_id'],'06',$year));
+        }
+        if ($valorcorte >= intval($year.'07') ) {
+            $objPHPExcel->getActiveSheet()->setCellValue('N'.$i, get_paid_month_info($row['mie_id'],'07',$year));
+        }
+        if ($valorcorte >= intval($year.'08') ) {
+            $objPHPExcel->getActiveSheet()->setCellValue('O'.$i, get_paid_month_info($row['mie_id'],'08',$year));
+        }
+        if ($valorcorte >= intval($year.'09') ) {
+            $objPHPExcel->getActiveSheet()->setCellValue('P'.$i, get_paid_month_info($row['mie_id'],'09',$year));
+        }
+        if ($valorcorte >= intval($year.'10') ) {
+            $objPHPExcel->getActiveSheet()->setCellValue('Q'.$i, get_paid_month_info($row['mie_id'],'10',$year));
+        }
+        if ($valorcorte >= intval($year.'11') ) {
+            $objPHPExcel->getActiveSheet()->setCellValue('R'.$i, get_paid_month_info($row['mie_id'],'11',$year));
+        }
+        if ($valorcorte >= intval($year.'12') ) {
+            $objPHPExcel->getActiveSheet()->setCellValue('S'.$i, get_paid_month_info($row['mie_id'],'12',$year));
+        }
+        if ($valorcorte >= intval($nextyear.'01') ) {
+            $objPHPExcel->getActiveSheet()->setCellValue('U'.$i, get_paid_month_info($row['mie_id'],'01',$nextyear));
+        }
+        if ($valorcorte >= intval($nextyear.'02') ) {
+            $objPHPExcel->getActiveSheet()->setCellValue('V'.$i, get_paid_month_info($row['mie_id'],'02',$nextyear));
+        }
+        if ($valorcorte >= intval($nextyear.'03') ) {
+            $objPHPExcel->getActiveSheet()->setCellValue('W'.$i, get_paid_month_info($row['mie_id'],'03',$nextyear));
+        }
+        if ($valorcorte >= intval($nextyear.'04') ) {
+            $objPHPExcel->getActiveSheet()->setCellValue('X'.$i, get_paid_month_info($row['mie_id'],'04',$nextyear));
+        }
 
 //NEXT YEAR//
-$objPHPExcel->getActiveSheet()->setCellValue('U'.$i, get_paid_month_info($row['mie_id'],'01',$nextyear));
-$objPHPExcel->getActiveSheet()->setCellValue('V'.$i, get_paid_month_info($row['mie_id'],'02',$nextyear));
-$objPHPExcel->getActiveSheet()->setCellValue('W'.$i, get_paid_month_info($row['mie_id'],'03',$nextyear));
-$objPHPExcel->getActiveSheet()->setCellValue('X'.$i, get_paid_month_info($row['mie_id'],'04',$nextyear));
+
+
+
+
 /*$objPHPExcel->getActiveSheet()->setCellValue('Y'.$i, get_paid_month_info($row['mie_id'],'05',$nextyear));
 $objPHPExcel->getActiveSheet()->setCellValue('Z'.$i, get_paid_month_info($row['mie_id'],'06',$nextyear));
 $objPHPExcel->getActiveSheet()->setCellValue('AA'.$i, get_paid_month_info($row['mie_id'],'07',$nextyear));
@@ -1272,68 +1310,68 @@ $objPHPExcel->getActiveSheet()->setCellValue('AF'.$i, get_paid_month_info($row['
 
 //COMMENTING PAYS//
 $H = get_paid_month_info($row['mie_id'],'01',$year);
-if (strlen($H) > 0) {
+if (strlen($H) > 0 && $valorcorte >= intval($year.'01')) {
     $objPHPExcel->getActiveSheet()->getComment('H'.$i)->setHeight("50px")->setWidth("250px")->getText()->createTextRun(get_meses_cobros($row['mie_id'],'01',$year)); 
 }
 $I = get_paid_month_info($row['mie_id'],'02',$year);
-if (strlen($I) > 0) {
+if (strlen($I) > 0 && $valorcorte >= intval($year.'02')) {
     $objPHPExcel->getActiveSheet()->getComment('I'.$i)->setHeight("50px")->setWidth("250px")->getText()->createTextRun(get_meses_cobros($row['mie_id'],'02',$year)); 
 }
 $J = get_paid_month_info($row['mie_id'],'03',$year);
-if (strlen($J) > 0) {
+if (strlen($J) > 0 && $valorcorte >= intval($year.'03')) {
     $objPHPExcel->getActiveSheet()->getComment('J'.$i)->setHeight("50px")->setWidth("250px")->getText()->createTextRun(get_meses_cobros($row['mie_id'],'03',$year)); 
 }
 $K = get_paid_month_info($row['mie_id'],'04',$year);
-if (strlen($K) > 0) {
+if (strlen($K) > 0 && $valorcorte >= intval($year.'04')) {
     $objPHPExcel->getActiveSheet()->getComment('K'.$i)->setHeight("50px")->setWidth("250px")->getText()->createTextRun(get_meses_cobros($row['mie_id'],'04',$year)); 
 }
 $L = get_paid_month_info($row['mie_id'],'05',$year);
-if (strlen($L) > 0) {
+if (strlen($L) > 0 && $valorcorte >= intval($year.'05')) {
     $objPHPExcel->getActiveSheet()->getComment('L'.$i)->setHeight("50px")->setWidth("250px")->getText()->createTextRun(get_meses_cobros($row['mie_id'],'05',$year)); 
 }
 $M = get_paid_month_info($row['mie_id'],'06',$year);
-if (strlen($M) > 0) {
+if (strlen($M) > 0 && $valorcorte >= intval($year.'06')) {
     $objPHPExcel->getActiveSheet()->getComment('M'.$i)->setHeight("50px")->setWidth("250px")->getText()->createTextRun(get_meses_cobros($row['mie_id'],'06',$year)); 
 }
 $N = get_paid_month_info($row['mie_id'],'07',$year);
-if (strlen($N) > 0) {
+if (strlen($N) > 0 && $valorcorte >= intval($year.'07')) {
     $objPHPExcel->getActiveSheet()->getComment('N'.$i)->setHeight("50px")->setWidth("250px")->getText()->createTextRun(get_meses_cobros($row['mie_id'],'07',$year)); 
 }
 $O = get_paid_month_info($row['mie_id'],'08',$year);
-if (strlen($O) > 0) {
+if (strlen($O) > 0 && $valorcorte >= intval($year.'08')) {
     $objPHPExcel->getActiveSheet()->getComment('O'.$i)->setHeight("50px")->setWidth("250px")->getText()->createTextRun(get_meses_cobros($row['mie_id'],'08',$year)); 
 }
 $P = get_paid_month_info($row['mie_id'],'09',$year);
-if (strlen($P) > 0) {
+if (strlen($P) > 0 && $valorcorte >= intval($year.'09')) {
     $objPHPExcel->getActiveSheet()->getComment('P'.$i)->setHeight("50px")->setWidth("250px")->getText()->createTextRun(get_meses_cobros($row['mie_id'],'09',$year)); 
 }
 $Q = get_paid_month_info($row['mie_id'],'10',$year);
-if (strlen($Q) > 0) {
+if (strlen($Q) > 0 && $valorcorte >= intval($year.'10')) {
     $objPHPExcel->getActiveSheet()->getComment('Q'.$i)->setHeight("50px")->setWidth("250px")->getText()->createTextRun(get_meses_cobros($row['mie_id'],'10',$year)); 
 }
 $R = get_paid_month_info($row['mie_id'],'11',$year);
-if (strlen($R) > 0) {
+if (strlen($R) > 0 && $valorcorte >= intval($year.'11')) {
     $objPHPExcel->getActiveSheet()->getComment('R'.$i)->setHeight("50px")->setWidth("250px")->getText()->createTextRun(get_meses_cobros($row['mie_id'],'11',$year)); 
 }
 $S = get_paid_month_info($row['mie_id'],'12',$year);
-if (strlen($S) > 0) {
+if (strlen($S) > 0 && $valorcorte >= intval($year.'12')) {
     $objPHPExcel->getActiveSheet()->getComment('S'.$i)->setHeight("50px")->setWidth("250px")->getText()->createTextRun(get_meses_cobros($row['mie_id'],'12',$year)); 
 }
 //NEXT YEAR//
 $U = get_paid_month_info($row['mie_id'],'01',$nextyear);
-if (strlen($U) > 0) {
+if (strlen($U) > 0 && $valorcorte >= intval($nextyear.'01')) {
     $objPHPExcel->getActiveSheet()->getComment('U'.$i)->setHeight("50px")->setWidth("250px")->getText()->createTextRun(get_meses_cobros($row['mie_id'],'01',$nextyear)); 
 }
 $V = get_paid_month_info($row['mie_id'],'02',$nextyear);
-if (strlen($V) > 0) {
+if (strlen($V) > 0 && $valorcorte >= intval($nextyear.'02')) {
     $objPHPExcel->getActiveSheet()->getComment('V'.$i)->setHeight("50px")->setWidth("250px")->getText()->createTextRun(get_meses_cobros($row['mie_id'],'02',$nextyear)); 
 }
 $W = get_paid_month_info($row['mie_id'],'03',$nextyear);
-if (strlen($W) > 0) {
+if (strlen($W) > 0 && $valorcorte >= intval($nextyear.'03')) {
     $objPHPExcel->getActiveSheet()->getComment('W'.$i)->setHeight("50px")->setWidth("250px")->getText()->createTextRun(get_meses_cobros($row['mie_id'],'03',$nextyear)); 
 }
 $X = get_paid_month_info($row['mie_id'],'04',$nextyear);
-if (strlen($X) > 0) {
+if (strlen($X) > 0 && $valorcorte >= intval($nextyear.'04')) {
     $objPHPExcel->getActiveSheet()->getComment('X'.$i)->setHeight("50px")->setWidth("250px")->getText()->createTextRun(get_meses_cobros($row['mie_id'],'04',$year)); 
 }
 /*$Y = get_paid_month_info($row['mie_id'],'05',$nextyear);
