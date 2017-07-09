@@ -2,33 +2,6 @@
 <script>
 $('.textarea').wysihtml5();
 
-$.extend( $.fn.dataTableExt.oSort, {
-    //pre-processing
-    "numchar-pre": function(str){
-        var patt = /^([0-9]+)([a-zA-Z]+)$/;    //match data like 1a, 2b, 1ab, 100k etc.
-        var matches = patt.exec($.trim(str));
-        var number = parseInt(matches[1]);     //extract the number part
-        var str = matches[2].toLowerCase();    //extract the "character" part and make it case-insensitive
-        var dec = 0;
-        for (i=0; i<str.length; i++)
-        {
-        dec += (str.charCodeAt(i)-96)*Math.pow(26, -(i+1));  //deal with the character as a base-26 number
-        }
-        return number + dec;       //combine the two parts
-    },
-
-    //sort ascending
-    "numchar-asc": function(a, b){
-        return a-b;
-    },
-
-    //sort descending
-    "numchar-desc": function(a, b){
-        return b-a;
-    }
-});
-
-
 (function() {
  
 /*
@@ -92,47 +65,55 @@ function naturalSort (a, b, html) {
     }
     return 0;
 }
- 
-jQuery.extend( jQuery.fn.dataTableExt.oSort, {
-    "natural-asc": function ( a, b ) {
-        return naturalSort(a,b,true);
-    },
- 
-    "natural-desc": function ( a, b ) {
-        return naturalSort(a,b,true) * -1;
-    },
- 
-    "natural-nohtml-asc": function( a, b ) {
-        return naturalSort(a,b,false);
-    },
- 
-    "natural-nohtml-desc": function( a, b ) {
-        return naturalSort(a,b,false) * -1;
-    },
- 
-    "natural-ci-asc": function( a, b ) {
-        a = a.toString().toLowerCase();
-        b = b.toString().toLowerCase();
- 
-        return naturalSort(a,b,true);
-    },
- 
-    "natural-ci-desc": function( a, b ) {
-        a = a.toString().toLowerCase();
-        b = b.toString().toLowerCase();
- 
-        return naturalSort(a,b,true) * -1;
-    }
-} );
+if ($.fn.dataTableExt != undefined) {
+    $.extend( $.fn.dataTableExt.oSort, {
+        
+        "natural-asc": function ( a, b ) {
+            console.log('entra en natural');
+            return naturalSort(a,b,true);
+        },
+    
+        "natural-desc": function ( a, b ) {
+            return naturalSort(a,b,true) * -1;
+        },
+    
+        "natural-nohtml-asc": function( a, b ) {
+            return naturalSort(a,b,false);
+        },
+    
+        "natural-nohtml-desc": function( a, b ) {
+            return naturalSort(a,b,false) * -1;
+        },
+    
+        "natural-ci-asc": function( a, b ) {
+            a = a.toString().toLowerCase();
+            b = b.toString().toLowerCase();
+    
+            return naturalSort(a,b,true);
+        },
+    
+        "natural-ci-desc": function( a, b ) {
+            a = a.toString().toLowerCase();
+            b = b.toString().toLowerCase();
+    
+            return naturalSort(a,b,true) * -1;
+        }
+    });
+}
+
  
 }());
 
 var getConfTabla2= function (){
+    
     $(function () {
-        $('#tipo_personalizada').DataTable({
+        var table = $('#tipo_personalizada').DataTable();
+        table.destroy();
+        $('#tipo_personalizada').DataTable({            
             "aLengthMenu": [[ 15, 50,75,100, -1], [ 15, 50,75,100, "All"]],
             "iDisplayLength": 15, 
             "iDisplayStart": 0,
+            "aoColumns": [{"sType": "natural"}, null, null, null, null],
             "language": {
                 "sProcessing":    "Procesando...",
                 "sLengthMenu":    "Mostrar _MENU_ registros",
@@ -156,7 +137,7 @@ var getConfTabla2= function (){
                     "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
                     "sSortDescending": ": Activar para ordenar la columna de manera descendente"
                 },
-                "aoColumns": [{"sType": "natural"}, null, null, null, null]
+                
             }
         });          
     });                                            
