@@ -141,6 +141,19 @@ $html.='</div>';
 return $html;
 }
 
+function generadorMenuEventos($titulo, $contenido) {
+$html='';
+$html.='<div class="box box-solid">';
+$html.='<div class="box-header with-border">';
+$html.='<h4 class="box-title">'.$titulo.'</h4>';
+$html.='</div>';
+$html.='<div class="box-body">';  
+    $html.=$contenido;    
+$html.='</div>';
+$html.='</div>';
+return $html;
+}
+
 
 function generadorMenuColor3($titulo, $xfunction) {
 $html='';

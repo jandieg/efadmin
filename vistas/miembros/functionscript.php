@@ -26,9 +26,6 @@ reader.readAsDataURL(document.getElementById('archivo').files[0]);
     };
 
     var data = new FormData();
-
-        
-
     reader.onloadend = function () {
         $("#targetLayer").css('background-image', 'url('+reader.result+')');
         $("#targetLayer").css('background-size', '100px 110px');
@@ -198,7 +195,7 @@ var setCanceladas = function() {
 //                        
                         
                         $("#ben_contenedor_filtro").html( mensaje.tabla);
-                        getConfTabla();
+                        getConfTabla2();
                     }else{
                     $.toaster({ priority : mensaje.priority, title : 'Alerta', message : mensaje.msg});
                 }
@@ -802,7 +799,7 @@ var getFiltro = function(key){
 //                        
                         
                         $("#ben_contenedor_filtro").html( mensaje.tabla);
-                        getConfTabla();
+                        getConfTabla2();
                     }else{
                     $.toaster({ priority : mensaje.priority, title : 'Alerta', message : mensaje.msg});
                 }
@@ -1198,7 +1195,7 @@ var getGlobalFiltro = function(key){
                         }
            
                         $("#ben_contenedor_filtro").html( mensaje.tabla);
-                        getConfTabla();
+                        getConfTabla2();
                     }
                     if(mensaje.success == "false"){
                        $.toaster({ priority : mensaje.priority, title : 'Alerta', message : mensaje.msg});

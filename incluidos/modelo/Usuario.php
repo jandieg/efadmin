@@ -16,6 +16,11 @@ class Usuario extends Conexion{
     public function __construct(){
         parent:: __construct();        
     }
+
+    public function getForumLeaderByPersona($idPersona) {
+        $sql = "call sp_selectForumLeaderByPersona('$idPersona')";
+        return parent::getConsultar($sql);
+    }
     function getNombreUser($id) {
         $resultset= $this->getUser($id, 'A');
         if ($row = $resultset->fetch_assoc()) { //usuario.usu_id , persona.per_nombre, persona.per_apellido

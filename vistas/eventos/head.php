@@ -13,6 +13,7 @@ require_once MODELO.'ForumLeader.php';
 require_once MODELO.'Pais.php';
 require_once MODELO.'Provincia.php';
 require_once MODELO.'Ciudad.php';
+require_once MODELO.'Usuario.php';
 require_once MODELO.'Asistencia.php';
 
 require_once E_LIB.'Mail.php';
@@ -626,6 +627,16 @@ function getRecordarEvento($idEvento, $doAsistencia= false) {
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {    
     try{
         switch ($_POST['KEY']):
+            case 'KEY_MIEMBROS_GRUPOS':
+            if (! empty($_POST['_id'])) {
+                $objMiembro = new Miembro();
+                $lista = array();
+                $listaMiembros=$objMiembro->getListaMiembroxGrupo2($_POST['_id'], $lista);
+                $form['form_8'] = array("elemento" => "lista-multiple",  "titulo" => "Caso del Mes", "id" => "_empresarios_mes", "option" => $listaMiembros); 
+                echo generadorEtiqueta($form);
+            }
+            
+            break;
             case 'KEY_CASO_DEL_MES':
                 if (! empty($_POST['_id'])) {
                     echo getTablaCasosDelMesByForumLeader($_POST['_id']);
@@ -645,6 +656,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     echo generadorEtiquetasFiltro($form);   
                 }            
                 break;
+            case 'KEY_GRUPO_FORUM_LEADER':
+                if (! empty($_POST['_id'])) {
+                    $objGrupo = new Grupo();
+                    $lista= array();
+                    $listado=$objGrupo->getListaGruposByForumLeaderPersona($_POST['_id'], $lista);                
+                    $form['form_3'] = array("elemento" => "combo","change" => "setCambioGrupos()", "titulo" => "Grupos", "id" => "_miembrosGrupos", "option" => $listado);
+                    echo generadorEtiqueta($form);   
+                }     
+            break;
             case 'KEY_ENVIAR_CORREO_INDIVIDUAL':
                  
                 if( !empty($_POST['_email_asunto'])  && !empty($_POST['_email_mensaje'])) {
@@ -734,7 +754,7 @@ $form['form_1'] = array("elemento" => "combo","change" => "loadgroups();","titul
 	    $objGrupo= new Grupo();
         $listaGrupos= $objGrupo->getListaGrupos2(NULL,$listaGrupoMiembros);
 		
-				   $form['form_3'] = array("elemento" => "combo", "titulo" => "Grupos", "id" => "_miembrosGrupos", "option" => $listaGrupos);
+				   $form['form_3'] = array("elemento" => "combo", "change"=>"setCambioGrupos()","titulo" => "Grupos", "id" => "_miembrosGrupos", "option" => $listaGrupos);
                    
                     
 					
@@ -1156,6 +1176,11 @@ $form['form_7'] = array("elemento" => "fecha + tiempo" ,"tipo_date" => "hidden" 
                         //$form['form_12'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => "Descripción", "id" => "_descripcion" ,"reemplazo" => $row['eve_descripcion']);
 						$form['form_12'] = array("elemento" => "caja" ,"tipo" => "hidden", "id" => "_participantes" ,"reemplazo" => $row['eve_descripcion']);
                         
+
+                        if (in_array(trim($_SESSION['user_perfil']), array('Forum Leader'))) {
+                            $objUsuario = new Usuario();
+                            $result2 = $objUsuario->getForumLeaderByPersona($row['eve_responsable']);
+                        }
                         
 
                        $resultado = str_replace("{contenedor_1}", generadorEtiqueta($form),  getPage('page_detalle_update_evento') );//generadorContMultipleRow($colum)); 
@@ -1299,11 +1324,14 @@ $form['form_7'] = array("elemento" => "fecha + tiempo" ,"tipo_date" => "hidden" 
                     $objEvento= new Evento();
                     $resultset= $objEvento->getEventosDetalle($_POST['_id']);
                     if($row = $resultset->fetch_assoc()) {
-                                 
+                        
+                        
+
                         $tabla['t_1'] = array("t_1" => generadorNegritas("Forum Leader"), "t_2" => $row['eve_responsable']);
                         $tabla['t_2'] = array("t_1" => generadorNegritas("Evento"), "t_2" => $row['eve_nombre']);
                         $tabla['t_3'] = array("t_1" => generadorNegritas("Dirección"), "t_2" => $row['direccion']);
-                        
+                        //todo poner para setear puntaje
+                        //$listaGrupoMiembros['lista_'] = array( "value" => "x",  "select" => "selected" ,"texto" => "Seleccione...");
                         $cont=10;
                         $objEvento = new Evento();
                         $resultset= $objEvento->getEventosDetalleGrupos($_POST['_id']);
@@ -1315,6 +1343,8 @@ $form['form_7'] = array("elemento" => "fecha + tiempo" ,"tipo_date" => "hidden" 
                             }
                             $cont=$cont + 1;
                         }
+
+                        
                         
                         if($row['eve_mis_grupos']== "1"){
                             $tabla['t_21'] = array("t_1" => generadorNegritas("Grupos"), "t_2" => "Mis Grupos");
@@ -1387,6 +1417,17 @@ $form['form_7'] = array("elemento" => "fecha + tiempo" ,"tipo_date" => "hidden" 
                                 $cont=$cont + 1;
                             }
                         }
+
+                        if (in_array(trim($_SESSION['user_perfil']), array('Forum Leader'))) {
+                            $objUsuario = new Usuario();
+                            $result2 = $objUsuario->getForumLeaderByPersona($row['eve_responsable']);
+                            if ($row2 = $result2->fetch_assoc()) {
+                                if ($row2['usu_id'] == $_SESSION['user_id_ben']) {
+                                    $tabla['t_100'] = array("t_1" => generadorNegritas("Puntaje"), "t_2" => $row['eve_puntaje']);
+                                }
+                            }
+                        }
+                        
                       //  $tabla['t_81'] = array("t_1" => generadorNegritas("Descripción"), "t_2" => $row['eve_descripcion']);
                         
    
@@ -1527,8 +1568,9 @@ while($row = $resultset->fetch_assoc()) {
 $eventReport="eventReport()";
 $faReport="faReport()";
 $contenido = generadorMenuColor1("Crear Evento", $lista);
-$contenido.=generadorEtiquetasFiltro($form);
-$contenido.=generadorMenuColorEventos("Reportes", $eventReport);
+//$contenido.=generadorEtiquetasFiltro($form);
+$contenido.=generadorMenuEventos("Reportes", generadorEtiquetasFiltro($form));
+//$contenido.=generadorMenuColorEventos("Reportes", $eventReport);
 //$contenido.=generadorMenuColor3("Facilitation Activity", $faReport);
 $filtro='';
 $filtro= getFiltroGruposEvento();

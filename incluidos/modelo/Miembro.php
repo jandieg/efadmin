@@ -137,9 +137,18 @@ public function setActualizarMiembro($idMiembro, $id_persona, $propietario, $nom
         return parent::getConsultar($sql);   
     }
     
-  
+    public function getListaMiembroxGrupo2($idGrupo, $lista= array()) {        
+        $resultset = $this->getMiembroxGrupo2($idGrupo);
+         while ($row = $resultset->fetch_assoc()) { 
+            $lista['lista_'.$row['mie_id']] = array("value" => $row['mie_id'],  "select" => "" ,"texto" => $row['per_nombre']." ".$row['per_apellido']);
+        }
+        return $lista;
+    }
 
-    
+    public function getMiembroxGrupo2($idGrupo) {
+        $sql = "call sp_selectMiembroxGrupo2('$idGrupo')";
+        return parent::getConsultar($sql);
+    }
     
     public function getMiembroGrupo($idMiembroGrupo) {
         $sql="call sp_selectMiembroSuGrupo('$idMiembroGrupo')";

@@ -1,7 +1,7 @@
 <script>
 
 var loadgroups = function(){
-    var forum_id  = $("#_titular").val().toString();
+   /* var forum_id  = $("#_titular").val().toString();
 	//alert("Forum ID: " +forum_id);
 	
 	if(forum_id!=1){
@@ -22,10 +22,57 @@ var loadgroups = function(){
 		}
 	});
 	
-	}
+	}*/
+    console.log($("#_titular").val().toString());
+    var parametros = {
+        KEY: 'KEY_GRUPO_FORUM_LEADER',
+        _id: $("#_titular").val().toString()
+    };
+
+    $.ajax({  
+		type: "POST",  
+		url: "eventos",  
+		data: parametros,
+		success: function(response)
+		{
+		//	$("#excel").html('Descargar');
+            
+			$("#_miembrosGrupos").html(response);
+            setCambioGrupos();
+		},error : function(xhr, status) {
+            
+            $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema' +" "+ xhr.responseText});
+        }
+	});
+    
 	
 };
 
+
+var setCambioGrupos = function() {
+    var parametros = {
+        KEY: 'KEY_MIEMBROS_GRUPOS',
+        _id: $("#_miembrosGrupos").val().toString()
+    };
+    $.ajax({  
+		type: "POST",  
+		url: "eventos",  
+		data: parametros,
+		beforeSend: function() 
+		{
+		$.msg({content : '<img src="public/images/loanding.gif" />', autoUnblock: false});
+		},
+		success: function(response)
+		{
+		//	$("#excel").html('Descargar');
+            $.msg('unblock');
+			$("#_empresarios_mes").html(response);
+		},error : function(xhr, status) {
+            $.msg('unblock');
+            $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema' +" "+ xhr.toString()});
+        }
+	});
+};
 
 var getComponenteEducacional = function () {
     var parametros = {
@@ -203,6 +250,35 @@ var getEliminarNoSeleccionados = function(){
          }
     });
 };
+
+var getActualizarEvento = function(){
+    //alert("En Construcción!");
+      var parametros = {
+             KEY: 'KEY_SHOW_FORM_ACTUALIZAR_EVENTO',
+             id: $('#_id_evento_detalle').val().toString()
+        };
+        $.ajax({
+            data:  parametros,
+            url:   'eventos',
+            type:  'post',
+            dataType : 'json',
+            success:  function (mensaje) {
+                //$.msg('unblock');
+                    if(mensaje.success == "true"){
+                        $("#ben_contenedor").html(mensaje.form);
+                        $("#respuesta_modal").html(mensaje.modal);
+                        $(".select2").select2();
+                        getConfTabla();
+
+                    }else{
+                        $("#ben_contenedor").html(mensaje.form);
+                    }
+            },error : function(xhr, status) {
+                //$.msg('unblock');
+                $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema'});
+            }
+        });    
+};
 var setCrearEvento = function(op, id_tipo_evento,opcion_contacto,opcion_acompanado,opcion_invitado,opcion_empresario_mes){ 
     $('#btnGuardar').attr("disabled", true);
     $('#btnGuardarNuevo').attr("disabled", true);
@@ -238,7 +314,7 @@ var setCrearEvento = function(op, id_tipo_evento,opcion_contacto,opcion_acompana
         acompanado=$("#_acompanado").val().toString();
     }
     
-    $("#_descripcion").val().toString()
+    //$("#_descripcion").val().toString();
 
     var fecha_hora_inicio= $("#_f_inicio").val().toString()+' '+ $("#_time_inicio").val().toString();
     var fecha_hora_fin = "";
@@ -266,8 +342,7 @@ var setCrearEvento = function(op, id_tipo_evento,opcion_contacto,opcion_acompana
             _ubicacion: 'aaa', 
             _descripcion: $("#_descripcion").val().toString(),           
             _participantes_adicionales: _arrayParticipantes,
-          //  _miembrosGrupos: _arrayMiembrosGrupos,
-		     _mis_grupos:$("#_miembrosGrupos").val().toString(),
+		     _mis_grupos: $("#_miembrosGrupos").val().toString(),
 		    _miembrosGrupos: $("#_miembrosGrupos").val().toString(),  
             _all_day:_all_day,
             _empresariosMes:_arrayEmpresariosMes,
@@ -283,14 +358,18 @@ var setCrearEvento = function(op, id_tipo_evento,opcion_contacto,opcion_acompana
 
         success:  function (mensaje) {
             $.msg('unblock');
+            console.log('entra principal');
             if(mensaje.success == "true_gn"){
+                console.log('entra 1');
                 $.toaster({ priority : mensaje.priority, title : 'Alerta', message : mensaje.msg});
                 getCrearEvento(id_tipo_evento.toString());
                 getBusquedaEvento_();
                 
             }else if(mensaje.success == "true_g"){
+                console.log('entra 2');
                 getRecargar();
             }else if(mensaje.success == "false"){
+                console.log('entra 3');
                 $.toaster({ priority : mensaje.priority, title : 'Alerta', message : mensaje.msg});
             }
             $('#btnGuardar').attr("disabled", false);
@@ -304,34 +383,7 @@ var setCrearEvento = function(op, id_tipo_evento,opcion_contacto,opcion_acompana
     });
 
 };
-var getActualizarEvento = function(){
-    //alert("En Construcción!");
-      var parametros = {
-             KEY: 'KEY_SHOW_FORM_ACTUALIZAR_EVENTO',
-             id: $('#_id_evento_detalle').val().toString()
-        };
-        $.ajax({
-            data:  parametros,
-            url:   'eventos',
-            type:  'post',
-            dataType : 'json',
-            success:  function (mensaje) {
-                //$.msg('unblock');
-                    if(mensaje.success == "true"){
-                        $("#ben_contenedor").html(mensaje.form);
-                        $("#respuesta_modal").html(mensaje.modal);
-                        $(".select2").select2();
-                        getConfTabla();
 
-                    }else{
-                        $("#ben_contenedor").html(mensaje.form);
-                    }
-            },error : function(xhr, status) {
-                //$.msg('unblock');
-                $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema'});
-            }
-        });    
-};
 var setActualizarEvento = function( id_evento,opcion_contacto,opcion_acompanado,opcion_invitado,opcion_empresario_mes){ 
 
     $.msg({content : '<img src="public/images/loanding.gif" />', autoUnblock: false});

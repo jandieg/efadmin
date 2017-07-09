@@ -211,8 +211,22 @@ class Grupo extends Conexion{
         return parent::getConsultar($sql);
     }
 
+    public function getGrupoByForumLeaderPersona($idPersona) {
+        $sql ="call sp_selectGrupoByForumLeaderPersona('$idPersona')";
+        return parent::getConsultar($sql);
+    }
+
     public function getListaGruposByForumLeader($idForumLeader, $lista=array()) {
         $resultset = $this->getGrupoByForumLeader($idForumLeader);
+         while($row = $resultset->fetch_assoc()) { 
+            $lista['lista_'.$row['gru_id']] = array( "value" => $row['gru_id'],  "select" => "" ,"texto" => $row['gru_descripcion']);
+            if($this->primerGrupo == ''){ $this->primerGrupo=$row['gru_id']; }
+        }
+        return $lista; 
+    }
+
+    public function getListaGruposByForumLeaderPersona($idPersona, $lista=array()) {
+        $resultset = $this->getGrupoByForumLeaderPersona($idPersona);
          while($row = $resultset->fetch_assoc()) { 
             $lista['lista_'.$row['gru_id']] = array( "value" => $row['gru_id'],  "select" => "" ,"texto" => $row['gru_descripcion']);
             if($this->primerGrupo == ''){ $this->primerGrupo=$row['gru_id']; }
@@ -256,7 +270,7 @@ class Grupo extends Conexion{
     }
     
 	
-	   public function getGruposForumSede($idForum) {
+	public function getGruposForumSede($idForum) {
         $sql="call sp_selectGrupoKey('$idForum', '6')";
         return parent::getConsultar($sql);   
     }
