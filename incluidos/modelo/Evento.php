@@ -91,6 +91,11 @@ class Evento extends Conexion{
 
     }
 
+    public function getTodosEventos() {
+        $sql = "call sp_selectEventos()";
+        return parent::getConsultar($sql);
+    }
+
     public function getEventosByGrupo($idGrupo) {
         $sql = "call sp_selectEventosByGrupo('$idGrupo')";
         return parent::getConsultar($sql);
@@ -101,6 +106,11 @@ class Evento extends Conexion{
         return parent::getConsultar($sql);
     }
       
+
+    public function getMiembrosPendientes() {
+        $sql = "call sp_selectMiembrosPendientes()";
+        return parent::getConsultar($sql);
+    }
     public function getMiembrosPendientesxGrupo($idGrupo) {
         $sql = "call sp_selectMiembrosPendientesxGrupo('$idGrupo')";
         return parent::getConsultar($sql);
