@@ -533,7 +533,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                  //$listaStatus['lista_'] = array("value" => "x",  "select" => "" ,"texto" => "Seleccionar...");
                  if($_SESSION['_esaplicante'] == '1'){
                     $objStatus= new StatusMember();
-                    $listaStatus= $objStatus->getListaAplicante();
+                    $listaStatus= $objStatus->getListaAplicanteNuevo();
                     $estadoprospecto='Estado del Aplicante';
                  }/*else{
                     $objStatus= new StatusMember();

@@ -23,6 +23,11 @@ class StatusMember extends Conexion{
         return parent::getConsultar($sql);   
     }
 
+    public function getAplicanteNuevo($estado, $isMiembroAplicante) {
+        $sql="call sp_selectStatusAplicanteNuevo('$estado', '$isMiembroAplicante')";
+        return parent::getConsultar($sql);   
+    }
+
     public function getMiembroStatus() {
         $sql="call sp_selectMiembroStatus();";
         return parent::getConsultar($sql);
@@ -46,6 +51,16 @@ class StatusMember extends Conexion{
 
     function getListaAplicante($lista = array()) {
         $resultset= $this->get('A','0');         
+        while ($row = $resultset->fetch_assoc()) { 
+                $lista['lista_'.$row['mem_sta_id']] = array("value" => $row['mem_sta_id'],  "select" => "" ,"texto" =>$row['mem_sta_codigo']);
+        }
+    
+       return $lista;
+
+    }
+
+    function getListaAplicanteNuevo($lista = array()) {
+        $resultset= $this->getAplicanteNuevo('A','0');         
         while ($row = $resultset->fetch_assoc()) { 
                 $lista['lista_'.$row['mem_sta_id']] = array("value" => $row['mem_sta_id'],  "select" => "" ,"texto" =>$row['mem_sta_codigo']);
         }
