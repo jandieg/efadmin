@@ -193,7 +193,7 @@ $form['form_0'] = array("elemento" => "subir-imagen", "valor" => $cod1."-".$cod2
                                             ,"boton_tipo" => "btn-info");
 //        $form2['form_6'] = array("elemento" => "combo","combo","change" => "", "titulo" => "Empresa", "id" => "_id_empresa", "option" => $listaEmpresas); 
         $form2['form_4'] = array("elemento" => "combo","change" => "", "titulo" => $lblCategoría, "id" => "_categoria", "option" => $listacategoria);    
-        $form2['form_5'] = array("elemento" => "textarea" ,"tipo" => "text" , "titulo" => "Comentario", "id" => "_observacion" ,"reemplazo" => $row['mie_observacion']);
+        $form2['form_5'] = array("elemento" => "caja" ,"tipo" => "hidden" , "titulo" => "", "id" => "_observacion" ,"reemplazo" => $row['mie_observacion']);
         $form2['form_6'] = array("elemento" => "caja", "tipo" => "hidden","id" => "_membresia", "reemplazo" => $valorMembresiaOculto);
         $form2['form_7'] = array("elemento" => "caja" ,"tipo" => "hidden" , "titulo" => " ","id" => "_precio_esp","reemplazo" => $row['precio_esp']);
         $form_2= generadorEtiqueta($form2);

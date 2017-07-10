@@ -25,6 +25,17 @@ include(LENGUAJE."/lenguaje_1.php");
 $settings = parse_ini_file(E_LIB."settings.ini.php");
 $asunto= "";$tabla= "";$correo= "";
 
+
+function setPuntaje($lista = array(), $puntaje = "") {
+    $listaAux = array();
+    $listaAux = $lista;
+    foreach ($lista as $k => $v) {
+        if ($v['value']=$puntaje) {
+            $listaAux[$k]['select'] = "selected";
+        }
+    }
+    return $listaAux;
+}
 function getCheckEventos($id,$nombre, $checked) {
     $msg='';
     $msg='<center><input  type="checkbox" '.$checked.' onclick="getAddListaEvento(\''.$id.'\',\''.$nombre.'\')"/></center>'; 
@@ -1154,6 +1165,11 @@ $form['form_7'] = array("elemento" => "fecha + tiempo" ,"tipo_date" => "hidden" 
                     
                      //Formularios
                     $objEvento= new Evento();
+                    $listaPuntajes['lista_0'] = array( "value" => "",  "select" => "selected" ,"texto" => "Seleccione...");
+                    for ($i = 1; $i < 6; $i++) {
+                        $listaPuntajes['lista_'.$i] = array( "value" => $i,  "select" => "selected" ,"texto" => $i);
+                    }
+
                     $resultset= $objEvento->getEventosDetalle($_POST['id']);
                     if($row = $resultset->fetch_assoc()) {
                         
@@ -1303,7 +1319,16 @@ $form['form_7'] = array("elemento" => "fecha + tiempo" ,"tipo_date" => "hidden" 
 					}else{
 					$form['form_11'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => "Expositor", "id" => "_descripcion" ,"reemplazo" => $row['eve_descripcion']);	
 					}
-						
+						if (in_array(trim($_SESSION['user_perfil']), array('Forum Leader'))) {
+                            $objUsuario = new Usuario();
+                            $result2 = $objUsuario->getForumLeaderByPersona($row['eve_responsable']);
+                            if ($row2 = $result2->fetch_assoc()) {
+                                if ($row2['usu_id'] == $_SESSION['user_id_ben'] && $row['tipo_evento_id'] == 2) {
+                                    $listaPuntj = setPuntaje($listaPuntajes, $row['eve_puntaje']);
+                                    $form['form_13'] = array("elemento" => "combo","change" => "", "titulo" => "Puntaje", "id" => "_puntaje", "option" => $listaPuntj);
+                                }
+                            }
+                        }
 						
 						
 						
@@ -1557,7 +1582,7 @@ $form['form_7'] = array("elemento" => "fecha + tiempo" ,"tipo_date" => "hidden" 
                             $objUsuario = new Usuario();
                             $result2 = $objUsuario->getForumLeaderByPersona($row['eve_responsable']);
                             if ($row2 = $result2->fetch_assoc()) {
-                                if ($row2['usu_id'] == $_SESSION['user_id_ben']) {
+                                if ($row2['usu_id'] == $_SESSION['user_id_ben'] && $row['tipo_evento_id'] == 2) {
                                     $tabla['t_100'] = array("t_1" => generadorNegritas("Puntaje"), "t_2" => $row['eve_puntaje']);
                                 }
                             }
