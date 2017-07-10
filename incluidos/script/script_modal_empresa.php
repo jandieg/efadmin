@@ -1,8 +1,7 @@
 <script>  
 
 var setCrearPAME = function(_tipo){
-    
-    
+   
     $("#btnCrearPAME").html('Agregando Empresa ...');
     $('#btnCrearPAME').attr("disabled", true);
         $.msg({content : '<img src="public/images/loanding.gif" />', autoUnblock: false});
@@ -21,8 +20,8 @@ var setCrearPAME = function(_tipo){
                 _industria:_arrayIndustria,
                 _fax: '',
                 _sitio_web: '',
-                _correo1: $("#_correo1_modal_empresa").val().toString(),
-                _movil: $("#_movil_modal_empresa").val().toString(),
+                _correo1: "",
+                _movil: "",
                 _ciudad: '',
                 _calle: $("#_calle_modal_empresa").val().toString(),
                 _bandera:'2',
