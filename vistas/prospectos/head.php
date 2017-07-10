@@ -59,7 +59,7 @@ function getDetalleUpdate($id, $recargar) {
          if($_SESSION['_esaplicante'] == '1'){
             $listaStatus = array(); //['lista_'] = array("value" => "x",  "select" => "" ,"texto" => "Seleccionar...");
             $objStatus= new StatusMember();
-            $listaStatus= $objStatus->getListaAplicante2($listaStatus, $row['status_member_id']);
+            $listaStatus= $objStatus->getListaAplicanteNuevo2($listaStatus, $row['status_member_id']);
             $estadoprospecto='Estado del Aplicante';
          }else{
             $listaStatus['lista_'] = array("value" => "x",  "select" => "" ,"texto" => "Seleccionar...");

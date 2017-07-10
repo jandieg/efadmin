@@ -69,6 +69,27 @@ class StatusMember extends Conexion{
 
     }
 
+
+    function getListaAplicanteNuevo2($lista = array(), $idSeleccionado) {
+        $resultset= $this->getAplicanteNuevo('A','0');         
+        if ($idSeleccionado != "") {
+            while ($row = $resultset->fetch_assoc()) { 
+                if($row['mem_sta_id']==$idSeleccionado){
+                    $lista['lista_'.$row['mem_sta_id']] = array("value" => $row['mem_sta_id'],  "select" => "selected" ,"texto" =>$row['mem_sta_codigo']);
+                } else {
+                    $lista['lista_'.$row['mem_sta_id']] = array("value" => $row['mem_sta_id'],  "select" => "" ,"texto" =>$row['mem_sta_codigo']);
+                }                
+            }
+        } else {
+            while ($row = $resultset->fetch_assoc()) { 
+                    $lista['lista_'.$row['mem_sta_id']] = array("value" => $row['mem_sta_id'],  "select" => "" ,"texto" =>$row['mem_sta_codigo']);
+            }
+        }        
+    
+       return $lista;
+
+    }
+
     
 
     function getListaAplicante2($lista = array(), $idSeleccionado = "") {
