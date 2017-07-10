@@ -119,6 +119,10 @@ var setActualizarDatos = function(id){
     $.msg({content : '<img src="public/images/loanding.gif" />', autoUnblock: false});
     var esposa = "";
     var hijos = "";
+    var telefonofijo = "";
+    if ($("#_telefono").val() != undefined) {
+        telefonofijo = $("#_telefono").val().toString();
+    }
     if ($("#_esposa").val() != undefined) {
         esposa = $("#_esposa").val().toString();
     }
@@ -137,7 +141,7 @@ var setActualizarDatos = function(id){
             _perfil: $("#_perfil").val().toString(),
             _estado: $("#_estado").val().toString(),        
             _correo: $("#_correo").val().toString(), 
-            _telefono: $("#_telefono").val().toString(), 
+            _telefono: telefonofijo, 
             _celular: $("#_celular").val().toString(),
 			_pais: $("#_pais").val().toString(),
             _esposa: esposa,

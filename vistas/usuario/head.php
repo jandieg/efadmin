@@ -69,21 +69,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             //Formularios
                             $form['form_1'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => generadorAsterisco($lblNombre), "id" => "_nombre" ,"reemplazo" => $row['per_nombre']);
                             $form['form_2'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => generadorAsterisco($lblApellido), "id" => "_apellido" ,"reemplazo" => $row['per_apellido']);
-                            $form['form_4'] = array("elemento" => "combo","change" => "", "titulo" => $lblTipoPersona, "id" => "_tipo_p", "option" => generadorComboTipoPersona(($row['per_tipo']=="N" ? "Natural" : "Jurídica")));                
-                            $form['form_5'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => $lblIdentificacion, "id" => "_identificacion" ,"reemplazo" => $row['per_identificacion']);         
+                            
                             $form['form_6'] = array("elemento" => "caja" ,"tipo" => "date" , "titulo" => $lblFNacimiento, "id" => "_fn", "reemplazo" => $row['per_fechanacimiento']); 
                             $form['form_7'] = array("elemento" => "combo","change" => "",  "titulo" => $lblGenero, "id" => "_genero", "option" => generadorComboGenero($row['per_genero']));
                             $form['form_8'] = array("elemento" => "combo","change" => "cambioPerfil()","titulo" => generadorAsterisco($lblPerfil), "id" => "_perfil", "option" => $listaPerfil);  
                             $form['form_15'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" =>generadorAsterisco( $lblCorreo), "id" => "_correo" ,"reemplazo" => $row['correo']);
-                            $form['form_16'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => generadorAsterisco($lblTF), "id" => "_telefono" ,"reemplazo" => $row['fijo']);
+                            $form['form_16'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => $lblTF, "id" => "_telefono" ,"reemplazo" => $row['fijo']);
                             $form['form_17'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => generadorAsterisco($lblTM), "id" => "_celular" ,"reemplazo" => $row['movil']);     
                             $form['form_11'] = array("elemento" => "combo","change" => "","titulo" => $lblEstado, "id" => "_estado", "option" => generadorComboEstado(($row['usu_estado']=="A" ? "Activo" : "Inactivo")));  
 						//   $form['form_12'] = array("elemento" => "combo", "change" => "",                  "titulo" => "Sede", "id" => "_sede", "option" => $listaSedes);
 						   $form['form_12'] =  array("elemento" => "combo","change" => "","titulo" => $lblPais, "id" => "_pais", "option" => $listapais);
-                           $form['form_13'] = array("elemento" => "cajaoc" ,"tipo" => "text" , "titulo" => generadorAsterisco("Esposa"), "id" => "_esposa" ,"reemplazo" => $row['per_esposa']);
-                           $form['form_14'] = array("elemento" => "cajaoc" ,"tipo" => "text" , "titulo" => generadorAsterisco("Hijos"), "id" => "_hijos" ,"reemplazo" => $row['per_hijos']);
+                           $form['form_13'] = array("elemento" => "cajaoc" ,"tipo" => "text" , "titulo" => "Esposa", "id" => "_esposa" ,"reemplazo" => $row['per_esposa']);
+                           $form['form_14'] = array("elemento" => "cajaoc" ,"tipo" => "text" , "titulo" => "Hijos", "id" => "_hijos" ,"reemplazo" => $row['per_hijos']);
                            $form['form_18'] = array("elemento" => "subir-imagen-oc", "valor" => $row['usu_id']);
                            $form['form_19'] = array("elemento" => "caja", "tipo" => "hidden", "id" => "_usu_id", "reemplazo" => $row['usu_id']);
+                           $form['form_4'] = array("elemento" => "caja","tipo" => "hidden", "titulo" => "", "id" => "_tipo_p", "reemplazo" => "N");                
+                            $form['form_5'] = array("elemento" => "caja" ,"tipo" => "hidden" , "titulo" => "", "id" => "_identificacion" ,"reemplazo" => $row['per_identificacion']);         
                            $resultado = str_replace("{contenedor_1}", generadorEtiqueta($form),  getPage('page_detalle_update') );//generadorContMultipleRow($colum));      
                            $resultado = str_replace("{boton}", generadorBoton($boton), $resultado);  
                            $resultado = str_replace("{cabecera}", "Actualizar Usuario", $resultado);
@@ -139,7 +140,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             break;
             case 'KEY_ACTUALIZAR':///////////////////////////////////////////////////////////             
                    if(!empty($_POST['_id']) && !empty($_POST['_nombre']) && !empty($_POST['_apellido'])  
-                        && !empty($_POST['_perfil'] ) && !empty($_POST['_correo'] )&& !empty($_POST['_telefono'] )&&  !empty($_POST['_celular'] )&&  !empty($_POST['_pais'] )){ 
+                        && !empty($_POST['_perfil'] ) && !empty($_POST['_correo'] ) &&  !empty($_POST['_celular'] )&&  !empty($_POST['_pais'] )){ 
                        
 //                        if($_POST['_sede'] == 'x'){
 //                            $data = array("success" => "false", "priority"=>'warning', "msg" => 'Debes seleccionar una Sede!');  
