@@ -1230,17 +1230,17 @@ $form['form_7'] = array("elemento" => "fecha + tiempo" ,"tipo_date" => "hidden" 
 
 
 if($row['tipo_evento_id']=='3'){
-$form['form_6'] = array("elemento" => "fecha + tiempo" ,"tipo_date" => "date" , "titulo_date" => "Fecha de Inicio", "id_date" => "_f_inicio" ,"reemplazo_date" => date("Y-m-d")
+$form['form_6'] = array("elemento" => "fecha + tiempo" ,"tipo_date" => "date" , "titulo_date" => "Fecha de Inicio", "id_date" => "_f_inicio" ,"reemplazo_date" => date('Y-m-d',strtotime($row['eve_fechainicio']))
 ,"tipo_time" => "time" , "titulo_time" => "Fecha de Inicio", "id_time" => "_time_inicio" ,"reemplazo_time" => date('H:i',strtotime($row['tip_eve_hora_rango_inicio']))); 
 
-$form['form_7'] = array("elemento" => "fecha + tiempo" ,"tipo_date" => "date" , "titulo_date" => "Fecha de Fin", "id_date" => "_f_fin" ,"reemplazo_date" => date("Y-m-d")
+$form['form_7'] = array("elemento" => "fecha + tiempo" ,"tipo_date" => "date" , "titulo_date" => "Fecha de Fin", "id_date" => "_f_fin" ,"reemplazo_date" => date('Y-m-d',strtotime($row['eve_fechafin']))
 ,"tipo_time" => "time" , "titulo_time" => "Fecha de Fin", "id_time" => "_time_fin" ,"reemplazo_time" => date('H:i',strtotime($row['tip_eve_hora_rango_fin'])));	
 }else{
 	
-$form['form_6'] = array("elemento" => "fecha + tiempo" ,"tipo_date" => "date" , "titulo_date" => "Fecha de Inicio", "id_date" => "_f_inicio" ,"reemplazo_date" => date("Y-m-d")
+$form['form_6'] = array("elemento" => "fecha + tiempo" ,"tipo_date" => "date" , "titulo_date" => "Fecha de Inicio", "id_date" => "_f_inicio" ,"reemplazo_date" => date('Y-m-d',strtotime($row['eve_fechainicio']))
 ,"tipo_time" => "time" , "titulo_time" => "Fecha de Inicio", "id_time" => "_time_inicio" ,"reemplazo_time" => date('H:i',strtotime($row['tip_eve_hora_rango_inicio']))); 
 
-$form['form_7'] = array("elemento" => "fecha + tiempo" ,"tipo_date" => "hidden" ,"id_date" => "_f_fin" ,"reemplazo_date" => date("Y-m-d")
+$form['form_7'] = array("elemento" => "fecha + tiempo" ,"tipo_date" => "hidden" ,"id_date" => "_f_fin" ,"reemplazo_date" => date('Y-m-d',strtotime($row['eve_fechafin']))
 ,"tipo_time" => "time" , "titulo_time" => "Fecha de Fin", "id_time" => "_time_fin" ,"reemplazo_time" => date('H:i',strtotime($row['tip_eve_hora_rango_fin'])));	
 
 }

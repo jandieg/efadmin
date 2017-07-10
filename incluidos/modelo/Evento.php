@@ -190,7 +190,6 @@ class Evento extends Conexion{
         $lista_eve_selecionadas=array();
         while ($row_evento_selecionada = $resultset_evento_selecionadas->fetch_assoc()) { 
             $lista_eve_selecionadas[$row_evento_selecionada['grupos_gru_id']]=$row_evento_selecionada['grupos_gru_id'];        
-       
          } 
         $this->objGrupos= new Grupo();
         $resultset= $this->objGrupos->getGrupos();

@@ -9,7 +9,7 @@ BEGIN
     UPDATE evento 
     SET eve_nombre=_nombre,eve_responsable=_responsable,eve_todoeldia=_toeldia,eve_fechainicio=_fi,eve_fechafin=_ff,
     eve_id_usuario=_usuario,direccion_id=_id_direccion,
-    eve_descripcion=_descripcion,eve_mis_grupos=_miembrosGrupos,eve_todos_grupos=_todos_grupos 
+    eve_descripcion=_descripcion,eve_mis_grupos=_lista_grupos,eve_todos_grupos=_todos_grupos 
     WHERE eve_id=_id;
 
     if _id_acompanado <> '' then
