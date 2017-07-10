@@ -540,8 +540,7 @@ WHERE miembro.grupo_id=".$xrow['gru_id']."
 AND miembro.status_member_id IN (".implode(',', $array).") 
 AND miembro.mie_id = miembro_inscripcion.miembro_id  
 AND (miembro.cancelled = 0 
-    or (miembro.cancelled = 1 
-        and miembro.mie_id in 
+    or (miembro.mie_id in 
                 (
                 select presupuestocobro.miembro_mie_id from presupuestocobro join 
                     detallepresupuestocobro  
@@ -549,7 +548,7 @@ AND (miembro.cancelled = 0
                 where detallepresupuestocobro.estado_presupuesto_est_pre_id = 1 and 
                 year(detallepresupuestocobro.detalleprecobro_fechavencimiento) < '$year'
                 )
-        and miembro.mie_id in 
+        or miembro.mie_id in 
                 (
                 select presupuestocobro.miembro_mie_id from presupuestocobro join 
                     detallepresupuestocobro  
