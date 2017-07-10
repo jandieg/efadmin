@@ -50,7 +50,7 @@ class ForumLeader extends Conexion{
         $listaForum=array();
         if($idSeleccionado!=''){
              while ($row = $resultset->fetch_assoc()) {
-                if($idSeleccionado==$row['usu_id']){
+                if($idSeleccionado==$row['per_id']){
                      $listaForum['lista_'.$row['usu_id']] = array("value" => $row['per_id'],  "select" => "selected" ,"texto" => $row['per_nombre'].' '.$row['per_apellido']);
                 }  else {
                     $listaForum['lista_'.$row['usu_id']] = array("value" => $row['per_id'],  "select" => "" ,"texto" => $row['per_nombre'].' '.$row['per_apellido']);
