@@ -1368,7 +1368,7 @@ $form['form_7'] = array("elemento" => "fecha + tiempo" ,"tipo_date" => "hidden" 
                     $arrayGrupo=array();
                     $listaGrupos="";
                     $cont=0;
-                    foreach($_POST['_miembrosGrupos'] as $valor){
+                    /*foreach($_POST['_miembrosGrupos'] as $valor){
                         if($valor == "T"){
                           $todosGrupos="1";
                         }
@@ -1380,12 +1380,12 @@ $form['form_7'] = array("elemento" => "fecha + tiempo" ,"tipo_date" => "hidden" 
                            $listaGrupos.= substr($valor, 0, -1).",";
                         }
                         $cont= $cont + 1;
-                    }            
+                    }            */
                     //Obtengo todos los miembros, menos los que estan en los grupos seleccionados
                     $arrayMiembros=array();
                     $listaMiembros="";
                     $cont=0;
-                    foreach($_POST['_miembrosGrupos'] as $valor){
+                   /* foreach($_POST['_miembrosGrupos'] as $valor){
 			$pos = strpos($valor, "-");
                         if(substr($valor, -1) == "M"){   
                            $idMiembros= substr($valor, 0, $pos);
@@ -1396,7 +1396,7 @@ $form['form_7'] = array("elemento" => "fecha + tiempo" ,"tipo_date" => "hidden" 
                                 $cont= $cont + 1;
                             }
                         }      
-                    }
+                    }*/
          
                     $listaAdicionales="";
                     if(isset($_POST['_participantes_adicionales'])){

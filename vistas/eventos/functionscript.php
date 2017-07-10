@@ -403,9 +403,11 @@ var setActualizarEvento = function( id_evento,opcion_contacto,opcion_acompanado,
     }
 
     var _arrayMiembrosGrupos = []; 
-    $('#_miembros_grupos :selected').each(function(i, selected){ 
+    console.log('el miembro grupo es ' + $("#_miembrosGrupos").val().toString());
+    _arrayMiembrosGrupos[0] = $("#_miembrosGrupos").val().toString();
+    /*$('#_miembros_grupos :selected').each(function(i, selected){ 
       _arrayMiembrosGrupos[i] = $(selected).val();
-    });
+    });*/
     
     
     var _arrayEmpresariosMes = []; 
