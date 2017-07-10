@@ -133,6 +133,11 @@ class Grupo extends Conexion{
         return $listaGrupos;
     }
 
+    public function getGrupoByMiembro($idMiembro) {
+        $sql = "call sp_selectGrupoByMiembro('$idMiembro')";
+        return parent::getConsultar($sql);
+    }
+
     public function getListaGrupos3() {
         $sql= "call sp_selectListaGrupos()";
         return parent::getConsultar($sql);
