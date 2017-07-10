@@ -121,8 +121,13 @@ class Evento extends Conexion{
         return parent::getConsultar($sql);
     }
 
+    public function getEventosByUsuarioPersona($idUser) {
+        $sql = "call sp_selectEventosByUsuarioPersona('$idUser')";
+        return parent::getConsultar($sql);
+    }
+
     public function getJSONEventosCalendar($id){
-        $resultset= $this->getEventos($id);
+        $resultset= $this->getEventosByUsuarioPersona($id);
         $response = array();
         while ($row = $resultset->fetch_assoc()) { 
             array_push($response, $row);     

@@ -809,12 +809,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 break; 
             case 'KEY_DATA_CALENDARIO'://///////////////////////////////////////////////////////// 
                 $objEvento= new Evento();
-                if (in_array($perVerFiltrosIDForumOp10, $_SESSION['usu_permiso'])) { 
-                    echo $objEvento->getJSONEventosCalendar($_SESSION['user_id_ben']); 
-                }else{
+                if (in_array(trim($_SESSION['user_perfil']), array('Administrador', 'Administrador Regional', 'IBP'))) {
                     echo $objEvento->getJSONEventosCalendar(""); 
+                } 
+                if (in_array(trim($_SESSION['user_perfil']), array('Forum Leader'))) {
+                    echo $objEvento->getJSONEventosCalendar($_SESSION['user_id_ben']); 
                 }
-   
+                    
                 break;
             case 'KEY_ULTIMA_FECHA':///////////////////////////////////////////////////////////
                 $fecha= date("Y-m-d");
