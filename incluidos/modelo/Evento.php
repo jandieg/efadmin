@@ -125,7 +125,6 @@ class Evento extends Conexion{
         $resultset= $this->getEventos($id);
         $response = array();
         while ($row = $resultset->fetch_assoc()) { 
-
             array_push($response, $row);     
         } 
         return json_encode(json_encode($response)); 

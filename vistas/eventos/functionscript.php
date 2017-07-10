@@ -359,6 +359,7 @@ var setCrearEvento = function(op, id_tipo_evento,opcion_contacto,opcion_acompana
         success:  function (mensaje) {
             $.msg('unblock');
             console.log('entra principal');
+            console.log(mensaje.success);
             if(mensaje.success == "true_gn"){
                 console.log('entra 1');
                 $.toaster({ priority : mensaje.priority, title : 'Alerta', message : mensaje.msg});

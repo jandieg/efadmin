@@ -846,7 +846,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     //$form['form_1'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => "Forum Leader", "id" => "_titular" ,"reemplazo" => $_SESSION['user_name']);
 					if($_SESSION['user_id_perfil']==3){
 $form['form_1'] = array("elemento" => "disabled" ,"tipo" => "text" , "titulo" => "Forum Leader", "id" => "_titular_1" ,"reemplazo" => $_SESSION['user_name']);
-$form['form_0'] = array("elemento" => "caja" ,"tipo" => "hidden", "id" => "_titular" ,"reemplazo" => $_SESSION['user_id_ben']);
+$objUsuario = new Usuario();
+$resultset4 = $objUsuario->getPersonaByForumLeader($_SESSION['user_id_ben']);
+if ($row4 = $resultset4->fetch_assoc()) {
+    $form['form_0'] = array("elemento" => "caja" ,"tipo" => "hidden", "id" => "_titular" ,"reemplazo" => $row4['per_id']);
+}
+
 					}else{
 
 $form['form_1'] = array("elemento" => "combo","change" => "loadgroups();","titulo" => $lblForumLeader, "id" => "_titular", "option" => $listaPerfil);
