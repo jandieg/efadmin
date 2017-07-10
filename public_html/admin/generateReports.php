@@ -539,11 +539,18 @@ $sql="SELECT miembro.*, miembro_inscripcion.* FROM miembro, miembro_inscripcion
 WHERE miembro.grupo_id=".$xrow['gru_id']." 
 AND miembro.status_member_id IN (".implode(',', $array).") 
 AND miembro.mie_id = miembro_inscripcion.miembro_id  
-AND (miembro.cancelled = 0 or (miembro.cancelled = 0 
-and miembro.mie_id in (select presupuestocobro.miembro_mie_id from presupuestocobro join 
-detallepresupuestocobro  on (presupuestocobro.precobro_id = detallepresupuestocobro.presupuestocobro_precobro_id)
-where detallepresupuestocobro.estado_presupuesto_est_pre_id = 1 and 
-year(detallepresupuestocobro.detalleprecobro_fechavencimiento) < '$year')))
+AND (miembro.cancelled = 0 
+    or (miembro.cancelled = 1 
+        and miembro.mie_id in 
+                (
+                select presupuestocobro.miembro_mie_id from presupuestocobro join 
+                    detallepresupuestocobro  
+                    on (presupuestocobro.precobro_id = detallepresupuestocobro.presupuestocobro_precobro_id)
+                where detallepresupuestocobro.estado_presupuesto_est_pre_id = 1 and 
+                year(detallepresupuestocobro.detalleprecobro_fechavencimiento) < '$year'
+                )
+        ) 
+    )
 AND miembro_inscripcion.mie_ins_fecha_ingreso <= '$corte'  
 ORDER By miembro.mie_codigo ASC";// AND miembro_inscripcion.mie_ins_year='$year'
 $res = mysqli_query($con,$sql);
