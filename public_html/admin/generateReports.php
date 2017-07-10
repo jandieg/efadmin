@@ -549,6 +549,14 @@ AND (miembro.cancelled = 0
                 where detallepresupuestocobro.estado_presupuesto_est_pre_id = 1 and 
                 year(detallepresupuestocobro.detalleprecobro_fechavencimiento) < '$year'
                 )
+        and miembro.mie_id in 
+                (
+                select presupuestocobro.miembro_mie_id from presupuestocobro join 
+                    detallepresupuestocobro  
+                    on (presupuestocobro.precobro_id = detallepresupuestocobro.presupuestocobro_precobro_id)
+                where detallepresupuestocobro.estado_presupuesto_est_pre_id = 2 and 
+                year(detallepresupuestocobro.detalleprecobro_fechavencimiento) = '$year'
+                )        
         ) 
     )
 AND miembro_inscripcion.mie_ins_fecha_ingreso <= '$corte'  
