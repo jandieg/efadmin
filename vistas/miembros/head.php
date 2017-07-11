@@ -1194,7 +1194,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                  break;
             case 'KEY_GUARDAR_INSCRIPCION':  
 
-                  if( !empty($_POST['_id_miembro_inscripcion']) && !empty($_POST['_fecha_inscripcion']) && !empty($_POST['_membresia_inscripcion']) && !empty($_POST['_estado_inscripcion']) && !empty($_POST['_fecha_cobro']) ){     
+                  if( !empty($_POST['_id_miembro_inscripcion']) && !empty($_POST['_fecha_inscripcion']) && !empty($_POST['_membresia_inscripcion']) && !empty($_POST['_estado_inscripcion'])){     
  //                    if($_POST['_estado_inscripcion'] == "2"){
  //                        $data = array("success" => "false", "priority"=>'info',"msg" => "La Inscripción ya fue cobrada!");
  //                        echo json_encode($data);
