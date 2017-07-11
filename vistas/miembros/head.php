@@ -28,11 +28,13 @@ require_once MODELO.'Membresia.php';
 require_once MODELO.'Inscripcion.php';
 require_once MODELO.'Usuario.php';
 require_once MODELO.'StatusMember.php';
+require_once MODELO.'PlantillaEmail.php';
+
 
 require_once MODELO.'EmpresaLocal.php';
 require_once MODELO.'PAMAsistente.php';
 require_once MODELO.'TipoEmpresaPAM.php';
-
+require_once '../../public_html/admin/sendEmail.php';
 include_once(HTML."/html.php");
 include_once(HTML."/html_2.php");
 include_once(HTML."/html_combos.php");
@@ -48,6 +50,7 @@ require_once MODELO2.'GlobalSede.php';
 $objProfesion; $objFuente; $objEstadoProspecto;$objIndustria;$objCategoria;$objPais;$objProvincia;$objCiudad;$objDesafio;$objRedSocial;
 $objUsuario;$objForum;$objHobby;$objMiembro;$tabla_desafios=array();$objEmpresaLocal;$objDireccion;$objStatus;$prefijoPais="";$codigoMiembro='';
 $titulo='';$idpersona='';$empresa='';$direcion='';$ciudad='';$estado='';$pais='';$nombreGrupo='';
+
 
 function getDetalleUpdate($id, $recargar) {
     $objMiembro= new Miembro();
@@ -178,6 +181,10 @@ $form['form_0'] = array("elemento" => "subir-imagen", "valor" => $cod1."-".$cod2
 		//$form['form_7'] = array("elemento" => "combo","change" => "", "titulo" => $lblTitulo, "id" => "_titulo", "option" => $listaprofe);
         
         $form['form_8'] = array("elemento" => "caja", "tipo" => "hidden","id" => "_titulo", "reemplazo" => "1");
+        if (isset($_GET['email'])) {
+            //si se activo que se enviara mail de bienvenida 
+            $form['form_9'] = array("elemento" => "caja", "tipo" => "hidden","id" => "_enviar_mail", "reemplazo" => $row['mie_id']);
+        }
         $form_1= generadorEtiqueta($form);
         
         //Formularios
@@ -461,6 +468,39 @@ function setSeleccionadoMiembro($lista = array(), $idSeleccionado = "") {
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {    
     try{
         switch ($_POST['KEY']): 
+
+            case 'KEY_ENVIAR_MAIL_BIENVENIDA':
+                $objMiembro = new Miembro();
+                $resultset = $objMiembro->getDataMiembroMailById($_POST['_id_miembro']);
+                
+                $mailfl = "";
+                $datos = array();
+                if ($row = $resultset->fetch_assoc()) {
+                    $datos['nombre'] = $row['per_nombre'];
+                    $datos['apellido'] = $row['per_apellido'];
+                    $datos['cod_miembro'] = $row['mie_codigo'];
+                    $datos['nombre_grupo'] = $row['gru_descripcion'];
+                    $datos['forum_leader'] = $row['forum_leader'];
+                    $datos['email'] = $row['cor_descripcion'];
+                    $mailfl = $row['mail_forum_leader'];
+                }
+
+                $objPlantillaEmail = new PlantillaEmail();
+                $resultset2 = $objPlantillaEmail->getPlantillaById(1);
+                $plantilla = array();
+                if ($row2 = $resultset2->fetch_assoc()) {
+                    $plantilla['plantilla_html'] = $row2['plantilla_html'];
+                    $plantilla['plantilla_asunto'] = $row2['plantilla_asunto'];
+                }
+                foreach ($datos as $k => $v) {
+                    $plantilla['plantilla_html'] = str_replace("%".$k."%", $v, $plantilla['plantilla_html']);
+                }
+
+                
+                enviarCorreo($datos['email'],$mailfl,$plantilla['plantilla_asunto'],$plantilla['plantilla_html']);
+                
+
+            break;
             case 'KEY_SHOW_FORM_ACTUALIZAR'://///////////////////////////////////////////////////////// 
 			
 			if(isset($_GET['id_miembro'])){ 

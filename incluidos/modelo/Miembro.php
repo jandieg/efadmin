@@ -229,6 +229,18 @@ public function setActualizarMiembro($idMiembro, $id_persona, $propietario, $nom
         return parent::getConsultar($sql);
     }
 
+    function getDataMiembroMailById($idMiembro) {
+        /*%nombre%: nombre del miembro
+        %apellido%: apellido del miembro
+        %cod_miembro%: código
+        %nombre_grupo%: grupo.gru_nombre
+        %forum_leader%: nombre y apellido del forum leader del grupo
+        %email%: email del miembro*/
+        $sql = "call sp_selectDataMiembroMailById('$idMiembro')";
+        return parent::getConsultar($sql);        
+    }
+
+
     public function getListaMiembrosByGrupo($lista = array(), $idGrupo) {
         $resultset = $this->getMiembrosByGrupo($idGrupo);
          while ($row = $resultset->fetch_assoc()) { 

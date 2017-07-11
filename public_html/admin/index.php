@@ -361,13 +361,7 @@ function ResetReports(id){
                                  }
                              });          
                 });
-            };
-
-            
-
-            
-
-            
+            };                        
             
             var setPerfilActualizarUserPass = function(){
                 $.msg({content : '<img src="public/images/loanding.gif" />', autoUnblock: false});

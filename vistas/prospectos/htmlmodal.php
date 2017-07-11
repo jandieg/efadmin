@@ -13,6 +13,10 @@
                             <input type="hidden" class="form-control" id="convertir_id_forum">
                             <input type="hidden" class="form-control" id="convertir_nombre_forum">
                         </div>
+                        <div class="form-group">
+                            <label for="email">Enviar Email de Bienvenida</label>
+                            <input type="checkbox" id="_email" name="email" checked/>
+                        </div>
                      
                         <div class="form-group">
                             <label for="codigo">Crear nuevo miembro</label>

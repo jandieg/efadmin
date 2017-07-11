@@ -630,6 +630,7 @@ var setUserActualizar = function(  id_persona, id_miembro){
                 url:   'miembros',
                 type:  'post',
                 dataType : 'json',
+                async: false,
                 beforeSend: function () {
                     $.msg({content : '<img src="public/images/loanding.gif" />', autoUnblock: false});
                         //$.blockUI({ message: '<h3>Esperé un momento...</h3>'}); 
@@ -638,6 +639,7 @@ var setUserActualizar = function(  id_persona, id_miembro){
                     $.msg('unblock');
                     //$.unblockUI();
                         if(mensaje.success == "true"){
+                           
                        textoalertas += "<div class='col-md-3'><div class='callout callout-success'><h4>Alerta:</h4><p>"+mensaje.msg+"</p></div></div>";
                        
                         getDetalleWithAlerts( id_miembro, textoalertas);
@@ -661,6 +663,24 @@ var setUserActualizar = function(  id_persona, id_miembro){
             $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema'});
         }
     });
+
+    if ($("#_enviar_mail").val() != undefined) {
+        var parametrosMail = {
+            KEY: 'KEY_ENVIAR_MAIL_BIENVENIDA',
+            _id_miembro: $("#_enviar_mail").val().toString()                                
+        };
+        $.ajax({
+            data: parametrosMail,
+            url: 'miembros',
+            type: 'post',
+            async: false,
+            success: function (datos) {
+                console.log(datos);
+            },error : function(xhr, status) {
+                $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema'});
+            }
+        });   
+    }
 
 
                
