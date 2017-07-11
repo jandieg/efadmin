@@ -1421,7 +1421,7 @@ if($pagosMes > 0){
 
 
 
-$commenting=comment_months($row['mie_id'],$m,$year,$i);
+$commenting=comment_months($row['mie_id'],$m,$year,$i, $corte);
 //cellColor($cell.$i, 'ffff00');
 
 $color='ffff00';
@@ -1649,7 +1649,7 @@ $pagosMesNY = tiene_pagos($row['mie_id'],$m,$nextyear);
 if($pagosMesNY >  0){
 
 //$objPHPExcel->getActiveSheet()->getComment($cell.$i)->setHeight("50px")->setWidth("250px")->getText()->createTextRun(comment_months_literal($row['mie_id'],$m,$nextyear,$i)); //substr($members,0,-2);
-$commenting_next_year=comment_months($row['mie_id'],$m,$nextyear,$i);
+$commenting_next_year=comment_months($row['mie_id'],$m,$nextyear,$i, $corte);
 $color='ffff00';
 
 //cellColor($cell.$i, $color);
