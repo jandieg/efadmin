@@ -197,7 +197,7 @@ function do_report(type,userid){
 		var page=type;
         var dataString = "";
         if (type == "fullReport") {
-            dataString = "year=" + year + "&userid=" + userid + "&group=" + group + "&page=" + page + "&fechacorte=" + fecha_corte;
+            dataString =  "userid=" + userid + "&group=" + group + "&page=" + page + "&fechacorte=" + fecha_corte;
         } else {
             dataString = "year=" + year + "&userid=" + userid + "&group=" + group + "&page=" + page;
         }

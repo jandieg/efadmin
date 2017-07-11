@@ -27,12 +27,16 @@
         <div class="col-xs-4">
             {contenedor_5}
         </div>
-        <div class="col-xs-4">
+        <div class="col-xs-2">
             
         </div> 
         <div class="col-xs-4">
-            
+            {contenedor_6}
         </div>
+        <div class="col-xs-2">
+            
+        </div> 
+
       </div>
       
       <div class="row">    

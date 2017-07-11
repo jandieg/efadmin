@@ -84,7 +84,7 @@ function getTablaFiltro($listaGrupos= array(),$tabla_miembros='') {
 
 
    // $form2['form_2'] = array("elemento" => "combo","change" => "ResetReports('1')" ,"titulo" => "<h4>Grupo</h4>", "id" => "_grupo", "option" => $listaGrupos); 
-    $form2['form_1'] = array("elemento" => "combo","disabled" => "","change" => "ResetReports('1')","titulo" => "<h4>Año</h4>", "id" => "_año", "option" => generadorComboAños(date('Y')));
+    $form5['form_1'] = array("elemento" => "combo","disabled" => "","change" => "ResetReports('1')","titulo" => "<h4>Año</h4>", "id" => "_año", "option" => generadorComboAños(date('Y')));
     $form4['form_1'] = array("elemento" => "caja" ,"disabled" => "","tipo" => "date" , "titulo" => "<h4>Fecha de Corte</h4>", "id" => "_fecha_corte" ,"reemplazo" => date('Y-m-d', strtotime(date('Y-m-01'). ' -1 days')));  
     
     
@@ -110,6 +110,7 @@ GENERAR REPORTE DE ACTIVIDAD</a></div>
     $resultado = str_replace("{contenedor_1}", generadorEtiquetasFiltro($form2),  $resultado );
     $resultado = str_replace("{contenedor_4}", generadorEtiquetasFiltro($form1),  $resultado );
     $resultado = str_replace("{contenedor_5}", generadorEtiquetasFiltro($form4),  $resultado );
+    $resultado = str_replace("{contenedor_6}", generadorEtiquetasFiltro($form5),  $resultado );
     
     $resultado = str_replace("{boton}", generadorBoton($boton), $resultado);  
     $resultado = str_replace("{cabecera}", "Reportes", $resultado);   

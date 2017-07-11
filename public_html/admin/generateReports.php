@@ -15,10 +15,26 @@ require_once dirname(__FILE__) . '/PHPExcel/Classes/PHPExcel.php';
 //Running Report #1 (Enrollment Fees)//
 //Getting Mandatory Variables: User ID + Year + Sede ID//
 $userid=$_GET['userid'];
-$year=$_GET['year'];
+//$year=$_GET['year'];
 $sede_id=$_GET['sede_id'];
 $email=$_GET['email'];
 $corte= $_GET['corte'];
+
+
+
+$year = getYearByCorte($corte);
+
+function getYearByCorte($corte) {
+    $fecha = date_create($corte);
+    $anhoactual = date('Y');
+    $mesdia = date_format($fecha,'md');
+    if (intval($mesdia) <= 430) {
+        return intval($anhoactual)-1;
+    }
+    return $anhoactual;
+}
+
+
 //Running Report//
 
 generate_enrollment_fees($userid,$year,$sede_id,$email, $corte); //This function will run The 1st report//	

@@ -1149,7 +1149,7 @@ GENERAR REPORTE DE ACTIVIDAD
 
 <?php }else if($page=='fullReport'){ 
 $userid = $_REQUEST['userid'];
-$year = $_REQUEST['year'];
+//$year = $_REQUEST['year'];
 $group = $_REQUEST['group'];
 $sede_id=$_SESSION['sede_id'];
 $email=$_SESSION['user_correo'];
@@ -1170,7 +1170,7 @@ curl_close($ch);
 
 $x=escapeshellarg($userid);
 
-exec("nohup /usr/bin/php -f generateReports.php userid='$userid' year='$year' sede_id='$sede_id' email='$email' corte='$corte'> /dev/null 2>&1 &");
+exec("nohup /usr/bin/php -f generateReports.php userid='$userid' sede_id='$sede_id' email='$email' corte='$corte'> /dev/null 2>&1 &");
 ?>
 
 <script>
