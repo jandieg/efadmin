@@ -214,8 +214,8 @@ public function setActualizarMiembro($idMiembro, $id_persona, $propietario, $nom
         }
     }
     
-    public function setEstadoMiembro($id, $status) {
-        $sql = "call sp_updateEstadoMiembro('$id', '$status')";
+    public function setEstadoMiembro($id, $status, $idUser) {
+        $sql = "call sp_updateEstadoMiembro('$id', '$status','$idUser')";
         return parent::setSqlSp($sql);
     }
     

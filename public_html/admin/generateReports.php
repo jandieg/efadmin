@@ -462,7 +462,8 @@ $objPHPExcel->getActiveSheet()->getComment('Q'.$i)->setHeight("auto")->setWidth(
 $CM=date('m');
 $CY=date('Y');
 //Removing and Computing Next Year
-$del = 32 - $CM;
+//$del = 32 - $CM;
+$del = 26;
 if($CY==$year){
 
 for($i = $del; $i <= 33; $i++) {
@@ -555,27 +556,25 @@ $sql="SELECT miembro.*, miembro_inscripcion.* FROM miembro, miembro_inscripcion
 WHERE miembro.grupo_id=".$xrow['gru_id']." 
 AND miembro.status_member_id IN (".implode(',', $array).") 
 AND miembro.mie_id = miembro_inscripcion.miembro_id  
-AND (miembro.cancelled = 0 
-    or (miembro.mie_id in 
-                (
-                select presupuestocobro.miembro_mie_id from presupuestocobro join 
-                    detallepresupuestocobro  
-                    on (presupuestocobro.precobro_id = detallepresupuestocobro.presupuestocobro_precobro_id)
-                where detallepresupuestocobro.estado_presupuesto_est_pre_id = 1 and 
-                year(detallepresupuestocobro.detalleprecobro_fechavencimiento) < '$year'
-                )
-        or miembro.mie_id in 
-                (
-                select presupuestocobro.miembro_mie_id from presupuestocobro join 
-                    detallepresupuestocobro  
-                    on (presupuestocobro.precobro_id = detallepresupuestocobro.presupuestocobro_precobro_id)
-                where detallepresupuestocobro.estado_presupuesto_est_pre_id = 2 and 
-                year(detallepresupuestocobro.detalleprecobro_fechavencimiento) = '$year'
-                )        
-        ) 
+AND (miembro.mie_id not in (select t0.mie_id from miembro t0 
+    where t0.cancelled = 1 
+    and year(t0.mie_fecha_cambio_status)<'$year'
+    and t0.mie_id not in 
+        (select t1.miembro_mie_id 
+            from presupuestocobro t1, detallepresupuestocobro t2
+            where t1.precobro_id = t2.presupuestocobro_precobro_id
+            and year(detalleprecobro_fechavencimiento) < '$year' 
+            and t2.estado_presupuesto_est_pre_id <> 2 )
+        )
+    
     )
 AND miembro_inscripcion.mie_ins_fecha_ingreso <= '$corte'  
-ORDER By miembro.mie_codigo ASC";// AND miembro_inscripcion.mie_ins_year='$year'
+ORDER By miembro.mie_codigo ASC";
+
+
+
+
+// AND miembro_inscripcion.mie_ins_year='$year'
 $res = mysqli_query($con,$sql);
 $rcount = mysqli_num_rows($res);
 $i=8;
@@ -625,7 +624,9 @@ if (strlen(trim(get_Monthly_Payment($row['mie_id'],$nextyear))) > 0) {
 } else {
     $duesnextyear = false;
 }
-$objPHPExcel->getActiveSheet()->setCellValue('F'.$i, get_Monthly_Payment($row['mie_id'],$year));
+
+
+$objPHPExcel->getActiveSheet()->setCellValue('F'.$i, get_Monthly_Payment($row['mie_id'], date_format(date_create($corte),'Y')));
 $objPHPExcel->getActiveSheet()->getStyle('F'.$i)->getAlignment()->setWrapText(true);
 if ($row['cancelled'] == 1) {
     $this_status_member="MC";
@@ -910,17 +911,15 @@ if($ins_color2){
         )
     ));
 }else{
-	
-	
 
-
-	 $objPHPExcel->getActiveSheet()->getStyle($xx1.$i.':'.$xx2.$i)->getFill()->applyFromArray(array(
-        'type' => PHPExcel_Style_Fill::FILL_SOLID,
-        'startcolor' => array(
-             'rgb' => $COLOR2
-        )
-    ));
-	
+    if (! in_array($this_status_member, array("MC", "MS"))) {
+        $objPHPExcel->getActiveSheet()->getStyle($xx1.$i.':'.$xx2.$i)->getFill()->applyFromArray(array(
+            'type' => PHPExcel_Style_Fill::FILL_SOLID,
+            'startcolor' => array(
+                'rgb' => $COLOR2
+            )
+        ));
+    }
 }
 
 } else  {
@@ -1402,7 +1401,7 @@ if (strlen($W) > 0 && $valorcorte >= intval($nextyear.'03')) {
 }
 $X = get_paid_month_info($row['mie_id'],'04',$nextyear);
 if (strlen($X) > 0 && $valorcorte >= intval($nextyear.'04')) {
-    $objPHPExcel->getActiveSheet()->getComment('X'.$i)->setHeight("50px")->setWidth("250px")->getText()->createTextRun(get_meses_cobros($row['mie_id'],'04',$year)); 
+    $objPHPExcel->getActiveSheet()->getComment('X'.$i)->setHeight("50px")->setWidth("250px")->getText()->createTextRun(get_meses_cobros($row['mie_id'],'04',$nextyear)); 
 }
 /*$Y = get_paid_month_info($row['mie_id'],'05',$nextyear);
 $Z = get_paid_month_info($row['mie_id'],'06',$nextyear);

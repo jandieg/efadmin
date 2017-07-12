@@ -46,7 +46,7 @@ $settings = parse_ini_file(E_LIB."settings.ini.php");
 require_once MODELO2.'GlobalMiembro.php';
 require_once MODELO2.'GlobalSede.php';
 
-
+error_reporting(0);
 $objProfesion; $objFuente; $objEstadoProspecto;$objIndustria;$objCategoria;$objPais;$objProvincia;$objCiudad;$objDesafio;$objRedSocial;
 $objUsuario;$objForum;$objHobby;$objMiembro;$tabla_desafios=array();$objEmpresaLocal;$objDireccion;$objStatus;$prefijoPais="";$codigoMiembro='';
 $titulo='';$idpersona='';$empresa='';$direcion='';$ciudad='';$estado='';$pais='';$nombreGrupo='';
@@ -572,7 +572,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             case 'KEY_SET_ESTADO_MIEMBRO':
                 if (! empty($_POST['_id_miembro']) && ! empty($_POST['_id_status'])) {
                     $objMiembro = new Miembro();
-                    $comp=$objMiembro->setEstadoMiembro($_POST['_id_miembro'], $_POST['_id_status']);
+                    $comp=$objMiembro->setEstadoMiembro($_POST['_id_miembro'], $_POST['_id_status'], $_SESSION['user_id_ben']);
                     if ($comp == "OK") {
                         $data = array("success" => "true", "priority"=>'success',"msg" => 'El Estado del miembro fue actualizado exitosamente');
                         echo json_encode($data);
@@ -862,7 +862,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         $resultado = str_replace("{contenedor_4}", generadorTabla_2($tabla2, "table-striped"), $resultado); 
                         $resultado = str_replace("{contenedor_5}", generadorTabla_2( $tabla3, "table-striped"), $resultado); 
                         $resultado = str_replace("{contenedor_6}", generadorTabla_2($tabla4, "table-striped"), $resultado); 
-                        $resultado = str_replace("{contenedor_7}", generadorTabla_2( $tabla_hobbies, "table-striped"), $resultado); 
+                        //$resultado = str_replace("{contenedor_7}", generadorTabla_2( $tabla_hobbies, "table-striped"), $resultado); 
+                        $resultado = str_replace("{contenedor_7}", "", $resultado); 
                         $resultado = str_replace("{contenedor_8}", generadorTabla_2($tabla_desafios, "table-striped"), $resultado); 
                         $resultado = str_replace("{contenedor_9}", $tablaDetalleEmpresas, $resultado);
                         $resultado = str_replace("{contenedor_10}", $tablaDetalleAsistente, $resultado);

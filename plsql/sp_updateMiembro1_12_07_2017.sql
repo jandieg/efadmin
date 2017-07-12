@@ -15,7 +15,7 @@ mie_id_usuario=_id_usuario,
 grupo_id=_id_grupo,mie_codigo=_mie_codigo,categoria_cat_id=_categoria,
 forum_usu_id=_propietario,Profesion_prof_id=_titulo,mie_descripcion_desafio=_desafios,
 mie_participacion_correo=_correoparticipacion ,
-status_member_id=_id_status, cancelled = 1, mie_fecha_cambio_status = now() 
+ cancelled = 1, mie_fecha_cambio_status = now() 
 WHERE mie_id=_id_miembro;
 else 
 UPDATE miembro 

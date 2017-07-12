@@ -1,8 +1,9 @@
-<?php 
-session_start();
-
+<?php
+    if(!isset($_SESSION)) 
+    { 
+        session_start(); 
+    } 
 ?>
-
 <script>
 if (document.querySelector("#uploadForm")!=null)
 document.querySelector("#uploadForm").addEventListener("submit", function(e){
@@ -673,7 +674,6 @@ var setUserActualizar = function(  id_persona, id_miembro){
             data: parametrosMail,
             url: 'miembros',
             type: 'post',
-            async: false,
             success: function (datos) {
                 console.log(datos);
             },error : function(xhr, status) {
