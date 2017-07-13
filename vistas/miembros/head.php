@@ -344,8 +344,22 @@ $form['form_0'] = array("elemento" => "subir-imagen", "valor" => $cod1."-".$cod2
                                        
                                 $id_estado_cobro= $row4['estado_cobro_id'];
                                 $valor_ins ="$ ".$row4['mie_ins_valor'];
-                                 
+                                $id_valor = "";
                                 $objEstadoPresupuesto= new EstadoPresupuesto();
+                                $objMembresia4 = new Membresia();
+                                $resultset5 = $objMembresia4->getMembresiaByValor($row4['mie_ins_valor']);
+                                if ($row5 = $resultset5->fetch_assoc()) {
+                                    $id_valor = $row5['memb_id'];
+                                }
+
+                                $listam3 = array();                     
+                                foreach ($listaMemb as $k=>$v) {                         
+                                    $listam3[$k] = $v;
+                                    $listam3[$k]['select'] = "";
+                                    if ($listam3[$k]['value'] == $id_valor) {
+                                        $listam3[$k]['select'] = "selected";
+                                    }
+                                }
                                 $estado_presup = "";
                                 $listaEP= array();
                                 $listaEP['lista_'] = array("value" => "x",  "select" => "" ,"texto" => "Seleccione...");
@@ -356,8 +370,8 @@ $form['form_0'] = array("elemento" => "subir-imagen", "valor" => $cod1."-".$cod2
                                 $form11['form_2'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_id_insc" ,"reemplazo" => $row4['mie_ins_id']);
                                 
                                 
-                                $form12['form_0'] = array("elemento" => "caja" ,"tipo" => "hidden" , "titulo" => "", "id" => "_ins_valor" ,"reemplazo" => $valor_ins);
-                                $form12['form_1'] = array("elemento" => "combo", "deshabilitado" => true, "titulo" => "Precio",  "id" => "_ins_valor2" ,"option" => $listaMemb);
+                                $form12['form_0'] = array("elemento" => "caja" ,"tipo" => "hidden" , "titulo" => "", "id" => "_ins_valor" ,"reemplazo" => $id_valor);
+                                $form12['form_1'] = array("elemento" => "combo", "deshabilitado" => true, "titulo" => "Precio",  "id" => "_ins_valor2" ,"option" => $listam3);
                                 $form12['form_2'] = array("elemento" => "caja" ,"tipo" => "date", "titulo" => "Fecha de Cobro", "id" => "_fecha_cobro", "reemplazo" => $fecha_cobro);                        
                                 
                             } else {

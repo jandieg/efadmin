@@ -36,6 +36,11 @@ class Membresia extends Conexion{
         return $valor;
     }
 
+    function getMembresiaByValor($valor) {
+        $sql = "call sp_selectMembresiaByValor('$valor')";
+        return parent::getConsultar($sql);
+    }
+
     function getListaComboMembresiaValor($id='') {
         $resultset= $this->getMembresias('A'); 
         $lista=array();
