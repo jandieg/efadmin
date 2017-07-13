@@ -46,11 +46,26 @@ function getDetalleEmpresaConMiembros($id, $key, $año) {
             
                 if($row['valor_inscripcion'] != ""){
                 if (in_array($row2['agrup'], array('A'))) {
-                    
-                    $msg="El valor de la Inscripción del Miembro ".$nombre." es de : $ ".$row['valor_inscripcion'];
-                    $boton['boton_1'] = array("elemento" => "boton" ,"modal" => "#modal_InscripcionCobro" ,"color" => "btn-info", 
-                        "click" => "getGenerarInscripcionCobro('".$msg."',".$row['mie_id'].")" ,"titulo" => "Cobrar Inscripción", 
-                        "lado" => "" ,"icono" => "fa-money"); 
+                    $objInscripcion = new Inscripcion();
+                    $result6 = $objInscripcion->getInscripcion($row['mie_id']);
+                    $mostrar = true;
+                    $valorins = 0;
+                    if ($row6 = $result6->fetch_assoc()) {
+                        $valorins = $row6['mie_ins_valor'];
+                        if ($row6['mie_ins_valor'] == 0) {                            
+                            $mostrar = false;
+                        }
+                    }
+
+                    $msg="El valor de la Inscripción del Miembro ".$nombre." es de : $ ".$valorins;
+                    //if ($row['valor_inscripcion'] == 0) {
+
+                    if ($mostrar) {
+                        $boton['boton_1'] = array("elemento" => "boton" ,"modal" => "#modal_InscripcionCobro" ,"color" => "btn-info", 
+                            "click" => "getGenerarInscripcionCobro('".$msg."',".$row['mie_id'].")" ,"titulo" => "Cobrar Inscripción", 
+                            "lado" => "" ,"icono" => "fa-money"); 
+                        }                    
+                    //}
                 }
             }
             
