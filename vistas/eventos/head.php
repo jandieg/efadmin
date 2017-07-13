@@ -1485,9 +1485,14 @@ $form['form_7'] = array("elemento" => "fecha + tiempo" ,"tipo_date" => "hidden" 
                     $resultset= $objEvento->getEventosDetalle($_POST['_id']);
                     if($row = $resultset->fetch_assoc()) {
                         
-                        
+                        $objForumLeader3 = new ForumLeader();
+                        $resultset5=$objForumLeader3->getPersonaById($row['eve_responsable']);
+                        $forumleader = "";
+                        if ($row5 = $resultset5->fetch_assoc()) {
+                            $forumleader = $row5['per_nombre'] . ' ' . $row5['per_apellido'];
+                        }
 
-                        $tabla['t_1'] = array("t_1" => generadorNegritas("Forum Leader"), "t_2" => $row['eve_responsable']);
+                        $tabla['t_1'] = array("t_1" => generadorNegritas("Forum Leader"), "t_2" => $forumleader);
                         $tabla['t_2'] = array("t_1" => generadorNegritas("Evento"), "t_2" => $row['eve_nombre']);
                         $tabla['t_3'] = array("t_1" => generadorNegritas("Dirección"), "t_2" => $row['direccion']);
                         //todo poner para setear puntaje

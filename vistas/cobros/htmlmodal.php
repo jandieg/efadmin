@@ -27,6 +27,8 @@
 
 
                 </div>
+                <label for="fechacob">Fecha de cobro</label>
+                <input type="date" name="fechacob" class="datepicker" id="_fecha_cobro" value="<?php echo date('Y-m-d'); ?>"/>
           
             </div>
             <div class="modal-footer">

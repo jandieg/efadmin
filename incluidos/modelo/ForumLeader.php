@@ -44,7 +44,10 @@ class ForumLeader extends Conexion{
         return $listaForum;
     }
 	//Para eventos//
-	
+	public function getPersonaById($idPersona) {
+        $sql = "call sp_selectPersonaById('$idPersona')";
+        return parent::getConsultar($sql);
+    }
 	public function getListaForumLeadersEVENTOS($idSeleccionado='') {   
         $resultset= $this->getForumLeader(NULL); 
         $listaForum=array();
