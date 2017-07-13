@@ -71,10 +71,19 @@ function getDetalleEmpresaConMiembros($id, $key, $año) {
             
         }
         $boton['boton_2'] = array("elemento" => "boton" ,"modal" => "#modal_detalleCobro" ,"color" => "btn-info" ,"click" => "getGenerarDetalleCobro('".$nombre."',".(($row['precobro_id'] == "") ? "0": $row['precobro_id']) .",".$row['mie_id'].")" ,"titulo" => "Cobrar Cuotas" ,"lado" => "" ,"icono" => "fa-money");
-        
-        $cuerpo.= generadorTablaColoresFilas("" , array(     
+        $tienependientes = false;
+        if (strlen($row['precobro_id']) > 0) {
+            $objPresupuestoCobro4 = new PresupuestoCobro();
+            $result7 = $objPresupuestoCobro4->getPendientesByPrecobro($row['precobro_id']);
+            if ($row7 = $result7->fetch_assoc()) {
+                $tienependientes = true;
+            }        
+        } 
+        if (! ($row['cancelled'] == 1 && ! $tienependientes)) {
+            $cuerpo.= generadorTablaColoresFilas("" , array(     
                    $nombre,
                    generadorBoton($boton)));   
+        }        
         // $tabla_miembros= generadorTablaModal(1,"","", array( "Código", "Nombre",'EF Paid','1st FM','Dues Mo','YTD'), $cuerpo);     
     }
     $tablaDetalleMiembros=  generadorTablaModal(1,"","", array( "Miembros",""), $cuerpo);     

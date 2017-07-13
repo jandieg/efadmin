@@ -40,6 +40,11 @@ class PresupuestoCobro extends Conexion{
         return parent::setSqlSp($sql);
     }       
 
+    public function getPendientesByPrecobro($idPrecobro) {
+        $sql = "call sp_selectPendientesByPrecobro('$idPrecobro')";
+        return parent::getConsultar($sql);
+    }
+
     public function getCreditoPresupuestoMiembro($id) {
         $sql="CALL sp_selectCreditoPresupuestoMiembro('$id')";
         return parent::getConsultar($sql);
