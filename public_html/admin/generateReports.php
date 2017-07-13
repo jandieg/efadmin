@@ -625,13 +625,17 @@ if (strlen(trim(get_Monthly_Payment($row['mie_id'],$nextyear))) > 0) {
     $duesnextyear = false;
 }
 
-
-$objPHPExcel->getActiveSheet()->setCellValue('F'.$i, get_Monthly_Payment($row['mie_id'], date_format(date_create($corte),'Y')));
-$objPHPExcel->getActiveSheet()->getStyle('F'.$i)->getAlignment()->setWrapText(true);
 if ($row['cancelled'] == 1) {
     $this_status_member="MC";
 } else {
     $this_status_member=get_status_info($row['status_member_id']);
+}
+if ($this_status_member == "MS") {
+    $objPHPExcel->getActiveSheet()->setCellValue('F'.$i, "");
+    $objPHPExcel->getActiveSheet()->getStyle('F'.$i)->getAlignment()->setWrapText(true);
+} else {
+    $objPHPExcel->getActiveSheet()->setCellValue('F'.$i, get_Monthly_Payment($row['mie_id'], date_format(date_create($corte),'Y')));
+    $objPHPExcel->getActiveSheet()->getStyle('F'.$i)->getAlignment()->setWrapText(true);
 }
 
 $objPHPExcel->getActiveSheet()->getColumnDimension('G'.$i)->setAutoSize(false);
