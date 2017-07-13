@@ -568,6 +568,86 @@ function countPayments($id,$month,$year,$pos){
 
 //echo countPayments('37','01','2016','9');
 
+function comment_months_exonerados($id, $corte) {
+
+	include("../../incluidos/db_config/config.php");
+	$sql = "SELECT  detallepresupuestocobro.detalleprecobro_fechavencimiento 
+from presupuestocobro join detallepresupuestocobro 
+on (presupuestocobro.precobro_id = detallepresupuestocobro.presupuestocobro_precobro_id)
+where detallepresupuestocobro.detalleprecobro_fechavencimiento <= '$corte' 
+and presupuestocobro.miembro_mie_id = '$id' 
+and detalleprecobro_valor = 0 
+ ";
+
+ 	$res = mysqli_query($con,$sql);
+
+		$data = ' ';
+
+		while($row = mysqli_fetch_array($res)){
+
+
+ 	$sql_date = $row['detalleprecobro_fechavencimiento'];
+
+$month =  intval(date_format(date_create($sql_date), 'm'));	
+$xyear =  date_format(date_create($sql_date), 'Y');	
+$texto = "";
+
+if($month==1){ $texto='ENERO'.$xyear; //cellColor('H'.$pos, 'ffff00'); 
+
+}
+
+if($month==2){ $texto='FEBRERO'.$xyear; //cellColor('I'.$pos, 'ffff00'); 
+
+}
+
+if($month==3){ $texto='MARZO'.$xyear; //cellColor('J'.$pos, 'ffff00'); 
+
+}
+
+if($month==4){ $texto='ABRIL'.$xyear; //cellColor('K'.$pos, 'ffff00'); 
+
+}
+
+if($month==5){ $texto='MAYO'.$xyear; //cellColor('L'.$pos, 'ffff00'); 
+
+}
+
+if($month==6){ $texto='JUNIO'.$xyear; //cellColor('M'.$pos, 'ffff00'); 
+
+}
+
+if($month==7){ $texto='JULIO'.$xyear; //cellColor('N'.$pos, 'ffff00'); 
+
+}
+
+if($month==8){ $texto='AGOSTO'.$xyear; //cellColor('O'.$pos, 'ffff00'); 
+
+}
+
+if($month==9){ $texto='SEPTIEMBRE'.$xyear; //cellColor('P'.$pos, 'ffff00'); 
+
+}
+
+if($month==10){ $texto='OCTUBRE'.$xyear; //cellColor('Q'.$pos, 'ffff00'); 
+
+}
+
+if($month==11){ $texto='NOVIEMBRE'.$xyear; //cellColor('R'.$pos, 'ffff00'); 
+
+}
+
+if($month==12){ $texto='DICIEMBRE'.$xyear; //cellColor('S'.$pos, 'ffff00'); 
+
+}
+
+		$data.= $texto.'  '; 
+
+		}
+
+		return $data;
+		//return substr($data,0,-2);
+
+}
 
 
 function comment_months($id,$month,$year,$pos,$corte){

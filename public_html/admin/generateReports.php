@@ -625,7 +625,8 @@ if (strlen(trim(get_Monthly_Payment($row['mie_id'],$nextyear))) > 0) {
     $duesnextyear = false;
 }
 
-if ($row['cancelled'] == 1) {
+if ($row['cancelled'] == 1 && strlen($row['mie_fecha_cambio_status']) > 0 
+&& intval(date_format(date_create($corte),'Ymd')) > intval(date_format(date_create($row['mie_fecha_cambio_status']),'Ymd'))  ) {
     $this_status_member="MC";
 } else {
     $this_status_member=get_status_info($row['status_member_id']);
@@ -1879,6 +1880,148 @@ if (strpos($commenting_next_year, 'DICIEMBRE'.$year) !== false  && $valorcorte >
 
 	
 }//end for
+
+$exonerados=comment_months_exonerados($row['mie_id'], $corte);
+
+    
+if (strpos($exonerados, 'ENERO'.$year) !== false  && $valorcorte >= intval($year.'01')) {
+    $objPHPExcel->getActiveSheet()->getStyle('H'.$i)->getFill()->applyFromArray(array(
+        'type' => PHPExcel_Style_Fill::FILL_SOLID,
+        'startcolor' => array(
+             'rgb' => '92d050'
+        )
+    ));
+}
+if (strpos($exonerados, 'FEBRERO'.$year) !== false  && $valorcorte >= intval($year.'02')) {
+    $objPHPExcel->getActiveSheet()->getStyle('I'.$i)->getFill()->applyFromArray(array(
+        'type' => PHPExcel_Style_Fill::FILL_SOLID,
+        'startcolor' => array(
+             'rgb' => '92d050'
+        )
+
+    ));
+}
+if (strpos($exonerados, 'MARZO'.$year) !== false  && $valorcorte >= intval($year.'03')) {
+    $objPHPExcel->getActiveSheet()->getStyle('J'.$i)->getFill()->applyFromArray(array(
+        'type' => PHPExcel_Style_Fill::FILL_SOLID,
+        'startcolor' => array(
+             'rgb' => '92d050'
+        )
+    ));
+}
+
+if (strpos($exonerados, 'ABRIL'.$year) !== false  && $valorcorte >= intval($year.'04')) {
+    $objPHPExcel->getActiveSheet()->getStyle('K'.$i)->getFill()->applyFromArray(array(
+        'type' => PHPExcel_Style_Fill::FILL_SOLID,
+        'startcolor' => array(
+             'rgb' => '92d050'
+        )
+    ));
+    
+}
+
+if (strpos($exonerados, 'MAYO'.$year) !== false  && $valorcorte >= intval($year.'05')) {
+    $objPHPExcel->getActiveSheet()->getStyle('L'.$i)->getFill()->applyFromArray(array(
+        'type' => PHPExcel_Style_Fill::FILL_SOLID,
+        'startcolor' => array(
+             'rgb' => '92d050'
+        )
+    ));
+}
+if (strpos($exonerados, 'JUNIO'.$year) !== false  && $valorcorte >= intval($year.'06')) {
+    $objPHPExcel->getActiveSheet()->getStyle('M'.$i)->getFill()->applyFromArray(array(
+        'type' => PHPExcel_Style_Fill::FILL_SOLID,
+        'startcolor' => array(
+             'rgb' => '92d050'
+        )
+    ));
+}
+if (strpos($exonerados, 'JULIO'.$year) !== false  && $valorcorte >= intval($year.'07')) {
+    $objPHPExcel->getActiveSheet()->getStyle('N'.$i)->getFill()->applyFromArray(array(
+        'type' => PHPExcel_Style_Fill::FILL_SOLID,
+        'startcolor' => array(
+             'rgb' => '92d050'
+        )
+    ));
+}
+if (strpos($exonerados, 'AGOSTO'.$year) !== false  && $valorcorte >= intval($year.'08')) {
+    $objPHPExcel->getActiveSheet()->getStyle('O'.$i)->getFill()->applyFromArray(array(
+        'type' => PHPExcel_Style_Fill::FILL_SOLID,
+        'startcolor' => array(
+             'rgb' => '92d050'
+        )
+    ));
+}
+if (strpos($exonerados, 'SEPTIEMBRE'.$year) !== false && $valorcorte >= intval($year.'09')) {
+    $objPHPExcel->getActiveSheet()->getStyle('P'.$i)->getFill()->applyFromArray(array(
+        'type' => PHPExcel_Style_Fill::FILL_SOLID,
+        'startcolor' => array(
+             'rgb' => '92d050'
+        )
+    ));
+}
+if (strpos($exonerados, 'OCTUBRE'.$year) !== false  && $valorcorte >= intval($year.'10')) {
+    $objPHPExcel->getActiveSheet()->getStyle('Q'.$i)->getFill()->applyFromArray(array(
+        'type' => PHPExcel_Style_Fill::FILL_SOLID,
+        'startcolor' => array(
+             'rgb' => '92d050'
+        )
+    ));
+}
+if (strpos($exonerados, 'NOVIEMBRE'.$year) !== false  && $valorcorte >= intval($year.'11')) {
+    $objPHPExcel->getActiveSheet()->getStyle('R'.$i)->getFill()->applyFromArray(array(
+        'type' => PHPExcel_Style_Fill::FILL_SOLID,
+        'startcolor' => array(
+             'rgb' => '92d050'
+        )
+    ));
+}
+if (strpos($exonerados, 'DICIEMBRE'.$year) !== false  && $valorcorte >= intval($year.'12')) {
+    $objPHPExcel->getActiveSheet()->getStyle('S'.$i)->getFill()->applyFromArray(array(
+        'type' => PHPExcel_Style_Fill::FILL_SOLID,
+        'startcolor' => array(
+             'rgb' => '92d050'
+        )
+    ));
+}
+
+
+
+
+    if (strpos($exonerados, 'ENERO'.$nextyear) !== false && $valorcorte >= intval($nextyear.'01')) {
+    $objPHPExcel->getActiveSheet()->getStyle('U'.$i)->getFill()->applyFromArray(array(
+        'type' => PHPExcel_Style_Fill::FILL_SOLID,
+        'startcolor' => array(
+             'rgb' => '92d050'
+        )
+    ));
+}
+if (strpos($exonerados, 'FEBRERO'.$nextyear) !== false && $valorcorte >= intval($nextyear.'02')) {
+    $objPHPExcel->getActiveSheet()->getStyle('V'.$i)->getFill()->applyFromArray(array(
+        'type' => PHPExcel_Style_Fill::FILL_SOLID,
+        'startcolor' => array(
+             'rgb' => '92d050'
+        )
+    ));
+}
+if (strpos($exonerados, 'MARZO'.$nextyear) !== false && $valorcorte >= intval($nextyear.'03')) {
+    $objPHPExcel->getActiveSheet()->getStyle('W'.$i)->getFill()->applyFromArray(array(
+        'type' => PHPExcel_Style_Fill::FILL_SOLID,
+        'startcolor' => array(
+             'rgb' => '92d050'
+        )
+    ));
+}
+
+if (strpos($exonerados, 'ABRIL'.$nextyear) !== false && $valorcorte >= intval($nextyear.'04')) {
+    $objPHPExcel->getActiveSheet()->getStyle('X'.$i)->getFill()->applyFromArray(array(
+        'type' => PHPExcel_Style_Fill::FILL_SOLID,
+        'startcolor' => array(
+             'rgb' => '92d050'
+        )
+    ));
+}
+
 //END//
 $objPHPExcel->getActiveSheet()->setCellValue('T'.$i, "=SUM(H".$i.":S".$i.")");
 $i++;
