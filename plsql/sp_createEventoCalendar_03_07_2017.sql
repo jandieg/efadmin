@@ -18,7 +18,7 @@ VALUES (_nombre,_responsable,_toeldia,_fi,_ff,_fr,_fr,_usuario,_id_tipo_evento,_
 
     SET _LID_EVENTO = LAST_INSERT_ID();
 
-INSERT INTO evento_grupo( evento_eve_id, grupos_gru_id) VALUES (_LID_EVENTO,4);
+INSERT INTO evento_grupo( evento_eve_id, grupos_gru_id) VALUES (_LID_EVENTO,_lista_grupos);
     if _id_acompanado <> '' then
         UPDATE evento SET evento_acompanado=_id_acompanado  WHERE eve_id=_LID_EVENTO;
 		

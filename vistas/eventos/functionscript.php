@@ -350,6 +350,8 @@ var setCrearEvento = function(op, id_tipo_evento,opcion_contacto,opcion_acompana
             _contactos:_arrayContactos
 
     };
+
+    console.log($("#_miembrosGrupos").val().toString());
     $.ajax({
         data:  parametros,
         url:   'eventos',
