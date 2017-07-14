@@ -1204,7 +1204,12 @@ $form['form_7'] = array("elemento" => "fecha + tiempo" ,"tipo_date" => "hidden" 
                         $objDireccion= new Direccion();
                         $lista= $objDireccion->getListaDireccion($row['tip_eve_opcion_direccion'], $row['direccion_id']);
 						
-						
+						$objEvento2 = new Evento();
+                        $resultset7 = $objEvento2->getEventoGrupos($_POST['id']);
+                        $grupos = "";
+                        if ($row7 = $resultset7->fetch_assoc()) {
+                            $grupos = $row7['grupos_gru_id'];
+                        }
 						
         $objForum= new ForumLeader();
         $listaForumLeader= $objForum->getListaForumLeadersEVENTOS($row['eve_responsable']);
@@ -1222,7 +1227,14 @@ $form['form_7'] = array("elemento" => "fecha + tiempo" ,"tipo_date" => "hidden" 
 				   
 		$listaGrupoMiembros['lista_'] = array( "value" => "x",  "select" => "selected" ,"texto" => "Seleccione...");
 	    $objGrupo= new Grupo();
-        $listaGrupos= $objGrupo->getListaGruposForum($row['eve_id_usuario'], $row['eve_mis_grupos'], NULL);
+        $objUsuario = new Usuario();
+        $resultset6=$objUsuario->getUsuarioByPersona($row['eve_responsable']);
+        $forumleader2 = "";
+
+        if ($row6 = $resultset6->fetch_assoc()) {
+            $forumleader2 = $row6['usu_id'];
+        }
+        $listaGrupos= $objGrupo->getListaGruposForum($forumleader2, $grupos, NULL);
 		$form['form_3'] = array("elemento" => "combo", "titulo" => "Grupos", "id" => "_miembrosGrupos", "option" => $listaGrupos);
 		
 

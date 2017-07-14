@@ -77,6 +77,11 @@ class Usuario extends Conexion{
         }  
     }
 
+    public function getUsuarioByPersona($idPersona) {
+        $sql ="call sp_selectUsuarioByPersona('$idPersona')";
+        return parent::getConsultar($sql);
+    }
+
     public function setActualizarUsuario($id ,$n, $a, $tipo,$ident, $fn, $genero, $id_perfil, $estado, $id_user, $correo, $telefono, $celular, $sede, $pais) {
         $sql="call sp_updateUsuario('$id','$n', '$a', '$tipo','$ident', '$fn' , '$genero' , '$id_perfil', '$estado', '$id_user', '$correo', '$telefono','$celular', '$sede', '$pais')"; 
         return parent::setSqlSp($sql);        
