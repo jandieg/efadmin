@@ -631,7 +631,7 @@ if ($row['cancelled'] == 1 && strlen($row['mie_fecha_cambio_status']) > 0
 } else {
     $this_status_member=get_status_info($row['status_member_id']);
 }
-if ($this_status_member == "MS") {
+if (in_array($this_status_member, array("MS","MC"))) {
     $objPHPExcel->getActiveSheet()->setCellValue('F'.$i, "");
     $objPHPExcel->getActiveSheet()->getStyle('F'.$i)->getAlignment()->setWrapText(true);
 } else {
