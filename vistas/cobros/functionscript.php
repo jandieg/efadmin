@@ -598,7 +598,8 @@ var setCobrarInscripcion = function(){
     $.msg({content : '<img src="public/images/loanding.gif" />', autoUnblock: false});
     var parametros = {
                 KEY: 'KEY_GUARDAR_COBRO_INSCRIPCION',  
-                _id_inscripcion_miembro: $("#_id_inscripcion_miembro").val().toString()
+                _id_inscripcion_miembro: $("#_id_inscripcion_miembro").val().toString(),
+                _fecha_cobro: $("#_fecha_cobro").val().toString()
         };
         $.ajax({
             data:  parametros,

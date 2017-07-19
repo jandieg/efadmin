@@ -458,10 +458,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             
             case 'KEY_GUARDAR_COBRO_INSCRIPCION': 
                  
-                 if( !empty($_POST['_id_inscripcion_miembro'])){  
+                 if( !empty($_POST['_id_inscripcion_miembro']) && ! empty($_POST['_fecha_cobro'])){  
                
                      $objInscripcion= new Inscripcion();
-                     $comp= $objInscripcion->setCobrar($_POST['_id_inscripcion_miembro'],$_SESSION['user_id_ben']);  
+                     $comp= $objInscripcion->setCobrar2($_POST['_id_inscripcion_miembro'],$_SESSION['user_id_ben'], $_POST['_fecha_cobro']);  
    
                      if($comp == "OK"){
                         $data = array("success" => "true", "priority"=>'success',"msg" => 'El Cobro se realizó correctamente!');  
