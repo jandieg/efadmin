@@ -21,16 +21,16 @@ class PresupuestoCobro extends Conexion{
         $sql="CALL sp_selectPresupuestoCobroMiembrosxGrupos2('$idGrupo', '$year')";
         return parent::getConsultar($sql);   
     }
-    public function grabarPresupuestoCobroMiembro($valor, $fechaInicioMiembro,$idMiembro,$totalCobro,$idPeriodo,$id_user,$listaFechas,$idMembresia,$listaFechasFaltantes,$valorFechasFaltantes,$idTipo) {
+    public function grabarPresupuestoCobroMiembro($valor, $fechaInicioMiembro,$idMiembro,$totalCobro,$idPeriodo,$id_user,$listaFechas,$idMembresia,$listaFechasFaltantes,$valorFechasFaltantes,$idTipo, $cancelled, $fechaCambio) {
         $fecha= date("Y-m-d H:i:s");
         $year= date("Y");
-        $sql="CALL sp_createPresupuestoCobroMiembro('$valor','$fechaInicioMiembro','$idMiembro','$totalCobro','$idPeriodo','$fecha','$id_user','$listaFechas', '$year', '$idMembresia','$listaFechasFaltantes', '$valorFechasFaltantes','$idTipo')";
+        $sql="CALL sp_createPresupuestoCobroMiembro('$valor','$fechaInicioMiembro','$idMiembro','$totalCobro','$idPeriodo','$fecha','$id_user','$listaFechas', '$year', '$idMembresia','$listaFechasFaltantes', '$valorFechasFaltantes','$idTipo', '$cancelled', '$fechaCambio')";
         return parent::setSqlSp($sql);   
     }
-    public function actualizarPresupuestoCobroMiembro($idPresupuesto,$valor, $totalCobro,$idPeriodo,$id_user,$listaFechas,$idMembresia,$idMiembro,$listaFechasFaltantes,$valorFechasFaltantes,$idTipo) {
+    public function actualizarPresupuestoCobroMiembro($idPresupuesto,$valor, $totalCobro,$idPeriodo,$id_user,$listaFechas,$idMembresia,$idMiembro,$listaFechasFaltantes,$valorFechasFaltantes,$idTipo,$cancelled, $fechaCambio) {
         $fecha= date("Y-m-d H:i:s");
         $year= date("Y");
-        $sql="CALL sp_updatePresupuestoCobroMiembro('$idPresupuesto','$valor','$totalCobro','$idPeriodo','$id_user','$listaFechas','$idMembresia', '$idMiembro','$listaFechasFaltantes','$valorFechasFaltantes','$idTipo','$year')";
+        $sql="CALL sp_updatePresupuestoCobroMiembro('$idPresupuesto','$valor','$totalCobro','$idPeriodo','$id_user','$listaFechas','$idMembresia', '$idMiembro','$listaFechasFaltantes','$valorFechasFaltantes','$idTipo','$year', '$cancelled', '$fechaCambio')";
         return parent::setSqlSp($sql);   
     }
 
@@ -93,6 +93,21 @@ class PresupuestoCobro extends Conexion{
      public function getPresupuestoCobroMiembrosFiltroGrupo($id, $year) {
         $sql="CALL sp_selectPresupuestoCobroMiembrosFiltroxGrupo('$id', '$year')";
         return parent::getConsultar($sql);   
+    }
+
+    public function getCuotasEnCero($id) {
+        $sql = "CALL sp_selectCuotasEnCero('$id')";
+        return parent::getConsultar($sql);
+    }
+
+    public function getFechasConCuotasEnCero($id) {
+        $resultset = $this->getCuotasEnCero($id);
+        $lista = array();
+
+        while ($row = $resultset->fetch_assoc()) {
+            $lista[] = date('Y-m-d',strtotime($row['detalleprecobro_fechavencimiento']));
+        }
+        return $lista;
     }
     
     public function getListaDetallePresupuesto($id) {   

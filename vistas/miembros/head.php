@@ -1083,7 +1083,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                      $membresiaValor= $objMembresia->getMembresiaValor($_POST['_id_membresia']);
 
 
-
+                     $objPresupuestoCobro3 = new PresupuestoCobro();
+                     $listaFechasCuotasEnCero = array();
+                     $listaFechasCuotasEnCero = $objPresupuestoCobro3->getFechasConCuotasEnCero($_POST['_id_presupuesto']);
+                     $objMiembro3 = new Miembro();
+                     $resultsetm = $objMiembro3->getMiembro1($_POST['_id_miembro']);
+                     $miembroCancelled = 0;
+                     $fechaCambioStatus = "";
+                     if ($row6 = $resultsetm->fetch_assoc()) {
+                        $miembroCancelled = $row6['cancelled'];
+                        $fechaCambioStatus = date_format(date_create($row6['mie_fecha_cambio_status']),'Y-m-d');
+                     }
 
                      ////////////////////////////////////////////////////////////
                      //Obtener las fechas del primer período
@@ -1109,8 +1119,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                  if($fechaPrimeraVuelta == ""){
                                      $fechaPrimeraVuelta= $fecha;
                                  }
-                                 $listaFechaLetrasPeriodos.= $fecha.",";
-                                 $multiplicadorPeriodo= $multiplicadorPeriodo + 1;
+                                 if (! in_array($fecha, $listaFechasCuotasEnCero)) {
+                                    $listaFechaLetrasPeriodos.= $fecha.",";
+                                    $multiplicadorPeriodo= $multiplicadorPeriodo + 1;
+                                 }                                 
                              }
                      }
                      ////////////////////////////////////////////////////////////
@@ -1125,13 +1137,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                      if($numMesesFaltantes > 0){
                          for ($index = $numMes_DelRegistro; $index < $numMes_DelPrimeraVuelta; $index = $index + 1) {
                              $fecha= getPrimerDiaMes(date("Y"),$index); 
-                             $listaFechaLetrasFaltantes.= $fecha.",";
-                             $multiplicadorLetrasFaltantes= $multiplicadorLetrasFaltantes + 1;
+                             if (! in_array($fecha, $listaFechasCuotasEnCero)) {
+                                $listaFechaLetrasFaltantes.= $fecha.",";
+                                $multiplicadorLetrasFaltantes= $multiplicadorLetrasFaltantes + 1;
+                             }
+                             
                          }    
                      }
                      ////////////////////////////////////////////////////////////
-
-                     $valorCobrarPeriodo= $membresiaValor * $periodoMeses;  
+                     $numCuotasEnCero = 0;
+                     $numCuotasEnCero = count($listaFechasCuotasEnCero);
+                     $valorCobrarPeriodo= $membresiaValor * ($periodoMeses - $numCuotasEnCero);  
                      $valorCobrarLetrasFaltantes= $membresiaValor;
 
                      $totalCobrar= ($valorCobrarPeriodo * $multiplicadorPeriodo) + ($valorCobrarLetrasFaltantes * $multiplicadorLetrasFaltantes);
@@ -1141,14 +1157,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                          $objPresupuestoCobro= new PresupuestoCobro();   
                          $comp= $objPresupuestoCobro->actualizarPresupuestoCobroMiembro($_POST['_id_presupuesto'], $valorCobrarPeriodo,
                                  $totalCobrar,$_POST['_id_periodo'], $_SESSION['user_id_ben'],$listaFechaLetrasPeriodos, $_POST['_id_membresia'],
-                                 $_POST['_id_miembro'],$listaFechaLetrasFaltantes, $valorCobrarLetrasFaltantes,$idTipo); 
+                                 $_POST['_id_miembro'],$listaFechaLetrasFaltantes, $valorCobrarLetrasFaltantes,$idTipo, $miembroCancelled, $fechaCambioStatus); 
                          $msg='El Presupuesto se actualizo correctamente!';
                       }else{
 
                          $objPresupuestoCobro= new PresupuestoCobro();
                          $comp= $objPresupuestoCobro->grabarPresupuestoCobroMiembro( $valorCobrarPeriodo, $fechaRegistroPresupuesto, $_POST['_id_miembro'],
                                  $totalCobrar,$_POST['_id_periodo'], $_SESSION['user_id_ben'],$listaFechaLetrasPeriodos, $_POST['_id_membresia'],
-                                  $listaFechaLetrasFaltantes, $valorCobrarLetrasFaltantes, $idTipo); 
+                                  $listaFechaLetrasFaltantes, $valorCobrarLetrasFaltantes, $idTipo, $miembroCancelled, $fechaCambioStatus); 
                          $msg='El Presupuesto se creo correctamente!';
                       }
 
