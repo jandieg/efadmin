@@ -432,8 +432,28 @@ var setActualizarEvento = function( id_evento,opcion_contacto,opcion_acompanado,
     if( $('#_all_day').prop('checked') ) {
         _all_day="1";
     } 
-    
-    var parametros = {
+    if ($("#_puntaje").val() != undefined &&  $("#_puntaje").val().toString().length > 0) {
+        var parametros = {
+            KEY: 'KEY_ACTUALIZAR_EVENTO',
+            _id: id_evento.toString(), 
+            _titular: $("#_titular").val().toString(),
+            _nombre: $("#_nombre").val().toString(),
+            _fi: fecha_hora_inicio,
+            _ff: fecha_hora_fin,
+            _id_ubicacion: $("#_ubicacion").val().toString(),
+            _ubicacion: 'aaa', 
+            _descripcion: $("#_descripcion").val().toString(),           
+            _participantes_adicionales: _arrayParticipantes,
+          //  _miembrosGrupos: _arrayMiembrosGrupos,
+		    _miembrosGrupos: $("#_miembrosGrupos").val().toString(), 
+            _all_day:_all_day,
+            _empresariosMes:_arrayEmpresariosMes,
+            _acompanado:acompanado,
+            _contactos:_arrayContactos,
+            _puntaje: $("#_puntaje").val().toString()
+        };
+    } else {
+        var parametros = {
             KEY: 'KEY_ACTUALIZAR_EVENTO',
             _id: id_evento.toString(), 
             _titular: $("#_titular").val().toString(),
@@ -451,7 +471,9 @@ var setActualizarEvento = function( id_evento,opcion_contacto,opcion_acompanado,
             _acompanado:acompanado,
             _contactos:_arrayContactos
 
-    };
+        };
+    }
+    
     $.ajax({
         data:  parametros,
         url:   'eventos',

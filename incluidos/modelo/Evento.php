@@ -141,6 +141,11 @@ class Evento extends Conexion{
         return parent::getConsultar($sql);
 
     }
+
+    public function setActualizarPuntaje($idEvento, $puntaje) {
+        $sql = "call sp_updatePuntaje('$idEvento', '$puntaje')";
+        return parent::setSqlSp($sql);
+    }
     
     public function getEventoParticipanteAdicional($idEvento) {
         $sql="call sp_selectEventoParticipanteAdicional('$idEvento')";

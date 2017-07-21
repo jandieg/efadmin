@@ -29,8 +29,9 @@ $asunto= "";$tabla= "";$correo= "";
 function setPuntaje($lista = array(), $puntaje = "") {
     $listaAux = array();
     $listaAux = $lista;
+    
     foreach ($lista as $k => $v) {
-        if ($v['value']=$puntaje) {
+        if ($v['value']==$puntaje) {
             $listaAux[$k]['select'] = "selected";
         }
     }
@@ -70,7 +71,9 @@ function getTablaComponenteEducacional() {
     $lista = $objGrupo->getListaGruposAndForumLeaders();
     $listaNombres = getListaNombres($lista);
      $tabla="<div='myDiv' style=' width: 900px !important; overflow-x: scroll !important;'>
-    <div class='row'><div class ='span2'>&nbsp;</div><div class ='span2'>&nbsp;</div><div class ='span2'>&nbsp;</div><div class ='span2 btn btn-primary' onClick='getRecargar()' style='margin-left:20px;'>Regresar</div></div>";
+    <div class='row'><div class ='span2'>&nbsp;</div><div class ='span2'>&nbsp;</div><div 
+    class ='span2'>&nbsp;</div><div class ='span2 btn btn-primary' 
+    onClick='getRecargar()' style='margin-left:20px;'>Regresar</div></div>";
     $tabla.="<table class='table table-bordered' style='border: 1px solid black; border-collapse: collapse;'><thead>
     <tr><th style='border: 1px solid black; border-collapse: collapse;'><strong>Año</strong>
     </th><th style='border: 1px solid black; border-collapse: collapse;'><strong>Mes</strong></th>";
@@ -91,7 +94,8 @@ function getTablaComponenteEducacional() {
     $listaData = array();
     foreach ($period as $dt) {
         foreach ($lista as $l) {
-            $listaData[$dt->format('Y')][intval($dt->format('m'))][$l['id']] = "<td style='border: 1px solid black; border-collapse: collapse;'>&nbsp;</td>"; 
+            $listaData[$dt->format('Y')][intval($dt->format('m'))][$l['id']]['evento'] = "<td style='border: 1px solid black; border-collapse: collapse;'>&nbsp;</td>"; 
+            $listaData[$dt->format('Y')][intval($dt->format('m'))][$l['id']]['puntaje'] = "<td style='border: 1px solid black; border-collapse: collapse;'>&nbsp;</td>"; 
         }
     }
 
@@ -99,7 +103,8 @@ function getTablaComponenteEducacional() {
     $resultset = $objEvento->getEventosByYearPeriod($anho_inicio, date('Y'));
 
     while ($row = $resultset->fetch_assoc()) {
-        $listaData[$row['anho']][$row['mes']][$row['grupos_gru_id']] = "<td style='border: 1px solid black; border-collapse: collapse;'>" . $row['ocasion'] . "</td>";
+        $listaData[$row['anho']][$row['mes']][$row['grupos_gru_id']]['evento'] = "<td style='border: 1px solid black; border-collapse: collapse;'>" . $row['ocasion'] . "</td>";
+        $listaData[$row['anho']][$row['mes']][$row['grupos_gru_id']]['puntaje'] = "<td style='border: 1px solid black; border-collapse: collapse;'><strong>" . $row['eve_puntaje'] . "</strong></td>";
     }
 
     $anhoact = "";
@@ -110,14 +115,13 @@ function getTablaComponenteEducacional() {
         } else {            
             $tabla.="<tr><td style='border: 1px solid black; border-collapse: collapse;'>&nbsp</td>";
         }
-       
-        
+               
         $tabla.="<td style='border: 1px solid black; border-collapse: collapse;'>".$meses[$dt->format("m")]."</td>";
-        
-        
+                
         foreach($lista as $l) {
-            $tabla.=$listaData[$dt->format('Y')][intval($dt->format('m'))][$l['id']];
-            $tabla.="<td style='border: 1px solid black; border-collapse: collapse;  border-right-width: 3px;'>&nbsp;</td>";
+
+            $tabla.=$listaData[$dt->format('Y')][intval($dt->format('m'))][$l['id']]['evento'];
+            $tabla.=$listaData[$dt->format('Y')][intval($dt->format('m'))][$l['id']]['puntaje']; //"<td style='border: 1px solid black; border-collapse: collapse;  border-right-width: 3px;'>&nbsp;</td>";
         }
         $tabla.="</tr>";
     }
@@ -1166,8 +1170,8 @@ $form['form_7'] = array("elemento" => "fecha + tiempo" ,"tipo_date" => "hidden" 
                      //Formularios
                     $objEvento= new Evento();
                     $listaPuntajes['lista_0'] = array( "value" => "",  "select" => "selected" ,"texto" => "Seleccione...");
-                    for ($i = 1; $i < 6; $i++) {
-                        $listaPuntajes['lista_'.$i] = array( "value" => $i,  "select" => "selected" ,"texto" => $i);
+                    for ($i = 1; $i < 6; $i++) {                        
+                        $listaPuntajes['lista_'.$i] = array( "value" => $i,  "select" => "" ,"texto" => $i);
                     }
 
                     $resultset= $objEvento->getEventosDetalle($_POST['id']);
@@ -1336,6 +1340,7 @@ $form['form_7'] = array("elemento" => "fecha + tiempo" ,"tipo_date" => "hidden" 
                             $result2 = $objUsuario->getForumLeaderByPersona($row['eve_responsable']);
                             if ($row2 = $result2->fetch_assoc()) {
                                 if ($row2['usu_id'] == $_SESSION['user_id_ben'] && $row['tipo_evento_id'] == 2) {
+                                    
                                     $listaPuntj = setPuntaje($listaPuntajes, $row['eve_puntaje']);
                                     $form['form_13'] = array("elemento" => "combo","change" => "", "titulo" => "Puntaje", "id" => "_puntaje", "option" => $listaPuntj);
                                 }
@@ -1405,6 +1410,10 @@ $form['form_7'] = array("elemento" => "fecha + tiempo" ,"tipo_date" => "hidden" 
                     $arrayGrupo=array();
                     $listaGrupos="";
                     $cont=0;
+                    if (! empty($_POST['_puntaje'])) {
+                        $objEvento3 = new Evento();
+                        $resp = $objEvento3->setActualizarPuntaje($_POST['_id'], $_POST['_puntaje']);
+                    }
                     /*foreach($_POST['_miembrosGrupos'] as $valor){
                         if($valor == "T"){
                           $todosGrupos="1";
