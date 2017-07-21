@@ -1803,8 +1803,18 @@ function getTablaFiltrada($id, $key, $idForum, $incluyecanceladas) {
     $lista = array();
     $objStatusMember = new StatusMember();
     $listaStatusMember = $objStatusMember->getListaMiembroStatus2($lista);
-
-    $resultset= $objMiembro->getFiltros($id,$key,$idForum, $incluyecanceladas);
+    if (strlen($idForum) > 0) {
+        $objUsuario3 = new Usuario();
+        $sede = 0;
+        $resultset4 = $objUsuario->getDatosUsuario($idForum);
+        if ($row7 = $resultset4->fetch_assoc()) {
+            $sede = $row7['sede_id'];
+        }
+        $resultset= $objMiembro->getFiltros2($id,$key,$idForum, $incluyecanceladas, $sede);
+    } else {
+        $resultset= $objMiembro->getFiltros($id,$key,$idForum, $incluyecanceladas);
+    }
+    
     while($row = $resultset->fetch_assoc()) { 
         $verDetalle='';
         if (in_array($perVerMiembroOp6, $_SESSION['usu_permiso'])) {
@@ -1902,7 +1912,7 @@ function getGlobalFiltros() {
     }else{
 	
 	
-	        $objForum = new ForumLeader();
+	    $objForum = new ForumLeader();
         $listaForum=$objForum->getListaForumLeaders2(NULL,$lista);
         $form['form_1'] = array("elemento" => "combo","change" => "getFiltro('2')", "titulo" => "Forum Leader", "id" => "_forum", "option" => $listaForum); 
         

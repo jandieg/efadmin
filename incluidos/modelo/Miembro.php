@@ -224,6 +224,11 @@ public function setActualizarMiembro($idMiembro, $id_persona, $propietario, $nom
         return parent::getConsultar($sql);   
     }
 
+    public function getFiltros2($id, $key, $permiso, $incluyecanceladas, $sede) {
+        $sql="call sp_selectMiembroFiltros2('$id','$key', '$permiso', '$incluyecanceladas', '$sede')";
+        return parent::getConsultar($sql);   
+    }
+
     public function getMiembrosByGrupo($idGrupo) {
         $sql = "call sp_selectMiembrosByGrupo('$idGrupo');";
         return parent::getConsultar($sql);
