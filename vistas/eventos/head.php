@@ -905,14 +905,105 @@ $form['form_1'] = array("elemento" => "combo","change" => "loadgroups();","titul
         $listaGrupos= $objGrupo->getListaGrupos2(NULL,$listaGrupoMiembros);
 		
 				   $form['form_3'] = array("elemento" => "combo", "change"=>"setCambioGrupos()","titulo" => "Grupos", "id" => "_miembrosGrupos", "option" => $listaGrupos);
-                   
-                    
-					
-					
-                  
+                   if ($_POST['_id_te'] == 5) {
+                        $form['form_4'] = array("elemento" => "Checkbox-color" ,"chec" => "checked" ,"tipo" => "" , "titulo" => "Agregar todos los grupos", "id" => "_grupos_todos" ,"reemplazo" => "1"); 
+                           /*$form['form_4'] = array("elemento" => "combo + boton","change" => "",                   "titulo" => "Ubicación", "id" => "_ubicacion", "option" => $lista, 
+                                            "modal" => "#modal_getCrearDireccion","boton_click" => "getTipoDireccion('".$row['tip_eve_opcion_direccion']."')", "boton_icono" => "fa fa-map","boton_nombre" => "", "boton_title" =>"Crear Dirección"
+                                            ,"boton_tipo" => "btn-info");*/
+                        $form['form_5'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => "Ubicacion", "id" => "_ubicacion" ,"reemplazo" => "");
+                        
+                        
+                        
+                //		$form['form_4'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => "Ubicación", "id" => "_ubicacion" ,"reemplazo" => "");
+                        
+                
+                        
+                        //$form['form_4'] = array("elemento" => "combo","change" => "",                   "titulo" => "Ubicación", "id" => "_ubicacion", "option" => $lista);
+                        
+                        
+                        
+                        if($row['tip_eve_tododia'] =='1'){
+                            $form['form_6'] = array("elemento" => "Checkbox-color" ,"chec" => "checked" ,"tipo" => "" , "titulo" => "Todo el día", "id" => "_all_day" ,"reemplazo" => ""); 
+                        }  else {
+                            $form['form_6'] = array("elemento" => "Checkbox-color" ,"chec" => "" ,"tipo" => "" , "titulo" => "Todo el día", "id" => "_all_day" ,"reemplazo" => ""); 
+                        }
+
+                        //Fechas//
+
+                        if($_POST['_id_te']=='3'){
+                            $form['form_7'] = array("elemento" => "fecha + tiempo" ,"tipo_date" => "date" , "titulo_date" => "Fecha de Inicio", "id_date" => "_f_inicio" ,"reemplazo_date" => date("Y-m-d")
+                            ,"tipo_time" => "time" , "titulo_time" => "Fecha de Inicio", "id_time" => "_time_inicio" ,"reemplazo_time" => date('H:i',strtotime($row['tip_eve_hora_rango_inicio']))); 
+
+                            $form['form_8'] = array("elemento" => "fecha + tiempo" ,"tipo_date" => "date" , "titulo_date" => "Fecha de Fin", "id_date" => "_f_fin" ,"reemplazo_date" => date("Y-m-d")
+                            ,"tipo_time" => "time" , "titulo_time" => "Fecha de Fin", "id_time" => "_time_fin" ,"reemplazo_time" => date('H:i',strtotime($row['tip_eve_hora_rango_fin'])));	
+                        }else{                        
+                            $form['form_7'] = array("elemento" => "fecha + tiempo" ,"tipo_date" => "date" , "titulo_date" => "Fecha de Inicio", "id_date" => "_f_inicio" ,"reemplazo_date" => date("Y-m-d")
+                            ,"tipo_time" => "time" , "titulo_time" => "Fecha de Inicio", "id_time" => "_time_inicio" ,"reemplazo_time" => date('H:i',strtotime($row['tip_eve_hora_rango_inicio']))); 
+
+                            $form['form_8'] = array("elemento" => "fecha + tiempo" ,"tipo_date" => "hidden" ,"id_date" => "_f_fin" ,"reemplazo_date" => date("Y-m-d")
+                            ,"tipo_time" => "time" , "titulo_time" => "Fecha de Fin", "id_time" => "_time_fin" ,"reemplazo_time" => date('H:i',strtotime($row['tip_eve_hora_rango_fin'])));	
+                        }
+
+
                     
 
-                    /*$form['form_4'] = array("elemento" => "combo + boton","change" => "",                   "titulo" => "Ubicación", "id" => "_ubicacion", "option" => $lista, 
+                        $objMiembro= new Miembro();
+                            $listaMiembros= $objMiembro->getListaMiembros(Null, NULL,"",FALSE);
+                            if(($_POST['_id_te']==1)||($_POST['_id_te']==2)){
+                                $form['form_9'] = array("elemento" => "lista-multiple",  "titulo" => "Caso del Mes", "id" => "_empresarios_mes", "option" => $listaMiembros); 
+                            }else{
+                                $form['form_9'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_empresarios_mes", "option" => $listaMiembros); 
+                            }
+                        if($row['tip_eve_opcion_acompanado'] == "1"){
+                            $objAcompanamiento= new Aconpanamiento();
+                            $lista= $objAcompanamiento->getListaAconpanamiento();
+                            $form['form_10'] = array("elemento" => "combo","change" => "",                    "titulo" => "Acompañado por", "id" => "_acompanado", "option" => $lista);       
+                        }
+                        if($row['tip_eve_opcion_contacto'] == "1"){
+                            $listaParticipantes= array();
+                            $objParticipante= new Participante();
+                            $listaParticipantes= $objParticipante->getListaParticipantes(NULL,'Contacto');
+                        /*
+                        $form['form_10'] = array("elemento" => "combo + caja + boton" ,"tipo" => "text" , "titulo" => "Contactos", 
+                                                            "id" => "" ,"reemplazo" => '',"boton_tipo" => "btn-info",
+                                                            "modal" => "#modal_getCrearParticipante","boton_click" => "getTipoParticipante('Contacto')",
+                                                            "boton_icono" => "fa fa-user","boton_nombre" => "", "boton_title" =>"Crear","change" => "",
+                                                            "id_list" => "_contacto","disabled" => "", "option_list" => $listaParticipantes);
+                        */
+                            
+                        //	$form['form_10'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_participantes" ,"reemplazo" => "");
+                    }
+
+                        if($row['tip_eve_opcion_invitado'] == "1"){
+                            $listaParticipantes= array();
+                            $objParticipante= new Participante();
+                            $listaParticipantes= $objParticipante->getListaParticipantes(NULL,'Invitado');
+                            /*
+                            $form['form_11'] = array("elemento" => "combo + caja + boton" ,"tipo" => "text" , "titulo" => "Invitados", 
+                                                            "id" => "" ,"reemplazo" => '',"boton_tipo" => "btn-info",
+                                                            "modal" => "#modal_getCrearParticipante","boton_click" => "getTipoParticipante('Invitado')",
+                                                            "boton_icono" => "fa fa-user","boton_nombre" => "", "boton_title" =>"Crear","change" => "",
+                                                            "id_list" => "_participantes","disabled" => "", "option_list" => $listaParticipantes);
+                            */
+                            if ($_POST['_id_te'] == '1') {
+                                $form['form_11'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_descripcion" ,"reemplazo" => $row['eve_descripcion']);
+                            } else if ($_POST['_id_te'] == '3') {
+                                $form['form_11'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_descripcion" ,"reemplazo" => $row['eve_descripcion']);
+                            } else if ($_POST['_id_te'] == '4') {
+                                $form['form_11'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_descripcion" ,"reemplazo" => $row['eve_descripcion']);
+                            } else if ($_POST['_id_te'] == '2') {
+                                $form['form_11'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => "Componente Educacional", "id" => "_descripcion" ,"reemplazo" => $row['eve_descripcion']);	
+                            } else {
+                                $form['form_11'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => "Expositor", "id" => "_descripcion" ,"reemplazo" => $row['eve_descripcion']);	
+                            }
+                            //$form['form_11'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => "Expositor", "id" => "_descripcion" ,"reemplazo" => $row['eve_descripcion']);
+                        }
+
+                        //   $form['form_12'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => "Descripción", "id" => "_descripcion" ,"reemplazo" => "");
+                        $form['form_12'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_participantes" ,"reemplazo" => "");
+
+                   } else {
+                        /*$form['form_4'] = array("elemento" => "combo + boton","change" => "",                   "titulo" => "Ubicación", "id" => "_ubicacion", "option" => $lista, 
                                             "modal" => "#modal_getCrearDireccion","boton_click" => "getTipoDireccion('".$row['tip_eve_opcion_direccion']."')", "boton_icono" => "fa fa-map","boton_nombre" => "", "boton_title" =>"Crear Dirección"
                                             ,"boton_tipo" => "btn-info");*/
                     $form['form_4'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => "Ubicacion", "id" => "_ubicacion" ,"reemplazo" => "");
@@ -933,32 +1024,27 @@ $form['form_1'] = array("elemento" => "combo","change" => "loadgroups();","titul
                         $form['form_5'] = array("elemento" => "Checkbox-color" ,"chec" => "" ,"tipo" => "" , "titulo" => "Todo el día", "id" => "_all_day" ,"reemplazo" => ""); 
                     }
 
-//Fechas//
+                    //Fechas//
 
-if($_POST['_id_te']=='3'){
-$form['form_6'] = array("elemento" => "fecha + tiempo" ,"tipo_date" => "date" , "titulo_date" => "Fecha de Inicio", "id_date" => "_f_inicio" ,"reemplazo_date" => date("Y-m-d")
-,"tipo_time" => "time" , "titulo_time" => "Fecha de Inicio", "id_time" => "_time_inicio" ,"reemplazo_time" => date('H:i',strtotime($row['tip_eve_hora_rango_inicio']))); 
+                    if ($_POST['_id_te'] == '3') {
+                        $form['form_6'] = array("elemento" => "fecha + tiempo" ,"tipo_date" => "date" , "titulo_date" => "Fecha de Inicio", "id_date" => "_f_inicio" ,"reemplazo_date" => date("Y-m-d")
+                        ,"tipo_time" => "time" , "titulo_time" => "Fecha de Inicio", "id_time" => "_time_inicio" ,"reemplazo_time" => date('H:i',strtotime($row['tip_eve_hora_rango_inicio']))); 
 
-$form['form_7'] = array("elemento" => "fecha + tiempo" ,"tipo_date" => "date" , "titulo_date" => "Fecha de Fin", "id_date" => "_f_fin" ,"reemplazo_date" => date("Y-m-d")
-,"tipo_time" => "time" , "titulo_time" => "Fecha de Fin", "id_time" => "_time_fin" ,"reemplazo_time" => date('H:i',strtotime($row['tip_eve_hora_rango_fin'])));	
-}else{
-	
-$form['form_6'] = array("elemento" => "fecha + tiempo" ,"tipo_date" => "date" , "titulo_date" => "Fecha de Inicio", "id_date" => "_f_inicio" ,"reemplazo_date" => date("Y-m-d")
-,"tipo_time" => "time" , "titulo_time" => "Fecha de Inicio", "id_time" => "_time_inicio" ,"reemplazo_time" => date('H:i',strtotime($row['tip_eve_hora_rango_inicio']))); 
+                        $form['form_7'] = array("elemento" => "fecha + tiempo" ,"tipo_date" => "date" , "titulo_date" => "Fecha de Fin", "id_date" => "_f_fin" ,"reemplazo_date" => date("Y-m-d")
+                        ,"tipo_time" => "time" , "titulo_time" => "Fecha de Fin", "id_time" => "_time_fin" ,"reemplazo_time" => date('H:i',strtotime($row['tip_eve_hora_rango_fin'])));	
+                    } else {                        
+                        $form['form_6'] = array("elemento" => "fecha + tiempo" ,"tipo_date" => "date" , "titulo_date" => "Fecha de Inicio", "id_date" => "_f_inicio" ,"reemplazo_date" => date("Y-m-d")
+                        ,"tipo_time" => "time" , "titulo_time" => "Fecha de Inicio", "id_time" => "_time_inicio" ,"reemplazo_time" => date('H:i',strtotime($row['tip_eve_hora_rango_inicio']))); 
 
-$form['form_7'] = array("elemento" => "fecha + tiempo" ,"tipo_date" => "hidden" ,"id_date" => "_f_fin" ,"reemplazo_date" => date("Y-m-d")
-,"tipo_time" => "time" , "titulo_time" => "Fecha de Fin", "id_time" => "_time_fin" ,"reemplazo_time" => date('H:i',strtotime($row['tip_eve_hora_rango_fin'])));	
-
-}
-
-
-                   
+                        $form['form_7'] = array("elemento" => "fecha + tiempo" ,"tipo_date" => "hidden" ,"id_date" => "_f_fin" ,"reemplazo_date" => date("Y-m-d")
+                        ,"tipo_time" => "time" , "titulo_time" => "Fecha de Fin", "id_time" => "_time_fin" ,"reemplazo_time" => date('H:i',strtotime($row['tip_eve_hora_rango_fin'])));	
+                    }
 
                     $objMiembro= new Miembro();
                         $listaMiembros= $objMiembro->getListaMiembros(Null, NULL,"",FALSE);
-						if(($_POST['_id_te']==1)||($_POST['_id_te']==2)){
+						if (($_POST['_id_te'] == 1) || ($_POST['_id_te'] == 2)) {
 							$form['form_8'] = array("elemento" => "lista-multiple",  "titulo" => "Caso del Mes", "id" => "_empresarios_mes", "option" => $listaMiembros); 
-						}else{
+						} else {
 							$form['form_8'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_empresarios_mes", "option" => $listaMiembros); 
 						}
                     if($row['tip_eve_opcion_acompanado'] == "1"){
@@ -1011,6 +1097,15 @@ $form['form_7'] = array("elemento" => "fecha + tiempo" ,"tipo_date" => "hidden" 
                  //   $form['form_12'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => "Descripción", "id" => "_descripcion" ,"reemplazo" => "");
 				    $form['form_12'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_participantes" ,"reemplazo" => "");
 
+                   }
+                   
+                    
+					
+					
+                  
+                    
+
+                    
                     $resultado = str_replace("{contenedor_1}", generadorEtiqueta($form),  getPage('page_detalle_update_evento') );//generadorContMultipleRow($colum)); 
                     $resultado = str_replace("{contenedor_2}", '',  $resultado);
                     $resultado = str_replace("{titulo}", "Crear Evento",  $resultado);
@@ -1098,6 +1193,12 @@ $form['form_7'] = array("elemento" => "fecha + tiempo" ,"tipo_date" => "hidden" 
                        $listaMiembros="";
                        $listaGrupos="";
                    }  
+                   $todoslosgrupos = "";
+                   if (! empty($_POST['_grupos_todos'])) {
+                        $objGrupo2 = new Grupo();                        
+                        $todoslosgrupos = implode(',', $objGrupo2->getGruposA($_POST['_miembrosGrupos']));                        
+                   }
+                   
                    $idGenerado="";
                    $objGenerador= new GeneradorID();
                    $idGenerado= $objGenerador->getGenerar();
@@ -1105,7 +1206,7 @@ $form['form_7'] = array("elemento" => "fecha + tiempo" ,"tipo_date" => "hidden" 
                     $objEvento= new Evento();         
                     $comp= $objEvento->setGrabarEvento($idGenerado, $_POST['_nombre'],   $_POST['_titular'],$_POST['_all_day'], $_POST['_fi'],$_POST['_ff'],
                             $_POST['_descripcion'],57,$listaAdicionales,$_POST['_miembrosGrupos'],$listaMiembros,
-                            $misGrupos,$todosGrupos,$_POST['_id_tipo_evento'],$_POST['_id_ubicacion'],$_POST['_acompanado'],$listaContactos,$listaEmpresario);
+                            $misGrupos,$todosGrupos,$_POST['_id_tipo_evento'],$_POST['_id_ubicacion'],$_POST['_acompanado'],$listaContactos,$listaEmpresario, $todoslosgrupos);
 
                     if($comp > 0){                        
                         getRecordarEvento($comp, TRUE);

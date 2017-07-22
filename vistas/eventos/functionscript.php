@@ -330,7 +330,12 @@ var setCrearEvento = function(op, id_tipo_evento,opcion_contacto,opcion_acompana
         _all_day="1";
     } 
     
-    var parametros = {
+    if ($("#_grupos_todos").val() != undefined) {
+        var _grupos_todos = 0;
+        if ($("#_grupos_todos").is(":checked")) {
+            _grupos_todos = 1;
+        }
+        var parametros = {
             KEY: 'KEY_GUARDAR_EVENTO',
             key_operacion: op.toString(), 
             _id_tipo_evento: id_tipo_evento.toString(), 
@@ -347,10 +352,35 @@ var setCrearEvento = function(op, id_tipo_evento,opcion_contacto,opcion_acompana
             _all_day:_all_day,
             _empresariosMes:_arrayEmpresariosMes,
             _acompanado:acompanado,
-            _contactos:_arrayContactos
+            _contactos:_arrayContactos,
+            _grupos_todos: _grupos_todos
+        };
 
-    };
+    } else {
+        var parametros = {
+            KEY: 'KEY_GUARDAR_EVENTO',
+            key_operacion: op.toString(), 
+            _id_tipo_evento: id_tipo_evento.toString(), 
+            _titular: $("#_titular").val().toString(),
+            _nombre: $("#_nombre").val().toString(),
+            _fi: fecha_hora_inicio,
+            _ff: fecha_hora_fin,
+            _id_ubicacion: $("#_ubicacion").val().toString(),
+            _ubicacion: 'aaa', 
+            _descripcion: $("#_descripcion").val().toString(),           
+            _participantes_adicionales: _arrayParticipantes,
+		     _mis_grupos: $("#_miembrosGrupos").val().toString(),
+		    _miembrosGrupos: $("#_miembrosGrupos").val().toString(),  
+            _all_day:_all_day,
+            _empresariosMes:_arrayEmpresariosMes,
+            _acompanado:acompanado,
+            _contactos:_arrayContactos,
 
+
+        };
+
+    }
+    
     console.log($("#_miembrosGrupos").val().toString());
     $.ajax({
         data:  parametros,

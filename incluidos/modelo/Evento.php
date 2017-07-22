@@ -33,11 +33,11 @@ class Evento extends Conexion{
 //        
 //    }
     public function setGrabarEvento( $idGenerado, $nombre, $titular,  $toeldia, $fi ,$ff, $descripcion, $id_user,$listaInvitados = '',
-            $listaGrupos = '', $listaMiembros = '', $misGrupos, $todosGrupos, $idEvento, $idDireccion,$idAcompanado, $listaContactos='', $listaEmpresarios='') {
+            $listaGrupos = '', $listaMiembros = '', $misGrupos, $todosGrupos, $idEvento, $idDireccion,$idAcompanado, $listaContactos='', $listaEmpresarios='', $todoslosgrupos= '') {
         $fecha= date("Y-m-d H:i:s");
         $sql="call sp_createEventoCalendar( '$titular','$toeldia','$fi','$ff','$descripcion' , "
                 . "'$fecha' , '$id_user', '$listaInvitados','$listaGrupos','$listaMiembros',"
-                . "'$misGrupos','$todosGrupos','$idEvento','$idDireccion','$idAcompanado','$listaContactos','$listaEmpresarios','$nombre','$idGenerado')";  
+                . "'$misGrupos','$todosGrupos','$idEvento','$idDireccion','$idAcompanado','$listaContactos','$listaEmpresarios','$nombre','$idGenerado', '$todoslosgrupos')";  
         $resultset= parent::getConsultar($sql);
         $idEvento = 0;
         if($row = $resultset->fetch_assoc()) { 

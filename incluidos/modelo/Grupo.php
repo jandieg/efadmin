@@ -252,6 +252,20 @@ class Grupo extends Conexion{
         }
         return $lista;
     }
+
+    public function getGruposAgrupExcluyendo($idExcluir) {
+        $sql = "call sp_selectGruposAgrupExcluyendo('$idExcluir')";
+        return parent::getConsultar($sql);
+    }
+
+    public function getGruposA($idExcluir) {
+        $resultset = $this->getGruposAgrupExcluyendo($idExcluir);
+        $lista = array();
+        while ($row = $resultset->fetch_assoc()) {
+            $lista[] = $row['gru_id'];
+        }
+        return $lista;
+    }
     
     public function getListaGruposForum($idForum='', $idSeleccionado='',$list= array()) {           
         $resultset= $this->getGruposForum($idForum);
