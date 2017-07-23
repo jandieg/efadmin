@@ -687,11 +687,53 @@ var setUserActualizar = function(  id_persona, id_miembro){
 
 };
 
+var getFiltroWithParams = function(parametros) {
+    
+    $(".select2").select2();
+    console.log(parametros);
+     $.ajax({
+            data:  parametros,            
+            url:   'miembros',
+            type:  'post',
+            dataType : 'json',
+            beforeSend: function () {
+                //$.msg({content : '<img src="public/images/loanding.gif" />', autoUnblock: false});
+            },
+            success:  function (mensaje) {
+                //$.msg('unblock');
+                    if(mensaje.success == "true"){
+                        if(parametros._key_filtro == "1"){
+                            //$('#_forum option[value="'+mensaje.id+'"]').prop('selected', true);
+                            $('#_forum').val(mensaje.id);
+                            $(".select2").select2();
+                        }
+                        if(parametros._key_filtro == "2"){
+                             //$('#_grupo option[value="'+mensaje.id+'"]').prop('selected', true);
+//                             $('#_grupo').val(mensaje.id);
+                             $('#_grupo').html(mensaje.gruposfiltro);
+                             $(".select2").select2();                                                          
+                        }
+//                                                
+                        $("#ben_contenedor_filtro").html( mensaje.tabla);
+                        getConfTabla2();
+                    }else{
+                    $.toaster({ priority : mensaje.priority, title : 'Alerta', message : mensaje.msg});
+                }
+            },error : function(xhr, status) {
+//                $.unblockUI();
+                //$.msg('unblock');
+                $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema' + xhr.toString() + status.toString()});
+            }
+        });    
+};
+
 
 var getRecargar = function(){
     //location.reload();
+    sessionStorage._recargado = true;
 	window.location.replace(window.location.origin+"/admin/miembros");	
 };
+
 var getFiltro = function(key){
    
      var canceladas = 0;
@@ -784,8 +826,18 @@ var getFiltro = function(key){
           
     }
 
-    
-    
+    sessionStorage._memb_type = $('#_memb_type').val().toString();
+    sessionStorage._status_memb = $('#_status_memb').val().toString();
+    sessionStorage._industria = $('#_industria').val().toString();
+    sessionStorage._grupo = $('#_grupo').val().toString();
+    sessionStorage._forum = $('#_forum').val().toString();
+    sessionStorage._empresa = $('#_empresa').val().toString();
+    sessionStorage.llave = 'KEY_SHOW_FILTRO';
+    sessionStorage._key_filtro = key;
+    sessionStorage._filtro = filtro;
+    sessionStorage._canceladas = canceladas;
+    console.log(sessionStorage);
+
       var parametros = {
             KEY: 'KEY_SHOW_FILTRO',
             _key_filtro: key,

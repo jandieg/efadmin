@@ -316,6 +316,7 @@ var setConvertirAplicante = function(){
         });
 };
 var getRecargar = function(){
+    sessionStorage._recargado_aplicantes = true;
    location.reload();
     //window.open(url, 'perfil');
 	//window.open('miembros', '?id=54');
@@ -376,15 +377,37 @@ function getBusquedaFiltro() {
         getConfTabla();
     });
 };
+
+var getFiltroWithParams = function(parametros) {
+    $.ajax({
+            data:  parametros,
+            url:   'prospectos',
+            type:  'post',
+            dataType : 'json',
+            beforeSend: function () {
+                //$.msg({content : '<img src="public/images/loanding.gif" />', autoUnblock: false});
+            },
+            success:  function (mensaje) {
+                //$.msg('unblock');
+                    if(mensaje.success == "true"){
+                        $("#ben_contenedor_filtro").html( mensaje.tabla);
+                        getConfTabla();
+                    }else{
+                    $.toaster({ priority : mensaje.priority, title : 'Alerta', message : mensaje.msg});
+                }
+            },error : function(xhr, status) {
+                //$.msg('unblock');
+                $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema' + xhr.toString() + status.toString()});
+            }
+        });    
+};
 var getFiltro = function(key){ 
     var filtro= "";
     switch(key){
         case "2":
             filtro= $("#_forum").val().toString();
-//            $('#_empresa option[value="x"]').prop('selected', true);
-//            $('#_industria option[value="x"]').prop('selected', true);
-            $('#_empresa').val('x');
-            $('#_industria').val('x');
+
+            $('#_estado').val('x');
             $(".select2").select2();
             break;
         case "3":
@@ -403,9 +426,17 @@ var getFiltro = function(key){
         case "5":
             filtro= $("#_estado").val().toString();
             $('#_forum').val('x');
-            $('#_empresa').val('x');
+    
             break;    
 }
+
+
+    
+    sessionStorage._forum = $('#_forum').val().toString();
+    sessionStorage._estado = $('#_estado').val().toString();    
+    sessionStorage.llave = 'KEY_SHOW_FILTRO';
+    sessionStorage._key_filtro = key;
+    sessionStorage._filtro = filtro;
     
       var parametros = {
             KEY: 'KEY_SHOW_FILTRO',

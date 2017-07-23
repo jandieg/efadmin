@@ -143,4 +143,49 @@ var getConfTabla2= function (){
     });                                            
 };
 
+
+
+
+$(document).ready(function() {
+    if (sessionStorage._recargado) {
+        if (sessionStorage._memb_type) {
+         $('#_memb_type').val(sessionStorage._memb_type);
+        }
+        
+        if (sessionStorage._status_memb) {
+            $('#_status_memb').val(sessionStorage._status_memb);
+        }
+
+        if (sessionStorage._industria) {
+            $('#_industria').val(sessionStorage._industria);
+        }
+        
+        if (sessionStorage._grupo) {
+            $('#_grupo').val(sessionStorage._grupo);
+        }
+
+        if (sessionStorage._forum) {
+            $('#_forum').val(sessionStorage._forum);
+        }
+        
+        if (sessionStorage._empresa) {
+            $('#_empresa').val(sessionStorage._empresa);
+        }
+
+        if (sessionStorage.llave) {
+            var parametros = {
+                KEY: sessionStorage.llave,
+                _key_filtro: sessionStorage._key_filtro,
+                _filtro: sessionStorage._filtro,
+                _canceladas: sessionStorage._canceladas
+            };
+            sessionStorage._recargado = false;
+            getFiltroWithParams(parametros);
+        }
+    }
+    
+    
+    
+});
+
 </script>

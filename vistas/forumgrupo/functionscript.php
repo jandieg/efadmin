@@ -22,14 +22,21 @@ var getDetalleFiltroGrupo = function(id){
     });
 };
 
+
 var getFiltroEmpresa = function() {
     if ($("#_empresa").val().toString() != "x") {
         $("#_forum_leader").val("x");
         $("#_industria").val("x");
+        sessionStorage._industria = $("#_industria").val().toString();
+        sessionStorage._forum_leader = $("#_forum_leader").val().toString();            
+        sessionStorage._empresa = $("#_empresa").val().toString();
+        sessionStorage.llave = 'KEY_FILTRO_EMPRESA';
+        sessionStorage._id = $("#_empresa").val().toString();
         var parametros = {
             KEY: 'KEY_FILTRO_EMPRESA',
             _id: $("#_empresa").val().toString()
         };
+        console.log(sessionStorage);
 
         $.ajax({
             data:  parametros,
@@ -54,6 +61,11 @@ var getFiltroForumLeader = function() {
     if ($("#_forum_leader").val().toString() != "x") {
         $("#_empresa").val("x");
         $("#_industria").val("x");
+        sessionStorage._industria = $("#_industria").val().toString();
+        sessionStorage._forum_leader = $("#_forum_leader").val().toString();            
+        sessionStorage._empresa = $("#_empresa").val().toString();
+        sessionStorage.llave = 'KEY_FILTRO_FORUM_LEADER';
+        sessionStorage._id = $("#_forum_leader").val().toString();
         var parametros = {
             KEY: 'KEY_FILTRO_FORUM_LEADER',
             _id: $("#_forum_leader").val().toString()
@@ -82,6 +94,11 @@ var getFiltroIndustria = function() {
     if ($("#_industria").val().toString() != "x") {
         $("#_forum_leader").val("x");
         $("#_empresa").val("x");
+        sessionStorage._industria = $("#_industria").val().toString();
+        sessionStorage._forum_leader = $("#_forum_leader").val().toString();            
+        sessionStorage._empresa = $("#_empresa").val().toString();
+        sessionStorage.llave = 'KEY_FILTRO_INDUSTRIA';
+        sessionStorage._id = $("#_industria").val().toString();
         var parametros = {
             KEY: 'KEY_FILTRO_INDUSTRIA',
             _id: $("#_industria").val().toString()
@@ -230,6 +247,7 @@ var getDetalle = function( id_miembro){
          });
 };
 var getRecargar = function(){
+    sessionStorage._recargado_empresas = true;
     location.reload();
     //window.open(url, 'perfil');
 };
