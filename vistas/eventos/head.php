@@ -293,21 +293,28 @@ function getTablaCasosDelMesByForumLeader($idForumLeader) {
     $period   = new DatePeriod($start, $interval, $end);    
 
 
-    $objEvento = new Evento();
+   // $objEvento = new Evento();
     $objEvento2 = new Evento();
-    $resultset = $objEvento->getMiembrosPendientesxForumLeader($idForumLeader); 
+    $objGrupo = new Grupo();
+    $resultset = $objGrupo->getGrupoByForumLeader($idForumLeader);
+    //$resultset = $objEvento->getMiembrosPendientesxForumLeader($idForumLeader); 
     $listaPendientes = array();
     $gruact = "";
     $cont = 1;
     while ($row = $resultset->fetch_assoc()) {
-        if ($gruact != $row['grupo_id']) {
+        $objEvento4 = new Evento();
+        $resultset2=$objEvento4->getMiembrosPendientesxGrupo($row['gru_id']);
+        while ($row2 = $resultset2->fetch_assoc()) {
+            $listaPendientes[$row['gru_id']][$row2['mie_id']] = $row2['mie_id'];
+        }
+        /*if ($gruact != $row['grupo_id']) {
             $cont = 1;
             $gruact = $row['grupo_id'];
         }
         if ($cont < 6) {
             $listaPendientes[$row['grupo_id']] = $row['mie_id'];
         }        
-        $cont++;
+        $cont++;*/
     }
     $tabla="<div='myDiv' style=' width: 900px !important; overflow-x: scroll !important;'>
     <div class='row'><div class ='span2'>&nbsp;</div><div class ='span2'>&nbsp;</div><div class ='span2'>&nbsp;</div><div class ='span2 btn btn-primary' onClick='getRecargar()' style='margin-left:20px;'>Regresar</div></div>";
@@ -355,7 +362,10 @@ function getTablaCasosDelMesByForumLeader($idForumLeader) {
     }
 
     foreach ($listaPendientes as $k => $l) {
-        $data[$k][$l][date('Y')][intval(date('m'))] = "<td style='background-color: green; border: 1px solid black; border-collapse: collapse;'><strong>n</strong></td>";
+        foreach ($l as $ll) {
+            $data[$k][$ll][date('Y')][intval(date('m'))] = "<td style='background-color: green; border: 1px solid black; border-collapse: collapse;'><strong>n</strong></td>";
+        }
+        
     }
     $nombreact = "";
     $i = 1;
