@@ -297,8 +297,8 @@ var setConvertirAplicante = function(){
                     if(mensaje.success == "true"){
                   //      load_miembro($("#convertir_id").val());
                   if ($("#_email").is(":checked")) {
-                    	//window.location.replace("http://"+ window.location.hostname + "/admin/miembros?id_miembro="+$("#convertir_id").val()+"&email=1");	                                        
-                    window.location.replace("http://localhost:3000/sistema/public_html/admin/miembros?id_miembro="+$("#convertir_id").val()+"&email=1");	                                        
+                    	window.location.replace("http://"+ window.location.hostname + "/admin/miembros?id_miembro="+$("#convertir_id").val()+"&email=1");	                                        
+                  
                   } else {
                     	window.location.replace("http://"+ window.location.hostname + "/admin/miembros?id_miembro="+$("#convertir_id").val());	                                        
                     //window.location.replace("http://localhost:3000/sistema/public_html/admin/miembros?id_miembro="+$("#convertir_id").val());	                                              
