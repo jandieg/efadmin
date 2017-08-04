@@ -204,7 +204,9 @@ $form['form_0'] = array("elemento" => "subir-imagen", "valor" => $cod1."-".$cod2
         $form2['form_6'] = array("elemento" => "caja", "tipo" => "hidden","id" => "_membresia", "reemplazo" => $valorMembresiaOculto);
         $form2['form_7'] = array("elemento" => "caja" ,"tipo" => "hidden" , "titulo" => " ","id" => "_precio_esp","reemplazo" => $row['precio_esp']);
         $form_2= generadorEtiqueta($form2);
-        
+        if (isset($_GET['id_miembro'])) {
+            $form7['form_18'] = array('elemento' => "Checkbox-color", "tipo" => "", "chec" => "checked", "titulo" => "Enviar Mail de Bienvenida", "id" => "_email_bienvenida" ,"reemplazo" => '');
+        }
         $form7['form_10'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => $lblCorreo, "id" => "_correo" ,"reemplazo" => $row['correo']);
        // $form7['form_11'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => $lblCorreoSecundario, "id" => "_correo_2" ,"reemplazo" => $row['correo2']);
 	    $form7['form_11'] = array("elemento" => "caja" ,"tipo" => "hidden" ,"id" => "_correo_2" ,"reemplazo" => $row['correo2']);

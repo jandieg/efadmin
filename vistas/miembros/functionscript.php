@@ -665,21 +665,25 @@ var setUserActualizar = function(  id_persona, id_miembro){
         }
     });
 
-    if ($("#_enviar_mail").val() != undefined) {
-        var parametrosMail = {
-            KEY: 'KEY_ENVIAR_MAIL_BIENVENIDA',
-            _id_miembro: $("#_enviar_mail").val().toString()                                
-        };
-        $.ajax({
-            data: parametrosMail,
-            url: 'miembros',
-            type: 'post',
-            success: function (datos) {
-                console.log(datos);
-            },error : function(xhr, status) {
-                $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema'});
-            }
-        });   
+    if ($("#_email_bienvenida").val() != undefined) {
+        if ($("#_email_bienvenida").is(":checked")) {
+            var parametrosMail = {
+                KEY: 'KEY_ENVIAR_MAIL_BIENVENIDA',
+                _id_miembro: id_miembro.toString()                                
+            };
+            $.ajax({
+                data: parametrosMail,
+                url: 'miembros',
+                type: 'post',
+                success: function (datos) {
+                    console.log(datos);
+                },error : function(xhr, status) {
+                    $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema'});
+                }
+            });
+
+        }
+           
     }
 
 
