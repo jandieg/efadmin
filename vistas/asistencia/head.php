@@ -351,9 +351,9 @@ function getTablaFiltro($listaEventos= array(), $listaGrupos= array() , $tabla) 
     $lista['lista_3']=array("value" => "2",  "select" => "" ,"texto" => "OTROS");
     
     //$form0['form_0'] = array("elemento" => "combo","disabled" => "","change" => "getEventosPeriodos()","titulo" => "Asistencia / Mesa Redonda", "id" => "_tipo_asistencia", "option" => $lista); 
-    $form1['form_3'] = array("elemento" => "combo","disabled" => "","change" => "","titulo" => "Grupos", "id" => "_grupos", "option" => $listaGrupos);
+    $form1['form_3'] = array("elemento" => "combo","disabled" => "","change" => "cambioGrupos()","titulo" => "Grupos", "id" => "_grupos", "option" => $listaGrupos);
     
-    $form2['form_1'] = array("elemento" => "combo","disabled" => "","change" => "","titulo" => "Años", "id" => "_año", "option" => generadorComboAños(date('Y')));
+    $form2['form_1'] = array("elemento" => "combo","disabled" => "","change" => "cambioAnho()","titulo" => "Años", "id" => "_año", "option" => generadorComboAños(date('Y')));
     
     
     //$form2['form_1'] = array("elemento" => "caja" ,"disabled" => "","tipo" => "date" , "titulo" => "Fecha Inicio", "id" => "_fi" ,"reemplazo" => "");

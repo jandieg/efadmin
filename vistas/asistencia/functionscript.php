@@ -20,10 +20,17 @@ var getEventosPeriodos = function(){
             KEY: 'KEY_FILTRO_EVENTO_PERIODO',
            _tipo_asistencia:$("#_tipo_asistencia").val().toString()
         }, function(mensaje) {
-            $("#_tipos_eventos").html(mensaje);
+            $("#_tipos_eventos").html(mensaje);            
          });              
 };
 
+var cambioGrupos = function() {
+    getDetalleFiltro();
+};
+
+var cambioAnho = function() {
+    getDetalleFiltro();
+};
 var getGrupos = function(){
     var parametros = {
         KEY: 'KEY_FILTRO_TIPO_EVENTO',
@@ -36,6 +43,7 @@ var getGrupos = function(){
         type: 'post',
         success: function (mensaje) {
             $("#_grupos").html(mensaje);
+            getDetalleFiltro();
         }
     });
        
