@@ -331,7 +331,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 						}
                         //$tabla['t_6'] = array("t_1" => generadorNegritas($lblGenero), "t_2" => $row['per_genero']);
                         $tabla['t_7'] = array("t_1" => generadorNegritas($lblEmpresa), "t_2" => $row['prosp_empresa']);
-                        $tabla['t_10'] = array("t_1" => generadorNegritas($lblEstadoProspecto), "t_2" => $row['status']);  
+                        $estadoprosp = "";
+                        $esta = explode('-', $row['status']);
+                        $estadoprosp = $esta[0];
+                        $tabla['t_10'] = array("t_1" => generadorNegritas($lblEstadoProspecto), "t_2" => $estadoprosp);  
                         
                         
                         //$tabla5['t_7'] = array("t_1" => generadorNegritas($lblCorreo), "t_2" => $row['correo']);
