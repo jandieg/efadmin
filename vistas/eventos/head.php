@@ -1132,7 +1132,8 @@ $form['form_1'] = array("elemento" => "combo","change" => "loadgroups();","titul
                         
                 if(!empty($_POST['key_operacion'] ) && !empty($_POST['_titular']) && !empty($_POST['_nombre']) 
                          && !empty($_POST['_fi']) && !empty($_POST['_ff']) && !empty($_POST['_ubicacion']) 
-                                 && !empty($_POST['_miembrosGrupos']) && !empty($_POST['_id_ubicacion']) && !empty($_POST['_id_tipo_evento'])){ 
+                                 && !empty($_POST['_miembrosGrupos']) && !empty($_POST['_id_ubicacion']) 
+                                 && !empty($_POST['_id_tipo_evento'])){ 
 
                     //Obtengo todos los grupos
                     $misGrupos="0";
@@ -1215,7 +1216,7 @@ $form['form_1'] = array("elemento" => "combo","change" => "loadgroups();","titul
                    
                     $objEvento= new Evento();         
                     $comp= $objEvento->setGrabarEvento($idGenerado, $_POST['_nombre'],   $_POST['_titular'],$_POST['_all_day'], $_POST['_fi'],$_POST['_ff'],
-                            $_POST['_descripcion'],57,$listaAdicionales,$_POST['_miembrosGrupos'],$listaMiembros,
+                            $_POST['_descripcion'],$_SESSION['user_id_ben'],$listaAdicionales,$_POST['_miembrosGrupos'],$listaMiembros,
                             $misGrupos,$todosGrupos,$_POST['_id_tipo_evento'],$_POST['_id_ubicacion'],$_POST['_acompanado'],$listaContactos,$listaEmpresario, $todoslosgrupos);
 
                     if($comp > 0){                        
@@ -1587,7 +1588,7 @@ $form['form_7'] = array("elemento" => "fecha + tiempo" ,"tipo_date" => "hidden" 
                    }                   
                     $objEvento= new Evento();         
                     $comp= $objEvento->setActualizarEvento($_POST['_id'],$_POST['_nombre'],   $_POST['_titular'],$_POST['_all_day'], $_POST['_fi'],$_POST['_ff'],
-                            $_POST['_descripcion'],57,$listaAdicionales,$_POST['_miembrosGrupos'],$listaMiembros,
+                            $_POST['_descripcion'],$_SESSION['user_id_ben'],$listaAdicionales,$_POST['_miembrosGrupos'],$listaMiembros,
                             $misGrupos,$todosGrupos,$_POST['_id_ubicacion'],$_POST['_acompanado'],$listaContactos,$listaEmpresario);
 
                     if($comp == "OK"){ 
