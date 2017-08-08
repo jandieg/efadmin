@@ -582,7 +582,11 @@ $CM=date('m'); //Current Month
 $CY=date('Y'); //Current Year
 /****** BODY ******/
 $dues = true; 
+$miembroActual = "";
 while($row = mysqli_fetch_array($res)) {
+    if ($row['mie_id'] != $miembroActual) {
+        $miembroActual = $row['mie_id'];
+    
 	
 //cellColor('H'.$i.':'.'S'.$i, 'CCCCCC');
 //cellColor('U'.$i.':'.'Z'.$i, 'CCCCCC');
@@ -2025,6 +2029,7 @@ if (strpos($exonerados, 'ABRIL'.$nextyear) !== false && $valorcorte >= intval($n
 //END//
 $objPHPExcel->getActiveSheet()->setCellValue('T'.$i, "=SUM(H".$i.":S".$i.")");
 $i++;
+}
 }//end loop
 $final_count=$rcount+9;
 //$objPHPExcel->getActiveSheet()->getColumnDimension('G'.$final_count)->setWidth(50)->setAutoSize(false);
