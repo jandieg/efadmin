@@ -1484,7 +1484,7 @@ if (strpos($commenting, 'ABRIL'.$year) !== false  && $valorcorte >= intval($year
         )
     ));
 }
-if (strpos($commenting, 'MAYO'.$year) !== false  && $valorcorte >= intval($year.'05')) {
+if (strpos($commenting, 'MAYO'.$year) !== false) {
     $objPHPExcel->getActiveSheet()->getStyle('L'.$i)->getFill()->applyFromArray(array(
         'type' => PHPExcel_Style_Fill::FILL_SOLID,
         'startcolor' => array(
@@ -1492,7 +1492,7 @@ if (strpos($commenting, 'MAYO'.$year) !== false  && $valorcorte >= intval($year.
         )
     ));
 }
-if (strpos($commenting, 'JUNIO'.$year) !== false  && $valorcorte >= intval($year.'06')) {
+if (strpos($commenting, 'JUNIO'.$year) !== false) {
     $objPHPExcel->getActiveSheet()->getStyle('M'.$i)->getFill()->applyFromArray(array(
         'type' => PHPExcel_Style_Fill::FILL_SOLID,
         'startcolor' => array(
@@ -1500,7 +1500,7 @@ if (strpos($commenting, 'JUNIO'.$year) !== false  && $valorcorte >= intval($year
         )
     ));
 }
-if (strpos($commenting, 'JULIO'.$year) !== false  && $valorcorte >= intval($year.'07')) {
+if (strpos($commenting, 'JULIO'.$year) !== false) {
     $objPHPExcel->getActiveSheet()->getStyle('N'.$i)->getFill()->applyFromArray(array(
         'type' => PHPExcel_Style_Fill::FILL_SOLID,
         'startcolor' => array(
@@ -1508,7 +1508,7 @@ if (strpos($commenting, 'JULIO'.$year) !== false  && $valorcorte >= intval($year
         )
     ));
 }
-if (strpos($commenting, 'AGOSTO'.$year) !== false  && $valorcorte >= intval($year.'08')) {
+if (strpos($commenting, 'AGOSTO'.$year) !== false) {
     $objPHPExcel->getActiveSheet()->getStyle('O'.$i)->getFill()->applyFromArray(array(
         'type' => PHPExcel_Style_Fill::FILL_SOLID,
         'startcolor' => array(
@@ -1516,7 +1516,7 @@ if (strpos($commenting, 'AGOSTO'.$year) !== false  && $valorcorte >= intval($yea
         )
     ));
 }
-if (strpos($commenting, 'SEPTIEMBRE'.$year) !== false  && $valorcorte >= intval($year.'09')) {
+if (strpos($commenting, 'SEPTIEMBRE'.$year) !== false) {
     $objPHPExcel->getActiveSheet()->getStyle('P'.$i)->getFill()->applyFromArray(array(
         'type' => PHPExcel_Style_Fill::FILL_SOLID,
         'startcolor' => array(
@@ -1524,7 +1524,7 @@ if (strpos($commenting, 'SEPTIEMBRE'.$year) !== false  && $valorcorte >= intval(
         )
     ));
 }
-if (strpos($commenting, 'OCTUBRE'.$year) !== false  && $valorcorte >= intval($year.'10')) {
+if (strpos($commenting, 'OCTUBRE'.$year) !== false  ) {
     $objPHPExcel->getActiveSheet()->getStyle('Q'.$i)->getFill()->applyFromArray(array(
         'type' => PHPExcel_Style_Fill::FILL_SOLID,
         'startcolor' => array(
@@ -1532,7 +1532,7 @@ if (strpos($commenting, 'OCTUBRE'.$year) !== false  && $valorcorte >= intval($ye
         )
     ));
 }
-if (strpos($commenting, 'NOVIEMBRE'.$year) !== false && $valorcorte >= intval($year.'11')) {
+if (strpos($commenting, 'NOVIEMBRE'.$year) !== false ) {
     $objPHPExcel->getActiveSheet()->getStyle('R'.$i)->getFill()->applyFromArray(array(
         'type' => PHPExcel_Style_Fill::FILL_SOLID,
         'startcolor' => array(
@@ -1540,7 +1540,7 @@ if (strpos($commenting, 'NOVIEMBRE'.$year) !== false && $valorcorte >= intval($y
         )
     ));
 }
-if (strpos($commenting, 'DICIEMBRE'.$year) !== false && $valorcorte >= intval($year.'12')) {
+if (strpos($commenting, 'DICIEMBRE'.$year) !== false ) {
     $objPHPExcel->getActiveSheet()->getStyle('S'.$i)->getFill()->applyFromArray(array(
         'type' => PHPExcel_Style_Fill::FILL_SOLID,
         'startcolor' => array(
@@ -1777,7 +1777,7 @@ if (strpos($commenting_next_year, 'DICIEMBRE'.$nextyear) !== false) {
         )
     ));
 }
-*/
+
 if (strpos($commenting_next_year, 'ENERO'.$year) !== false  && $valorcorte >= intval($year.'01')) {
     $objPHPExcel->getActiveSheet()->getStyle('H'.$i)->getFill()->applyFromArray(array(
         'type' => PHPExcel_Style_Fill::FILL_SOLID,
@@ -1877,7 +1877,7 @@ if (strpos($commenting_next_year, 'DICIEMBRE'.$year) !== false  && $valorcorte >
         )
     ));
 }
-
+*/
 
 }
 }
