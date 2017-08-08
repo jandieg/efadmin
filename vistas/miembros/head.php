@@ -1086,8 +1086,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
                      $objPresupuestoCobro3 = new PresupuestoCobro();
+                     $objPresupuestoCobro4 = new PresupuestoCobro();
                      $listaFechasCuotasEnCero = array();
                      $listaFechasCuotasEnCero = $objPresupuestoCobro3->getFechasConCuotasEnCero($_POST['_id_presupuesto']);
+                     $listaFechasCuotasPagas = array();
+                     $listaFechasCuotasPagas = $objPresupuestoCobro4->getFechasConCuotasPagas($_POST['_id_presupuesto']);
                      $objMiembro3 = new Miembro();
                      $resultsetm = $objMiembro3->getMiembro1($_POST['_id_miembro']);
                      $miembroCancelled = 0;
@@ -1113,15 +1116,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                          $fechaPrimerDia_Registro= getPrimerDiaMes(date("Y"), '01');
                      }
                      
-
                      for ($index = $periodoMeses; $index <= 12; $index = $index + $periodoMeses) {
-
-                             $fecha= getPrimerDiaMes(date("Y"),($index - $periodoMeses) + 1);
-                             if($fecha >= $fechaPrimerDia_Registro){ //ojo, parte siempre y cuando sea mayor
-                                 if($fechaPrimeraVuelta == ""){
+                             $fecha = getPrimerDiaMes(date("Y"), ($index - $periodoMeses) + 1);
+                             if ($fecha >= $fechaPrimerDia_Registro) { //ojo, parte siempre y cuando sea mayor
+                                 if ($fechaPrimeraVuelta == "") {
                                      $fechaPrimeraVuelta= $fecha;
                                  }
-                                 if (! in_array($fecha, $listaFechasCuotasEnCero)) {
+                                 if (! in_array($fecha, $listaFechasCuotasEnCero) && ! in_array($fecha, $listaFechasCuotasPagas)) {
                                     $listaFechaLetrasPeriodos.= $fecha.",";
                                     $multiplicadorPeriodo= $multiplicadorPeriodo + 1;
                                  }                                 
@@ -1139,7 +1140,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                      if($numMesesFaltantes > 0){
                          for ($index = $numMes_DelRegistro; $index < $numMes_DelPrimeraVuelta; $index = $index + 1) {
                              $fecha= getPrimerDiaMes(date("Y"),$index); 
-                             if (! in_array($fecha, $listaFechasCuotasEnCero)) {
+                             if (! in_array($fecha, $listaFechasCuotasEnCero) && ! in_array($fecha, $listaFechasCuotasEnCero)) {
                                 $listaFechaLetrasFaltantes.= $fecha.",";
                                 $multiplicadorLetrasFaltantes= $multiplicadorLetrasFaltantes + 1;
                              }
@@ -1148,14 +1149,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                      }
                      ////////////////////////////////////////////////////////////
                      $numCuotasEnCero = 0;
-                     $numCuotasEnCero = count($listaFechasCuotasEnCero);
+                     $numCuotasEnCero = count($listaFechasCuotasEnCero) + count($listaFechasCuotasPagas);
                      $valorCobrarPeriodo= $membresiaValor * ($periodoMeses - $numCuotasEnCero);  
                      $valorCobrarLetrasFaltantes= $membresiaValor;
 
                      $totalCobrar= ($valorCobrarPeriodo * $multiplicadorPeriodo) + ($valorCobrarLetrasFaltantes * $multiplicadorLetrasFaltantes);
                      $objTipoPresupuesto = new TipoPresupuesto();
                      $idTipo= $objTipoPresupuesto->getPrimerIDTipo();
-                      if($_POST['_id_presupuesto'] != "0"){
+                     if($_POST['_id_presupuesto'] != "0"){
                          $objPresupuestoCobro= new PresupuestoCobro();   
                          $comp= $objPresupuestoCobro->actualizarPresupuestoCobroMiembro($_POST['_id_presupuesto'], $valorCobrarPeriodo,
                                  $totalCobrar,$_POST['_id_periodo'], $_SESSION['user_id_ben'],$listaFechaLetrasPeriodos, $_POST['_id_membresia'],
@@ -1173,13 +1174,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                      if($comp == "OK"){
                          $data = array("success" => "true", "priority"=>'success',"msg" => $msg);
-                         echo json_encode($data);
-                     }else{
+                         
+                     }else{                         
                          $data = array("success" => "false", "priority"=>'info',"msg" => $comp); 
-                         echo json_encode($data);
-                     }
-
-
+                         
+                     }   
+                     //$data = array("success" => "true", "priority"=>'success',"msg" => "mensaje");
+                     echo json_encode($data);             
 
                  }  else {
                      $data = array("success" => "false", "priority"=>'info', "msg" => 'Faltan campos por llenar!');  

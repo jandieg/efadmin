@@ -109,6 +109,21 @@ class PresupuestoCobro extends Conexion{
         }
         return $lista;
     }
+
+    public function getCuotasPagas($id) {
+        $sql = "CALL sp_selectCuotasPagas('$id')";
+        return parent::getConsultar($sql);
+    }
+
+    public function getFechasConCuotasPagas($id) {
+        $resultset = $this->getCuotasPagas($id);
+        $lista = array();
+
+        while ($row = $resultset->fetch_assoc()) {
+            $lista[] = date('Y-m-d',strtotime($row['detalleprecobro_fechavencimiento']));
+        }
+        return $lista;
+    }
     
     public function getListaDetallePresupuesto($id) {   
         $resultset= $this->getDetallePresupuestoMiembro($id); 

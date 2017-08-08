@@ -939,21 +939,19 @@ var setAgregarPresupuestoEnPrincipal = function(id_presupuesto, id_miembro, id_p
             url:   'miembros',
             type:  'post',
             async: false,
-            dataType : 'json',
-            beforeSend: function () {
-               
-            },
+            dataType : 'json',            
             success:  function (mensaje) {
                 
-                    if(mensaje.success == "true"){
+                    if (mensaje.success == "true") {
                         respuesta = "<div class='col-md-3'><div class='callout callout-success'><h4>Alerta:</h4><p>"+mensaje.msg+"</p></div></div>";
                         //$.toaster({ priority : mensaje.priority, title : 'Alerta', message : mensaje.msg});               
-                    }else{                        
+                    } else {                        
                         respuesta = "<div class='col-md-3'><div class='callout callout-info'><h4>Alerta:</h4><p>"+mensaje.msg+"</p></div></div>";
                         //$.toaster({ priority : mensaje.priority, title : 'Alerta Membresia', message : mensaje.msg});               
                     }
             },error : function(xhr, status) {
-                respuesta = "<div class='col-md-3'><div class='callout callout-danger'><h4>Alerta:</h4><p>Disculpe, existió un problema </p></div></div>";
+                
+                respuesta = "<div class='col-md-3'><div class='callout callout-danger'><h4>Alerta:</h4><p>Disculpe, existió un problema </p></div></div>";                
                 //$.toaster({ priority : 'danger', title : 'Alerta Membresia', message : 'Disculpe, existió un problema' + status.toString()+" "+ xhr.toString()});
             }
         });
