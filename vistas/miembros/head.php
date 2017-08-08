@@ -1149,7 +1149,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                      }
                      ////////////////////////////////////////////////////////////
                      $numCuotasEnCero = 0;
-                     $numCuotasEnCero = count($listaFechasCuotasEnCero) + count($listaFechasCuotasPagas);
+                     $numCuotasEnCero = count($listaFechasCuotasEnCero);
                      $valorCobrarPeriodo= $membresiaValor * ($periodoMeses - $numCuotasEnCero);  
                      $valorCobrarLetrasFaltantes= $membresiaValor;
 
