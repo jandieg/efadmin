@@ -403,7 +403,7 @@ var getUserEditar = function(id){
 };
 var getDetalle = function( id_miembro, base){
     
-    $.post("miembros", {
+    /*$.post("miembros", {
         KEY: 'KEY_SHOW_FORM_DETALLE',
         id_miembro:id_miembro,
         base: base
@@ -411,7 +411,26 @@ var getDetalle = function( id_miembro, base){
         $("#ben_contenedor").html(mensaje);
         $("#alertas").html("");
 
-    });
+    });*/
+    var parametros = {
+        KEY: 'KEY_SHOW_FORM_DETALLE',
+        id_miembro: id_miembro,
+        base: base
+    };
+    $.ajax({
+            data:  parametros,
+            url:   'miembros',
+            type:  'post',
+            success:  function (mensaje) { 
+                
+                $("#ben_contenedor").html(mensaje);
+                $("#alertas").html("");
+
+            },error : function(xhr, status) {
+                console.log(xhr);
+                console.log(status);
+            }
+        });
 };
 var getDetalleWithAlerts = function( id_miembro, alertas){
     var base = '';
