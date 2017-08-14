@@ -10,6 +10,12 @@
     }
 
     .tabla-colapsada {
-      border: 1px solid black; border-collapse: collapse;
+      border: 1px solid black !important; 
+      border-collapse: collapse;
+    }
+
+    .rellenar-tabla {
+      border-top: 1px solid black !important;
+      border-bottom: 1px solid black !important;
     }
   </style>
