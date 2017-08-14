@@ -371,12 +371,19 @@ function getTablaCasosDelMesByForumLeader($idForumLeader) {
     $nombreact = "";
     $i = 1;
     $j = 1;
-    foreach ($data as $k => $d) {    
-        
+    
+    foreach ($data as $k => $d) {            
         if ($grupoactlista != $k) {
             $j = 1;
             $grupoactlista = $k;
-            $tabla.="<tr><td class='tabla-colapsada'>&nbsp;</td><td>Forum ".$i."</td>";
+            $objGrupo3 = new Grupo();
+            $resultset8 = $objGrupo3->getNombreGrupos($k);
+            if ($row8=$resultset8->fetch_assoc()) {
+                $tabla.="<tr><td class='tabla-colapsada'>&nbsp;</td><td>".$row8['gru_descripcion']."</td>";
+            } else {
+                $tabla.="<tr><td class='tabla-colapsada'>&nbsp;</td><td>Forum ".$i."</td>";
+            }
+            
             foreach ($period as $dt) {
                 $tabla.="<td class='tabla-colapsada'>&nbsp;</td>";        
             }
