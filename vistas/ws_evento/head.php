@@ -24,7 +24,7 @@ if (isset($data)) {
                 $response_1= array();
                 $objEmpresaLocal= new Entity($response_1);
 		
-					$user=$data->_all==FALSE ?-1:$data->user;
+					$user=$data->_all==FALSE ?$data->user:-1;
 
                     $parametros= array($user , $fecha_inicio, $fecha_fin);
                     $resultset= $objEmpresaLocal->getSp('sp_appSelectMiembroEventosCalendarioForum', $parametros, 'eventos');

@@ -1846,10 +1846,7 @@ if (in_array($perVertodoslosGruposOp7, $_SESSION['usu_permiso'])) {
 }
 //$form['form_2'] = array("elemento" => "combo","change" => "getFiltroForumLeader()", "titulo" => "Forum Leader", "id" => "_forum_leader", "option" => $listaForumLeaders);   
 
-if (in_array(trim($_SESSION['user_perfil']), array('Forum Leader', 'Administrador', 'Administrador Regional'))) {
 $form['form_1'] = array("elemento" => "boton","color" => "", "click" => "getCasoDelMes(".$_SESSION['user_id_ben'].")", "modal" => "", "titulo" => "Caso del Mes");   
-
-}
 $form['form_2'] = array("elemento" => "boton","color" => "", "click" => "getComponenteEducacional()", "modal" => "", "titulo" => "Componente Educacional");   
 if($valor['elemento']=='boton'){
             $msg.='<button type="button" class="btn '.$valor['color'].' btn-block margin-bottom" onclick="'.$valor['click'].'" data-toggle="modal" data-target="'.$valor['modal'].'" >'.$valor['titulo'].'</button>'; 
