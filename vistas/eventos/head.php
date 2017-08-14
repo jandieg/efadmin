@@ -74,17 +74,17 @@ function getTablaComponenteEducacional() {
     <div class='row'><div class ='span2'>&nbsp;</div><div class ='span2'>&nbsp;</div><div 
     class ='span2'>&nbsp;</div><div class ='span2 btn btn-primary' 
     onClick='getRecargar()' style='margin-left:20px;'>Regresar</div></div>";
-    $tabla.="<table class='table table-bordered' style='border: 1px solid black; border-collapse: collapse;'><thead>
-    <tr><th style='border: 1px solid black; border-collapse: collapse;'><strong>Año</strong>
-    </th><th style='border: 1px solid black; border-collapse: collapse;'><strong>Mes</strong></th>";
+    $tabla.="<table class='table table-bordered tabla-colapsada'><thead>
+    <tr><th class='tabla-colapsada'><strong>Año</strong>
+    </th><th class='tabla-colapsada'><strong>Mes</strong></th>";
     $aux = false;
     foreach ($listaNombres as $l) {
         if (! $aux) {
             $aux = true;
-            $tabla.="<th style='border: 1px solid black; border-collapse: collapse; width: 30px !important;'>".$l."</th>";
+            $tabla.="<th class='tabla-colapsada' style='width: 30px !important;'>".$l."</th>";
         } else {
             $aux = false;
-            $tabla.="<th style='border: 1px solid black; border-collapse: collapse; border-right-width: 3px;'>".$l."</th>";
+            $tabla.="<th class='tabla-colapsada' style='border-right-width: 3px;'>".$l."</th>";
         }
             
     }
@@ -94,8 +94,8 @@ function getTablaComponenteEducacional() {
     $listaData = array();
     foreach ($period as $dt) {
         foreach ($lista as $l) {
-            $listaData[$dt->format('Y')][intval($dt->format('m'))][$l['id']]['evento'] = "<td style='border: 1px solid black; border-collapse: collapse;'>&nbsp;</td>"; 
-            $listaData[$dt->format('Y')][intval($dt->format('m'))][$l['id']]['puntaje'] = "<td style='border: 1px solid black; border-collapse: collapse;'>&nbsp;</td>"; 
+            $listaData[$dt->format('Y')][intval($dt->format('m'))][$l['id']]['evento'] = "<td class='tabla-colapsada'>&nbsp;</td>"; 
+            $listaData[$dt->format('Y')][intval($dt->format('m'))][$l['id']]['puntaje'] = "<td class='tabla-colapsada'>&nbsp;</td>"; 
         }
     }
 
@@ -103,20 +103,20 @@ function getTablaComponenteEducacional() {
     $resultset = $objEvento->getEventosByYearPeriod($anho_inicio, date('Y'));
 
     while ($row = $resultset->fetch_assoc()) {
-        $listaData[$row['anho']][$row['mes']][$row['grupos_gru_id']]['evento'] = "<td style='border: 1px solid black; border-collapse: collapse;'>" . $row['ocasion'] . "</td>";
-        $listaData[$row['anho']][$row['mes']][$row['grupos_gru_id']]['puntaje'] = "<td style='border: 1px solid black; border-collapse: collapse;'><strong>" . $row['eve_puntaje'] . "</strong></td>";
+        $listaData[$row['anho']][$row['mes']][$row['grupos_gru_id']]['evento'] = "<td class='tabla-colapsada'>" . $row['ocasion'] . "</td>";
+        $listaData[$row['anho']][$row['mes']][$row['grupos_gru_id']]['puntaje'] = "<td class='tabla-colapsada'><strong>" . $row['eve_puntaje'] . "</strong></td>";
     }
 
     $anhoact = "";
     foreach($period as $dt) {
         if ($dt->format('Y') != $anhoact) {            
-            $tabla.="<tr style='border-top: 3px solid black;'><td style='border: 1px solid black; border-collapse: collapse;  border-top-width: 3px;'>".$dt->format('Y')."</td>";
+            $tabla.="<tr style='border-top: 3px solid black;'><td class='tabla-colapsada' style='border-top-width: 3px;'>".$dt->format('Y')."</td>";
             $anhoact = $dt->format('Y');
         } else {            
-            $tabla.="<tr><td style='border: 1px solid black; border-collapse: collapse;'>&nbsp</td>";
+            $tabla.="<tr><td class='tabla-colapsada'>&nbsp</td>";
         }
                
-        $tabla.="<td style='border: 1px solid black; border-collapse: collapse;'>".$meses[$dt->format("m")]."</td>";
+        $tabla.="<td class='tabla-colapsada'>".$meses[$dt->format("m")]."</td>";
                 
         foreach($lista as $l) {
 

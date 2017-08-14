@@ -8,4 +8,8 @@
     #ben_contenedor{
           overflow-x: scroll;
     }
+
+    .tabla-colapsada {
+      border: 1px solid black; border-collapse: collapse;
+    }
   </style>
