@@ -18,4 +18,16 @@
       border-top: 1px solid black !important;
       border-bottom: 1px solid black !important;
     }
+
+    #mydiv>.fixed-column {
+        position: absolute;
+        display: inline-block;
+        width: auto;
+        border-right: 1px solid #ddd;
+    }
+    @media(min-width:768px) {
+        #mydiv>.fixed-column {
+            display: none;
+        }
+    }
   </style>

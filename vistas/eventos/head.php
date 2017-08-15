@@ -319,7 +319,7 @@ function getTablaCasosDelMesByForumLeader($idForumLeader) {
     <div class='row'><div class ='span2'>&nbsp;</div><div class ='span2'>&nbsp;</div>
     <div class='span2'>&nbsp;</div><div class ='span2 btn btn-primary' 
     onClick='getRecargar()' style='margin-left:20px;'>Regresar</div></div>";
-    $tabla .= "<table class='table table-bordered' class='tabla-colapsada'>";
+    $tabla .= "<table class='table table-bordered tabla tabla-colapsada'>";
     $tabla.= "<thead>";
     $tabla.= "<tr><th class='tabla-colapsada'>&nbsp;</th><th class='tabla-colapsada'>&nbsp;</th>";
 

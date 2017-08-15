@@ -82,7 +82,15 @@ $(document).ready(function() {
         return event;  
       }   
     });
+    
   });
+
+var $table = $('.tabla');
+var $fixedColumn = $table.clone().insertBefore($table).addClass('fixed-column');
+$fixedColumn.find('th:not(:nth-child(-n+2)),td:not(:nth-child(-n+2))').remove();
+$fixedColumn.find('tr').each(function (i, elem) {
+    $(this).height($table.find('tr:eq(' + i + ')').height());
+});
   
 
 </script>
