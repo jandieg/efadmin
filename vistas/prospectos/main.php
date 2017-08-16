@@ -10,6 +10,8 @@
                     <!--<p><button type="button" id="btnCrearCliente" class="btn btn-success" onclick="setContenedorCrear('crearEmpresa')">Crear Cliente</button></p>-->      
                     <?php echo $t; ?>
                   </div>
+                  <div id="ben_contenedor2" style="display:none;">
+                  </div>
             </div>
           </div>
         </section>

@@ -396,7 +396,7 @@ var getUserEditar = function(id){
             KEY: 'KEY_SHOW_FORM_ACTUALIZAR',
             id_miembro: id
         }, function(mensaje) {
-            $("#ben_contenedor").html(mensaje);
+            $("#ben_contenedor2").html(mensaje);
             $(".select2").select2();
             $("#alertas").html("");
          });
@@ -422,8 +422,9 @@ var getDetalle = function( id_miembro, base){
             url:   'miembros',
             type:  'post',
             success:  function (mensaje) { 
-                
-                $("#ben_contenedor").html(mensaje);
+                $("#ben_contenedor").hide();                
+                $("#ben_contenedor2").html(mensaje);
+                $("#ben_contenedor2").show();
                 $("#alertas").html("");
 
             },error : function(xhr, status) {
@@ -439,7 +440,9 @@ var getDetalleWithAlerts = function( id_miembro, alertas){
         id_miembro:id_miembro,
         base: base
     }, function(mensaje) {
-        $("#ben_contenedor").html(mensaje);
+        $("#ben_contenedor").hide();
+        $("#ben_contenedor2").show();
+        $("#ben_contenedor2").html(mensaje);
         
         $("#alertas").html(alertas);
     });
@@ -753,8 +756,12 @@ var getFiltroWithParams = function(parametros) {
 
 var getRecargar = function(){
     //location.reload();
+
+    $("#ben_contenedor2").hide();
+    $("#ben_contenedor").show();
+    /*
     sessionStorage._recargado = true;
-	window.location.replace(window.location.origin+"/admin/miembros");	
+	window.location.replace(window.location.origin+"/admin/miembros");	*/
 };
 
 var getFiltro = function(key){

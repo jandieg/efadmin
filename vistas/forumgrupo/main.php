@@ -6,7 +6,12 @@
           <div class="row">   
               <div id="ben_contenedor_filtros">
                    <?php echo $t; ?>
-            </div>
+              </div>
+              <div id="ben_contenedor_filtros2">
+              </div>
+              <div id="ben_contenedor_filtros3">
+              </div>
+
           </div>
         </section>
       </div>

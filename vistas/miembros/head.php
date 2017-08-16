@@ -614,7 +614,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $objMiembro= new Miembro();
                     $resultset= $objMiembro->getMiembro1($_POST['id_miembro']);  
                     if($row = $resultset->fetch_assoc()) {  
-                        
+                    
                         $idpersona=$row['per_id'];
                         $titulo=$row['per_nombre'].' '.$row['per_apellido'];
 

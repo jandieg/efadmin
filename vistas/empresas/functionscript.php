@@ -4,7 +4,9 @@ var getDetalle = function(id){
         KEY: 'KEY_SHOW_FORM_DETALLE',
         id: id
     }, function(mensaje) {
-        $("#ben_contenedor").html(mensaje);
+        $("#ben_contenedor").hide();
+        $("#ben_contenedor2").html(mensaje);
+        $("#ben_contenedor2").show();
     });              
 };
 var getActualizar = function(id){
@@ -12,7 +14,9 @@ var getActualizar = function(id){
             KEY: 'KEY_SHOW_FORM_ACTUALIZAR',
             id: id.toString()
         }, function(mensaje) {
-            $("#ben_contenedor").html(mensaje);
+            $("#ben_contenedor").hide();            
+            $("#ben_contenedor2").html(mensaje);
+            $("#ben_contenedor2").show();
             $(".select2").select2();
         });
 }; 
@@ -20,7 +24,9 @@ var getCrear = function(){
      $.post("empresas", {
             KEY: 'KEY_SHOW_FORM_GUARDAR'
         }, function(mensaje) {
-            $("#ben_contenedor").html(mensaje);
+            $("#ben_contenedor").hide();
+            $("#ben_contenedor2").show();
+            $("#ben_contenedor2").html(mensaje);
             $(".select2").select2();
          });
 };
@@ -118,8 +124,11 @@ var setActualizar = function(id){
         });
 };
 var getRecargar = function(){
+    $("#ben_contenedor2").hide();
+    $("#ben_contenedor").show();
+    /*
     sessionStorage._recargado_empresas2 = true;
-    location.reload();
+    location.reload();*/
 };
 var getAgregarContacto = function(id){
     $("#_id_contacto_empresa").val(id.toString()); 
