@@ -543,7 +543,6 @@ while($xrow = mysqli_fetch_array($r)) {
     $curagrup = $xrow['agrup'];
     $totalagrup[$curagrup]['sheet'] = $xSheet; //guardo el ultimo index de cada grupo.    
 $objPHPExcel->setActiveSheetIndex($xSheet);
-
 $objPHPExcel->getActiveSheet()->setCellValue('D3', $xrow['gru_descripcion']);
 $objPHPExcel->getActiveSheet()->setCellValue('D4', get_admin_details($xrow['gru_forum'],'fullname'));
 //$objPHPExcel->getActiveSheet()->setCellValue('S3', '1/1/'.$year);
@@ -565,14 +564,10 @@ AND (miembro.mie_id not in (select t0.mie_id from miembro t0
             where t1.precobro_id = t2.presupuestocobro_precobro_id
             and year(detalleprecobro_fechavencimiento) < '$year' 
             and t2.estado_presupuesto_est_pre_id <> 2 )
-        )
-    
+        )    
     )
 AND miembro_inscripcion.mie_ins_fecha_ingreso <= '$corte'  
 ORDER By miembro.mie_codigo ASC";
-
-
-
 
 // AND miembro_inscripcion.mie_ins_year='$year'
 $res = mysqli_query($con,$sql);
@@ -590,10 +585,7 @@ while($row = mysqli_fetch_array($res)) {
 	
 //cellColor('H'.$i.':'.'S'.$i, 'CCCCCC');
 //cellColor('U'.$i.':'.'Z'.$i, 'CCCCCC');
-//cellColor('AA'.$i.':'.'AF'.$i, 'CCCCCC');
-
-
-		
+//cellColor('AA'.$i.':'.'AF'.$i, 'CCCCCC');		
 $codigo_usuario = $row['mie_codigo'];
  
 list($c1, $c2, $c3, $c4) = split('[/.-]', $codigo_usuario);

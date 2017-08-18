@@ -644,9 +644,7 @@ var setUserActualizar = function(  id_persona, id_miembro){
 
      
         
-        if ($("#_status").val() == 2) {
-            textoalertas += setActualizarCancelacion();
-        } 
+        
         
             $.ajax({
                 data:  parametros,
@@ -664,6 +662,9 @@ var setUserActualizar = function(  id_persona, id_miembro){
                         if(mensaje.success == "true"){
                            
                        textoalertas += "<div class='col-md-3'><div class='callout callout-success'><h4>Alerta:</h4><p>"+mensaje.msg+"</p></div></div>";
+                       if ($("#_status").val() == 2) {
+                            textoalertas += setActualizarCancelacion();
+                        } 
                        
                         getDetalleWithAlerts( id_miembro, textoalertas);
                         //$.toaster({ priority : mensaje.priority, title : 'Alerta', message : mensaje.msg});

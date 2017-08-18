@@ -35,8 +35,11 @@ class PresupuestoCobro extends Conexion{
     }
 
     public function cancelarPresupuestoCobroMiembro($idMiembro, $mes, $anho) {
-        $fecha = date("Y=m-d H:i:s"); 
-        $sql = "CALL sp_cancelPresupuestoCobroMiembro('$idMiembro', '$mes', '$anho', '$fecha')";
+        $mes2 = str_pad($mes,2,"0",STR_PAD_LEFT );
+        $fecha = $anho."-".$mes2."-01"; 
+        $fecha2= strtotime($fecha);
+        $penultima = date('Y-m-d', strtotime("-2 day", $fecha2)) . " 00:00:00";        
+        $sql = "CALL sp_cancelPresupuestoCobroMiembro('$idMiembro', '$mes', '$anho', '$penultima')";
         return parent::setSqlSp($sql);
     }       
 
