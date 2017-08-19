@@ -1217,7 +1217,12 @@ $form['form_1'] = array("elemento" => "combo","change" => "loadgroups();","titul
                         $objGrupo2 = new Grupo();                        
                         $todoslosgrupos = implode(',', $objGrupo2->getGruposA($_POST['_miembrosGrupos']));                        
                    }
-                   
+                   $objUsuario2 = new Usuario();
+                   $ciudad=23;
+                   $resultset9=$objUsuario2->getCiudadByUsuario($_SESSION['user_id_ben']);
+                   if ($row9 = $resultset9->fetch_assoc()) {
+                        $ciudad = $row9['ciudad_ciu_id'];
+                   }
                    $idGenerado="";
                    $objGenerador= new GeneradorID();
                    $idGenerado= $objGenerador->getGenerar();
@@ -1225,7 +1230,7 @@ $form['form_1'] = array("elemento" => "combo","change" => "loadgroups();","titul
                     $objEvento= new Evento();         
                     $comp= $objEvento->setGrabarEvento($idGenerado, $_POST['_nombre'],   $_POST['_titular'],$_POST['_all_day'], $_POST['_fi'],$_POST['_ff'],
                             $_POST['_descripcion'],$_SESSION['user_id_ben'],$listaAdicionales,$_POST['_miembrosGrupos'],$listaMiembros,
-                            $misGrupos,$todosGrupos,$_POST['_id_tipo_evento'],$_POST['_id_ubicacion'],$_POST['_acompanado'],$listaContactos,$listaEmpresario, $todoslosgrupos);
+                            $misGrupos,$todosGrupos,$_POST['_id_tipo_evento'],$_POST['_id_ubicacion'],$_POST['_acompanado'],$listaContactos,$listaEmpresario, $todoslosgrupos, $ciudad);
 
                     if($comp > 0){                        
                         getRecordarEvento($comp, TRUE);
