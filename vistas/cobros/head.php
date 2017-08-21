@@ -286,7 +286,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $objFormaPago= new FormaPago();
                     $listaFormaPago= $objFormaPago->getListaFormaPago();    
 
-                    $form['form_1'] = array("elemento" => "combo","change" => "","titulo" => "Forma de Pago", "id" => "_formapago", "option" => $listaFormaPago);  
+                    $form6['form_1'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_formapago" ,"reemplazo" => 1);
+                    //array("elemento" => "combo","change" => "","titulo" => "Forma de Pago", "id" => "_formapago", "option" => $listaFormaPago);  
                     if (! $esadminreg) {
                         $boton_f['boton_2'] = array("elemento" => "boton","id" => "btnGuardar" ,"modal" => "" ,"color" => "btn-primary" ,
                         "click" => "setCobrar()" ,"titulo" => "Cobrar" ,"lado" => "" ,"icono" => ""); 
@@ -305,14 +306,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $form4['form_1'] = array("elemento" => "caja pequeña", "titulo" => "Monto Reversado ", "tipo" => "text", "id" => "_montoreversado", "reemplazo" => 0);  
                     $form5['form_1'] = array("elemento" => "caja" ,"tipo" => "date", "titulo" => "Fecha de Cobro", "id" => "_fecha_cobro", "reemplazo" => date('Y-m-d'));                                            
                     $pie= str_replace("{contenedor_1}", generadorEtiqueta($form2),  getPage('page_detalle'));
-                    $pie= str_replace("{contenedor_2}", generadorEtiqueta($form),  $pie );
+                    $pie= str_replace("{contenedor_2}", generadorEtiqueta($form4),  $pie );
                     $pie2 = str_replace("{contenedor_1}", generadorEtiqueta($form3), getPage('page_detalle'));                                        
                     
                     if ($esadminreg) {
                         $pie2 = str_replace("{contenedor_2}", generadorEtiqueta($form5), $pie2);             
-                        $pie3 = str_replace("{contenedor_1}", generadorEtiqueta($form4), getPage('page_detalle'));                                        
-                        $pie3 = str_replace("{contenedor_2}", "", $pie3);                                        
-                        $html = str_replace("{cuerpo}", $head1.$tablaDetalle.$pie.$pie2.$pie3.$idOcultos, getPage("page_detalle_forum_modal")); 
+                        /*$pie3 = str_replace("{contenedor_1}", generadorEtiqueta($form4), getPage('page_detalle'));                                        
+                        $pie3 = str_replace("{contenedor_2}", "", $pie3);                                        */
+                        $html = str_replace("{cuerpo}", $head1.$tablaDetalle.$pie.$pie2.$idOcultos, getPage("page_detalle_forum_modal")); 
                         
                     } else {
                         $pie2 = str_replace("{contenedor_2}", "", $pie2);             
