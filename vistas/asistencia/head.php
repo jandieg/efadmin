@@ -24,13 +24,12 @@ function getAddMeses($partida, $tope, $control, $bandera) {
     }
     return $html;
 }
-function getAsistencia($idTipoEvento, $idGrupo, $fecha_inicio, $fecha_fin) {
+function getAsistencia($idGrupo, $fecha_inicio, $fecha_fin) {
         $objAsistencia= new Asistencia();
-        $resultset= $objAsistencia->getAsistencia($idGrupo, $fecha_inicio, $fecha_fin, $idTipoEvento);  
+        $resultset= $objAsistencia->getAsistencia($idGrupo, $fecha_inicio, $fecha_fin);  
         $arrayMiembros= array();
         $arrayCabeceraId= array();
-        $arrayCabecera= array();
-      
+        $arrayCabecera= array();      
         $arrayEventos= array();
         $banderaMiembros='';
         $cont= 1;
@@ -87,12 +86,11 @@ function getAsistencia($idTipoEvento, $idGrupo, $fecha_inicio, $fecha_fin) {
         $html.='<th><center>Nombre</center></th>';
         foreach($arrayCabecera as $valor =>$val ){
             $html .= getAddMeses($control, $val["control"], $val["control"],TRUE);//Para add columnas
-            $control= $val["control"] + 1;//Para add columnas
-            
+            $control= $val["control"] + 1;//Para add columnas            
             $html.='<th><center>'.$val["valor"].'</center></th>';
         }
         $html .= getAddMeses($control, 12, "",TRUE);//Para add columnas
-        $html.='<th><center>Faltas</center></th>';
+        $html.='<th><center>Asistencia</center></th>';
 //        $html.='<th><center>Faltas Promedio</center></th>';
 //        $html.='<th><center>Asistencia Promedio</center></th>';
         $html .='</tr>';
@@ -121,7 +119,7 @@ function getAsistencia($idTipoEvento, $idGrupo, $fecha_inicio, $fecha_fin) {
              $control= 1;
 //            $promedio= round(($cont_faltas * 100)/$cont, 0);
 //            $promedio_año=round((($cont - $cont_faltas) * 100 ) / $cont , 0);  
-            $html .='<td><center>'.$cont_faltas.'</center></td>';
+            $html .='<td><center>'.$cont.'</center></td>';
 //            $html .='<td><center>'.$promedio.'%</center></td>';
 //            $html .='<td><center>'.$promedio_año.'%</center></td>';
             $html .='</tr>';            
@@ -213,13 +211,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         switch ($_POST['KEY']): 
 
             case 'KEY_DETALLE_FILTRO':
-                if(!empty($_POST['_id_grupos']) && !empty($_POST['_id_tipo_evento']) ){ 
+                if(! empty($_POST['_id_grupos'])){ 
                     $fecha_inicio = getPrimerDiaMes($_POST['_año'],'1');
                     $fecha_fin= getUltimoDiaMes($_POST['_año'],'12');
                     /*if ($_POST['_tipo_asistencia'] == "3") {
                          echo getCasos($_POST['_id_tipo_evento'], $_POST['_id_grupos'], $fecha_inicio, $fecha_fin);
                     }else{*/
-                        echo getAsistencia($_POST['_id_tipo_evento'], $_POST['_id_grupos'], $fecha_inicio, $fecha_fin);
+                        echo getAsistencia($_POST['_id_grupos'], $fecha_inicio, $fecha_fin);
                     //}
                     
                     exit();            
@@ -325,20 +323,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     
      exit(); 
 }
-if (in_array($perVerTodosFiltrosAsistenciaOp17, $_SESSION['usu_permiso'])) {
+if (in_array($perVerFiltrosIDForumAsistenciaOp17, $_SESSION['usu_permiso'])) {
     
     //$lista['lista_']=array("value" => "x",  "select" => "" ,"texto" => "Seleccione...");
     
-    $objGrupo= new Grupo();
-    $listaGrupos= $objGrupo->getListaGrupos2($objGrupo->getPrimerGrupo(),NULL);
-    
- }  elseif (in_array($perVerFiltrosIDForumAsistenciaOp17, $_SESSION['usu_permiso'])) {
-     
-    //$lista['lista_']=array("value" => "x",  "select" => "" ,"texto" => "Seleccione...");
     
     $objGrupo= new Grupo();
     $listaGrupos= $objGrupo->getListaGruposForum($_SESSION['user_id_ben'], NULL,NULL);
+    
+ }  else {
+    
+    //$lista['lista_']=array("value" => "x",  "select" => "" ,"texto" => "Seleccione...");
+    $objGrupo= new Grupo();
+    $listaGrupos= $objGrupo->getListaGrupos2($objGrupo->getPrimerGrupo(),NULL);
+    
  }
+
+ 
  
     $objTipoE= new TipoEvento();
     $listaEventos= $objTipoE->getListaAcotada(NULL,NULL,'', '');
@@ -358,15 +359,15 @@ function getTablaFiltro($listaEventos= array(), $listaGrupos= array() , $tabla) 
     
     //$form2['form_1'] = array("elemento" => "caja" ,"disabled" => "","tipo" => "date" , "titulo" => "Fecha Inicio", "id" => "_fi" ,"reemplazo" => "");
     //$form3['form_1'] = array("elemento" => "caja" ,"disabled" => "","tipo" => "date" , "titulo" => "Fecha Fin", "id" => "_ff" ,"reemplazo" => "");    
-    $form4['form_1'] = array("elemento" => "combo","disabled" => "","change" => "getGrupos()","titulo" => "Tipos Eventos", "id" => "_tipos_eventos", "option" => $listaEventos); 
-    $resultado = str_replace("{contenedor_1}", generadorEtiquetaVVertical2($form4),  getPage('page_cuerpo'));     
-    $resultado = str_replace("{contenedor_2}", generadorEtiquetaVVertical2($form1), $resultado); 
+    //$form4['form_1'] = array("elemento" => "combo","disabled" => "","change" => "getGrupos()","titulo" => "Tipos Eventos", "id" => "_tipos_eventos", "option" => $listaEventos); 
+    $resultado = str_replace("{contenedor_1}", generadorEtiquetaVVertical2($form1),  getPage('page_cuerpo'));     
+    $resultado = str_replace("{contenedor_2}", generadorEtiquetaVVertical2($form2), $resultado); 
     $resultado = str_replace("{contenedor_3}", "", $resultado); 
-    $resultado = str_replace("{contenedor_4}", generadorEtiquetaVVertical2($form2), $resultado); 
+    $resultado = str_replace("{contenedor_4}", "", $resultado); 
     $resultado = str_replace("{contenedor_5}", "", $resultado); 
     $resultado = str_replace("{contenedor_6}", '<div id="ben_contenedor_tabla">'.$tabla.'</div>', $resultado); 
     $resultado = str_replace("{boton}", "", $resultado);  
-    $resultado = str_replace("{cabecera}", "Faltas", $resultado);   
+    $resultado = str_replace("{cabecera}", "Asistencia", $resultado);   
 
     return $resultado;
 }

@@ -56,8 +56,8 @@ var getDetalleFiltro = function(){
             _id_grupos: $("#_grupos").val().toString(),
 //            _fi: $("#_fi").val().toString(),
 //            _ff: $("#_ff").val().toString(),
-            _año:$("#_año").val().toString(),
-            _id_tipo_evento: $("#_tipos_eventos").val().toString()
+            _año:$("#_año").val().toString()
+           /* _id_tipo_evento: $("#_tipos_eventos").val().toString()*/
             //_tipo_asistencia:$("#_tipo_asistencia").val().toString()
         };
         $.ajax({
