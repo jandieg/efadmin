@@ -84,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                            $form['form_18'] = array("elemento" => "subir-imagen-oc", "valor" => $row['usu_id']);
                            $form['form_19'] = array("elemento" => "caja", "tipo" => "hidden", "id" => "_usu_id", "reemplazo" => $row['usu_id']);
                            $form['form_4'] = array("elemento" => "caja","tipo" => "hidden", "titulo" => "", "id" => "_tipo_p", "reemplazo" => "N");                
-                            $form['form_5'] = array("elemento" => "caja" ,"tipo" => "hidden" , "titulo" => "", "id" => "_identificacion" ,"reemplazo" => $row['per_identificacion']);         
+                            //$form['form_5'] = array("elemento" => "caja" ,"tipo" => "hidden" , "titulo" => "", "id" => "_identificacion" ,"reemplazo" => $row['per_identificacion']);         
                            $resultado = str_replace("{contenedor_1}", generadorEtiqueta($form),  getPage('page_detalle_update') );//generadorContMultipleRow($colum));      
                            $resultado = str_replace("{boton}", generadorBoton($boton), $resultado);  
                            $resultado = str_replace("{cabecera}", "Actualizar Usuario", $resultado);
@@ -112,7 +112,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $form['form_1'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => generadorAsterisco($lblNombre), "id" => "_nombre" ,"reemplazo" => "");
                 $form['form_2'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => generadorAsterisco($lblApellido), "id" => "_apellido" ,"reemplazo" => "");
                 $form['form_4'] = array("elemento" => "combo","change" => "","titulo" => $lblTipoPersona, "id" => "_tipo_p", "option" => generadorComboTipoPersona('Natural'));                
-                $form['form_5'] = array("elemento" => "caja" ,"tipo" => "number" , "titulo" => $lblIdentificacion, "id" => "_identificacion" ,"reemplazo" => "");         
+                //$form['form_5'] = array("elemento" => "caja" ,"tipo" => "number" , "titulo" => $lblIdentificacion, "id" => "_identificacion" ,"reemplazo" => "");         
                 $form['form_6'] = array("elemento" => "caja" ,"tipo" => "date" , "titulo" => $lblFNacimiento, "id" => "_fn", "reemplazo" => ""); 
                 $form['form_7'] = array("elemento" => "combo", "change" => "",   "titulo" => $lblGenero, "id" => "_genero", "option" => generadorComboGenero('MASCULINO'));
                 $form['form_8'] = array("elemento" => "combo","change" => "","titulo" => generadorAsterisco($lblPerfil), "id" => "_perfil", "option" => $listaPerfil);               
@@ -150,7 +150,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                           
                         $objUsuario= new Usuario();
                         $comp= $objUsuario->setActualizarUsuario2($_POST['_id'] ,$_POST['_nombre'], $_POST['_apellido'], $_POST['_tipo_p'] ,
-                                $_POST['_identificacion'], $_POST['_fn'], $_POST['_genero'], $_POST['_perfil'], $_POST['_estado'], $_SESSION['user_id_ben'], $_POST['_correo']
+                                'a', $_POST['_fn'], $_POST['_genero'], $_POST['_perfil'], $_POST['_estado'], $_SESSION['user_id_ben'], $_POST['_correo']
                                 ,$_POST['_telefono'], $_POST['_celular'], '1', $_POST['_pais'], $_POST['_esposa'], $_POST['_hijos']); 
                         
                         if($comp == "OK"){
@@ -231,7 +231,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             $hash = hash_hmac("sha256", trim($_POST['_contraseña']), $salt);
                             ////////////////////////////////////////////////////
                             $objUsuario= new Usuario();
-                            $comp= $objUsuario->setGrabarUsuario($_POST['_nombre'], $_POST['_apellido'], $_POST['_tipo_p'],$_POST['_identificacion'], $_POST['_fn'], 
+                            $comp= $objUsuario->setGrabarUsuario($_POST['_nombre'], $_POST['_apellido'], $_POST['_tipo_p'],'a', $_POST['_fn'], 
                                 $_POST['_genero'], $_POST['_user'] , $hash, $_POST['_perfil'],$_POST['_estado'],  $_SESSION['user_id_ben'],$_POST['_correo']
                                 ,$_POST['_telefono'],$_POST['_celular'],$salt,'1',$_POST['_pais']);  
                             
@@ -271,7 +271,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         
                         
                        
-                        $tabla2['t_1'] = array("t_1" => generadorNegritas($lblIdentificacion), "t_2" => $row['per_identificacion']);
+                        //$tabla2['t_1'] = array("t_1" => generadorNegritas($lblIdentificacion), "t_2" => $row['per_identificacion']);
                         if($row['per_tipo']=='J'){$tabla2['t_2'] = array("t_1" => generadorNegritas($lblTipoPersona), "t_2" => "Jurídica");} 
                         if($row['per_tipo']=='N'){$tabla2['t_2'] = array("t_1" => generadorNegritas($lblTipoPersona), "t_2" => "Natural");} 
                         $tabla2['t_3'] = array("t_1" => generadorNegritas($lblFNacimiento), "t_2" => getFormatoFechadmy($row['per_fechanacimiento']));
