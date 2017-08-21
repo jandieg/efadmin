@@ -35,6 +35,7 @@ var getDetalleFiltro = function(_key_filtro){
             _key_filtro: _key_filtro.toString(),
             _año: $("#_año").val().toString()
         };
+        
         $.ajax({
             data:  parametros,
             url:   'cobros',

@@ -78,6 +78,7 @@ if(file_exists(E_VISTAS.E_PAGE."/head.php")){
        
         <link rel="stylesheet" href="public/framework/dist/css/skins/_all-skins.min.css">  
         <link rel="stylesheet" href="public/framework/plugins/datatables/dataTables.bootstrap.css">
+        
         <?php
             if(file_exists(E_VISTAS.E_PAGE."/css.php")){
                 include(E_VISTAS.E_PAGE."/css.php");
@@ -328,7 +329,8 @@ function ResetReports(id){
                         }
                     });    
             };
-         
+
+       
             var getConfTabla= function (){
                 $(function () {
                     if ( $.fn.dataTable.isDataTable( '#tipo_personalizada' ) ) {
@@ -775,6 +777,7 @@ function ResetReports(id){
         <script src="public/js/msg/jquery.msg.min.js"></script>
         
         <script src="public/framework/plugins/datatables/jquery.dataTables.min.js"></script>
+        
         <script src="public/framework/plugins/datatables/dataTables.bootstrap.min.js"></script>
         
         <?php

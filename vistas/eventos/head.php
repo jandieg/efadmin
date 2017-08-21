@@ -70,11 +70,11 @@ function getTablaComponenteEducacional() {
     $objGrupo = new Grupo();
     $lista = $objGrupo->getListaGruposAndForumLeaders();
     $listaNombres = getListaNombres($lista);
-     $tabla="<div='myDiv' style=' width: 900px !important; overflow-x: scroll !important;'>
+     $tabla="<div='myDiv' style=' >
     <div class='row'><div class ='span2'>&nbsp;</div><div class ='span2'>&nbsp;</div><div 
     class ='span2'>&nbsp;</div><div class ='span2 btn btn-primary' 
     onClick='getRecargar()' style='margin-left:20px;'>Regresar</div></div>";
-    $tabla.="<table class='table table-bordered tabla-colapsada'><thead>
+    $tabla.="<table class='table table-bordered  tabla-colapsada' id='latabla'><thead>
     <tr><th class='tabla-colapsada'><strong>Año</strong>
     </th><th class='tabla-colapsada'><strong>Mes</strong></th>";
     $aux = false;
