@@ -96,7 +96,13 @@ var setEstado = function(_id_miembro) {
         _id_status: estado
     };
     if (estado == 2) {
-        setGuardarCancelacion2(_id_miembro);
+        var r = confirm("Esta Seguro que desea Cancelar el miembro?");
+        if (r) {
+            setGuardarCancelacion2(_id_miembro);
+        } else {
+            return;
+        }
+        
     }
     
 
