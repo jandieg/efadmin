@@ -15,6 +15,9 @@
                   <div id="ben_contenedor">   
                     <?php echo $t; ?>
                   </div>
+                  </div>
+                  <div id="ben_contenedor2" style="display: none;">
+                  </div>
             </div>
           </div>
         </section>
@@ -29,6 +32,8 @@
             <div class="col-md-12">
                   <div id="ben_contenedor">   
                     
+                  </div>
+                  <div id="ben_contenedor2" style="display: none;">
                   </div>
             </div>
           </div>

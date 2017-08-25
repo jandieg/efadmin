@@ -119,7 +119,7 @@ function getDetalleGruposConMiembros($idGrupo) {
             $funcion_3= "getEnviarCorreoWithAdjunto('".$row['correo']."','".$nombre."',1)";
             $funcion_4= "getEnviarCorreoIndividual('".$row['correo']."','Mis Grupos',3)";
             $funcion_5= "getEnviarCorreoIndividual('".$row['correo']."','Todos los Grupos',4)";
-            $funcion_6= "getRecargar()";
+            $funcion_6= "getRecargar2()";
 $verDetalle="getDetalle(".$row['mie_id'].",'')";
              $cuerpo.= generadorTablaFilas(array(
                  "<center>".$cont."</center>",

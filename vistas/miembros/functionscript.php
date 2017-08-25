@@ -96,7 +96,13 @@ var setEstado = function(_id_miembro) {
         _id_status: estado
     };
     if (estado == 2) {
-        setGuardarCancelacion2(_id_miembro);
+       var r = confirm("Esta Seguro que desea Cancelar el Miembro?");
+       if (r) {
+            setGuardarCancelacion2(_id_miembro);
+       } else {
+            return; 
+       }
+           
     }
     
 
@@ -396,14 +402,14 @@ var getUserEditar = function(id){
             KEY: 'KEY_SHOW_FORM_ACTUALIZAR',
             id_miembro: id
         }, function(mensaje) {
-            $("#ben_contenedor").html(mensaje);
+            $("#ben_contenedor2").html(mensaje);
             $(".select2").select2();
             $("#alertas").html("");
          });
 };
 var getDetalle = function( id_miembro, base){
     
-    $.post("miembros", {
+    /*$.post("miembros", {
         KEY: 'KEY_SHOW_FORM_DETALLE',
         id_miembro:id_miembro,
         base: base
@@ -411,7 +417,27 @@ var getDetalle = function( id_miembro, base){
         $("#ben_contenedor").html(mensaje);
         $("#alertas").html("");
 
-    });
+    });*/
+    var parametros = {
+        KEY: 'KEY_SHOW_FORM_DETALLE',
+        id_miembro: id_miembro,
+        base: base
+    };
+    $.ajax({
+            data:  parametros,
+            url:   'miembros',
+            type:  'post',
+            success:  function (mensaje) { 
+                $("#ben_contenedor").hide();                
+                $("#ben_contenedor2").html(mensaje);
+                $("#ben_contenedor2").show();
+                $("#alertas").html("");
+
+            },error : function(xhr, status) {
+                console.log(xhr);
+                console.log(status);
+            }
+        });
 };
 var getDetalleWithAlerts = function( id_miembro, alertas){
     var base = '';
@@ -420,7 +446,9 @@ var getDetalleWithAlerts = function( id_miembro, alertas){
         id_miembro:id_miembro,
         base: base
     }, function(mensaje) {
-        $("#ben_contenedor").html(mensaje);
+        $("#ben_contenedor").hide();
+        $("#ben_contenedor2").show();
+        $("#ben_contenedor2").html(mensaje);
         
         $("#alertas").html(alertas);
     });
@@ -622,9 +650,7 @@ var setUserActualizar = function(  id_persona, id_miembro){
 
      
         
-        if ($("#_status").val() == 2) {
-            textoalertas += setActualizarCancelacion();
-        } 
+        
         
             $.ajax({
                 data:  parametros,
@@ -642,6 +668,9 @@ var setUserActualizar = function(  id_persona, id_miembro){
                         if(mensaje.success == "true"){
                            
                        textoalertas += "<div class='col-md-3'><div class='callout callout-success'><h4>Alerta:</h4><p>"+mensaje.msg+"</p></div></div>";
+                       if ($("#_status").val() == 2) {
+                            textoalertas += setActualizarCancelacion();
+                        } 
                        
                         getDetalleWithAlerts( id_miembro, textoalertas);
                         //$.toaster({ priority : mensaje.priority, title : 'Alerta', message : mensaje.msg});
@@ -734,8 +763,12 @@ var getFiltroWithParams = function(parametros) {
 
 var getRecargar = function(){
     //location.reload();
+
+    $("#ben_contenedor2").hide();
+    $("#ben_contenedor").show();
+    /*
     sessionStorage._recargado = true;
-	window.location.replace(window.location.origin+"/admin/miembros");	
+	window.location.replace(window.location.origin+"/admin/miembros");	*/
 };
 
 var getFiltro = function(key){

@@ -77,6 +77,11 @@ class Usuario extends Conexion{
         }  
     }
 
+    public function getCiudadByUsuario($idUsuario) {
+        $sql = "call sp_selectCiudadByUsuario('$idUsuario')";
+        return parent::getConsultar($sql);
+    }
+
     public function getUsuarioByPersona($idPersona) {
         $sql ="call sp_selectUsuarioByPersona('$idPersona')";
         return parent::getConsultar($sql);

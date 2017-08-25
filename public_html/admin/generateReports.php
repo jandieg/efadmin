@@ -543,7 +543,6 @@ while($xrow = mysqli_fetch_array($r)) {
     $curagrup = $xrow['agrup'];
     $totalagrup[$curagrup]['sheet'] = $xSheet; //guardo el ultimo index de cada grupo.    
 $objPHPExcel->setActiveSheetIndex($xSheet);
-
 $objPHPExcel->getActiveSheet()->setCellValue('D3', $xrow['gru_descripcion']);
 $objPHPExcel->getActiveSheet()->setCellValue('D4', get_admin_details($xrow['gru_forum'],'fullname'));
 //$objPHPExcel->getActiveSheet()->setCellValue('S3', '1/1/'.$year);
@@ -565,14 +564,10 @@ AND (miembro.mie_id not in (select t0.mie_id from miembro t0
             where t1.precobro_id = t2.presupuestocobro_precobro_id
             and year(detalleprecobro_fechavencimiento) < '$year' 
             and t2.estado_presupuesto_est_pre_id <> 2 )
-        )
-    
+        )    
     )
 AND miembro_inscripcion.mie_ins_fecha_ingreso <= '$corte'  
 ORDER By miembro.mie_codigo ASC";
-
-
-
 
 // AND miembro_inscripcion.mie_ins_year='$year'
 $res = mysqli_query($con,$sql);
@@ -590,10 +585,7 @@ while($row = mysqli_fetch_array($res)) {
 	
 //cellColor('H'.$i.':'.'S'.$i, 'CCCCCC');
 //cellColor('U'.$i.':'.'Z'.$i, 'CCCCCC');
-//cellColor('AA'.$i.':'.'AF'.$i, 'CCCCCC');
-
-
-		
+//cellColor('AA'.$i.':'.'AF'.$i, 'CCCCCC');		
 $codigo_usuario = $row['mie_codigo'];
  
 list($c1, $c2, $c3, $c4) = split('[/.-]', $codigo_usuario);
@@ -727,21 +719,22 @@ $first_FM_y=getInscription_info($row['mie_id'],'ins_year');
 $COLOR1='CCCCCC';
 $COLOR2='FFFFFF';
 $COLOR3='92D050';
+$letramc = "H";
 
 
 //Paiting FM //
-if(($first_FM_m=='01')&&($first_FM_y==$year)){$x1='H'; $x2='H';    $ins_color='A6A6A6'; }else
-if(($first_FM_m=='02')&&($first_FM_y==$year)){$x1='H'; $x2='H';    $ins_color='A6A6A6'; }else
-if(($first_FM_m=='03')&&($first_FM_y==$year)){$x1='H'; $x2='I';    $ins_color='A6A6A6'; }else
-if(($first_FM_m=='04')&&($first_FM_y==$year)){$x1='H'; $x2='J';    $ins_color='A6A6A6'; }else
-if(($first_FM_m=='05')&&($first_FM_y==$year)){$x1='H'; $x2='K';    $ins_color='A6A6A6'; }else
-if(($first_FM_m=='06')&&($first_FM_y==$year)){$x1='H'; $x2='L';    $ins_color='A6A6A6'; }else
-if(($first_FM_m=='07')&&($first_FM_y==$year)){$x1='H'; $x2='M';    $ins_color='A6A6A6'; }else
-if(($first_FM_m=='08')&&($first_FM_y==$year)){$x1='H'; $x2='N';    $ins_color='A6A6A6'; }else
-if(($first_FM_m=='09')&&($first_FM_y==$year)){$x1='H'; $x2='O';    $ins_color='A6A6A6'; }else
-if(($first_FM_m=='10')&&($first_FM_y==$year)){$x1='H'; $x2='P';    $ins_color='A6A6A6'; }else
-if(($first_FM_m=='11')&&($first_FM_y==$year)){$x1='H'; $x2='Q';    $ins_color='A6A6A6'; }else
-if(($first_FM_m=='12')&&($first_FM_y==$year)){$x1='H'; $x2='R';    $ins_color='A6A6A6'; }else{ $x1='H'; $x2='S';  $ins_color='';}
+if(($first_FM_m=='01')&&($first_FM_y==$year)){$x1='H'; $x2='H'; $letramc= 'H';   $ins_color='A6A6A6'; }else
+if(($first_FM_m=='02')&&($first_FM_y==$year)){$x1='H'; $x2='H'; $letramc= 'I';   $ins_color='A6A6A6'; }else
+if(($first_FM_m=='03')&&($first_FM_y==$year)){$x1='H'; $x2='I'; $letramc= 'J';   $ins_color='A6A6A6'; }else
+if(($first_FM_m=='04')&&($first_FM_y==$year)){$x1='H'; $x2='J'; $letramc= 'K';   $ins_color='A6A6A6'; }else
+if(($first_FM_m=='05')&&($first_FM_y==$year)){$x1='H'; $x2='K'; $letramc= 'L';   $ins_color='A6A6A6'; }else
+if(($first_FM_m=='06')&&($first_FM_y==$year)){$x1='H'; $x2='L'; $letramc= 'M';   $ins_color='A6A6A6'; }else
+if(($first_FM_m=='07')&&($first_FM_y==$year)){$x1='H'; $x2='M'; $letramc= 'N';   $ins_color='A6A6A6'; }else
+if(($first_FM_m=='08')&&($first_FM_y==$year)){$x1='H'; $x2='N'; $letramc= 'O';   $ins_color='A6A6A6'; }else
+if(($first_FM_m=='09')&&($first_FM_y==$year)){$x1='H'; $x2='O'; $letramc= 'P';   $ins_color='A6A6A6'; }else
+if(($first_FM_m=='10')&&($first_FM_y==$year)){$x1='H'; $x2='P'; $letramc= 'Q';   $ins_color='A6A6A6'; }else
+if(($first_FM_m=='11')&&($first_FM_y==$year)){$x1='H'; $x2='Q'; $letramc= 'R';   $ins_color='A6A6A6'; }else
+if(($first_FM_m=='12')&&($first_FM_y==$year)){$x1='H'; $x2='R'; $letramc= 'S';  $ins_color='A6A6A6'; }else{ $x1='H'; $x2='S';  $ins_color='';}
 
 
 
@@ -764,6 +757,57 @@ if ($ins_color || intval($first_FM_y) > intval($year)) {
         ));
     }
 	 
+     //si es miembro cancelado
+if ($this_status_member == "MC") {
+        //se pinta todo en blanco primero
+        $objPHPExcel->getActiveSheet()->getStyle($letramc.$i.':S'.$i)->getFill()->applyFromArray(array(
+            'type' => PHPExcel_Style_Fill::FILL_SOLID,
+            'startcolor' => array(
+                'rgb' => $COLOR2
+            )
+        ));
+
+
+        $objPHPExcel->getActiveSheet()->getStyle("U".$i.':X'.$i)->getFill()->applyFromArray(array(
+            'type' => PHPExcel_Style_Fill::FILL_SOLID,
+            'startcolor' => array(
+                'rgb' => $COLOR2
+            )
+        ));
+
+        //se pregunta si tiene fecha_cambio_status
+         if (strlen($row['mie_fecha_cambio_status']) > 0) {
+            $elmes = date_format(date_create($row['mie_fecha_cambio_status']), 'm');
+            $elanho = date_format(date_create($row['mie_fecha_cambio_status']), 'Y');
+            $pos = getColorPintar($elmes,$elanho, $year);
+            if (is_array($pos)) {
+                if ($pos['primeranho']) {
+                    $objPHPExcel->getActiveSheet()->getStyle($pos['value'].$i.':S'.$i)->getFill()->applyFromArray(array(
+                        'type' => PHPExcel_Style_Fill::FILL_SOLID,
+                        'startcolor' => array(
+                            'rgb' => $COLOR1
+                        )
+                    ));
+
+                    $objPHPExcel->getActiveSheet()->getStyle("U".$i.':X'.$i)->getFill()->applyFromArray(array(
+                            'type' => PHPExcel_Style_Fill::FILL_SOLID,
+                            'startcolor' => array(
+                                'rgb' => $COLOR1
+                            )
+                        ));
+        
+                    
+                } else {
+                    $objPHPExcel->getActiveSheet()->getStyle($pos['value'].$i.':X'.$i)->getFill()->applyFromArray(array(
+                            'type' => PHPExcel_Style_Fill::FILL_SOLID,
+                            'startcolor' => array(
+                                'rgb' => $COLOR1
+                            )
+                        ));
+                }
+            }
+         }
+}
 /*
 
 	 $objPHPExcel->getActiveSheet()->getStyle($xx1.$i.':'.$xx2.$i)->getFill()->applyFromArray(array(

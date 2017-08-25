@@ -35,6 +35,7 @@ var getDetalleFiltro = function(_key_filtro){
             _key_filtro: _key_filtro.toString(),
             _año: $("#_año").val().toString()
         };
+        
         $.ajax({
             data:  parametros,
             url:   'cobros',
@@ -404,7 +405,7 @@ var setReversarCobros = function(){
                 KEY: 'KEY_REVERSAR_COBRO',  
                 _lista_id_detalle_presupuesto: listaIDDetalle,
                 _id_presupuesto: $("#_id_presupuesto_cobro").val().toString(),
-                _formapago: $("#_formapago").val().toString(),
+                _formapago: 1,
                 _id_miembro:$("#_id_miembro_cobro").val().toString()                
         };
 
@@ -475,7 +476,7 @@ var setCobrarAdminReg = function(){
                 KEY: 'KEY_GUARDAR_COBRO_ADMIN_REG',  
                 _lista_id_detalle_presupuesto: listaIDDetalle,
                 _id_presupuesto: $("#_id_presupuesto_cobro").val().toString(),
-                _formapago: $("#_formapago").val().toString(),
+                _formapago: 1,
                 _id_miembro:$("#_id_miembro_cobro").val().toString(),
                 _resto: montopagar,
                 _fecha: $("#_fecha_cobro").val().toString(),
@@ -550,7 +551,7 @@ var setCobrar = function(){
                 KEY: 'KEY_GUARDAR_COBRO',  
                 _lista_id_detalle_presupuesto: listaIDDetalle,
                 _id_presupuesto: $("#_id_presupuesto_cobro").val().toString(),
-                _formapago: $("#_formapago").val().toString(),
+                _formapago: 1,
                 _id_miembro:$("#_id_miembro_cobro").val().toString(),
                 _resto: montopagar,
                 _bandera_credito: banderacredito

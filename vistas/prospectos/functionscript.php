@@ -57,7 +57,9 @@ var getDetalle = function(id){
             KEY: 'KEY_SHOW_FORM_DETALLE',
             id: id
         }, function(mensaje) {
-            $("#ben_contenedor").html(mensaje);
+            $("#ben_contenedor").hide();
+            $("#ben_contenedor2").show();
+            $("#ben_contenedor2").html(mensaje);            
             $(".select2").select2();
          });
 };
@@ -316,8 +318,11 @@ var setConvertirAplicante = function(){
         });
 };
 var getRecargar = function(){
+    $("#ben_contenedor2").hide();
+    $("#ben_contenedor").show();
+    /*
     sessionStorage._recargado_aplicantes = true;
-   location.reload();
+   location.reload();*/
     //window.open(url, 'perfil');
 	//window.open('miembros', '?id=54');
 	

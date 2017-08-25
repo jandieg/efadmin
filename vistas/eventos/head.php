@@ -70,21 +70,21 @@ function getTablaComponenteEducacional() {
     $objGrupo = new Grupo();
     $lista = $objGrupo->getListaGruposAndForumLeaders();
     $listaNombres = getListaNombres($lista);
-     $tabla="<div='myDiv' style=' width: 900px !important; overflow-x: scroll !important;'>
+     $tabla="<div='myDiv' style=' >
     <div class='row'><div class ='span2'>&nbsp;</div><div class ='span2'>&nbsp;</div><div 
     class ='span2'>&nbsp;</div><div class ='span2 btn btn-primary' 
     onClick='getRecargar()' style='margin-left:20px;'>Regresar</div></div>";
-    $tabla.="<table class='table table-bordered' style='border: 1px solid black; border-collapse: collapse;'><thead>
-    <tr><th style='border: 1px solid black; border-collapse: collapse;'><strong>Año</strong>
-    </th><th style='border: 1px solid black; border-collapse: collapse;'><strong>Mes</strong></th>";
+    $tabla.="<table class='table table-bordered  tabla-colapsada' id='latabla'><thead>
+    <tr><th class='tabla-colapsada'><strong>Año</strong>
+    </th><th class='tabla-colapsada'><strong>Mes</strong></th>";
     $aux = false;
     foreach ($listaNombres as $l) {
         if (! $aux) {
             $aux = true;
-            $tabla.="<th style='border: 1px solid black; border-collapse: collapse; width: 30px !important;'>".$l."</th>";
+            $tabla.="<th class='tabla-colapsada' style='width: 30px !important;'>".$l."</th>";
         } else {
             $aux = false;
-            $tabla.="<th style='border: 1px solid black; border-collapse: collapse; border-right-width: 3px;'>".$l."</th>";
+            $tabla.="<th class='tabla-colapsada' style='border-right-width: 3px;'>".$l."</th>";
         }
             
     }
@@ -94,8 +94,8 @@ function getTablaComponenteEducacional() {
     $listaData = array();
     foreach ($period as $dt) {
         foreach ($lista as $l) {
-            $listaData[$dt->format('Y')][intval($dt->format('m'))][$l['id']]['evento'] = "<td style='border: 1px solid black; border-collapse: collapse;'>&nbsp;</td>"; 
-            $listaData[$dt->format('Y')][intval($dt->format('m'))][$l['id']]['puntaje'] = "<td style='border: 1px solid black; border-collapse: collapse;'>&nbsp;</td>"; 
+            $listaData[$dt->format('Y')][intval($dt->format('m'))][$l['id']]['evento'] = "<td class='tabla-colapsada'>&nbsp;</td>"; 
+            $listaData[$dt->format('Y')][intval($dt->format('m'))][$l['id']]['puntaje'] = "<td class='tabla-colapsada'>&nbsp;</td>"; 
         }
     }
 
@@ -103,20 +103,20 @@ function getTablaComponenteEducacional() {
     $resultset = $objEvento->getEventosByYearPeriod($anho_inicio, date('Y'));
 
     while ($row = $resultset->fetch_assoc()) {
-        $listaData[$row['anho']][$row['mes']][$row['grupos_gru_id']]['evento'] = "<td style='border: 1px solid black; border-collapse: collapse;'>" . $row['ocasion'] . "</td>";
-        $listaData[$row['anho']][$row['mes']][$row['grupos_gru_id']]['puntaje'] = "<td style='border: 1px solid black; border-collapse: collapse;'><strong>" . $row['eve_puntaje'] . "</strong></td>";
+        $listaData[$row['anho']][$row['mes']][$row['grupos_gru_id']]['evento'] = "<td class='tabla-colapsada'>" . $row['ocasion'] . "</td>";
+        $listaData[$row['anho']][$row['mes']][$row['grupos_gru_id']]['puntaje'] = "<td class='tabla-colapsada'><strong>" . $row['eve_puntaje'] . "</strong></td>";
     }
 
     $anhoact = "";
     foreach($period as $dt) {
         if ($dt->format('Y') != $anhoact) {            
-            $tabla.="<tr style='border-top: 3px solid black;'><td style='border: 1px solid black; border-collapse: collapse;  border-top-width: 3px;'>".$dt->format('Y')."</td>";
+            $tabla.="<tr style='border-top: 3px solid black;'><td class='tabla-colapsada' style='border-top-width: 3px;'>".$dt->format('Y')."</td>";
             $anhoact = $dt->format('Y');
         } else {            
-            $tabla.="<tr><td style='border: 1px solid black; border-collapse: collapse;'>&nbsp</td>";
+            $tabla.="<tr><td class='tabla-colapsada'>&nbsp</td>";
         }
                
-        $tabla.="<td style='border: 1px solid black; border-collapse: collapse;'>".$meses[$dt->format("m")]."</td>";
+        $tabla.="<td class='tabla-colapsada'>".$meses[$dt->format("m")]."</td>";
                 
         foreach($lista as $l) {
 
@@ -189,31 +189,31 @@ function getTablaCasosDelMes() {
     }
     $tabla="<div='myDiv' style=' width: 900px !important; overflow-x: scroll !important;'>
     <div class='row'><div class ='span2'>&nbsp;</div><div class ='span2'>&nbsp;</div><div class ='span2'>&nbsp;</div><div class ='span2 btn btn-primary' onClick='getRecargar()' style='margin-left:20px;'>Regresar</div></div>";
-    $tabla .= "<table class='table table-bordered' style='border: 1px solid black; border-collapse: collapse;'>";
+    $tabla .= "<table class='table table-bordered tabla-colapsada' >";
     $tabla.= "<thead>";
-    $tabla.= "<tr><th style='border: 1px solid black; border-collapse: collapse;'>&nbsp;</th><th style='border: 1px solid black; border-collapse: collapse;'>&nbsp;</th>";
+    $tabla.= "<tr><th class='tabla-colapsada'>&nbsp;</th><th class='tabla-colapsada'>&nbsp;</th>";
 
     $resultset2 = $objEvento2->getTodosEventos();
     $anhoact = "";                        
     foreach ($period as $dt) {
         if ($anhoact != $dt->format('Y')) {
             $anhoact = $dt->format('Y');
-            $tabla.="<th style='border: 1px solid black; border-collapse: collapse;'><strong>".$dt->format('Y')."</strong></th>";
+            $tabla.="<th class='tabla-colapsada'><strong>".$dt->format('Y')."</strong></th>";
         } else {
             $tabla.="<th>&nbsp;</th>";
         }        
     }
     $tabla.="</tr>";
-    $tabla.= "<tr><th style='border: 1px solid black; border-collapse: collapse;'>&nbsp;</th><th style='border: 1px solid black; border-collapse: collapse;'>&nbsp;</th>";
+    $tabla.= "<tr><th class='tabla-colapsada'>&nbsp;</th><th class='tabla-colapsada'>&nbsp;</th>";
     foreach ($period as $dt) {
-        $tabla.="<th style='border: 1px solid black; border-collapse: collapse;'><strong>".$meses[$dt->format('m')]."</strong></th>";        
+        $tabla.="<th class='tabla-colapsada'><strong>".$meses[$dt->format('m')]."</strong></th>";        
     }
     $tabla.="</tr>";
     $tabla.="</thead><tbody>";
 
     $patron = array();
     foreach($period as $dt) {
-        $patron[$dt->format('Y')][intval($dt->format('m'))] = "<td style='border: 1px solid black; border-collapse: collapse;'>&nbsp;</td>";
+        $patron[$dt->format('Y')][intval($dt->format('m'))] = "<td class='tabla-colapsada'>&nbsp;</td>";
     } 
 
     //logica lista!
@@ -228,24 +228,23 @@ function getTablaCasosDelMes() {
             $data[$row2['grupo_id']][$row2['mie_id']]['nombre'] = $row2['nombre'];            
         }
 
-        $data[$row2['grupo_id']][$row2['mie_id']][$row2['anho']][$row2['mes']] = "<td style='background-color: yellow; border: 1px solid black; border-collapse: collapse;'><strong>C</strong></td>";        
+        $data[$row2['grupo_id']][$row2['mie_id']][$row2['anho']][$row2['mes']] = "<td style='background-color: yellow;' class='tabla-colapsada'><strong>C</strong></td>";        
         
     }
 
     foreach ($listaPendientes as $k => $l) {
-        $data[$k][$l][date('Y')][intval(date('m'))] = "<td style='background-color: green; border: 1px solid black; border-collapse: collapse;'><strong>n</strong></td>";
+        $data[$k][$l][date('Y')][intval(date('m'))] = "<td style='background-color: green;' class='tabla-colapsada'><strong>n</strong></td>";
     }
     $nombreact = "";
     $i = 1;
     $j = 1;
-    foreach ($data as $k => $d) {    
-        
+    foreach ($data as $k => $d) {            
         if ($grupoactlista != $k) {
             $j = 1;
             $grupoactlista = $k;
-            $tabla.="<tr><td style='border: 1px solid black; border-collapse: collapse;'>&nbsp;</td><td>Forum ".$i."</td>";
+            $tabla.="<tr><td class='tabla-colapsada'>&nbsp;</td><td>Forum ".$i."</td>";
             foreach ($period as $dt) {
-                $tabla.="<td style='border: 1px solid black; border-collapse: collapse;'>&nbsp;</td>";        
+                $tabla.="<td class='tabla-colapsada'>&nbsp;</td>";        
             }
             $tabla.="</tr>";
             $i++;
@@ -253,8 +252,8 @@ function getTablaCasosDelMes() {
         foreach ($d as $dd) {
             if (strlen(trim($dd['nombre'])) > 0) {
                 $tabla.="<tr>";
-                $tabla.="<td style='border: 1px solid black; border-collapse: collapse;'><strong>".$j."</strong></td>";
-                $tabla.="<td style='border: 1px solid black; border-collapse: collapse;'><strong>".$dd['nombre']."</strong></td>";
+                $tabla.="<td class='tabla-colapsada'><strong>".$j."</strong></td>";
+                $tabla.="<td class='tabla-colapsada'><strong>".$dd['nombre']."</strong></td>";
                 foreach($period as $dt) {
                     $tabla.=$dd[$dt->format('Y')][intval($dt->format('m'))];
                 }
@@ -317,32 +316,34 @@ function getTablaCasosDelMesByForumLeader($idForumLeader) {
         $cont++;*/
     }
     $tabla="<div='myDiv' style=' width: 900px !important; overflow-x: scroll !important;'>
-    <div class='row'><div class ='span2'>&nbsp;</div><div class ='span2'>&nbsp;</div><div class ='span2'>&nbsp;</div><div class ='span2 btn btn-primary' onClick='getRecargar()' style='margin-left:20px;'>Regresar</div></div>";
-    $tabla .= "<table class='table table-bordered' style='border: 1px solid black; border-collapse: collapse;'>";
+    <div class='row'><div class ='span2'>&nbsp;</div><div class ='span2'>&nbsp;</div>
+    <div class='span2'>&nbsp;</div><div class ='span2 btn btn-primary' 
+    onClick='getRecargar()' style='margin-left:20px;'>Regresar</div></div>";
+    $tabla .= "<table class='table table-bordered tabla tabla-colapsada'>";
     $tabla.= "<thead>";
-    $tabla.= "<tr><th style='border: 1px solid black; border-collapse: collapse;'>&nbsp;</th><th style='border: 1px solid black; border-collapse: collapse;'>&nbsp;</th>";
+    $tabla.= "<tr><th class='tabla-colapsada'>&nbsp;</th><th class='tabla-colapsada'>&nbsp;</th>";
 
     $resultset2 = $objEvento2->getEventosByForumLeader($idForumLeader);
     $anhoact = "";                        
     foreach ($period as $dt) {
         if ($anhoact != $dt->format('Y')) {
             $anhoact = $dt->format('Y');
-            $tabla.="<th style='border: 1px solid black; border-collapse: collapse;'><strong>".$dt->format('Y')."</strong></th>";
+            $tabla.="<th class='tabla-colapsada'><strong>".$dt->format('Y')."</strong></th>";
         } else {
-            $tabla.="<th>&nbsp;</th>";
+            $tabla.="<th class='rellenar-tabla'>&nbsp;</th>";
         }        
     }
     $tabla.="</tr>";
-    $tabla.= "<tr><th style='border: 1px solid black; border-collapse: collapse;'>&nbsp;</th><th style='border: 1px solid black; border-collapse: collapse;'>&nbsp;</th>";
+    $tabla.= "<tr><th class='tabla-colapsada'>&nbsp;</th><th class='tabla-colapsada'>&nbsp;</th>";
     foreach ($period as $dt) {
-        $tabla.="<th style='border: 1px solid black; border-collapse: collapse;'><strong>".$meses[$dt->format('m')]."</strong></th>";        
+        $tabla.="<th class='tabla-colapsada'><strong>".$meses[$dt->format('m')]."</strong></th>";        
     }
     $tabla.="</tr>";
     $tabla.="</thead><tbody>";
 
     $patron = array();
     foreach($period as $dt) {
-        $patron[$dt->format('Y')][intval($dt->format('m'))] = "<td style='border: 1px solid black; border-collapse: collapse;'>&nbsp;</td>";
+        $patron[$dt->format('Y')][intval($dt->format('m'))] = "<td class='tabla-colapsada'>&nbsp;</td>";
     } 
 
     //logica lista!
@@ -357,27 +358,34 @@ function getTablaCasosDelMesByForumLeader($idForumLeader) {
             $data[$row2['grupo_id']][$row2['mie_id']]['nombre'] = $row2['nombre'];            
         }
 
-        $data[$row2['grupo_id']][$row2['mie_id']][$row2['anho']][$row2['mes']] = "<td style='background-color: yellow; border: 1px solid black; border-collapse: collapse;'><strong>C</strong></td>";        
+        $data[$row2['grupo_id']][$row2['mie_id']][$row2['anho']][$row2['mes']] = "<td style='background-color: yellow; ' class='tabla-colapsada'><strong>C</strong></td>";        
         
     }
 
     foreach ($listaPendientes as $k => $l) {
         foreach ($l as $ll) {
-            $data[$k][$ll][date('Y')][intval(date('m'))] = "<td style='background-color: green; border: 1px solid black; border-collapse: collapse;'><strong>n</strong></td>";
+            $data[$k][$ll][date('Y')][intval(date('m'))] = "<td style='background-color: green;' class='tabla-colapsada'><strong>n</strong></td>";
         }
         
     }
     $nombreact = "";
     $i = 1;
     $j = 1;
-    foreach ($data as $k => $d) {    
-        
+    
+    foreach ($data as $k => $d) {            
         if ($grupoactlista != $k) {
             $j = 1;
             $grupoactlista = $k;
-            $tabla.="<tr><td style='border: 1px solid black; border-collapse: collapse;'>&nbsp;</td><td>Forum ".$i."</td>";
+            $objGrupo3 = new Grupo();
+            $resultset8 = $objGrupo3->getNombreGrupos($k);
+            if ($row8=$resultset8->fetch_assoc()) {
+                $tabla.="<tr><td class='tabla-colapsada'>&nbsp;</td><td>".$row8['gru_descripcion']."</td>";
+            } else {
+                $tabla.="<tr><td class='tabla-colapsada'>&nbsp;</td><td>Forum ".$i."</td>";
+            }
+            
             foreach ($period as $dt) {
-                $tabla.="<td style='border: 1px solid black; border-collapse: collapse;'>&nbsp;</td>";        
+                $tabla.="<td class='tabla-colapsada'>&nbsp;</td>";        
             }
             $tabla.="</tr>";
             $i++;
@@ -385,8 +393,8 @@ function getTablaCasosDelMesByForumLeader($idForumLeader) {
         foreach ($d as $dd) {
             if (strlen(trim($dd['nombre'])) > 0) {
                 $tabla.="<tr>";
-                $tabla.="<td style='border: 1px solid black; border-collapse: collapse;'><strong>".$j."</strong></td>";
-                $tabla.="<td style='border: 1px solid black; border-collapse: collapse;'><strong>".$dd['nombre']."</strong></td>";
+                $tabla.="<td class='tabla-colapsada'><strong>".$j."</strong></td>";
+                $tabla.="<td class='tabla-colapsada'><strong>".$dd['nombre']."</strong></td>";
                 foreach($period as $dt) {
                     $tabla.=$dd[$dt->format('Y')][intval($dt->format('m'))];
                 }
@@ -1209,7 +1217,12 @@ $form['form_1'] = array("elemento" => "combo","change" => "loadgroups();","titul
                         $objGrupo2 = new Grupo();                        
                         $todoslosgrupos = implode(',', $objGrupo2->getGruposA($_POST['_miembrosGrupos']));                        
                    }
-                   
+                   $objUsuario2 = new Usuario();
+                   $ciudad=23;
+                   $resultset9=$objUsuario2->getCiudadByUsuario($_SESSION['user_id_ben']);
+                   if ($row9 = $resultset9->fetch_assoc()) {
+                        $ciudad = $row9['ciudad_ciu_id'];
+                   }
                    $idGenerado="";
                    $objGenerador= new GeneradorID();
                    $idGenerado= $objGenerador->getGenerar();
@@ -1217,7 +1230,7 @@ $form['form_1'] = array("elemento" => "combo","change" => "loadgroups();","titul
                     $objEvento= new Evento();         
                     $comp= $objEvento->setGrabarEvento($idGenerado, $_POST['_nombre'],   $_POST['_titular'],$_POST['_all_day'], $_POST['_fi'],$_POST['_ff'],
                             $_POST['_descripcion'],$_SESSION['user_id_ben'],$listaAdicionales,$_POST['_miembrosGrupos'],$listaMiembros,
-                            $misGrupos,$todosGrupos,$_POST['_id_tipo_evento'],$_POST['_id_ubicacion'],$_POST['_acompanado'],$listaContactos,$listaEmpresario, $todoslosgrupos);
+                            $misGrupos,$todosGrupos,$_POST['_id_tipo_evento'],$_POST['_id_ubicacion'],$_POST['_acompanado'],$listaContactos,$listaEmpresario, $todoslosgrupos, $ciudad);
 
                     if($comp > 0){                        
                         getRecordarEvento($comp, TRUE);

@@ -55,13 +55,13 @@ class Asistencia extends Conexion{
 
     } 
     
-    function getAsistencia($grupo, $fecha_inicio = '',$fecha_fin= '', $tipoEvento) {   
+    function getAsistencia($grupo, $fecha_inicio = '',$fecha_fin= '') {   
         if($fecha_inicio == '' || $fecha_fin == ''){
             $fecha_inicio = getPrimerDiaMes(date('Y'),'1');
             $fecha_fin= getUltimoDiaMes(date('Y'),'12');
         }
         $fecha= date("Y-m-d H:i:s");
-        $sql="call sp_selectAsistencia('$grupo', '$fecha_inicio','$fecha_fin','$tipoEvento')";  
+        $sql="call sp_selectAsistencia2('$grupo', '$fecha_inicio','$fecha_fin')";  
         return parent::getConsultar($sql);
     } 
     function getAsistenciaTotales($grupo, $fecha_inicio = '',$fecha_fin= '', $tipoEvento) {   

@@ -78,6 +78,7 @@ if(file_exists(E_VISTAS.E_PAGE."/head.php")){
        
         <link rel="stylesheet" href="public/framework/dist/css/skins/_all-skins.min.css">  
         <link rel="stylesheet" href="public/framework/plugins/datatables/dataTables.bootstrap.css">
+        
         <?php
             if(file_exists(E_VISTAS.E_PAGE."/css.php")){
                 include(E_VISTAS.E_PAGE."/css.php");
@@ -328,10 +329,12 @@ function ResetReports(id){
                         }
                     });    
             };
-         
+
+       
             var getConfTabla= function (){
                 $(function () {
-                    $('#tipo_personalizada').DataTable({
+                    if ( $.fn.dataTable.isDataTable( '#tipo_personalizada' ) ) {
+                        $('#tipo_personalizada').DataTable({
                                  "aLengthMenu": [[ 15, 50,75,100, -1], [ 15, 50,75,100, "All"]],
                                  "iDisplayLength": 15, 
                                  "iDisplayStart": 0,
@@ -359,7 +362,41 @@ function ResetReports(id){
                                          "sSortDescending": ": Activar para ordenar la columna de manera descendente"
                                      }
                                  }
-                             });          
+                             });
+                    }
+                    else {
+                        $('#tipo_personalizada').DataTable({
+                                 "aLengthMenu": [[ 15, 50,75,100, -1], [ 15, 50,75,100, "All"]],
+                                 "iDisplayLength": 15, 
+                                 "iDisplayStart": 0,
+                                 "paging": false,
+                                 "language": {
+                                     "sProcessing":    "Procesando...",
+                                     "sLengthMenu":    "Mostrar _MENU_ registros",
+                                     "sZeroRecords":   "No se encontraron resultados",
+                                     "sEmptyTable":    "Ningún dato disponible en esta tabla",
+                                     "sInfo":          "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                                     "sInfoEmpty":     "Mostrando registros del 0 al 0 de un total de 0 registros",
+                                     "sInfoFiltered":  "(filtrado de un total de _MAX_ registros)",
+                                     "sInfoPostFix":   "",
+                                     "sSearch":        "Buscar:",
+                                     "sUrl":           "",
+                                     "sInfoThousands":  ",",
+                                     "sLoadingRecords": "Cargando...",
+                                     "oPaginate": {
+                                         "sFirst":    "Primero",
+                                         "sLast":    "Último",
+                                         "sNext":    "Siguiente",
+                                         "sPrevious": "Anterior"
+                                     },
+                                     "oAria": {
+                                         "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+                                         "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                                     }
+                                 }
+                             });
+                    }
+                              
                 });
             };                        
             
@@ -740,6 +777,7 @@ function ResetReports(id){
         <script src="public/js/msg/jquery.msg.min.js"></script>
         
         <script src="public/framework/plugins/datatables/jquery.dataTables.min.js"></script>
+        
         <script src="public/framework/plugins/datatables/dataTables.bootstrap.min.js"></script>
         
         <?php

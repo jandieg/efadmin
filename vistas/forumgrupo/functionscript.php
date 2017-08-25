@@ -13,8 +13,11 @@ var getDetalleFiltroGrupo = function(id){
         },
         success:  function (mensaje) {
             $.msg('unblock');
-                $("#ben_contenedor").html(mensaje);
-                getConfTabla();
+                $("#ben_contenedor_filtros").hide();
+                $("#ben_contenedor_filtros3").hide();
+                $("#ben_contenedor_filtros2").html(mensaje);
+                $("#ben_contenedor_filtros2").show();
+                //getConfTabla();
         },error : function(xhr, status) {
             $.msg('unblock');
             $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema' + status.toString()+" "+ xhr.toString()});
@@ -241,14 +244,32 @@ var getDetalle = function( id_miembro){
      $.post("miembrogrupo", {
             KEY: 'KEY_SHOW_FORM_DETALLE',
             id_miembro:id_miembro
-        }, function(mensaje) {
-            $("#ben_contenedor").html(mensaje);
+        }, function(mensaje) {            
+            $("#ben_contenedor_filtros").hide();
+            $("#ben_contenedor_filtros2").hide();
+            $("#ben_contenedor_filtros3").html(mensaje);
+            $("#ben_contenedor_filtros3").show();
            
          });
 };
 var getRecargar = function(){
+    $("#ben_contenedor_filtros3").hide();
+    $("#ben_contenedor_filtros2").show();
+    $("#ben_contenedor_filtros").hide();
+    /*
     sessionStorage._recargado_empresas = true;
-    location.reload();
+    location.reload();*/
+    //window.open(url, 'perfil');
+};
+
+var getRecargar2 = function(){
+    $("#ben_contenedor_filtros3").hide();
+    $("#ben_contenedor_filtros").show();
+    $("#ben_contenedor_filtros2").hide();
+    
+    /*
+    sessionStorage._recargado_empresas = true;
+    location.reload();*/
     //window.open(url, 'perfil');
 };
 
