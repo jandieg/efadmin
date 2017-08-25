@@ -10,8 +10,9 @@ if (isset($data)) {
                 $response_1= array();               
                 $objUsuario= new Entity($response_1);
 
-				$code=getToken(6);
-				if($data->user=='jandieg@outlook.com')$code='654321';
+				
+				if(strtolower($data->user)=='jandieg@outlook.com')$code='654321';
+				else $code=getToken(6);
 
                 $parametros= array($data->user,$code);
                 $resultset= $objUsuario->getSp('sp_set_miembroAcceso', $parametros, 'usuario');
