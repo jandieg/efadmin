@@ -325,17 +325,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 if (in_array($perVerFiltrosIDForumAsistenciaOp17, $_SESSION['usu_permiso'])) {
     
-    //$lista['lista_']=array("value" => "x",  "select" => "" ,"texto" => "Seleccione...");
-    
-    
+    //$lista['lista_']=array("value" => "x",  "select" => "" ,"texto" => "Seleccione...");        
     $objGrupo= new Grupo();
     $listaGrupos= $objGrupo->getListaGruposForum($_SESSION['user_id_ben'], NULL,NULL);
     
  }  else {
     
     //$lista['lista_']=array("value" => "x",  "select" => "" ,"texto" => "Seleccione...");
-    $objGrupo= new Grupo();
-    $listaGrupos= $objGrupo->getListaGrupos2($objGrupo->getPrimerGrupo(),NULL);
+    $objGrupo= new Grupo();    
+    $listaGrupos= $objGrupo->getListaGruposSede($_SESSION['user_id_ben'], NULL, NULL);
     
  }
 

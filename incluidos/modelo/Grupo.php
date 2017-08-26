@@ -266,6 +266,27 @@ class Grupo extends Conexion{
         }
         return $lista;
     }
+
+    public function getListaGruposSede($idUser='', $idSeleccionado='',$list= array()) {           
+        $resultset= $this->getGruposSede($idUser);
+        if($idSeleccionado!=''){
+            while($row = $resultset->fetch_assoc()) { 
+                if($row['gru_id'] == $idSeleccionado){
+                     $list['lista_'.$row['gru_id']] = array( "value" => $row['gru_id'],  "select" => "selected" ,"texto" => $row['gru_descripcion']);
+                     if($this->primerGrupo == ''){ $this->primerGrupo=$row['gru_id']; }
+                }else{
+                     $list['lista_'.$row['gru_id']] = array( "value" => $row['gru_id'],  "select" => "" ,"texto" => $row['gru_descripcion']);
+                     if($this->primerGrupo == ''){ $this->primerGrupo=$row['gru_id']; }
+                }
+            }
+        }  else {
+            while($row = $resultset->fetch_assoc()) { 
+                $list['lista_'.$row['gru_id']] = array( "value" => $row['gru_id'],  "select" => "" ,"texto" => $row['gru_descripcion']);
+                if($this->primerGrupo == ''){ $this->primerGrupo=$row['gru_id']; }
+            }
+       }
+        return $list;
+    }
     
     public function getListaGruposForum($idForum='', $idSeleccionado='',$list= array()) {           
         $resultset= $this->getGruposForum($idForum);
@@ -291,6 +312,11 @@ class Grupo extends Conexion{
 	
 	public function getGruposForumSede($idForum) {
         $sql="call sp_selectGrupoKey('$idForum', '6')";
+        return parent::getConsultar($sql);   
+    }
+
+    public function getGruposSede($idUser) {
+        $sql="call sp_selectGrupoKey('$idUser', '7')";
         return parent::getConsultar($sql);   
     }
 
