@@ -498,7 +498,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $datos['nombre_grupo'] = $row['gru_descripcion'];
                     $datos['forum_leader'] = $row['forum_leader'];
                     $datos['email'] = $row['cor_descripcion'];
-                    $mailfl = $row['mail_forum_leader'];
+                    if (strlen($row['mail_asistente']) > 0) {
+                        $mailfl = $row['mail_asistente'];
+                    } else {
+                        $mailfl = $row['mail_forum_leader'];
+                    }                    
                 }
 
                 $objPlantillaEmail = new PlantillaEmail();
