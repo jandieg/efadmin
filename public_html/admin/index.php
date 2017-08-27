@@ -78,6 +78,7 @@ if(file_exists(E_VISTAS.E_PAGE."/head.php")){
        
         <link rel="stylesheet" href="public/framework/dist/css/skins/_all-skins.min.css">  
         <link rel="stylesheet" href="public/framework/plugins/datatables/dataTables.bootstrap.css">
+        <link rel="stylesheet" href="public/framework/plugins/datatables/extensions/FixedColumns/css/dataTables.fixedColumns.min.css" />
         
         <?php
             if(file_exists(E_VISTAS.E_PAGE."/css.php")){
@@ -328,6 +329,19 @@ function ResetReports(id){
                             $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema'});
                         }
                     });    
+            };
+
+            var getConfTablaFixed = function() {
+                $('#latabla').DataTable( {
+                    scrollY:        "300px",
+                    scrollX:        true,
+                    scrollCollapse: true,
+                    ordering: false,
+                    paging:         false,
+                    fixedColumns:   {
+                        leftColumns: 2
+                    }
+                }); 
             };
 
        
@@ -779,6 +793,8 @@ function ResetReports(id){
         <script src="public/framework/plugins/datatables/jquery.dataTables.min.js"></script>
         
         <script src="public/framework/plugins/datatables/dataTables.bootstrap.min.js"></script>
+        <script src="https://cdn.datatables.net/fixedcolumns/3.2.2/js/dataTables.fixedColumns.min.js"></script>
+
         
         <?php
             if(file_exists(E_VISTAS.E_PAGE."/script.php")){

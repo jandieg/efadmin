@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="public/framework/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
 <link href='public/fullcalendar-2.2.7-yearview/fullcalendar.css' rel='stylesheet' />
 <link href='public/fullcalendar-2.2.7-yearview/fullcalendar.print.css' rel='stylesheet' media='print' />
-<link rel="stylesheet" href="public/framework/plugins/datatables/extensions/FixedColumns/css/dataTables.fixedColumns.min.css" />
+
  <style>
     #mi_modal_personalizado{
       width: 60% !important;

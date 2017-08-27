@@ -1,8 +1,6 @@
 <script src='public/fullcalendar-2.2.7-yearview/lib/moment.min.js'></script>
 <script src='public/fullcalendar-2.2.7-yearview/fullcalendar.min.js'></script>
 <script src="public/framework/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
-<script src="public/framework/plugins/datatables/extensions/FixedColumns/js/dataTables.fixedColumns.min.js"></script>
- 
 
 <script>
 $('.textarea').wysihtml5();
@@ -84,19 +82,8 @@ $(document).ready(function() {
         return event;  
       }   
     });
-
-     $('#latabla').datatable( {
-        scrollY:        "300px",
-        scrollX:        true,
-        scrollCollapse: true,
-        paging:         false,
-        fixedColumns:   {
-            leftColumns: 2
-        }
-    } );
-
     
-
+    
     
   });
 

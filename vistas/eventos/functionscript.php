@@ -89,7 +89,8 @@ var getComponenteEducacional = function () {
         },
         success:  function (mensaje) {
             $.msg('unblock');
-                $("#ben_contenedor").html(mensaje);                    
+                $("#ben_contenedor").html(mensaje);    
+                getConfTablaFixed();               
         },error : function(xhr, status) {
             $.msg('unblock');
             $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema' + status.toString()+" "+ xhr.toString()});
@@ -148,7 +149,7 @@ var getCasoDelMes = function(id) {
             success:  function (mensaje) { 
                 
                 $("#ben_contenedor").html(mensaje);
-               
+               getConfTablaFixed();
                   
             },error : function(xhr, status) {                
                
@@ -628,17 +629,6 @@ var getSincronizarEventoWhithGoogle = function(){
     window.open($("#_url_google_calendar").val().toString());
 };
 
-
-
-
-
-
-
-
-
-
-
-
 var setLimpiarCorreo = function (){
     $('iframe').contents().find('.wysihtml5-editor').html('');
     $("#_email_asunto").val("");
@@ -647,6 +637,7 @@ var setLimpiarCorreo = function (){
     $('#btnRecordatorioEnviarCorreo').attr("disabled", false);
     $("#_email_receptor_nombre").val("");
 };
+
 var setEnviarCorreoIndividual = function(){
 
         var parametros = {
@@ -678,17 +669,14 @@ var setEnviarCorreoIndividual = function(){
                 $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema' + status.toString()+" "+ xhr.toString()});
             }
         });
-
 };
 
 var getEnviarCorreoIndividual = function( _nombre_receptor, _mensaje, _asunto){
    setLimpiarCorreo();
    $("#_email_receptor_nombre").val(_nombre_receptor.toString());
    $("#_email_asunto").val(_asunto);
-   $('iframe').contents().find('.wysihtml5-editor').html(_mensaje);
-   
+   $('iframe').contents().find('.wysihtml5-editor').html(_mensaje); 
 };
-
 
 var getFiltro = function(key){
    

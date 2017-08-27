@@ -113,7 +113,7 @@ function getTablaComponenteEducacional() {
             $tabla.="<tr style='border-top: 3px solid black;'><td class='tabla-colapsada' style='border-top-width: 3px;'>".$dt->format('Y')."</td>";
             $anhoact = $dt->format('Y');
         } else {            
-            $tabla.="<tr><td class='tabla-colapsada'>&nbsp</td>";
+            $tabla.="<tr><td class='tabla-colapsada'>".$dt->format('Y')."</td>";
         }
                
         $tabla.="<td class='tabla-colapsada'>".$meses[$dt->format("m")]."</td>";
@@ -189,7 +189,7 @@ function getTablaCasosDelMes() {
     }
     $tabla="<div='myDiv' style=' width: 900px !important; overflow-x: scroll !important;'>
     <div class='row'><div class ='span2'>&nbsp;</div><div class ='span2'>&nbsp;</div><div class ='span2'>&nbsp;</div><div class ='span2 btn btn-primary' onClick='getRecargar()' style='margin-left:20px;'>Regresar</div></div>";
-    $tabla .= "<table class='table table-bordered tabla-colapsada' >";
+    $tabla .= "<table class='table table-bordered tabla-colapsada' id='latabla'>";
     $tabla.= "<thead>";
     $tabla.= "<tr><th class='tabla-colapsada'>&nbsp;</th><th class='tabla-colapsada'>&nbsp;</th>";
 
@@ -319,7 +319,7 @@ function getTablaCasosDelMesByForumLeader($idForumLeader) {
     <div class='row'><div class ='span2'>&nbsp;</div><div class ='span2'>&nbsp;</div>
     <div class='span2'>&nbsp;</div><div class ='span2 btn btn-primary' 
     onClick='getRecargar()' style='margin-left:20px;'>Regresar</div></div>";
-    $tabla .= "<table class='table table-bordered tabla tabla-colapsada'>";
+    $tabla .= "<table class='table table-bordered tabla tabla-colapsada' id='latabla'>";
     $tabla.= "<thead>";
     $tabla.= "<tr><th class='tabla-colapsada'>&nbsp;</th><th class='tabla-colapsada'>&nbsp;</th>";
 
