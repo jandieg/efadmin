@@ -45,8 +45,13 @@ class Industria extends Conexion{
             }
        }
        return $listaIndustria;
-
     }
+    
+    function setCreateUpdateIndustria($ind_id, $ind_descripcion, $key) {
+        $sql = "call sp_createUpdateIndustria('$ind_id','$ind_descripcion', '$key')";
+        return parent::setSqlSp($sql);
+    }
+    
      function getListaIndustrias2($idSeleccionado='',$listaIndustria= array()) {
         $resultset_industria= $this->getIndustrias('A'); 
         if($idSeleccionado!=''){

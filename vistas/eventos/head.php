@@ -842,7 +842,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 break; 
             case 'KEY_DATA_CALENDARIO'://///////////////////////////////////////////////////////// 
                 $objEvento= new Evento();
-                if (in_array(trim($_SESSION['user_perfil']), array('Administrador', 'Administrador Regional', 'IBP'))) {
+                if (in_array(trim($_SESSION['user_perfil']), array('Administrador', 'Administrador Regional', 'IBP', 'Asistente'))) {
                     echo $objEvento->getJSONEventosCalendar(""); 
                 } 
                 if (in_array(trim($_SESSION['user_perfil']), array('Forum Leader'))) {

@@ -315,14 +315,14 @@ class EmpresaLocal extends Conexion{
 
     }
 
-
+    public function setCreateUpdateEmpresa($emp_nombre, $id_industria) {
+        $sql = "call sp_createUpdateEmpresa('$emp_nombre', '$id_industria')";
+        return parent::setSqlSp($sql);
+    }
 
     public function getFiltros2($id, $key, $permiso, $todas) {
-
         $sql="call sp_selectEmpresaLocalFiltros2('$id','$key', '$permiso','$todas')";
-
         return parent::getConsultar($sql);   
-
     }
 
     

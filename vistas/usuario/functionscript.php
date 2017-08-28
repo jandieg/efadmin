@@ -210,6 +210,7 @@ var setUserCrear = function(op){
                 }
             },error : function(xhr, status) {
                 $.msg('unblock');
+                console.log(xhr);
                 $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema'});
             }
         });

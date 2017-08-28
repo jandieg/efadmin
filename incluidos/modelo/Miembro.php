@@ -234,6 +234,26 @@ public function setActualizarMiembro($idMiembro, $id_persona, $propietario, $nom
         return parent::getConsultar($sql);
     }
 
+    public function setCreateMiembroFromScript($id_empresa, $mie_fecharegistro, $codigo_grupo,
+        $miembro_id, $membresia_id, $status_member_id, $mie_observacion, $precio_esp, $mie_fecha_cancelacion, 
+        $cancelled, $per_nombre, $per_apellido, $per_tipo, $per_fechanacimiento, $per_genero, $per_hijos, 
+        $per_esposa, $email, $telefono, $celular, $direccion) {
+        
+        $fechas = explode('/',$mie_fecharegistro);
+        $mie_fecharegistro = $fechas[2].'-'.$fechas[0].'-'.$fechas[1].' '.date('h:i:s');
+        if (strlen($mie_fecha_cancelacion) > 0) {
+            $fechas2 = explode('/',$mie_fecha_cancelacion);
+            $mie_fecha_cancelacion = $fechas2[2].'-'.$fechas2[0].'-'.$fechas2[1].' '.date('h:i:s');
+        }
+        $sql = "call sp_createMiembroFromScript('$id_empresa', '$mie_fecharegistro',
+        '$codigo_grupo', '$miembro_id', '$membresia_id', 'status_member_id', 
+        '$mie_observacion', '$precio_esp', '$mie_fecha_cancelacion', 
+        '$cancelled', '$per_nombre', '$per_apellido', '$per_tipo',
+        '$per_fechanacimiento', '$per_genero', '$per_hijos', '$per_esposa',
+        '$email', '$telefono', '$celular', '$direccion')";
+        return parent::setSqlSp($sql);
+    }
+
     function getDataMiembroMailById($idMiembro) {
         /*%nombre%: nombre del miembro
         %apellido%: apellido del miembro
