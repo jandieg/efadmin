@@ -734,10 +734,18 @@ function generadorEtiqueta($tab=array()){
                    $msg.='<div class="form-group">'; 
                     $msg.='<label for="" class="col-sm-3 control-label">'.$valor['titulo_date'].'</label>'; 
                     $msg.='<div class="col-sm-6">'; 
-                    $msg.='<input type="'.$valor['tipo_date'].'" class="form-control " id="'.$valor['id_date'].'" placeholder="'.$valor['titulo_date'].'" required="required" value="'.$valor['reemplazo_date'].'">'; 
+                    if (isset($valor['deshabilitado'])) {
+                        $msg.='<input type="'.$valor['tipo_date'].'" class="form-control " id="'.$valor['id_date'].'" placeholder="'.$valor['titulo_date'].'" required="required" disabled value="'.$valor['reemplazo_date'].'">'; 
+                    } else {
+                        $msg.='<input type="'.$valor['tipo_date'].'" class="form-control " id="'.$valor['id_date'].'" placeholder="'.$valor['titulo_date'].'" required="required" value="'.$valor['reemplazo_date'].'">'; 
+                    }                    
                     $msg.=' </div>'; 
                     $msg.='<div class="col-sm-3">'; 
-                    $msg.='<input type="'.$valor['tipo_time'].'" class="form-control " id="'.$valor['id_time'].'" placeholder="'.$valor['titulo_time'].'" required="required" value="'.$valor['reemplazo_time'].'">'; 
+                    if (isset($valor['deshabilitado'])) {
+                        $msg.='<input type="'.$valor['tipo_time'].'" class="form-control " id="'.$valor['id_time'].'" placeholder="'.$valor['titulo_time'].'" required="required" disabled value="'.$valor['reemplazo_time'].'">'; 
+                    } else {
+                        $msg.='<input type="'.$valor['tipo_time'].'" class="form-control " id="'.$valor['id_time'].'" placeholder="'.$valor['titulo_time'].'" required="required" value="'.$valor['reemplazo_time'].'">'; 
+                    }                    
                     $msg.=' </div>'; 
                     $msg.='</div>';            
                }
@@ -788,7 +796,12 @@ function generadorEtiqueta($tab=array()){
                    $msg.='<div class="form-group">'; 
                     $msg.='<label for="" class="col-sm-3 control-label">'.$valor['titulo'].'</label>'; 
                     $msg.='<div class="col-sm-9">'; 
-                    $msg.='<input type="'.$valor['tipo'].'" class="form-control" id="'.$valor['id'].'" placeholder="'.$valor['titulo'].'" required="required" value="'.$valor['reemplazo'].'">'; 
+                    if (isset($valor['deshabilitado'])) {
+                        $msg.='<input type="'.$valor['tipo'].'" disabled class="form-control" id="'.$valor['id'].'" placeholder="'.$valor['titulo'].'" required="required" value="'.$valor['reemplazo'].'">'; 
+                    } else {
+                        $msg.='<input type="'.$valor['tipo'].'" class="form-control" id="'.$valor['id'].'" placeholder="'.$valor['titulo'].'" required="required" value="'.$valor['reemplazo'].'">'; 
+                    }
+                    
                     $msg.=' </div>'; 
                     $msg.='</div>';            
                }

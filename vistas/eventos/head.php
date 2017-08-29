@@ -1351,8 +1351,18 @@ $form['form_1'] = array("elemento" => "combo","change" => "loadgroups();","titul
         $listaForumLeader= $objForum->getListaForumLeadersEVENTOS($row['eve_responsable']);
                         
                        // $form['form_1'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => "Forum Leader", "id" => "_titular" ,"reemplazo" => $row['eve_responsable']); 
-					   $form['form_1'] = array("elemento" => "combo","change" => "","titulo" => $lblForumLeader, "id" => "_titular", "option" => $listaForumLeader);
-                        $form['form_2'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => "Nombre del Evento", "id" => "_nombre" ,"reemplazo" => $row['eve_nombre']);
+                       if (in_array(trim($_SESSION['user_perfil']), array('Forum Leader'))) { 
+                            $form['form_1'] = array("elemento" => "combo","change" => "","titulo" => $lblForumLeader, "deshabilitado" => "", "id" => "_titular", "option" => $listaForumLeader);
+                       } else {
+                            $form['form_1'] = array("elemento" => "combo","change" => "","titulo" => $lblForumLeader, "id" => "_titular", "option" => $listaForumLeader);
+                       }
+					   
+                       if (in_array(trim($_SESSION['user_perfil']), array('Forum Leader'))) { 
+                            $form['form_2'] = array("elemento" => "caja", "deshabilitado" => "", "tipo" => "text", "titulo" => "Nombre del Evento", "id" => "_nombre" ,"reemplazo" => $row['eve_nombre']);
+                       } else {
+                            $form['form_2'] = array("elemento" => "caja", "tipo" => "text", "titulo" => "Nombre del Evento", "id" => "_nombre" ,"reemplazo" => $row['eve_nombre']);
+                       }
+                        
          
                    /*     $form['form_3'] = array("elemento" => "combo + caja + boton" ,"tipo" => "text" , "titulo" => "Miembros", 
                                                        "id" => "" ,"reemplazo" => '',"boton_tipo" => "btn-info",
@@ -1371,14 +1381,24 @@ $form['form_1'] = array("elemento" => "combo","change" => "loadgroups();","titul
             $forumleader2 = $row6['usu_id'];
         }
         $listaGrupos= $objGrupo->getListaGruposForum($forumleader2, $grupos, NULL);
-		$form['form_3'] = array("elemento" => "combo", "titulo" => "Grupos", "id" => "_miembrosGrupos", "option" => $listaGrupos);
+        if (in_array(trim($_SESSION['user_perfil']), array('Forum Leader'))) { 
+            $form['form_3'] = array("elemento" => "combo", "deshabilitado" => "", "titulo" => "Grupos", "id" => "_miembrosGrupos", "option" => $listaGrupos);
+        } else {
+            $form['form_3'] = array("elemento" => "combo", "titulo" => "Grupos", "id" => "_miembrosGrupos", "option" => $listaGrupos);
+        }
+		
 		
 
                         
 						/*$form['form_4'] = array("elemento" => "combo + boton","change" => "",                   "titulo" => "Ubicación", "id" => "_ubicacion", "option" => $lista, 
                                             "modal" => "#modal_getCrearDireccion","boton_click" => "getTipoDireccion('".$row['tip_eve_opcion_direccion']."')", "boton_icono" => "fa fa-map","boton_nombre" => "", "boton_title" =>"Crear Dirección"
                                             ,"boton_tipo" => "btn-info");*/
-                        $form['form_4'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => "Ubicacion", "id" => "_ubicacion" ,"reemplazo" => $row['direccion']);
+                        if (in_array(trim($_SESSION['user_perfil']), array('Forum Leader'))) { 
+                            $form['form_4'] = array("elemento" => "caja" ,"tipo" => "text", "deshabilitado" => "", "titulo" => "Ubicacion", "id" => "_ubicacion" ,"reemplazo" => $row['direccion']);
+                        } else {
+                            $form['form_4'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => "Ubicacion", "id" => "_ubicacion" ,"reemplazo" => $row['direccion']);
+                        }
+                        
 						
                         //$form['form_4'] = array("elemento" => "combo","change" => "",                   "titulo" => "Ubicación", "id" => "_ubicacion", "option" => $lista);
                
@@ -1388,25 +1408,46 @@ $form['form_1'] = array("elemento" => "combo","change" => "loadgroups();","titul
                             $form['form_5'] = array("elemento" => "Checkbox-color" ,"chec" => "" ,"tipo" => "" , "titulo" => "Todo el día", "id" => "_all_day" ,"reemplazo" => ""); 
                         }
 
-                        $form['form_6'] = array("elemento" => "fecha + tiempo" ,"tipo_date" => "date" , "titulo_date" => "Fecha de Inicio", "id_date" => "_f_inicio" ,"reemplazo_date" => date('Y-m-d',strtotime($row['eve_fechainicio']))
+                        if (in_array(trim($_SESSION['user_perfil']), array('Forum Leader'))) { 
+                            $form['form_6'] = array("elemento" => "fecha + tiempo" ,"tipo_date" => "date" , "titulo_date" => "Fecha de Inicio", "id_date" => "_f_inicio" ,"deshabilitado" => "", "reemplazo_date" => date('Y-m-d',strtotime($row['eve_fechainicio']))
                                                                                ,"tipo_time" => "time" , "titulo_time" => "Fecha de Inicio", "id_time" => "_time_inicio" ,"reemplazo_time" => date('H:i',strtotime($row['eve_fechainicio']))   ); 
+                        } else {
+                            $form['form_6'] = array("elemento" => "fecha + tiempo" ,"tipo_date" => "date" , "titulo_date" => "Fecha de Inicio", "id_date" => "_f_inicio" ,"reemplazo_date" => date('Y-m-d',strtotime($row['eve_fechainicio']))
+                                                                               ,"tipo_time" => "time" , "titulo_time" => "Fecha de Inicio", "id_time" => "_time_inicio" ,"reemplazo_time" => date('H:i',strtotime($row['eve_fechainicio']))   ); 
+                        }
+                        
 
 
 
 if($row['tipo_evento_id']=='3'){
-$form['form_6'] = array("elemento" => "fecha + tiempo" ,"tipo_date" => "date" , "titulo_date" => "Fecha de Inicio", "id_date" => "_f_inicio" ,"reemplazo_date" => date('Y-m-d',strtotime($row['eve_fechainicio']))
-,"tipo_time" => "time" , "titulo_time" => "Fecha de Inicio", "id_time" => "_time_inicio" ,"reemplazo_time" => date('H:i',strtotime($row['tip_eve_hora_rango_inicio']))); 
+    if (in_array(trim($_SESSION['user_perfil']), array('Forum Leader'))) { 
+        $form['form_6'] = array("elemento" => "fecha + tiempo" ,"tipo_date" => "date" , "titulo_date" => "Fecha de Inicio", "id_date" => "_f_inicio" ,"reemplazo_date" => date('Y-m-d',strtotime($row['eve_fechainicio']))
+        ,"tipo_time" => "time" ,"deshabilitado" => "", "titulo_time" => "Fecha de Inicio", "id_time" => "_time_inicio" ,"reemplazo_time" => date('H:i',strtotime($row['tip_eve_hora_rango_inicio']))); 
 
-$form['form_7'] = array("elemento" => "fecha + tiempo" ,"tipo_date" => "date" , "titulo_date" => "Fecha de Fin", "id_date" => "_f_fin" ,"reemplazo_date" => date('Y-m-d',strtotime($row['eve_fechafin']))
-,"tipo_time" => "time" , "titulo_time" => "Fecha de Fin", "id_time" => "_time_fin" ,"reemplazo_time" => date('H:i',strtotime($row['tip_eve_hora_rango_fin'])));	
+        $form['form_7'] = array("elemento" => "fecha + tiempo" ,"tipo_date" => "date" , "titulo_date" => "Fecha de Fin", "id_date" => "_f_fin" ,"reemplazo_date" => date('Y-m-d',strtotime($row['eve_fechafin']))
+        ,"tipo_time" => "time" ,"deshabilitado" => "", "titulo_time" => "Fecha de Fin", "id_time" => "_time_fin" ,"reemplazo_time" => date('H:i',strtotime($row['tip_eve_hora_rango_fin'])));	
+    } else {
+        $form['form_6'] = array("elemento" => "fecha + tiempo" ,"tipo_date" => "date" , "titulo_date" => "Fecha de Inicio", "id_date" => "_f_inicio" ,"reemplazo_date" => date('Y-m-d',strtotime($row['eve_fechainicio']))
+        ,"tipo_time" => "time" , "titulo_time" => "Fecha de Inicio", "id_time" => "_time_inicio" ,"reemplazo_time" => date('H:i',strtotime($row['tip_eve_hora_rango_inicio']))); 
+
+        $form['form_7'] = array("elemento" => "fecha + tiempo" ,"tipo_date" => "date" , "titulo_date" => "Fecha de Fin", "id_date" => "_f_fin" ,"reemplazo_date" => date('Y-m-d',strtotime($row['eve_fechafin']))
+        ,"tipo_time" => "time" , "titulo_time" => "Fecha de Fin", "id_time" => "_time_fin" ,"reemplazo_time" => date('H:i',strtotime($row['tip_eve_hora_rango_fin'])));	
+    }
+
 }else{
-	
-$form['form_6'] = array("elemento" => "fecha + tiempo" ,"tipo_date" => "date" , "titulo_date" => "Fecha de Inicio", "id_date" => "_f_inicio" ,"reemplazo_date" => date('Y-m-d',strtotime($row['eve_fechainicio']))
-,"tipo_time" => "time" , "titulo_time" => "Fecha de Inicio", "id_time" => "_time_inicio" ,"reemplazo_time" => date('H:i',strtotime($row['tip_eve_hora_rango_inicio']))); 
+    if (in_array(trim($_SESSION['user_perfil']), array('Forum Leader'))) { 
+        $form['form_6'] = array("elemento" => "fecha + tiempo" ,"tipo_date" => "date" , "titulo_date" => "Fecha de Inicio", "id_date" => "_f_inicio" ,"reemplazo_date" => date('Y-m-d',strtotime($row['eve_fechainicio']))
+        ,"tipo_time" => "time" ,"deshabilitado" => "", "titulo_time" => "Fecha de Inicio", "id_time" => "_time_inicio" ,"reemplazo_time" => date('H:i',strtotime($row['tip_eve_hora_rango_inicio']))); 
 
-$form['form_7'] = array("elemento" => "fecha + tiempo" ,"tipo_date" => "hidden" ,"id_date" => "_f_fin" ,"reemplazo_date" => date('Y-m-d',strtotime($row['eve_fechafin']))
-,"tipo_time" => "time" , "titulo_time" => "Fecha de Fin", "id_time" => "_time_fin" ,"reemplazo_time" => date('H:i',strtotime($row['tip_eve_hora_rango_fin'])));	
+        $form['form_7'] = array("elemento" => "fecha + tiempo" ,"tipo_date" => "hidden" ,"id_date" => "_f_fin" ,"reemplazo_date" => date('Y-m-d',strtotime($row['eve_fechafin']))
+        ,"tipo_time" => "time" ,"deshabilitado" => "", "titulo_time" => "Fecha de Fin", "id_time" => "_time_fin" ,"reemplazo_time" => date('H:i',strtotime($row['tip_eve_hora_rango_fin'])));	
+    } else {
+        $form['form_6'] = array("elemento" => "fecha + tiempo" ,"tipo_date" => "date" , "titulo_date" => "Fecha de Inicio", "id_date" => "_f_inicio" ,"reemplazo_date" => date('Y-m-d',strtotime($row['eve_fechainicio']))
+        ,"tipo_time" => "time" , "titulo_time" => "Fecha de Inicio", "id_time" => "_time_inicio" ,"reemplazo_time" => date('H:i',strtotime($row['tip_eve_hora_rango_inicio']))); 
 
+        $form['form_7'] = array("elemento" => "fecha + tiempo" ,"tipo_date" => "hidden" ,"id_date" => "_f_fin" ,"reemplazo_date" => date('Y-m-d',strtotime($row['eve_fechafin']))
+        ,"tipo_time" => "time" , "titulo_time" => "Fecha de Fin", "id_time" => "_time_fin" ,"reemplazo_time" => date('H:i',strtotime($row['tip_eve_hora_rango_fin'])));	
+    }
 }
 
                         if($row['tip_eve_opcion_empresario_mes'] == "1"){
