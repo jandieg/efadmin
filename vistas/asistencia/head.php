@@ -41,7 +41,8 @@ function getAsistencia($idGrupo, $fecha_inicio, $fecha_fin) {
             $suma = 0;
             
             //Que solo sean fechas ya pasadas
-            if(date('Y-m-d',strtotime($row['eve_fechafin'])) <= date("Y-m-d")){
+            if(date('Y-m-d', strtotime($row['mie_fecharegistro'])) <= date('Y-m-d',strtotime($row['eve_fechafin'])) 
+            && date('Y-m-d',strtotime($row['eve_fechafin'])) <= date("Y-m-d")){
                 $disabled="";
                 if($row['asis_estado'] == '0'){
                     $checked="";
