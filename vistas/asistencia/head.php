@@ -5,6 +5,8 @@ require_once MODELO.'Grupo.php';
 include(HTML."/html.php");
 include(HTML."/html_2.php");
 include(HTML."/html_combos.php");
+error_reporting(E_ALL);
+
 $objGrupo;
 function getCheck($id,$funcion, $disabled ,$checked) {
     $msg='';

@@ -25,6 +25,11 @@ class Grupo extends Conexion{
         $sql="CALL `sp_selectGrupos`()";
         return parent::getConsultar($sql);   
     }
+
+    public function getGrupos3($idUser) {
+        $sql = "call sp_selectGrupos2('$idUser')";
+        return parent::getConsultar($sql);
+    }
     public function getGrupos2($estado= '') {
         $sql="CALL `sp_selectGrupos1`('$estado')";
         return parent::getConsultar($sql);   
@@ -131,6 +136,29 @@ class Grupo extends Conexion{
             }
        }
         return $listaGrupos;
+    }
+
+       public function getListaGrupos7($idSeleccionado='',$listaGrupos=array(), $idUser) {   
+        $resultset= $this->getGrupos3($idUser);      
+        if($idSeleccionado!=''){
+            while($row = $resultset->fetch_assoc()) { 
+                if($row['gru_id'] == $idSeleccionado){
+                      $listaGrupos['lista_'.$row['gru_id']] = array( "value" => $row['gru_id'],  "select" => "selected" ,"texto" => $row['gru_descripcion']);
+                      if($this->primerGrupo == ''){  $this->primerGrupo=$row['gru_id'];  }
+                }else{
+                     $listaGrupos['lista_'.$row['gru_id']] = array( "value" => $row['gru_id'],  "select" => "" ,"texto" => $row['gru_descripcion']);
+                     if($this->primerGrupo == ''){  $this->primerGrupo=$row['gru_id'];  }
+                }
+            }
+        }  else {
+            while($row = $resultset->fetch_assoc()) { 
+                $listaGrupos['lista_'.$row['gru_id']] = array( "value" => $row['gru_id'],  "select" => "" ,"texto" => $row['gru_descripcion']);
+            
+                if($this->primerGrupo == ''){  $this->primerGrupo=$row['gru_id'];  }
+            }
+       }
+        return $listaGrupos;
+    
     }
 
     public function getGrupoByMiembro($idMiembro) {

@@ -31,7 +31,7 @@ var cambioGrupos = function() {
 var cambioAnho = function() {
     getDetalleFiltro();
 };
-var getGrupos = function(){
+/*var getGrupos = function(){
     var parametros = {
         KEY: 'KEY_FILTRO_TIPO_EVENTO',
         _tipo_evento: $("#_tipos_eventos").val().toString()
@@ -47,7 +47,7 @@ var getGrupos = function(){
         }
     });
        
-};
+};*/
 
 var getDetalleFiltro = function(){
 //    alert('dfsf');
@@ -156,7 +156,7 @@ var getDetalleEvento = function(_nombre, _responsable, _fi, _ff, _direccion, _de
 var getRecargar = function(){
     location.reload();
 };
-window.onload = getGrupos;
+/*window.onload = getGrupos;*/
 
 </script>
 

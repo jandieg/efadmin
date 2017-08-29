@@ -1423,7 +1423,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     setDatosConexion($_POST['_base']);
       
                                     $objForum = new ForumLeader();
-                                    $listaForum=$objForum->getListaForumLeaders2(NULL,$lista);
+                                    $listaForum=$objForum->getListaForumLeaders7(NULL,$lista, $_SESSION['user_id_ben']);
                                     $comboForum= generadorComboSelectOption("_forum", "getGlobalFiltro(3)",$listaForum);
                                     
                                     $objGrupo= new Grupo();
@@ -1768,19 +1768,19 @@ function getFiltros() {
 		
 		
 		$objForum = new ForumLeader();
-        $listaForum=$objForum->getListaForumLeaders2(NULL,$lista);
+        $listaForum=$objForum->getListaForumLeaders7(NULL,$lista, $_SESSION['user_id_ben']);
         $form['form_1'] = array("elemento" => "combo","change" => "getFiltro('2')", "titulo" => "Forum Leader", "id" => "_forum", "option" => $listaForum); 
 
 
         
         $objGrupo= new Grupo();
-        $listaGrupos= $objGrupo->getListaGrupos2(NULL,$lista);
+        $listaGrupos= $objGrupo->getListaGrupos7(NULL,$lista, $_SESSION['user_id_ben']);
         $form['form_2'] = array("elemento" => "combo","change" => "getFiltro('1')", "titulo" => "Grupos", "id" => "_grupo", "option" => $listaGrupos); 
 
        
     }
     $objEmpresaLocal= new EmpresaLocal();
-    $listaEmpresa=$objEmpresaLocal->getListaEmpresa2(NULL, $lista);
+    $listaEmpresa=$objEmpresaLocal->getListaEmpresa3(NULL, $lista, $_SESSION['user_id_ben']);
     $form['form_3'] = array("elemento" => "combo","change" => "getFiltro('3')", "titulo" => "Empresas", "id" => "_empresa", "option" => $listaEmpresa); 
     
     $objIndustria = new Industria();
@@ -1813,13 +1813,19 @@ function getTablaFiltrada($id, $key, $idForum, $incluyecanceladas) {
     if (strlen($idForum) > 0) {
         $objUsuario3 = new Usuario();
         $sede = 0;
-        $resultset4 = $objUsuario->getDatosUsuario($idForum);
+        $resultset4 = $objUsuario3->getDatosUsuario($idForum);
         if ($row7 = $resultset4->fetch_assoc()) {
             $sede = $row7['sede_id'];
         }
         $resultset= $objMiembro->getFiltros2($id,$key,$idForum, $incluyecanceladas, $sede);
     } else {
-        $resultset= $objMiembro->getFiltros($id,$key,$idForum, $incluyecanceladas);
+        $objUsuario3 = new Usuario();
+        $sede = 0;
+        $resultset4 = $objUsuario3->getDatosUsuario($_SESSION['user_id_ben']);
+        if ($row7 = $resultset4->fetch_assoc()) {
+            $sede = $row7['sede_id'];
+        }
+        $resultset= $objMiembro->getFiltros2($id, $key, $idForum, $incluyecanceladas, $sede);
     }
     
     while($row = $resultset->fetch_assoc()) { 
@@ -1920,7 +1926,7 @@ function getGlobalFiltros() {
 	
 	
 	    $objForum = new ForumLeader();
-        $listaForum=$objForum->getListaForumLeaders2(NULL,$lista);
+        $listaForum=$objForum->getListaForumLeaders7(NULL,$lista, $_SESSION['user_id_ben']);
         $form['form_1'] = array("elemento" => "combo","change" => "getFiltro('2')", "titulo" => "Forum Leader", "id" => "_forum", "option" => $listaForum); 
         
         $objGrupo= new Grupo();
