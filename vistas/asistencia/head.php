@@ -35,12 +35,16 @@ function getAsistencia($idGrupo, $fecha_inicio, $fecha_fin) {
         $cont= 1;
         while($row = $resultset->fetch_assoc()) { 
             $isFalta='';
+            $cont_asist =0;
+            $suma = 0;
+            
             //Que solo sean fechas ya pasadas
             if(date('Y-m-d',strtotime($row['eve_fechafin'])) <= date("Y-m-d")){
                 $disabled="";
                 if($row['asis_estado'] == '0'){
                     $checked="";
                 }else{
+                    $suma = 1;
                     $checked="checked";
                 }
                 $isFalta=$row['asis_estado'];
@@ -48,16 +52,19 @@ function getAsistencia($idGrupo, $fecha_inicio, $fecha_fin) {
                 $disabled="disabled";
                 $checked="";
             }
+
+            
             $funcion="setAsistencia(".$row['asis_id'].")";
             //Guardo en un array todos los eventos, en base al miembro
             $arrayEventos[$cont] =  array("evento" =>  getCheck($row['asis_id'],$funcion,$disabled, $checked),
                 "miembro_id" => $row['miembro_mie_id'],
                 "mes" => date('m',strtotime($row['eve_fechafin'])),
                 "faltas" => $isFalta,
+                "chequeado" => $checked,
                 "control" => date('n',strtotime($row['eve_fechafin'])));
             //Guardo los miembros en un array, es decir, sin repeticiones
-            if($banderaMiembros != $row['miembro_mie_id']){
-               $arrayMiembros[$cont] = array("nombre" => $row['nombre'], "miembro_id" => $row['miembro_mie_id'], "fecha" => $row['eve_fechafin']);
+            if($banderaMiembros != $row['miembro_mie_id']){                 
+               $arrayMiembros[$cont] = array("nombre" => $row['nombre'], "miembro_id" => $row['miembro_mie_id'], "fecha" => $row['eve_fechafin']);               
             }
             $banderaMiembros=$row['miembro_mie_id'];
  
@@ -99,10 +106,12 @@ function getAsistencia($idGrupo, $fecha_inicio, $fecha_fin) {
         foreach ($arrayMiembros as $valores => $valor) { 
             $cont_faltas= 0;
             $cont= 0;
+            $miembroact = "";
             $html .='<tr>';
             $html .='<td>'.$valor['nombre'].'</td>';
             foreach ($arrayEventos as $eventos => $evento) {
                 //unicamente va a dibujar los eventos del miembro
+                
                 if($evento['miembro_id']==$valor['miembro_id']){   //$evento['mes']
                     $html .= getAddMeses($control, $evento["control"], $evento["control"],FALSE);//Para add columnas
                     $control= $evento["control"] + 1;//Para add columnas
@@ -110,9 +119,13 @@ function getAsistencia($idGrupo, $fecha_inicio, $fecha_fin) {
                     if($evento['faltas']=="0"){
                         $cont_faltas= $cont_faltas + 1;
                     }
-                    if($evento['faltas'] != ""){
+  /*                  if($evento['faltas'] != ""){
                         $cont= $cont + 1;
-                    }      
+                    }      */
+                    if (strlen($evento['chequeado']) > 0) {
+                        $cont++;
+                    }
+                    
                 }
             }
              $html .= getAddMeses($control, 12, '',FALSE);//Para add columnas
