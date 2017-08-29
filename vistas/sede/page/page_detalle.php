@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-md-12">
           <h2 class="page-header">
-            <i class="fa fa-user"></i> Información de la IBP
+            <i class="fa fa-user"></i> Información del IBP
               {boton}
           </h2>
           

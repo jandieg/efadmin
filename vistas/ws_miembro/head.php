@@ -251,7 +251,7 @@ if (isset($data)) {
 
 				break;
 	case 'UPDATE':
-				$memberCode=$data->code;
+				$memberCode=strval($data->code);
 				$encodedString=$data->foto;
 				$encodedString=str_replace(' ','+',$encodedString);
 				$decoded=base64_decode($encodedString);

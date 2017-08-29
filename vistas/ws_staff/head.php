@@ -33,6 +33,29 @@ if (isset($data)) {
 
                 break;
 
+	case 'CONTACT':
+                setDatosConexion('');			
+				
+                //Contactos
+                $response_1= array();             
+                $objMiembro= new Entity($response_1);
+                $parametros= array($data->id);
+                $resultset= $objMiembro->getSp('app_GetContacts', $parametros, 'data');
+               
+                if(count($resultset['data']) > 0 ){
+					$result["data"]=$resultset['data'];
+                    $result["success"] = "1"; 
+                    echo json_encode($result);                          
+                }else{
+                    $resultset["success"] = "0"; 
+                    $resultset["data"] = "No existe Información!"; 
+                    echo json_encode($resultset); 
+                }
+
+                exit();
+
+                break;
+
         endswitch;    
     } catch (Exception $exc) { echo getError($exc);}  
 } else { 
