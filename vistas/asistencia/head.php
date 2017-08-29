@@ -44,6 +44,9 @@ function getAsistencia($idGrupo, $fecha_inicio, $fecha_fin) {
             if(date('Y-m-d', strtotime($row['mie_fecharegistro'])) <= date('Y-m-d',strtotime($row['eve_fechafin'])) 
             && date('Y-m-d',strtotime($row['eve_fechafin'])) <= date("Y-m-d")){
                 $disabled="";
+                if (in_array(trim($_SESSION['user_perfil']), array('Forum Leader'))) {
+                    $disabled="disabled";
+                }
                 if($row['asis_estado'] == '0'){
                     $checked="";
                 }else{

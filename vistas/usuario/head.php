@@ -263,7 +263,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $objUsuario= new Usuario();
                     $resultset= $objUsuario->getUser($_POST['id'], '');
                     if($row = $resultset->fetch_assoc()) { 
-                                        
+                        if (file_exists("../../public_html/i/".$_POST['id'].".jpg")) {
+                            $tabla1['t_0'] = array("t_1" => cargarImagen("../../i/".$_POST['id'].".jpg"), "t_2" => "");                            
+                        } else {
+                            $tabla1['t_0'] = array("t_1" => cargarImagen(""), "t_2" => "");
+                            
+                        }
                         $tabla1['t_1'] = array("t_1" => generadorNegritas($lblNombre), "t_2" => $row['per_nombre']);
                         $tabla1['t_2'] = array("t_1" => generadorNegritas($lblApellido), "t_2" => $row['per_apellido']);
                         $tabla1['t_3'] = array("t_1" => generadorNegritas($lblPerfil), "t_2" => $row['perfil_des']);

@@ -7,6 +7,15 @@ var getDetalle = function(id){
         $("#ben_contenedor").html(mensaje);
      });
 };
+
+var getDetalle2 = function(id){
+ $.post("usuario", {
+        KEY: 'KEY_SHOW_FORM_DETALLE2',
+        id: id.toString()
+    }, function(mensaje) {
+        $("#ben_contenedor").html(mensaje);
+     });
+};
 var setLimpiar = function (){
     $('iframe').contents().find('.wysihtml5-editor').html('');
     $("#_email_receptor").val("");
