@@ -20,6 +20,11 @@ class Membresia extends Conexion{
         $sql="call sp_selectMembresias('$estado')";
         return parent::getConsultar($sql);   
     } 
+
+    public function getMembresias2($estado, $idUser) {
+        $sql = "call sp_selectMembresias2('$estado', '$idUser')";
+        return parent::getConsultar($sql);
+    }
     
     
      public function getMembresia($id) {

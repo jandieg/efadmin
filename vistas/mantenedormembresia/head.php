@@ -100,7 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 $objMembresia= new Membresia();
 $cuerpo='';
 $cont=1;
-$resultset= $objMembresia->getMembresias("A");
+$resultset= $objMembresia->getMembresias2("A", $_SESSION['user_id_ben']);
  while($row = $resultset->fetch_assoc()) { 
      $cuerpo.= generadorTablaFilas(array(
          "<center>".$cont."</center>",
