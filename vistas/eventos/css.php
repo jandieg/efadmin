@@ -19,6 +19,10 @@
       border-top: 1px solid black !important;
       border-bottom: 1px solid black !important;
     }
+
+    .fondo-blanco{
+        background-color:white;
+    }
 /*
     #mydiv>.fixed-column {
         position: absolute;

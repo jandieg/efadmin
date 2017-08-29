@@ -162,7 +162,7 @@ function getTablaCasosDelMes() {
         "11" => "Nov",
         "12" => "Dic"
     );
-    $anho_inicio = intval(date('Y'))-3;
+    $anho_inicio = intval(date('Y'))-1;
     $start    = new DateTime(date($anho_inicio.'-m-01'));
     $start->modify('first day of this month');
     $end      = new DateTime(date('Y-m-d'));
@@ -194,6 +194,8 @@ function getTablaCasosDelMes() {
     $tabla.= "<tr><th class='tabla-colapsada'>&nbsp;</th><th class='tabla-colapsada'>&nbsp;</th>";
 
     $resultset2 = $objEvento2->getTodosEventos();
+    $objMiembro = new Miembro();
+    $resultset3 = $objMiembro->getAllMembers();
     $anhoact = "";                        
     foreach ($period as $dt) {
         if ($anhoact != $dt->format('Y')) {
@@ -221,6 +223,11 @@ function getTablaCasosDelMes() {
     
     $grupoactlista = "";
     $nroforum = 0;
+    while ($row4 = $resultset3->fetch_assoc()) {
+        $data[$row4['grupo_id']][$row4['mie_id']] = $patron;
+        $data[$row4['grupo_id']][$row4['mie_id']]['nombre'] = $row4['per_nombre'] . ' ' . $row4['per_apellido'];
+    }
+
     while ($row2 = $resultset2->fetch_assoc()) {
         
         if (! isset($data[$row2['grupo_id']][$row2['mie_id']]) && strlen($row2['nombre']) > 0) {
@@ -242,7 +249,7 @@ function getTablaCasosDelMes() {
         if ($grupoactlista != $k) {
             $j = 1;
             $grupoactlista = $k;
-            $tabla.="<tr><td class='tabla-colapsada'>&nbsp;</td><td>Forum ".$i."</td>";
+            $tabla.="<tr><td class='tabla-colapsada'>&nbsp;</td><td class='fondo-blanco'>Forum ".$i."</td>";
             foreach ($period as $dt) {
                 $tabla.="<td class='tabla-colapsada'>&nbsp;</td>";        
             }
@@ -252,8 +259,8 @@ function getTablaCasosDelMes() {
         foreach ($d as $dd) {
             if (strlen(trim($dd['nombre'])) > 0) {
                 $tabla.="<tr>";
-                $tabla.="<td class='tabla-colapsada'><strong>".$j."</strong></td>";
-                $tabla.="<td class='tabla-colapsada'><strong>".$dd['nombre']."</strong></td>";
+                $tabla.="<td class='tabla-colapsada fondo-blanco'><strong>".$j."</strong></td>";
+                $tabla.="<td class='tabla-colapsada fondo-blanco'><strong>".$dd['nombre']."</strong></td>";
                 foreach($period as $dt) {
                     $tabla.=$dd[$dt->format('Y')][intval($dt->format('m'))];
                 }
@@ -283,7 +290,7 @@ function getTablaCasosDelMesByForumLeader($idForumLeader) {
         "11" => "Nov",
         "12" => "Dic"
     );
-    $anho_inicio = intval(date('Y'))-3;
+    $anho_inicio = intval(date('Y'))-1;
     $start    = new DateTime(date($anho_inicio.'-m-01'));
     $start->modify('first day of this month');
     $end      = new DateTime(date('Y-m-d'));
@@ -379,9 +386,9 @@ function getTablaCasosDelMesByForumLeader($idForumLeader) {
             $objGrupo3 = new Grupo();
             $resultset8 = $objGrupo3->getNombreGrupos($k);
             if ($row8=$resultset8->fetch_assoc()) {
-                $tabla.="<tr><td class='tabla-colapsada'>&nbsp;</td><td>".$row8['gru_descripcion']."</td>";
+                $tabla.="<tr><td class='tabla-colapsada'>&nbsp;</td><td class='fondo-blanco'>".$row8['gru_descripcion']."</td>";
             } else {
-                $tabla.="<tr><td class='tabla-colapsada'>&nbsp;</td><td>Forum ".$i."</td>";
+                $tabla.="<tr><td class='tabla-colapsada'>&nbsp;</td><td class='fondo-blanco'>Forum ".$i."</td>";
             }
             
             foreach ($period as $dt) {
@@ -393,8 +400,8 @@ function getTablaCasosDelMesByForumLeader($idForumLeader) {
         foreach ($d as $dd) {
             if (strlen(trim($dd['nombre'])) > 0) {
                 $tabla.="<tr>";
-                $tabla.="<td class='tabla-colapsada'><strong>".$j."</strong></td>";
-                $tabla.="<td class='tabla-colapsada'><strong>".$dd['nombre']."</strong></td>";
+                $tabla.="<td class='tabla-colapsada fondo-blanco'><strong>".$j."</strong></td>";
+                $tabla.="<td class='tabla-colapsada fondo-blanco'><strong>".$dd['nombre']."</strong></td>";
                 foreach($period as $dt) {
                     $tabla.=$dd[$dt->format('Y')][intval($dt->format('m'))];
                 }

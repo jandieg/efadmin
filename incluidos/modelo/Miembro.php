@@ -234,6 +234,11 @@ public function setActualizarMiembro($idMiembro, $id_persona, $propietario, $nom
         return parent::getConsultar($sql);
     }
 
+    public function getAllMembers() {
+        $sql = "call sp_selectAllMembers()";
+        return parent::getConsultar($sql);
+    }
+
     public function setCreateMiembroFromScript($id_empresa, $mie_fecharegistro, $codigo_grupo,
         $miembro_id, $membresia_id, $status_member_id, $mie_observacion, $precio_esp, $mie_fecha_cancelacion, 
         $cancelled, $per_nombre, $per_apellido, $per_tipo, $per_fechanacimiento, $per_genero, $per_hijos, 
