@@ -1117,11 +1117,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                      if (date('Y') ==  date('Y',strtotime($_POST['_fecha_registro']))) {
                         $fechaPrimerDia_Registro= getPrimerDiaMes(date("Y"), date('m',strtotime($_POST['_fecha_registro'])));
                      } else {
-                         $fechaPrimerDia_Registro= getPrimerDiaMes(date("Y"), '01');
+                         $fechaPrimerDia_Registro= getPrimerDiaMes(date('Y',strtotime($_POST['_fecha_registro'])), date('m',strtotime($_POST['_fecha_registro'])));
+                         //$fechaPrimerDia_Registro= getPrimerDiaMes(date("Y"), '01');
                      }
                      
                      for ($index = $periodoMeses; $index <= 12; $index = $index + $periodoMeses) {
-                             $fecha = getPrimerDiaMes(date("Y"), ($index - $periodoMeses) + 1);
+                             $fecha = getPrimerDiaMes(date('Y',strtotime($_POST['_fecha_registro'])), ($index - $periodoMeses) + 1);
                              if ($fecha >= $fechaPrimerDia_Registro) { //ojo, parte siempre y cuando sea mayor
                                  if ($fechaPrimeraVuelta == "") {
                                      $fechaPrimeraVuelta= $fecha;
@@ -1143,7 +1144,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                      $numMesesFaltantes= $numMes_DelPrimeraVuelta - $numMes_DelRegistro;
                      if($numMesesFaltantes > 0){
                          for ($index = $numMes_DelRegistro; $index < $numMes_DelPrimeraVuelta; $index = $index + 1) {
-                             $fecha= getPrimerDiaMes(date("Y"),$index); 
+                             $fecha= getPrimerDiaMes(date('Y',strtotime($_POST['_fecha_registro'])),$index); 
                              if (! in_array($fecha, $listaFechasCuotasEnCero) && ! in_array($fecha, $listaFechasCuotasEnCero)) {
                                 $listaFechaLetrasFaltantes.= $fecha.",";
                                 $multiplicadorLetrasFaltantes= $multiplicadorLetrasFaltantes + 1;
