@@ -1165,14 +1165,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                          $objPresupuestoCobro= new PresupuestoCobro();   
                          $comp= $objPresupuestoCobro->actualizarPresupuestoCobroMiembro($_POST['_id_presupuesto'], $valorCobrarPeriodo,
                                  $totalCobrar,$_POST['_id_periodo'], $_SESSION['user_id_ben'],$listaFechaLetrasPeriodos, $_POST['_id_membresia'],
-                                 $_POST['_id_miembro'],$listaFechaLetrasFaltantes, $valorCobrarLetrasFaltantes,$idTipo, $miembroCancelled, $fechaCambioStatus); 
+                                 $_POST['_id_miembro'],$listaFechaLetrasFaltantes, $valorCobrarLetrasFaltantes,
+                                 $idTipo, $miembroCancelled, $fechaCambioStatus, date('Y',strtotime($_POST['_fecha_registro']))); 
                          $msg='El Presupuesto se actualizo correctamente!';
                       }else{
 
                          $objPresupuestoCobro= new PresupuestoCobro();
                          $comp= $objPresupuestoCobro->grabarPresupuestoCobroMiembro( $valorCobrarPeriodo, $fechaRegistroPresupuesto, $_POST['_id_miembro'],
                                  $totalCobrar,$_POST['_id_periodo'], $_SESSION['user_id_ben'],$listaFechaLetrasPeriodos, $_POST['_id_membresia'],
-                                  $listaFechaLetrasFaltantes, $valorCobrarLetrasFaltantes, $idTipo, $miembroCancelled, $fechaCambioStatus); 
+                                  $listaFechaLetrasFaltantes, $valorCobrarLetrasFaltantes, $idTipo, $miembroCancelled, $fechaCambioStatus, date('Y',strtotime($_POST['_fecha_registro']))); 
                          $msg='El Presupuesto se creo correctamente!';
                       }
 
