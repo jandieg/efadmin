@@ -7,5 +7,5 @@ return 1;
 else 
 return v_id;
 end if;
-  RETURN 1;
+  
 END;

@@ -55,7 +55,7 @@ function cargarMiembros($datos) {
 		$fecha = date('d/m/Y', PHPExcel_Shared_Date::ExcelToPHP($objPHPExcel->getActiveSheet()->getCell('B'.$i)->getValue()));
 		$fecha2 = date('d/m/Y', PHPExcel_Shared_Date::ExcelToPHP($objPHPExcel->getActiveSheet()->getCell('I'.$i)->getValue()));
 		$fecha3 = date('d/m/Y', PHPExcel_Shared_Date::ExcelToPHP($objPHPExcel->getActiveSheet()->getCell('N'.$i)->getValue()));
-		$objMiembro->setCreateMiembroFromScript($nombre, 
+		print_r($objMiembro->setCreateMiembroFromScript($nombre, 
 		$fecha, $objPHPExcel->getActiveSheet()->getCell("C".$i)->getValue(),
         $objPHPExcel->getActiveSheet()->getCell("D".$i)->getValue(), $objPHPExcel->getActiveSheet()->getCell("E".$i)->getValue(), 
 		$objPHPExcel->getActiveSheet()->getCell("F".$i)->getValue(), $objPHPExcel->getActiveSheet()->getCell("G".$i)->getValue(), 
@@ -65,7 +65,7 @@ function cargarMiembros($datos) {
 		$fecha3, $objPHPExcel->getActiveSheet()->getCell("O".$i)->getValue(), 
 		$objPHPExcel->getActiveSheet()->getCell("P".$i)->getValue(), $objPHPExcel->getActiveSheet()->getCell("Q".$i)->getValue(), 
 		$objPHPExcel->getActiveSheet()->getCell("R".$i)->getValue(), $objPHPExcel->getActiveSheet()->getCell("S".$i)->getValue(), 
-		$objPHPExcel->getActiveSheet()->getCell("T".$i)->getValue(), $objPHPExcel->getActiveSheet()->getCell("U".$i)->getValue());
+		$objPHPExcel->getActiveSheet()->getCell("T".$i)->getValue(), $objPHPExcel->getActiveSheet()->getCell("U".$i)->getValue()));
 		$i++;
 	}
 	

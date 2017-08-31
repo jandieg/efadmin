@@ -214,6 +214,11 @@ public function setActualizarMiembro($idMiembro, $id_persona, $propietario, $nom
         }
     }
     
+    public function hotfixCodigos($nombre, $apellido, $codigo, $grupo) {
+        $sql = "call sp_hotfixCodigos('$nombre', '$apellido', '$codigo', '$grupo')";
+        return parent::setSqlSp($sql);
+    }
+
     public function setEstadoMiembro($id, $status, $idUser) {
         $sql = "call sp_updateEstadoMiembro('$id', '$status','$idUser')";
         return parent::setSqlSp($sql);
@@ -224,7 +229,7 @@ public function setActualizarMiembro($idMiembro, $id_persona, $propietario, $nom
         return parent::getConsultar($sql);   
     }
 
-    public function getFiltros2($id, $key, $permiso, $incluyecanceladas, $sede) {
+    public function getFiltros2($id, $key='', $permiso='', $incluyecanceladas=0, $sede) {
         $sql="call sp_selectMiembroFiltros2('$id','$key', '$permiso', '$incluyecanceladas', '$sede')";
         return parent::getConsultar($sql);   
     }
@@ -245,6 +250,9 @@ public function setActualizarMiembro($idMiembro, $id_persona, $propietario, $nom
         $per_esposa, $email, $telefono, $celular, $direccion) {
         if (strlen(trim($status_member_id))== 0) {
             $status_member_id = 1;
+        }
+        if (strlen(trim($membresia_id)) == 0) {
+            $membresia_id = 1;
         }
         $fechas = explode('/', $mie_fecharegistro);
         $mie_fecharegistro = $fechas[2].'-'.$fechas[0].'-'.$fechas[1].' '.date('h:i:s');

@@ -1816,17 +1816,19 @@ function getTablaFiltrada($id, $key, $idForum, $incluyecanceladas) {
         $resultset4 = $objUsuario3->getDatosUsuario($idForum);
         if ($row7 = $resultset4->fetch_assoc()) {
             $sede = $row7['sede_id'];
-        }
-        $resultset= $objMiembro->getFiltros2($id,$key,$idForum, $incluyecanceladas, $sede);
+        }        
     } else {
         $objUsuario3 = new Usuario();
-        $sede = 0;
+        $sede = 2;
         $resultset4 = $objUsuario3->getDatosUsuario($_SESSION['user_id_ben']);
         if ($row7 = $resultset4->fetch_assoc()) {
             $sede = $row7['sede_id'];
         }
-        $resultset= $objMiembro->getFiltros2($id, $key, $idForum, $incluyecanceladas, $sede);
+        
     }
+    
+
+    $resultset= $objMiembro->getFiltros2($id,$key,$idForum, $incluyecanceladas, $sede);
     
     while($row = $resultset->fetch_assoc()) { 
         $verDetalle='';
