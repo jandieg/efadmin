@@ -67,7 +67,14 @@ $objPHPExcel->getActiveSheet()->setCellValue('D3', $report_name_for_excel);
 $objPHPExcel->getActiveSheet()->setCellValue('A72', $nextyear);
 //Consulting DataBase
 for ($i = 1; $i <= 12; $i++) {
-$sql = "SELECT * FROM miembro_inscripcion WHERE MONTH(mie_ins_fecha_cobro)='$i' AND YEAR(mie_ins_fecha_cobro)='$year' and date(mie_ins_fecha_cobro) <= '$corte'"; // AND YEAR(mie_ins_fecha_ingreso)='$year'	
+$sql = "SELECT * FROM miembro_inscripcion, miembro, grupos  
+WHERE MONTH(miembro_inscripcion.mie_ins_fecha_cobro)='$i' 
+AND YEAR(miembro_inscripcion.mie_ins_fecha_cobro)='$year' 
+and date(miembro_inscripcion.mie_ins_fecha_cobro) <= '$corte'
+and miembro_inscripcion.miembro_id = miembro.mie_id 
+and grupos.gru_id = miembro.grupo_id 
+and grupos.sede_id = '$sedeid' 
+"; // AND YEAR(mie_ins_fecha_ingreso)='$year'	
 $res = mysqli_query($con,$sql);
 //$row = mysqli_fetch_array($res);
 //$response["result"] = array();
@@ -2767,10 +2774,10 @@ for ($i = 12; $i <= 23; $i++) {
 	}
 
 $objPHPExcel->getActiveSheet()->setCellValue('A'.$i, $m."/".$x_day."/".$year);
-$objPHPExcel->getActiveSheet()->setCellValue('B'.$i, calculate_summary_value($m,$year,'enrollment', $corte));  //Computing Enrollment Fees
-$objPHPExcel->getActiveSheet()->setCellValue('D'.$i, calculate_summary_value($m,$year,'dues', $corte));  //Computing Dues
-$objPHPExcel->getActiveSheet()->setCellValue('F'.$i, calculate_summary_value($m,$year,'other', $corte));  //Computing Other Activity
-$objPHPExcel->getActiveSheet()->setCellValue('R'.$i, calculate_summary_value($m,$year,'price', $corte));  //Computing Price
+$objPHPExcel->getActiveSheet()->setCellValue('B'.$i, calculate_summary_value($m,$year,'enrollment', $corte, $sedeid));  //Computing Enrollment Fees
+$objPHPExcel->getActiveSheet()->setCellValue('D'.$i, calculate_summary_value($m,$year,'dues', $corte, $sedeid));  //Computing Dues
+$objPHPExcel->getActiveSheet()->setCellValue('F'.$i, calculate_summary_value($m,$year,'other', $corte, $sedeid));  //Computing Other Activity
+$objPHPExcel->getActiveSheet()->setCellValue('R'.$i, calculate_summary_value($m,$year,'price', $corte, $sedeid));  //Computing Price
 $m++;
 
 }//end for 1
@@ -2786,10 +2793,10 @@ for ($n = 32; $n <= 43; $n++) {
 	}
 
 $objPHPExcel->getActiveSheet()->setCellValue('A'.$n, $m2."/".$x_day."/".$nextyear);
-$objPHPExcel->getActiveSheet()->setCellValue('B'.$n, calculate_summary_value($m2,$nextyear,'enrollment', $corte));  //Computing Enrollment Fees
-$objPHPExcel->getActiveSheet()->setCellValue('D'.$n, calculate_summary_value($m2,$nextyear,'dues', $corte));  //Computing Dues
-$objPHPExcel->getActiveSheet()->setCellValue('F'.$n, calculate_summary_value($m2,$nextyear,'other', $corte));  //Computing Other Activity
-$objPHPExcel->getActiveSheet()->setCellValue('R'.$n, calculate_summary_value($m2,$nextyear,'price', $corte));  //Computing Price
+$objPHPExcel->getActiveSheet()->setCellValue('B'.$n, calculate_summary_value($m2,$nextyear,'enrollment', $corte, $sedeid));  //Computing Enrollment Fees
+$objPHPExcel->getActiveSheet()->setCellValue('D'.$n, calculate_summary_value($m2,$nextyear,'dues', $corte, $sedeid));  //Computing Dues
+$objPHPExcel->getActiveSheet()->setCellValue('F'.$n, calculate_summary_value($m2,$nextyear,'other', $corte, $sedeid));  //Computing Other Activity
+$objPHPExcel->getActiveSheet()->setCellValue('R'.$n, calculate_summary_value($m2,$nextyear,'price', $corte, $sedeid));  //Computing Price
 
 $m2++;
 

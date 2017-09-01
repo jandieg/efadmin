@@ -43,7 +43,7 @@ return $data;
 
 
 
-function calculate_summary_value($month,$year,$type, $corte){
+function calculate_summary_value($month,$year,$type, $corte, $sede){
 
 include("../../incluidos/db_config/config.php");
 
@@ -59,6 +59,7 @@ AND YEAR(cobro.cobro_fecharegistro)='$year'
 AND date(cobro.cobro_fecharegistro) <= '$corte'
 AND miembro.mie_id = cobro.miembro_id 
 AND miembro.grupo_id = grupos.gru_id
+AND grupos.sede_id = '$sede'
 AND grupos.agrup in ('A','B')";
 
 }
@@ -69,9 +70,11 @@ if($type=='enrollment'){
 
 $sql="SELECT miembro.*, miembro_inscripcion.*, 
 SUM(miembro_inscripcion.mie_ins_valor) AS total 
-FROM miembro, miembro_inscripcion WHERE  
+FROM miembro, miembro_inscripcion, grupos WHERE  
 MONTH(miembro_inscripcion.mie_ins_fecha_cobro)='$month' 
 AND YEAR(miembro_inscripcion.mie_ins_fecha_cobro)='$year' 
+AND miembro.grupo_id = grupos.gru_id 
+AND grupos.sede_id = '$sede'
 AND DATE(miembro_inscripcion.mie_ins_fecha_cobro)<='$corte' AND miembro.mie_id = miembro_inscripcion.miembro_id ";
 
 }
@@ -84,6 +87,7 @@ AND YEAR(cobro.cobro_fecharegistro)='$year'
 AND date(cobro.cobro_fecharegistro) <= '$corte'
 AND miembro.mie_id = cobro.miembro_id 
 AND miembro.grupo_id = grupos.gru_id
+AND grupos.sede_id = '$sede'
 AND grupos.agrup in ('C')";
 
 }
@@ -102,9 +106,12 @@ WHERE ((MONTH(t0.detalleprecobro_fechavencimiento) = mes) AND (YEAR(t0.detallepr
 
 $sql="SELECT MAX(t0.precobro_valor) AS total
 
-FROM presupuestocobro AS t0
-
-WHERE (t0.precobro_year = '$year') AND (t0.precobro_year <= YEAR('$corte'))";
+FROM presupuestocobro AS t0, miembro AS t1, grupos AS t2 
+WHERE t0.miembro_mie_id=t1.mie_id 
+AND t1.grupo_id = t2.gru_id 
+AND t2.sede_id = '$sede' 
+AND (t0.precobro_year = '$year') 
+AND (t0.precobro_year <= YEAR('$corte'))";
 
 }
 
