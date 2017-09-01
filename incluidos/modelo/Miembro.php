@@ -23,6 +23,11 @@ class Miembro extends Conexion{
         $sql="call sp_selectMiembros1()";
         return parent::getConsultar($sql);   
     }
+
+    public function getMiembros2($idUser) {
+        $sql="call sp_selectMiembros2('$idUser')";
+        return parent::getConsultar($sql);   
+    }
     public function getForumMiembros1($idForum) {
         $sql="call sp_selectForumMiembros1('$idForum')";
         return parent::getConsultar($sql);   
@@ -302,6 +307,39 @@ public function setActualizarMiembro($idMiembro, $id_persona, $propietario, $nom
         return $lista;
     }
     
+    public function getListaMiembros2($idSeleccionado='', $lista= array(),$id_forum="", $is_todos_seleccionado= FALSE, $idUser) {   
+        if($id_forum == ""){
+            $resultset= $this->getMiembros2($idUser); 
+        }else{
+            $resultset= $this->getForumMiembros1($id_forum); 
+        }
+        
+        
+        if($is_todos_seleccionado == FALSE){
+            if($idSeleccionado!=''){
+                while ($row = $resultset->fetch_assoc()) {
+                    if($row['mie_id'] == $idSeleccionado){
+                        $lista['lista_'.$row['mie_id']] = array("value" => $row['mie_id'],  "select" => "selected" ,"texto" => $row['per_nombre']." ".$row['per_apellido']);
+
+                    }else{
+                        $lista['lista_'.$row['mie_id']] = array("value" => $row['mie_id'],  "select" => "" ,"texto" => $row['per_nombre']." ".$row['per_apellido']);
+                    }
+
+                }
+            }  else {
+               while ($row = $resultset->fetch_assoc()) { 
+                    $lista['lista_'.$row['mie_id']] = array("value" => $row['mie_id'],  "select" => "" ,"texto" => $row['per_nombre']." ".$row['per_apellido']);
+               }
+            }
+        }else{
+            while ($row = $resultset->fetch_assoc()) { 
+                    $lista['lista_'.$row['mie_id']] = array("value" => $row['mie_id'],  "select" => "selected" ,"texto" => $row['per_nombre']." ".$row['per_apellido']);
+            }
+        }
+        return $lista;
+    }
+    
+
     public function getListaMiembros($idSeleccionado='', $lista= array(),$id_forum="", $is_todos_seleccionado= FALSE) {   
         if($id_forum == ""){
             $resultset= $this->getMiembros1(); 

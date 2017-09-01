@@ -519,13 +519,13 @@ if (in_array($perVerTodosFiltrosCobrosOp13, $_SESSION['usu_permiso'])) {
 
     $lista['lista_']= array("value" => "x",  "select" => "" ,"texto" => "Seleccione...");
     $objEmpresaLocal= new EmpresaLocal();
-    $listaEmpresa= $objEmpresaLocal->getListaEmpresa2($objEmpresaLocal->getPrimerEmpresa(), $lista);
+    $listaEmpresa= $objEmpresaLocal->getListaEmpresa4($objEmpresaLocal->getPrimerEmpresa(), $lista, $_SESSION['user_id_ben']);
     
     $objMiembro= new Miembro();
-    $listaMiembros= $objMiembro->getListaMiembros(NULL, $lista,"",FALSE);
+    $listaMiembros= $objMiembro->getListaMiembros2(NULL, $lista,"",FALSE, $_SESSION['user_id_ben']);
     
     $objGrupo= new Grupo();
-    $listaGrupos= $objGrupo->getListaGrupos2(NULL,$lista);
+    $listaGrupos= $objGrupo->getListaGrupos4(NULL,$lista, $_SESSION['user_id_ben']);
     
     $tabla_miembros= getDetalleEmpresaConMiembros($objGrupo->getPrimerGrupo(), "GRUPO", date('Y')); 
     

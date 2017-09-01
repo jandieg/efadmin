@@ -316,6 +316,61 @@ class EmpresaLocal extends Conexion{
 
     }
 
+  public function getListaEmpresa4($id='', $lista= array(), $idUser) {   
+
+        $resultset= $this->getEmpresasLocal2("", $idUser); 
+
+    
+
+        if($id!=''){
+
+            while ($row = $resultset->fetch_assoc()) {
+
+                if($this->primerEmpresa == ''){
+
+                    $this->primerEmpresa=$row['emp_id'];
+
+                }
+
+                if($row['emp_id']==$id){
+
+                     $lista['lista_'.$row['emp_id']] = array("value" => $row['emp_id'],  "select" => "Selected" ,"texto" => $row['nombre_empresa']);
+
+                     
+
+                }else{
+
+                     $lista['lista_'.$row['emp_id']] = array("value" => $row['emp_id'],  "select" => "" ,"texto" => $row['nombre_empresa']);
+
+                }
+
+
+
+            }
+
+        }  else {
+
+            while ($row = $resultset->fetch_assoc()) { 
+
+                if($this->primerEmpresa == ''){
+
+                    $this->primerEmpresa=$row['emp_id'];
+
+                }
+
+                  $lista['lista_'.$row['emp_id']] = array("value" => $row['emp_id'],  "select" => "" ,"texto" => $row['nombre_empresa']);
+
+
+
+           }
+
+          
+
+          }
+
+        return $lista;
+
+    }
 
        public function getListaEmpresa2($id='', $lista= array()) {   
 
