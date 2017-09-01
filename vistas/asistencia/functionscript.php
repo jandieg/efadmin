@@ -100,7 +100,7 @@ var setAsistencia = function(_id_asistencia){
                 if(mensaje.success == "true"){
                     $.toaster({ priority : mensaje.priority, title : 'Alerta', message : mensaje.msg});
                     $.msg('unblock');
-                    //getDetalleFiltro();
+                    getDetalleFiltro();
                 }else{
                     $.msg('unblock');
                     $.toaster({ priority : mensaje.priority, title : 'Alerta', message : mensaje.msg});

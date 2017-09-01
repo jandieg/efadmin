@@ -910,11 +910,12 @@ var getFiltro = function(key){
                         $("#ben_contenedor_filtro").html( mensaje.tabla);
                         getConfTabla2();
                     }else{
-                    $.toaster({ priority : mensaje.priority, title : 'Alerta', message : mensaje.msg});
+                    $.toaster({ priority : mensaje.priority, title : 'Alerta' + mensaje.msg, message : mensaje.msg});
                 }
             },error : function(xhr, status) {
 //                $.unblockUI();
                 //$.msg('unblock');
+                console.log(xhr);
                 $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema' + xhr.toString() + status.toString()});
             }
         });    
@@ -983,7 +984,7 @@ var setAgregarPresupuestoEnPrincipal = function(id_presupuesto, id_miembro, id_p
                         //$.toaster({ priority : mensaje.priority, title : 'Alerta Membresia', message : mensaje.msg});               
                     }
             },error : function(xhr, status) {
-                
+                console.log(xhr);
                 respuesta = "<div class='col-md-3'><div class='callout callout-danger'><h4>Alerta:</h4><p>Disculpe, existió un problema </p></div></div>";                
                 //$.toaster({ priority : 'danger', title : 'Alerta Membresia', message : 'Disculpe, existió un problema' + status.toString()+" "+ xhr.toString()});
             }

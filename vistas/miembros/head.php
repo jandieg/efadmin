@@ -1014,10 +1014,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             break;
             case 'KEY_SHOW_FILTRO':
 
-                if(!empty($_POST['_key_filtro']) && !empty($_POST['_filtro'])  && strlen($_POST['_canceladas']) > 0){ 
+                if(!empty($_POST['_key_filtro']) 
+                && !empty($_POST['_filtro'])  
+                && strlen($_POST['_canceladas']) > 0){ 
                     $permiso= "";                    
                     if (in_array($perFiltroVerMiembrosForumOp6, $_SESSION['usu_permiso'])) {
-                       $permiso= $_SESSION['user_id_ben'];
+                        //if ($_SESSION['user_id_ben'] != 94) {
+                            $permiso= $_SESSION['user_id_ben'];
+                        //}
+                       
                     }
                     
                     

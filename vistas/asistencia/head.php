@@ -41,8 +41,8 @@ function getAsistencia($idGrupo, $fecha_inicio, $fecha_fin) {
             $suma = 0;
             
             //Que solo sean fechas ya pasadas
-            if(date('Y-m-d', strtotime($row['mie_fecharegistro'])) <= date('Y-m-d',strtotime($row['eve_fechafin'])) 
-            && date('Y-m-d',strtotime($row['eve_fechafin'])) <= date("Y-m-d")){
+            if( date_format(date_create($row['mie_fecharegistro']), 'Y-m-d') <= date('Y-m-d', strtotime($row['eve_fechafin'])) 
+            && date('Y-m-d', strtotime($row['eve_fechafin'])) <= date("Y-m-d")){
                 $disabled="";
                 if (in_array(trim($_SESSION['user_perfil']), array('Forum Leader'))) {
                     $disabled="disabled";
