@@ -123,7 +123,7 @@ function getDetalleUpdate($id, $recargar) {
         $objMembresia= new Membresia();
         $listaM= array();
         $listaM['lista_'] = array("value" => "x",  "select" => "" ,"texto" => "Seleccione...");
-        $listaM= $objMembresia->getListaMembresias($row['membresia_id'],$listaM);
+        $listaM= $objMembresia->getListaMembresias($row['membresia_id'],$listaM, $_SESSION['user_id_ben']);
         $valorMembresiaOculto = 0;
         foreach($listaM as $d) {
             if (strlen($d['select']) > 0) {
@@ -294,7 +294,7 @@ $form['form_0'] = array("elemento" => "subir-imagen", "valor" => $cod1."-".$cod2
                  $periodo_perio_id = "";
                  $id_presupuesto = 0;
                  $objMembresia2 = new Membresia();
-                 $listaMemb = $objMembresia2->getListaComboMembresiaValor($lamembresia);
+                 $listaMemb = $objMembresia2->getListaComboMembresiaValor($lamembresia, $_SESSION['user_id_ben']);
                  if ($row_precobro = $result_presupuestocobro->fetch_assoc()) {
                      $id_presupuesto = $row_precobro['precobro_id'];
                      $periodo_perio_id = $row_precobro['periodo_perio_id'];
@@ -1166,6 +1166,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                      $totalCobrar= ($valorCobrarPeriodo * $multiplicadorPeriodo) + ($valorCobrarLetrasFaltantes * $multiplicadorLetrasFaltantes);
                      $objTipoPresupuesto = new TipoPresupuesto();
                      $idTipo= $objTipoPresupuesto->getPrimerIDTipo();
+                     echo $valorCobrarPeriodo;
                      if($_POST['_id_presupuesto'] != "0"){
                          $objPresupuestoCobro= new PresupuestoCobro();   
                          $comp= $objPresupuestoCobro->actualizarPresupuestoCobroMiembro($_POST['_id_presupuesto'], $valorCobrarPeriodo,
@@ -1243,7 +1244,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                          }
                              $objMembresia= new Membresia();
                              $lista= array();
-                             $lista= $objMembresia->getListaMembresias($_POST['membresia'],NULL);
+                             $lista= $objMembresia->getListaMembresias($_POST['membresia'],NULL, $_SESSION['user_id_ben']);
 
                              $objEstadoPresupuesto= new EstadoPresupuesto();
                              $listaEP= array();

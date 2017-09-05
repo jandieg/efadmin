@@ -46,8 +46,8 @@ class Membresia extends Conexion{
         return parent::getConsultar($sql);
     }
 
-    function getListaComboMembresiaValor($id='') {
-        $resultset= $this->getMembresias('A'); 
+    function getListaComboMembresiaValor($id='', $idUser) {
+        $resultset= $this->getMembresias2('A', $idUser); 
         $lista=array();
         //if (!empty($resultset))
         while ($row = $resultset->fetch_assoc()) {  
@@ -87,8 +87,8 @@ class Membresia extends Conexion{
         }
         return $lista;
     }
-    public function getListaMembresias($id='', $lista_=array()) {   
-        $resultset= $this->getMembresias('A'); 
+    public function getListaMembresias($id='', $lista_=array(), $idUser) {   
+        $resultset= $this->getMembresias2('A', $idUser); 
         $lista=$lista_;
         if($id!=''){
             while ($row = $resultset->fetch_assoc()) { 
