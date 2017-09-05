@@ -67,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         redirect("miembroperfil");  
                     }else{
                     //    redirect("perfil");
-					 redirect("prospectos?_esaplicante=0");
+					 redirect("/");
                     }
 
 
