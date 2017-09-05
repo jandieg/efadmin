@@ -661,7 +661,10 @@ function comment_months($id,$month,$year,$pos,$corte){
 
 	include("../../incluidos/db_config/config.php");
 
-		$sql = "SELECT * FROM detallecobro WHERE miembro_mie_id='$id' AND MONTH(det_cobro_fecharegistro)='$month' AND YEAR(det_cobro_fecharegistro)='$year' and date(det_cobro_fecharegistro) <= '$corte'";	
+		$sql = "SELECT * FROM detallecobro WHERE miembro_mie_id='$id' 
+		AND MONTH(det_cobro_fecharegistro)='$month' 
+		AND YEAR(det_cobro_fecharegistro)='$year' 
+		AND date(det_cobro_fecharegistro) <= '$corte'";	
 
 		$res = mysqli_query($con,$sql);
 

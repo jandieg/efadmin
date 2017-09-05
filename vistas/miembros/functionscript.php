@@ -579,6 +579,10 @@ var setUserActualizar = function(  id_persona, id_miembro){
     if( $('#_participacion').prop('checked') ) {
         participacion="1";
      }
+     var la_membresia = $("#_membresia").val().toString();
+     if ($("#_membresia_presupuesto").val().toString() != "x") {
+         la_membresia = $("#_membresia_presupuesto").val().toString();
+     }
         var parametros = {
                 KEY: 'KEY_ACTUALIZAR', 
                 _id_empresa: $("#_id_empresa").val().toString(),
@@ -599,9 +603,8 @@ var setUserActualizar = function(  id_persona, id_miembro){
                 _tipo_p: $("#_tipo_p").val().toString(),
                 _identificacion: $("#_identificacion").val().toString(),
                 _genero: 'M',
-                _status: $("#_status").val().toString(),
-                
-                _membresia: $("#_membresia").val().toString(),
+                _status: $("#_status").val().toString(),                
+                _membresia: la_membresia,
                 _id_skype: $("#_id_skype").val().toString(),
                 _id_Twitter: $("#_id_Twitter").val().toString(),
                 _observacion:$("#_observacion").val().toString(),
