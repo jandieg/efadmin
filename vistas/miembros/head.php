@@ -1166,7 +1166,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                      $totalCobrar= ($valorCobrarPeriodo * $multiplicadorPeriodo) + ($valorCobrarLetrasFaltantes * $multiplicadorLetrasFaltantes);
                      $objTipoPresupuesto = new TipoPresupuesto();
                      $idTipo= $objTipoPresupuesto->getPrimerIDTipo();
-                     echo $valorCobrarPeriodo;
+                     
                      if($_POST['_id_presupuesto'] != "0"){
                          $objPresupuestoCobro= new PresupuestoCobro();   
                          $comp= $objPresupuestoCobro->actualizarPresupuestoCobroMiembro($_POST['_id_presupuesto'], $valorCobrarPeriodo,
