@@ -23,10 +23,10 @@ function cargarMiembros() {
 	$i = 2;
 	while (strlen($objPHPExcel->getActiveSheet()->getCell("A".$i)->getValue()) > 0) {		
 		$objMiembro = new Miembro();
-        print_r($objMiembro->hotfixCodigos($objPHPExcel->getActiveSheet()->getCell("K".$i)->getValue(), 
-        $objPHPExcel->getActiveSheet()->getCell("L".$i)->getValue(), 
-        $objPHPExcel->getActiveSheet()->getCell("D".$i)->getValue(), 
-        $objPHPExcel->getActiveSheet()->getCell("C".$i)->getValue()));
+        print_r($objMiembro->hotfixCodigos($objPHPExcel->getActiveSheet()->getCell("M".$i)->getValue(), 
+        $objPHPExcel->getActiveSheet()->getCell("N".$i)->getValue(), 
+        $objPHPExcel->getActiveSheet()->getCell("F".$i)->getValue(), 
+        $objPHPExcel->getActiveSheet()->getCell("E".$i)->getValue()));
 		
 		$i++;
 	}

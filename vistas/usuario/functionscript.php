@@ -176,7 +176,8 @@ var setActualizarDatos = function(id){
         });
 };
 var setUserCrear = function(op){
-    $.msg({content : '<img src="public/images/loanding.gif" />', autoUnblock: false});
+    
+    //$.msg({content : '<img src="public/images/loanding.gif" />', autoUnblock: false});
     var parametros = {
                 KEY: 'KEY_GUARDAR',
                 key_operacion: op.toString(),        

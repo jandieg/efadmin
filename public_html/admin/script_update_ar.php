@@ -53,19 +53,19 @@ function cargarMiembros($datos) {
 		$nombre = $datos[$objPHPExcel->getActiveSheet()->getCell("A".$i)->getCalculatedValue()];
 		
 		$fecha = date('d/m/Y', PHPExcel_Shared_Date::ExcelToPHP($objPHPExcel->getActiveSheet()->getCell('B'.$i)->getValue()));
-		$fecha2 = date('d/m/Y', PHPExcel_Shared_Date::ExcelToPHP($objPHPExcel->getActiveSheet()->getCell('I'.$i)->getValue()));
-		$fecha3 = date('d/m/Y', PHPExcel_Shared_Date::ExcelToPHP($objPHPExcel->getActiveSheet()->getCell('N'.$i)->getValue()));
+		$fecha2 = date('d/m/Y', PHPExcel_Shared_Date::ExcelToPHP($objPHPExcel->getActiveSheet()->getCell('K'.$i)->getValue()));
+		$fecha3 = date('d/m/Y', PHPExcel_Shared_Date::ExcelToPHP($objPHPExcel->getActiveSheet()->getCell('P'.$i)->getValue()));
 		print_r($objMiembro->setCreateMiembroFromScript($nombre, 
-		$fecha, $objPHPExcel->getActiveSheet()->getCell("C".$i)->getValue(),
-        $objPHPExcel->getActiveSheet()->getCell("D".$i)->getValue(), $objPHPExcel->getActiveSheet()->getCell("E".$i)->getValue(), 
-		$objPHPExcel->getActiveSheet()->getCell("F".$i)->getValue(), $objPHPExcel->getActiveSheet()->getCell("G".$i)->getValue(), 
-		$objPHPExcel->getActiveSheet()->getCell("H".$i)->getValue(), $fecha2, 
-        $objPHPExcel->getActiveSheet()->getCell("J".$i)->getValue(), $objPHPExcel->getActiveSheet()->getCell("K".$i)->getValue(), 
-		$objPHPExcel->getActiveSheet()->getCell("L".$i)->getValue(), $objPHPExcel->getActiveSheet()->getCell("M".$i)->getValue(), 
-		$fecha3, $objPHPExcel->getActiveSheet()->getCell("O".$i)->getValue(), 
-		$objPHPExcel->getActiveSheet()->getCell("P".$i)->getValue(), $objPHPExcel->getActiveSheet()->getCell("Q".$i)->getValue(), 
+		$fecha, $objPHPExcel->getActiveSheet()->getCell("E".$i)->getValue(),
+        $objPHPExcel->getActiveSheet()->getCell("F".$i)->getValue(), $objPHPExcel->getActiveSheet()->getCell("G".$i)->getValue(), 
+		$objPHPExcel->getActiveSheet()->getCell("H".$i)->getValue(), $objPHPExcel->getActiveSheet()->getCell("I".$i)->getValue(), 
+		$objPHPExcel->getActiveSheet()->getCell("J".$i)->getValue(), $fecha2, 
+        $objPHPExcel->getActiveSheet()->getCell("L".$i)->getValue(), $objPHPExcel->getActiveSheet()->getCell("M".$i)->getValue(), 
+		$objPHPExcel->getActiveSheet()->getCell("N".$i)->getValue(), $objPHPExcel->getActiveSheet()->getCell("P".$i)->getValue(), 
+		$fecha3, $objPHPExcel->getActiveSheet()->getCell("Q".$i)->getValue(), 
 		$objPHPExcel->getActiveSheet()->getCell("R".$i)->getValue(), $objPHPExcel->getActiveSheet()->getCell("S".$i)->getValue(), 
-		$objPHPExcel->getActiveSheet()->getCell("T".$i)->getValue(), $objPHPExcel->getActiveSheet()->getCell("U".$i)->getValue()));
+		$objPHPExcel->getActiveSheet()->getCell("T".$i)->getValue(), $objPHPExcel->getActiveSheet()->getCell("U".$i)->getValue(), 
+		$objPHPExcel->getActiveSheet()->getCell("V".$i)->getValue(), $objPHPExcel->getActiveSheet()->getCell("W".$i)->getValue()));
 		$i++;
 	}
 	

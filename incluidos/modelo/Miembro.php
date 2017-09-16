@@ -224,6 +224,13 @@ public function setActualizarMiembro($idMiembro, $id_persona, $propietario, $nom
         return parent::setSqlSp($sql);
     }
 
+    public function hotfixInscripcion($nombre, $apellido, $registro, 
+    $ingreso, $anho, $cobro, $estado, $valor, $membresia) {
+        $sql = "call sp_hotfixInscripcion('$nombre', '$apellido', '$registro', 
+        '$ingreso', '$anho', '$cobro', '$estado', '$valor', '$membresia')";
+        return parent::setSqlSp($sql);
+    }
+
     public function setEstadoMiembro($id, $status, $idUser) {
         $sql = "call sp_updateEstadoMiembro('$id', '$status','$idUser')";
         return parent::setSqlSp($sql);
