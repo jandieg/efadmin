@@ -18,7 +18,9 @@ $tabla_grupos;
 $lista_miembro= array();
 function getTablaGrupos() {
     $objGrupo = new Grupo();
-    $resultset = $objGrupo->getListaGrupos3();
+    $lista = array();
+    
+    $resultset = $objGrupo->getGrupos3($_SESSION['user_id_ben']);
     $cont = 1;
     $cuerpo = "";
     $datos = array();
@@ -275,7 +277,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
 $t= '';
-if (in_array($perVertodoslosGruposOp7, $_SESSION['usu_permiso'])) {
+//if (in_array($perVertodoslosGruposOp7, $_SESSION['usu_permiso'])) {
     
     $objGrupo= new Grupo();
     
@@ -284,7 +286,7 @@ if (in_array($perVertodoslosGruposOp7, $_SESSION['usu_permiso'])) {
     //$tabla_miembros= getDetalleGruposConMiembros($objGrupo->getPrimerGrupo()); 
     $t=getTablaFiltro($listaGrupos,$tabla_grupos );
     
- }  elseif (in_array($perVerGruposIDForumOp7, $_SESSION['usu_permiso'])) {
+ /*}  elseif (in_array($perVerGruposIDForumOp7, $_SESSION['usu_permiso'])) {
      
     $objForum = new ForumLeader();
     $idPrimerGrupo= $objForum->getIdPrimerGruposDePrivilegioForumLeader($_SESSION['user_id_ben']);
@@ -293,7 +295,7 @@ if (in_array($perVertodoslosGruposOp7, $_SESSION['usu_permiso'])) {
     $objGrupo= new Grupo();
     $listaGrupos= $objGrupo->getListaGruposForum($_SESSION['user_id_ben'], NULL, NULL); 
     $t=getTablaFiltro($listaGrupos,$tabla_grupos );
-}
+}*/
 
 
 
