@@ -278,7 +278,8 @@ $t= '';
 if (in_array($perVertodoslosGruposOp7, $_SESSION['usu_permiso'])) {
     
     $objGrupo= new Grupo();
-    $listaGrupos= $objGrupo->getListaGrupos(NULL);
+    
+    $listaGrupos= $objGrupo->getListaGrupos7(NULL, array(),$_SESSION['user_id_ben']);
     $tabla_grupos = getTablaGrupos();
     //$tabla_miembros= getDetalleGruposConMiembros($objGrupo->getPrimerGrupo()); 
     $t=getTablaFiltro($listaGrupos,$tabla_grupos );
