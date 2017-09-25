@@ -50,4 +50,32 @@
       border-top-left-radius: 4px;
     }
 
+    /*cropper styles*/
+
+    #cropper-image {
+      max-width: 100%;
+    }
+
+    #modal-cropper .modal-content {
+      max-width: 800px;
+    }
+
+    #modal-cropper .modal-content .docs-data label{
+      min-width: 35px;
+    }
+
+    #modal-cropper .modal-content .docs-data .options-left{
+      padding-right: 5px;
+      padding-top: 5px;
+    }
+
+    #modal-cropper .modal-content .docs-data .options-right{
+      padding-left: 5px;
+      padding-top: 5px;
+    }
+
+    #modal-cropper .modal-content .docs-data input{
+      text-align: center;
+    }
+
 </style>

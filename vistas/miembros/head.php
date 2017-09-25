@@ -536,13 +536,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 break;     
             case 'KEY_ARCHIVO':
                 
-                
-                if(is_array($_FILES)) {
+                //codigo anterior
+                /*if(is_array($_FILES)) {
                 if(is_uploaded_file($_FILES['archivo']['tmp_name'])) {
                 $sourcePath = $_FILES['archivo']['tmp_name'];                
                 $targetPath = "../../public_html/i/".$_POST['codigo'].".jpg";
                 move_uploaded_file($sourcePath,$targetPath);
-                }}
+                }}*/
+
+                //codigo nuevo con crop
+                $img = str_replace('data:image/jpeg;base64,', '', $_POST['archivo']);
+                $img = str_replace(' ', '+', $img);
+                $data = base64_decode($img);
+
+
+                //$sourcePath = $_FILES['archivo']['tmp_name'];                
+                $targetPath = "../../public_html/i/".$_POST['codigo'].".jpg";
+                //move_uploaded_file($sourcePath,$targetPath);
+                file_put_contents($targetPath, $data);
+                
                 
                 
                 //echo '<img class="image-preview" src="'."../../public_html/i/".$_POST['codigo'].".jpg".'" class="upload-preview" />';

@@ -188,4 +188,101 @@ $(document).ready(function() {
     
 });
 
+var datosimg;
+
+$('#cropper-confirm').on('click', function () {
+    // Crop
+    var h = parseInt($('#dataHeight').val());
+    var w = parseInt($('#dataWidth').val());
+    var cropper = $('#cropper-image').cropper('getCroppedCanvas');
+
+    var croppedCanvas;
+    thumbWidth = 800;
+    
+        var canvas = document.createElement('canvas');
+        var ctx = canvas.getContext("2d");
+        newWidth = thumbWidth;        
+        newHeight = Math.floor(h/w*newWidth);
+        canvas.width = newWidth;
+        canvas.height = newHeight;
+
+        ctx.drawImage(cropper, 0, 0, newWidth, newHeight);
+        datosimg = canvas.toDataURL("image/jpeg");
+        $('#cropper-image').cropper('clear');
+        $('#cropper-image').cropper('destroy');
+        $('#cropper-image').cropper('reset');
+        $('#cropper-image').removeAttr('src');
+    
+       /* $('.upload-image-lost-preview .preview-img').css('background-image', 'url(' + datosimg + ')');
+        $('.upload-image-lost-preview').show();
+        $('#lost_pet_file').parent().hide();*/
+        $('#modal-cropper .modal-header button').trigger('click');
+        
+    /*} else {
+        $('.upload-image-lost-preview .preview-img').css('background-image', 'url(' + cropper.toDataURL() + ')');
+        $('.upload-image-lost-preview').show();
+        $('#lost_pet_file').parent().hide();
+        $('#modal-cropper .modal-header button').trigger('click');
+    }*/
+    
+});
+
+$('#modal-cropper').on('shown.bs.modal', function () {
+    var $dataX = $('#dataX');
+    var $dataY = $('#dataY');
+    var $dataHeight = $('#dataHeight');
+    var $dataWidth = $('#dataWidth');
+    $('#cropper-image').cropper({
+        crop: function (e) {
+            $dataX.val(Math.round(e.x));
+            $dataY.val(Math.round(e.y));
+            $dataHeight.val(Math.round(e.height));
+            $dataWidth.val(Math.round(e.width));
+        },
+        done: function (data) {
+            $('#cropper-image').cropper('destroy');
+            // Output the result data for cropping image.
+        }
+    });
+    
+}).on('hidden.bs.modal', function () {
+    // cropBoxData = $image.cropper('getCropBoxData');
+    // canvasData = $image.cropper('getCanvasData');
+    $('#cropper-image').cropper('unbuild');
+});
+
+function cropper_Modal() {
+    $("#modal-cropper").modal().show();
+}
+
+var upload_flag = 0;
+var previewImage = function (input) {
+    console.log('esta entrando');
+    if (input.files && input.files[0]) {
+        console.log('entra en files');
+        var reader = new FileReader();
+        reader.onload = function (e) {     
+            $('#cropper-image').attr('src', e.target.result);     
+            cropper_Modal();     
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+$('.upload-image-lost-preview .fileopen-img').click(function () {
+    $('.upload-image-lost-preview .lost-upload').trigger('click');
+});
+var procesarCrop = function() {
+    console.log("se hizo click");
+    console.log(this);
+    upload_flag = 1;
+    previewImage(document.getElementById('lost_pet_file'));
+}
+
+/*$(".lost-upload").click(function () {
+    console.log("se hizo click");
+    upload_flag = 1;
+    previewImage(this);
+});*/
+
 </script>

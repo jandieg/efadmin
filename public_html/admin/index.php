@@ -74,6 +74,7 @@ if(file_exists(E_VISTAS.E_PAGE."/head.php")){
         <!-- Theme style -->
         <link rel="stylesheet" href="public/framework/dist/css/AdminLTE.min.css">
         <link rel="stylesheet" href="public/css/jquery.msg.css">
+        <link rel="stylesheet" href="public/framework/plugins/cropper/cropper.min.css">
         <link rel="stylesheet" href="public/tabverticales/bootstrap.vertical-tabs.css">
        
         <link rel="stylesheet" href="public/framework/dist/css/skins/_all-skins.min.css">  
@@ -92,6 +93,8 @@ if(file_exists(E_VISTAS.E_PAGE."/head.php")){
                   <!-- jQuery 2.1.4 -->
         <script src="public/framework/plugins/jQuery/jquery-2.2.3.min.js"></script>
         <script src="public/framework/plugins/jQueryUI/jquery-ui.min.js"></script>
+        <script src="public/framework/plugins/cropper/cropper.min.js"></script>
+
         <!-- Bootstrap 3.3.5 -->
         <script src="public/framework/bootstrap/js/bootstrap.min.js"></script>
 

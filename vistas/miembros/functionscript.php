@@ -18,16 +18,40 @@ var subirFoto = function() {
     if ($("#el_codigo").val().toString().length == 11) {
 
     
-    var reader = new FileReader();
+/*    var reader = new FileReader();
 
 reader.readAsDataURL(document.getElementById('archivo').files[0]);
     var parametros= {
         codigo: $("#el_codigo").val(),
         archivo: reader
     };
-
+*/
     var data = new FormData();
-    reader.onloadend = function () {
+    if (datosimg) {
+        $("#targetLayer").css('background-image', 'url('+datosimg+')');
+        $("#targetLayer").css('background-size', '100px 110px');
+        $("#targetLayer").css('background-repeat', 'no-repeat');        
+        data.append("codigo", $("#el_codigo").val());
+        data.append("archivo", datosimg);
+        data.append("KEY", "KEY_ARCHIVO");
+        $.ajax({
+            url: "miembros",
+            type: "POST",
+            data:  data,
+            contentType: false,
+            cache: false,
+            processData:false,
+            success: function(data)
+            {
+                console.log(data);
+            },
+            error: function() 
+            {
+            } 	        
+        });
+
+    }
+/*    reader.onloadend = function () {
         $("#targetLayer").css('background-image', 'url('+reader.result+')');
         $("#targetLayer").css('background-size', '100px 110px');
         $("#targetLayer").css('background-repeat', 'no-repeat');        
@@ -53,7 +77,7 @@ reader.readAsDataURL(document.getElementById('archivo').files[0]);
             } 	        
         });
 
-    }
+    }*/
 
     } else {
         alert("Disculpe, el codigo es incorrecto");
