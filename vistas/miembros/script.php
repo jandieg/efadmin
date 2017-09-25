@@ -197,7 +197,7 @@ $('#cropper-confirm').on('click', function () {
     var cropper = $('#cropper-image').cropper('getCroppedCanvas');
 
     var croppedCanvas;
-    thumbWidth = 800;
+    thumbWidth = 400;
     
         var canvas = document.createElement('canvas');
         var ctx = canvas.getContext("2d");
