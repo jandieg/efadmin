@@ -252,6 +252,7 @@ $('#modal-cropper').on('shown.bs.modal', function () {
 });
 
 function cropper_Modal() {
+    console.log('entra en el cropper modal');
     $("#modal-cropper").modal().show();
 }
 
@@ -262,6 +263,7 @@ var previewImage = function (input) {
         console.log('entra en files');
         var reader = new FileReader();
         reader.onload = function (e) {     
+            console.log('entra en el reader');
             $('#cropper-image').attr('src', e.target.result);     
             cropper_Modal();     
         }

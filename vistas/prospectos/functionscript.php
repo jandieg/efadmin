@@ -67,7 +67,9 @@ var getCrear = function(){
      $.post("prospectos", {
             KEY: 'KEY_SHOW_FORM_GUARDAR'
         }, function(mensaje) {
-            $("#ben_contenedor").html(mensaje);
+            $("#ben_contenedor").hide();            
+            $("#ben_contenedor2").html(mensaje);
+            $("#ben_contenedor2").show();
             $(".select2").select2();
          });
 };
@@ -134,11 +136,13 @@ var setUserCrear = function(op, _esaplicante){
             type:  'post',
             success:  function (mensaje) {
                mensaje = JSON.parse(mensaje);
+               console.log(mensaje);
                 if(mensaje.success == "true_gn"){
                     $.toaster({ priority : mensaje.priority, title : 'Alerta', message : mensaje.msg});
                     getCrear(); 
                     $.msg('unblock');
-                }else if(mensaje.success == "true_g"){ 
+                }else if(mensaje.success == "true_g"){
+                    console.log('estas entrando aca'); 
                     getRecargar();
                     $.msg('unblock');
                 }else if(mensaje.success == "false"){
@@ -299,11 +303,10 @@ var setConvertirAplicante = function(){
                     if(mensaje.success == "true"){
                   //      load_miembro($("#convertir_id").val());
                   if ($("#_email").is(":checked")) {
-                    	window.location.replace("http://"+ window.location.hostname + "/admin/miembros?id_miembro="+$("#convertir_id").val()+"&email=1");	                                        
-                  
+                    	window.location.replace("http://"+ window.location.hostname + "/admin/miembros?id_miembro="+$("#convertir_id").val()+"&email=1");	                                                          
                   } else {
                     	window.location.replace("http://"+ window.location.hostname + "/admin/miembros?id_miembro="+$("#convertir_id").val());	                                        
-                    //window.location.replace("http://localhost:3000/sistema/public_html/admin/miembros?id_miembro="+$("#convertir_id").val());	                                              
+                    //window.location.replace("http://efadmin.localhost:3000/admin/miembros?id_miembro="+$("#convertir_id").val());	                                              
                   }
 				
                     }else{

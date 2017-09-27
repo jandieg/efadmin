@@ -15,7 +15,7 @@ var subirFoto = function() {
     console.log('si esta cargando');
     
     $("#el_codigo").val($("#_cod_1").val().toString() +"-"+ $("#_cod_2").val().toString() +"-"+ $("#_cod_3").val().toString() +"-"+ $("#_cod_4").val().toString());
-    if ($("#el_codigo").val().toString().length == 11) {
+    if ($("#el_codigo").val().toString().length == 11 || $("#el_codigo").val().toString().length == 12) {
 
     
 /*    var reader = new FileReader();
