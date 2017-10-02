@@ -346,9 +346,14 @@ if(isset($_GET['_tipo_usuario'])){
         $titulo= '';
         $cuerpo='';
         $cont=1;
+        $objSede = new Sede();
+        $datasede = $objSede->getSedeByUser($_SESSION['user_id_ben']);
+        if ($row = $datasede->fetch_assoc()) {
+            $lasede = $row['sede_id'];
+        }
         if($_GET['_tipo_usuario'] == '1'){
             $objUsuario= new Usuario();
-            $resultset= $objUsuario->getUsuarios();
+            $resultset= $objUsuario->getUsuariosBySede($lasede);
             $titulo= 'Usuarios';
             while($row = $resultset->fetch_assoc()) { 
                 $cuerpo.= generadorTablaFilas(array(
