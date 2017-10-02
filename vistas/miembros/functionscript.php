@@ -651,7 +651,7 @@ var setUserActualizar = function(  id_persona, id_miembro){
             $("#_fecha_cobro").val().toString()
         );
        
-        } else {
+        } /*else {
             textoalertas += setAgregarInscripcionEnPrincipal(
             $("#_id_insc").val().toString(), 
             id_miembro.toString(), 
@@ -661,7 +661,7 @@ var setUserActualizar = function(  id_persona, id_miembro){
             $("#_fecha_cobro").val().toString()
         );
        
-        }
+        }*/
         
     
 
