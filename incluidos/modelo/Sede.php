@@ -18,6 +18,11 @@ class Sede extends Conexion{
     public function __construct(){
         parent:: __construct();        
     }
+
+    public function getSedeByUser($id_usuario) {
+        $sql = "call sp_selectSedeByUser('$id_usuario')";
+        return parent::getConsultar($sql);
+    }
     
      public function getIdCiudad() {
         return $this->idCiudad;

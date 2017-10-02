@@ -2,6 +2,8 @@
 require_once MODELO.'ForumLeader.php';
 require_once MODELO.'Grupo.php';
 require_once MODELO.'Miembro.php';
+require_once MODELO.'Sede.php';
+
 include(HTML."/html.php");
 include(HTML."/html_filtros.php");
 //require_once 'public/phpmailer/correo.php';
@@ -62,7 +64,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 if(!empty($_POST['_grupo']) && !empty($_POST['_forum']) && !empty($_POST['key_operacion'] ) ){ 
 
                     $grupo= new Grupo();
-                    $comp= $grupo->setGrabarGrupo($_POST['_forum'], $_POST['_grupo'], $_SESSION['user_id_ben']);  
+                    $objSede = new Sede();
+                    $datasede = $objSede->getSedeByUser($_SESSION['user_id_ben']);
+                    $lasede = 1;
+                    if ($row = $datasede->fetch_assoc()) {
+                        $lasede = $row['sede_id'];
+                    }
+                    $comp= $grupo->setGrabarGrupo($_POST['_forum'], $_POST['_grupo'], $_SESSION['user_id_ben'], $lasede);  
                     if($comp == "OK"){
                          if($_POST['key_operacion']=='gn'){
                            $data = array("success" => "true_gn", "priority"=>'success',"msg" => 'El Grupo se creo correctamente!');  

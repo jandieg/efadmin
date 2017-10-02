@@ -52,13 +52,13 @@ class Grupo extends Conexion{
     }
     
  
-    public function setGrabarGrupo($idForum, $grupo, $idModificador) {
+    public function setGrabarGrupo($idForum, $grupo, $idModificador, $sede) {
         $fecha= date("Y-m-d H:i:s");
-         $sql="call sp_createGrupo('$grupo','$idForum','$fecha','$idModificador')";
+         $sql="call sp_createGrupo('$grupo','$idForum','$fecha','$idModificador', '$sede')";
         return parent::setSqlSp($sql);   
     }
   
-     public function setActualizarGrupo($idGrupo, $idForum, $grupo, $idModificador) {
+    public function setActualizarGrupo($idGrupo, $idForum, $grupo, $idModificador) {
         $sql="call sp_updateGrupo('$idGrupo','$grupo','$idForum','$idModificador')";
         return parent::setSqlSp($sql);   
     }
