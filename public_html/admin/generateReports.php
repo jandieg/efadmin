@@ -78,6 +78,12 @@ and grupos.sede_id = '$sedeid'
 $res = mysqli_query($con,$sql);
 //$row = mysqli_fetch_array($res);
 //$response["result"] = array();
+$cor1 = 0;
+$cor2 = 0;
+$cor3 = 0;
+$cor4 = 0;
+$cor5 = 0;
+$cor6 = 0;
 if(($i=='01')||($i=='02')||($i=='03')||($i=='04')){
 $n=10;
 $limit=8;
@@ -106,36 +112,66 @@ if ($row['estado_cobro_id'] == 2) {
 //Getting custom values from timestamp in executiveforums db//
 $this_month =  date('m', $sql_date);
 //End Getting time and date//
-if((($this_month=='01')||($this_month=='05')||($this_month=='09')) && $row['mie_ins_valor']!="0"){
- $objPHPExcel->getActiveSheet()->setCellValue('A'.$n, get_user_details($row['miembro_id'],'member_code'));
- $objPHPExcel->getActiveSheet()->setCellValue('B'.$n, $fecha_cobro);
- $objPHPExcel->getActiveSheet()->setCellValue('C'.$n, $row['mie_ins_valor']);
-	}
-if((($this_month=='02')||($this_month=='06')||($this_month=='10')) && $row['mie_ins_valor']!="0"){
- $objPHPExcel->getActiveSheet()->setCellValue('E'.$n, get_user_details($row['miembro_id'],'member_code'));
- $objPHPExcel->getActiveSheet()->setCellValue('F'.$n, $fecha_cobro);
- $objPHPExcel->getActiveSheet()->setCellValue('G'.$n, $row['mie_ins_valor']);
-	}
-if((($this_month=='03')||($this_month=='07')||($this_month=='11')) && $row['mie_ins_valor']!="0"){
- $objPHPExcel->getActiveSheet()->setCellValue('I'.$n, get_user_details($row['miembro_id'],'member_code'));
- $objPHPExcel->getActiveSheet()->setCellValue('J'.$n, $fecha_cobro);
- $objPHPExcel->getActiveSheet()->setCellValue('K'.$n, $row['mie_ins_valor']);
-	}
-if(($this_month=='04') && $row['mie_ins_valor']!="0"){
- $objPHPExcel->getActiveSheet()->setCellValue('M'.$n, get_user_details($row['miembro_id'],'member_code'));
- $objPHPExcel->getActiveSheet()->setCellValue('N'.$n, $fecha_cobro);
- $objPHPExcel->getActiveSheet()->setCellValue('O'.$n, $row['mie_ins_valor']);
-	}
-if(($this_month=='08') && $row['mie_ins_valor']!="0"){
- $objPHPExcel->getActiveSheet()->setCellValue('M'.$n, get_user_details($row['miembro_id'],'member_code'));
- $objPHPExcel->getActiveSheet()->setCellValue('N'.$n, $fecha_cobro);
- $objPHPExcel->getActiveSheet()->setCellValue('O'.$n, $row['mie_ins_valor']);
-	}
-if(($this_month=='12') && $row['mie_ins_valor']!="0"){
- $objPHPExcel->getActiveSheet()->setCellValue('M'.$n, get_user_details($row['miembro_id'],'member_code'));
- $objPHPExcel->getActiveSheet()->setCellValue('N'.$n, $fecha_cobro);
- $objPHPExcel->getActiveSheet()->setCellValue('O'.$n, $row['mie_ins_valor']);
-	}
+if((($this_month=='01')||($this_month=='05')||($this_month=='09'))) {
+ if ($row['mie_ins_valor']!="0"){
+    $val1 = $n + $cor1;
+ $objPHPExcel->getActiveSheet()->setCellValue('A'.$val1, get_user_details($row['miembro_id'],'member_code'));
+ $objPHPExcel->getActiveSheet()->setCellValue('B'.$val1, $fecha_cobro);
+ $objPHPExcel->getActiveSheet()->setCellValue('C'.$val1, $row['mie_ins_valor']);
+	} else {
+        $cor1--;
+    }
+}
+if((($this_month=='02')||($this_month=='06')||($this_month=='10'))) {
+ if ($row['mie_ins_valor']!="0"){
+    $val2 = $n + $cor2;
+ $objPHPExcel->getActiveSheet()->setCellValue('E'.$val2, get_user_details($row['miembro_id'],'member_code'));
+ $objPHPExcel->getActiveSheet()->setCellValue('F'.$val2, $fecha_cobro);
+ $objPHPExcel->getActiveSheet()->setCellValue('G'.$val2, $row['mie_ins_valor']);
+	} else {
+        $cor2--;
+    }
+}
+if((($this_month=='03')||($this_month=='07')||($this_month=='11'))) {
+    if ($row['mie_ins_valor']!="0"){
+    $val3 = $n + $cor3;
+ $objPHPExcel->getActiveSheet()->setCellValue('I'.$val3 , get_user_details($row['miembro_id'],'member_code'));
+ $objPHPExcel->getActiveSheet()->setCellValue('J'.$val3, $fecha_cobro);
+ $objPHPExcel->getActiveSheet()->setCellValue('K'.$val3, $row['mie_ins_valor']);
+	} else {
+        $cor3--;
+    }
+}
+if(($this_month=='04')) {
+ if ($row['mie_ins_valor']!="0"){
+    $val4 = $n + $cor4;
+ $objPHPExcel->getActiveSheet()->setCellValue('M'.$val4, get_user_details($row['miembro_id'],'member_code'));
+ $objPHPExcel->getActiveSheet()->setCellValue('N'.$val4, $fecha_cobro);
+ $objPHPExcel->getActiveSheet()->setCellValue('O'.$val4, $row['mie_ins_valor']);
+	} else if ($this_month=='04') {
+        $cor4--;
+    }
+}
+if(($this_month=='08')) { 
+    if ($row['mie_ins_valor']!="0"){
+    $val5 = $n + $cor5;
+ $objPHPExcel->getActiveSheet()->setCellValue('M'.$val5, get_user_details($row['miembro_id'],'member_code'));
+ $objPHPExcel->getActiveSheet()->setCellValue('N'.$val5, $fecha_cobro);
+ $objPHPExcel->getActiveSheet()->setCellValue('O'.$val5, $row['mie_ins_valor']);
+	} else {
+        $cor5--;
+    }
+}
+if(($this_month=='12')) { 
+    if ($row['mie_ins_valor']!="0"){
+    $val6 = $n - $cor6;
+ $objPHPExcel->getActiveSheet()->setCellValue('M'.$val6, get_user_details($row['miembro_id'],'member_code'));
+ $objPHPExcel->getActiveSheet()->setCellValue('N'.$val6, $fecha_cobro);
+ $objPHPExcel->getActiveSheet()->setCellValue('O'.$val6, $row['mie_ins_valor']);
+	} else if ($this_month=='12') {
+        $cor6--;
+    }
+}
 
 $n++;
 }//end loop
@@ -150,6 +186,10 @@ $sql = "SELECT * FROM miembro_inscripcion WHERE MONTH(mie_ins_fecha_cobro)='$i' 
 $res = mysqli_query($con,$sql);
 //$row = mysqli_fetch_array($res);
 //$response["result"] = array();
+$cor1 = 0;
+$cor2 = 0;
+$cor3 = 0; 
+$cor4 = 0;
 if(($i=='01')||($i=='02')||($i=='03')||($i=='04')){
 $n=77;
 $limit=8;
@@ -179,26 +219,46 @@ if ($row['estado_cobro_id'] == 2) {
 //Getting custom values from timestamp in executiveforums db//
 $this_month =  date('m', $sql_date);
 //End Getting time and date//
-if(($this_month=='01')  && $row['mie_ins_valor']!="0"){
- $objPHPExcel->getActiveSheet()->setCellValue('A'.$n, get_user_details($row['miembro_id'],'member_code'));
- $objPHPExcel->getActiveSheet()->setCellValue('B'.$n, $fecha_cobro);
- $objPHPExcel->getActiveSheet()->setCellValue('C'.$n, $row['mie_ins_valor']);
-	}
-if(($this_month=='02') && $row['mie_ins_valor']!="0"){
- $objPHPExcel->getActiveSheet()->setCellValue('E'.$n, get_user_details($row['miembro_id'],'member_code'));
- $objPHPExcel->getActiveSheet()->setCellValue('F'.$n, $fecha_cobro);
- $objPHPExcel->getActiveSheet()->setCellValue('G'.$n, $row['mie_ins_valor']);
-	}
-if(($this_month=='03') && $row['mie_ins_valor']!="0"){
- $objPHPExcel->getActiveSheet()->setCellValue('I'.$n, get_user_details($row['miembro_id'],'member_code'));
- $objPHPExcel->getActiveSheet()->setCellValue('J'.$n, $fecha_cobro);
- $objPHPExcel->getActiveSheet()->setCellValue('K'.$n, $row['mie_ins_valor']);
-	}
-if(($this_month=='04') && $row['mie_ins_valor']!="0"){
- $objPHPExcel->getActiveSheet()->setCellValue('M'.$n, get_user_details($row['miembro_id'],'member_code'));
- $objPHPExcel->getActiveSheet()->setCellValue('N'.$n, $fecha_cobro);
- $objPHPExcel->getActiveSheet()->setCellValue('O'.$n, $row['mie_ins_valor']);
-	}
+if(($this_month=='01')) { 
+    if ($row['mie_ins_valor']!="0"){
+    $val1 = $n + $cor1;
+ $objPHPExcel->getActiveSheet()->setCellValue('A'.$val1, get_user_details($row['miembro_id'],'member_code'));
+ $objPHPExcel->getActiveSheet()->setCellValue('B'.$val1, $fecha_cobro);
+ $objPHPExcel->getActiveSheet()->setCellValue('C'.$val1, $row['mie_ins_valor']);
+	} else {
+        $cor1--;
+    }
+}
+if(($this_month=='02')) { 
+    if ($row['mie_ins_valor']!="0"){
+    $val2 = $n + $cor2;
+ $objPHPExcel->getActiveSheet()->setCellValue('E'.$val2, get_user_details($row['miembro_id'],'member_code'));
+ $objPHPExcel->getActiveSheet()->setCellValue('F'.$val2, $fecha_cobro);
+ $objPHPExcel->getActiveSheet()->setCellValue('G'.$val2, $row['mie_ins_valor']);
+	} else {
+        $cor2--;
+    }
+}
+if(($this_month=='03')) { 
+    if ($row['mie_ins_valor']!="0"){
+    $val3 = $n + $cor3;
+ $objPHPExcel->getActiveSheet()->setCellValue('I'.$val3, get_user_details($row['miembro_id'],'member_code'));
+ $objPHPExcel->getActiveSheet()->setCellValue('J'.$val3, $fecha_cobro);
+ $objPHPExcel->getActiveSheet()->setCellValue('K'.$val3, $row['mie_ins_valor']);
+	} else {
+        $cor3--;
+    }
+}
+if(($this_month=='04')) { 
+    if ($row['mie_ins_valor']!="0"){
+    $val4 = $n + $cor4;
+ $objPHPExcel->getActiveSheet()->setCellValue('M'.$val4, get_user_details($row['miembro_id'],'member_code'));
+ $objPHPExcel->getActiveSheet()->setCellValue('N'.$val4, $fecha_cobro);
+ $objPHPExcel->getActiveSheet()->setCellValue('O'.$val4, $row['mie_ins_valor']);
+	} else {
+        $cor4--;
+    }
+}
     /*
 if($this_month=='08'){
  $objPHPExcel->getActiveSheet()->setCellValue('M'.$n, get_user_details($row['miembro_id'],'member_code'));
