@@ -40,6 +40,7 @@ $perGrupoOp5='23';                  //Grupo
 $perMantenedorUsuarioOp5='22';         //Mantenedor Usuario
 $perMantenedorIndustriasOp5='21';      //Mantenedor Industrias
 $perMantenedorPerfilOp5='20';          //Mantenedor Perfil
+$perMantenedorFormaPagoOp5 = '86';
 $perPermisosOp5='19';                  //Permisos
 
 

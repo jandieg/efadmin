@@ -96,6 +96,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     exit(); 
 }
 
+if (in_array($perMantenedorFormaPagoOp5, $_SESSION['usu_permiso'])) {
+
+
 $objFP= new FormaPago();
 $cuerpo='';
 $cont=1;
@@ -111,4 +114,5 @@ $resultset= $objFP->getFormaPago("A");
 $boton['boton_1'] = array("color" => "btn-info" ,"click" => "getCrear()" ,"titulo" => "","icono" => "fa-plus");
 $t= generadorTablaConBotones(1, "Forma de Pago",'getCrear()', array("N°", "Descripción","Fecha de Registro", "Última Modificación"), $cuerpo, $boton);
  
+} 
  // SELECT `for_pag_id`, `for_pag_descripcion`, `for_pag_estado`, `for_pag_fecharegistro`, `for_pag_fechamodificacion`, `for_pag_id_usuario` 
