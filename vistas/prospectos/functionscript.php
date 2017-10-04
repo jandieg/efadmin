@@ -145,6 +145,7 @@ var setUserCrear = function(op, _esaplicante){
                     console.log('estas entrando aca'); 
                     getRecargar();
                     $.msg('unblock');
+                    
                 }else if(mensaje.success == "false"){
                     $.msg('unblock');
                     $.toaster({ priority : mensaje.priority, title : 'Alerta', message : mensaje.msg});
@@ -323,6 +324,7 @@ var setConvertirAplicante = function(){
 var getRecargar = function(){
     $("#ben_contenedor2").hide();
     $("#ben_contenedor").show();
+    location.reload();
     /*
     sessionStorage._recargado_aplicantes = true;
    location.reload();*/

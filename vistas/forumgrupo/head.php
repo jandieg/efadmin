@@ -63,6 +63,7 @@ function getTablaGruposByEmpresa($idEmpresa) {
 function getTablaGruposByIndustria($idIndustria) {
     $objGrupo = new Grupo();
     $resultset = $objGrupo->getGrupoByIndustriaAndUser($idIndustria, $_SESSION);
+    
     $cont = 1;
     $cuerpo = "";
     $datos = array();
