@@ -62,7 +62,7 @@ function getTablaGruposByEmpresa($idEmpresa) {
 
 function getTablaGruposByIndustria($idIndustria) {
     $objGrupo = new Grupo();
-    $resultset = $objGrupo->getGrupoByIndustria($idIndustria);
+    $resultset = $objGrupo->getGrupoByIndustriaAndUser($idIndustria, $_SESSION);
     $cont = 1;
     $cuerpo = "";
     $datos = array();
@@ -303,9 +303,9 @@ $t= '';
 function getTablaFiltro($listaGrupos= array(),$tabla_grupos='' ) {
     $lista['lista_']= array("value" => "x",  "select" => "" ,"texto" => "Seleccione..."); 
     $objEmpresaLocal = new EmpresaLocal();
-    $listaEmpresas = $objEmpresaLocal->getListaEmpresa2("", $lista);
+    $listaEmpresas = $objEmpresaLocal->getListaEmpresa3("", $lista, $_SESSION['user_id_ben']);
     $objForumLeader = new ForumLeader();
-    $listaForumLeaders = $objForumLeader->getListaForumLeaders2("", $lista);
+    $listaForumLeaders = $objForumLeader->getListaForumLeaders7("", $lista, $_SESSION['user_id_ben']);
     $objIndustria = new Industria();
     $listaIndustrias = $objIndustria->getListaIndustrias2("", $lista);
     $form['form_2'] = array("elemento" => "combo","change" => "getFiltroEmpresa()", "titulo" => "Empresas", "id" => "_empresa", "option" => $listaEmpresas);   

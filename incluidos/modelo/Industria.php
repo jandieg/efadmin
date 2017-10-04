@@ -70,6 +70,25 @@ class Industria extends Conexion{
        return $listaIndustria;
 
     }
+
+    function getListaIndustrias3($idSeleccionado='',$listaIndustria= array(), $idUser) {
+        $resultset_industria= $this->getIndustrias('A'); 
+        if($idSeleccionado!=''){
+            while ($row_industria = $resultset_industria->fetch_assoc()) { 
+                if($row_industria['ind_id']==$idSeleccionado){
+                    $listaIndustria['lista_'.$row_industria['ind_id']] = array("value" => $row_industria['ind_id'],  "select" => "selected" ,"texto" => $row_industria['ind_descripcion']);
+                }else{
+                    $listaIndustria['lista_'.$row_industria['ind_id']] = array("value" => $row_industria['ind_id'],  "select" => "" ,"texto" => $row_industria['ind_descripcion']); 
+                }
+            }
+        }  else {
+           while ($row_industria = $resultset_industria->fetch_assoc()) { 
+                 $listaIndustria['lista_'.$row_industria['ind_id']] = array("value" => $row_industria['ind_id'],  "select" => "" ,"texto" => $row_industria['ind_descripcion']);
+            }
+       }
+       return $listaIndustria;
+
+    }
     function getMultiListaIndustria($idProspecto) {
         $resultset_industria_selecionadas= $this->getIndustriasSeleccionadas($idProspecto); 
         $lista_ind_selecionadas=array();
