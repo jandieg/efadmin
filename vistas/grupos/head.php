@@ -119,9 +119,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 $grupo= new Grupo();
 $cuerpo='';
 $cont=1;
-$resultset= $grupo->getGrupos2();
- while($row = $resultset->fetch_assoc()) { 
-  
+$resultset= $grupo->getGrupos3($_SESSION['user_id_ben']);
+
+while($row = $resultset->fetch_assoc()) { 
      $cuerpo.= generadorTablaFilas(array(
          "<center>".$cont."</center>",
          generadorLink($row['gru_descripcion'],'getDetalle('.$row['gru_id'].')'),
