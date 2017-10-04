@@ -80,7 +80,8 @@ reader.readAsDataURL(document.getElementById('archivo').files[0]);
     }*/
 
     } else {
-        alert("Disculpe, el codigo es incorrecto");
+        //si no hay codigo o lo ingreso mal
+        alert("Debes ingresar el código del miembro para poder cargar la foto");
     }
     
     
