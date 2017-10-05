@@ -119,7 +119,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 $grupo= new Grupo();
 $cuerpo='';
 $cont=1;
-$resultset= $grupo->getGrupos3($_SESSION['user_id_ben']);
+if ($_SESSION['user_user']=='admin') {
+    $resultset= $grupo->getGrupos();
+} else {
+    $resultset= $grupo->getGrupos3($_SESSION['user_id_ben']);
+}
+
 
 while($row = $resultset->fetch_assoc()) { 
      $cuerpo.= generadorTablaFilas(array(
