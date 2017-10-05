@@ -1956,7 +1956,8 @@ function getGlobalFiltros() {
         $form['form_2'] = array("elemento" => "combo","change" => "getFiltro('1')", "titulo" => "Grupos", "id" => "_grupo", "option" => $listaGrupos); 
 		
 		  $objEmpresaLocal= new EmpresaLocal();
-    $listaEmpresa=$objEmpresaLocal->getListaEmpresa2(NULL, $lista);
+    $listaEmpresa=$objEmpresaLocal->getListaEmpresa3(NULL, $lista, $_SESSION['user_id_ben']);
+    
     $form['form_3'] = array("elemento" => "combo","change" => "getFiltro('3')", "titulo" => "Empresas", "id" => "_empresa", "option" => $listaEmpresa); 
     
 
