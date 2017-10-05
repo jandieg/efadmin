@@ -353,7 +353,12 @@ if(isset($_GET['_tipo_usuario'])){
         }
         if($_GET['_tipo_usuario'] == '1'){
             $objUsuario= new Usuario();
-            $resultset= $objUsuario->getUsuariosBySede($lasede);
+            if ($_SESSION['user_user']=='admin') {
+                $resultset= $objUsuario->getUsuarios();
+            } else {
+                $resultset= $objUsuario->getUsuariosBySede($lasede);
+            }
+            
             $titulo= 'Usuarios';
             while($row = $resultset->fetch_assoc()) { 
                 $cuerpo.= generadorTablaFilas(array(
