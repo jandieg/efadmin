@@ -105,6 +105,7 @@ if ($.fn.dataTableExt != undefined) {
 }());
 
 var getConfTabla2= function (){
+    console.log('entra en este');
     
     $(function () {
         var table = $('#tipo_personalizada').DataTable();
@@ -147,6 +148,9 @@ var getConfTabla2= function (){
 
 
 $(document).ready(function() {
+    if ($("#tipo_personalizada") != undefined) {
+        getConfTabla2();
+    }
     if (sessionStorage._recargado) {
         if (sessionStorage._memb_type) {
          $('#_memb_type').val(sessionStorage._memb_type);
