@@ -365,7 +365,7 @@ function generadorTablaConBotones_Grupos($tipo, $titulo,$funcion='', $columnas=a
     
     $t.='</div>';
     if($tipo==1){
-        $tipoDatatable='tipo_personalizada';
+        $tipoDatatable='tipo_personalizada2';
     }  else {
         $tipoDatatable='normal';
     }

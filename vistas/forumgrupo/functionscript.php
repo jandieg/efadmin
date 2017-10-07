@@ -51,7 +51,7 @@ var getFiltroEmpresa = function() {
             success:  function (mensaje) {
                 $.msg('unblock');
                     $("#ben_contenedor").html(mensaje);
-                    getConfTabla();
+                    getConfTabla2();
             },error : function(xhr, status) {
                 $.msg('unblock');
                 $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema' + status.toString()+" "+ xhr.toString()});
@@ -84,7 +84,7 @@ var getFiltroForumLeader = function() {
             success:  function (mensaje) {
                 $.msg('unblock');
                     $("#ben_contenedor").html(mensaje);
-                    getConfTabla();
+                    getConfTabla2();
             },error : function(xhr, status) {
                 $.msg('unblock');
                 $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema' + status.toString()+" "+ xhr.toString()});
@@ -117,7 +117,7 @@ var getFiltroIndustria = function() {
             success:  function (mensaje) {
                 $.msg('unblock');
                     $("#ben_contenedor").html(mensaje);
-                    getConfTabla();
+                    getConfTabla2();
             },error : function(xhr, status) {
                 $.msg('unblock');
                 $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema' + status.toString()+" "+ xhr.toString()});
