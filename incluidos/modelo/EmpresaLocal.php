@@ -37,9 +37,18 @@ class EmpresaLocal extends Conexion{
 
     }
 
-       public function getEmpresasLocal2($idForum='', $idUser) {
+    public function getEmpresasLocal2($idForum='', $idUser) {
 
         $sql="call sp_selectEmpresas2('$idForum', '$idUser')";
+
+        return parent::getConsultar($sql);   
+
+    }
+
+
+    public function getEmpresasLocal3($idForum='', $idUser) {
+
+        $sql="call sp_selectEmpresas3('$idForum', '$idUser')";
 
         return parent::getConsultar($sql);   
 
@@ -263,6 +272,62 @@ class EmpresaLocal extends Conexion{
        public function getListaEmpresa3($id='', $lista= array(), $idUser) {   
 
         $resultset= $this->getEmpresasLocal2("", $idUser); 
+
+    
+
+        if($id!=''){
+
+            while ($row = $resultset->fetch_assoc()) {
+
+                if($this->primerEmpresa == ''){
+
+                    $this->primerEmpresa=$row['emp_id'];
+
+                }
+
+                if($row['emp_id']==$id){
+
+                     $lista['lista_'.$row['emp_id']] = array("value" => $row['emp_id'],  "select" => "Selected" ,"texto" => $row['nombre_empresa']);
+
+                     
+
+                }else{
+
+                     $lista['lista_'.$row['emp_id']] = array("value" => $row['emp_id'],  "select" => "" ,"texto" => $row['nombre_empresa']);
+
+                }
+
+
+
+            }
+
+        }  else {
+
+            while ($row = $resultset->fetch_assoc()) { 
+
+                if($this->primerEmpresa == ''){
+
+                    $this->primerEmpresa=$row['emp_id'];
+
+                }
+
+                  $lista['lista_'.$row['emp_id']] = array("value" => $row['emp_id'],  "select" => "" ,"texto" => $row['nombre_empresa']);
+
+
+
+           }
+
+          
+
+          }
+
+        return $lista;
+
+    }
+
+     public function getListaEmpresa5($id='', $lista= array(), $idUser) {   
+
+        $resultset= $this->getEmpresasLocal3("", $idUser); 
 
     
 

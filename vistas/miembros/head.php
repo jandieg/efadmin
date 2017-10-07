@@ -132,7 +132,7 @@ function getDetalleUpdate($id, $recargar) {
         }
         
         $objEmpresaLocal= new EmpresaLocal();
-        $listaEmpresas= $objEmpresaLocal->getListaEmpresa($row['emp_id']);
+        $listaEmpresas= $objEmpresaLocal->getListaEmpresa5($row['emp_id'], NULL, $_SESSION['user_id_ben']);
                                                                                     
         global $lblForumLeader,$lblNombre, $lblApellido , $lblTipoPersona, $lblIdentificacion, $lblGenero,
                 $lblTitulo,$lblFNacimiento, $lblCorreo, $lblCorreoSecundario, $lblTF, $lblTM, $lblEmpresa,
@@ -1451,7 +1451,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     $comboGrupos= generadorComboSelectOption("_grupo", "getGlobalFiltro(4)",$listaGrupos);
                                     
                                     $objEmpresaLocal= new EmpresaLocal();
-                                    $listaEmpresa=$objEmpresaLocal->getListaEmpresa2(NULL, $lista);
+                                    $listaEmpresa=$objEmpresaLocal->getListaEmpresa5(NULL, $lista, $_SESSION['user_id_ben']);
                                     $comboEmpresa= generadorComboSelectOption("_empresa", "getGlobalFiltro(5)",$listaEmpresa);
                                     
                                     $objIndustria = new Industria();
@@ -1638,7 +1638,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     
                     $lista["0"]= array("value" => "x",  "select" => "selected" ,"texto" => "Seleccione...");
                     $objEmpresaLocal= new EmpresaLocal();
-                    $listaEmpresa=$objEmpresaLocal->getListaEmpresa2(NULL, $lista);
+                    $listaEmpresa=$objEmpresaLocal->getListaEmpresa5(NULL, $lista, $_SESSION['user_id_ben']);
                     $empresas= generadorComboSelectOption($_id_empresa, "",$listaEmpresa);
                     
                     $objTipoEmpresaPAM = new TipoEmpresaPAM();
@@ -1800,7 +1800,7 @@ function getFiltros() {
        
     }
     $objEmpresaLocal= new EmpresaLocal();
-    $listaEmpresa=$objEmpresaLocal->getListaEmpresa3(NULL, $lista, $_SESSION['user_id_ben']);
+    $listaEmpresa=$objEmpresaLocal->getListaEmpresa5(NULL, $lista, $_SESSION['user_id_ben']);
     $form['form_3'] = array("elemento" => "combo","change" => "getFiltro('3')", "titulo" => "Empresas", "id" => "_empresa", "option" => $listaEmpresa); 
     
     $objIndustria = new Industria();
@@ -1956,7 +1956,7 @@ function getGlobalFiltros() {
         $form['form_2'] = array("elemento" => "combo","change" => "getFiltro('1')", "titulo" => "Grupos", "id" => "_grupo", "option" => $listaGrupos); 
 		
 		  $objEmpresaLocal= new EmpresaLocal();
-    $listaEmpresa=$objEmpresaLocal->getListaEmpresa3(NULL, $lista, $_SESSION['user_id_ben']);
+    $listaEmpresa=$objEmpresaLocal->getListaEmpresa5(NULL, $lista, $_SESSION['user_id_ben']);
     
     $form['form_3'] = array("elemento" => "combo","change" => "getFiltro('3')", "titulo" => "Empresas", "id" => "_empresa", "option" => $listaEmpresa); 
     
