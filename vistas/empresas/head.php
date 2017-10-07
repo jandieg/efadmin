@@ -19,6 +19,7 @@ include(HTML."/html.php");
 include(HTML."/html_2.php");
 
 include(HTML."/html_combos.php");
+error_reporting(E_ALL);
 //require_once 'public/phpmailer/correo.php';
 $objEmpresaLocal;
 $objIndustria;

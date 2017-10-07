@@ -110,7 +110,7 @@ if ($.fn.dataTableExt != undefined) {
     $(function () {
         var table = $('#tipo_personalizada2').DataTable();
         table.destroy();
-        $('#tipo_personalizada').DataTable({            
+        $('#tipo_personalizada2').DataTable({            
             "aLengthMenu": [[ 15, 50,75,100, -1], [ 15, 50,75,100, "All"]],
             "iDisplayLength": 15, 
             "iDisplayStart": 0,
