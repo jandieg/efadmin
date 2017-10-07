@@ -522,7 +522,12 @@ function getFiltros() {
     if (in_array($perVerTodosEmpresasOp8, $_SESSION['usu_permiso'])) {
         
         $objForum = new ForumLeader();
-        $listaForum=$objForum->getListaForumLeaders2(NULL,$lista);
+        if ($_SESSION['user_user']=='admin') {
+            $listaForum=$objForum->getListaForumLeaders2(NULL,$lista);
+        } else {
+            $listaForum=$objForum->getListaForumLeaders7(NULL,$lista, $_SESSION['user_id_ben']);
+        }
+        
         $form['form_2'] = array("elemento" => "combo","change" => "getFiltro('2')", "titulo" => "Forum Leader", "id" => "_forum", "option" => $listaForum); 
         
       /*  $objGrupo= new Grupo();
@@ -533,7 +538,11 @@ function getFiltros() {
     }
    
     $objIndustria = new Industria();
-    $listaIndustrias=$objIndustria->getListaIndustrias2(NULL, $lista);
+    if ($_SESSION['user_user']=='admin') {
+        $listaIndustrias=$objIndustria->getListaIndustrias2(NULL, $lista); 
+    } else {
+        $listaIndustrias=$objIndustria->getListaIndustrias3(NULL, $lista, $_SESSION['user_id_ben']); 
+    }
     $form['form_4'] = array("elemento" => "combo","change" => "getFiltro('4')", "titulo" => "Industrias", "id" => "_industria", "option" => $listaIndustrias); 
     $form['form_5'] = array("elemento" => "Checkbox-comun", "id" => "_mostrar_todas", 
     "chec" => "onChange='getMostrarTodas()'", "titulo" => "Mostrar todas las empresas");
