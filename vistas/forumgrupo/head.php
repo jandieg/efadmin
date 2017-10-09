@@ -304,7 +304,7 @@ $t= '';
 function getTablaFiltro($listaGrupos= array(),$tabla_grupos='' ) {
     $lista['lista_']= array("value" => "x",  "select" => "" ,"texto" => "Seleccione..."); 
     $objEmpresaLocal = new EmpresaLocal();
-    $listaEmpresas = $objEmpresaLocal->getListaEmpresa3("", $lista, $_SESSION['user_id_ben']);
+    $listaEmpresas = $objEmpresaLocal->getListaEmpresa5("", $lista, $_SESSION['user_id_ben']);
     $objForumLeader = new ForumLeader();
     $listaForumLeaders = $objForumLeader->getListaForumLeaders7("", $lista, $_SESSION['user_id_ben']);
     $objIndustria = new Industria();
