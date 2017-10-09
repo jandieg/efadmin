@@ -353,11 +353,9 @@ if(isset($_GET['_tipo_usuario'])){
         }
         if($_GET['_tipo_usuario'] == '1'){
             $objUsuario= new Usuario();
-            if ($_SESSION['user_user']=='admin') {
-                $resultset= $objUsuario->getUsuarios();
-            } else {
-                $resultset= $objUsuario->getUsuariosBySede($lasede);
-            }
+            
+            $resultset= $objUsuario->getUsuarios();
+            
             
             $titulo= 'Usuarios';
             while($row = $resultset->fetch_assoc()) { 
@@ -375,7 +373,12 @@ if(isset($_GET['_tipo_usuario'])){
          
         }elseif ($_GET['_tipo_usuario'] == '3') {
             $objForumLeader= new ForumLeader();
-            $resultset= $objForumLeader->getForumLeader2('', '');
+            if ($_SESSION['user_user']=='admin') { 
+                $resultset= $objForumLeader->getForumLeader2('', '');
+            } else {
+                $resultset= $objForumLeader->getForumLeader7('', $_SESSION['user_id_ben']);
+            }
+            
             $titulo= 'Forum Leader';
             while($row = $resultset->fetch_assoc()) { 
                 $nombre= $row['per_nombre'].' '.$row['per_apellido'];
