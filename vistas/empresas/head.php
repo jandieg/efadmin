@@ -539,11 +539,11 @@ function getFiltros() {
     }
    
     $objIndustria = new Industria();
-    if ($_SESSION['user_user']=='admin') {
+    //if ($_SESSION['user_user']=='admin') {
         $listaIndustrias=$objIndustria->getListaIndustrias2(NULL, $lista); 
-    } else {
+    /*} else {
         $listaIndustrias=$objIndustria->getListaIndustrias3(NULL, $lista, $_SESSION['user_id_ben']); 
-    }
+    }*/
     $form['form_4'] = array("elemento" => "combo","change" => "getFiltro('4')", "titulo" => "Industrias", "id" => "_industria", "option" => $listaIndustrias); 
     $form['form_5'] = array("elemento" => "Checkbox-comun", "id" => "_mostrar_todas", 
     "chec" => "onChange='getMostrarTodas()'", "titulo" => "Mostrar todas las empresas");
