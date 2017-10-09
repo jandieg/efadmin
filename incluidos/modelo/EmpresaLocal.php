@@ -511,6 +511,11 @@ class EmpresaLocal extends Conexion{
         return parent::getConsultar($sql);   
     }
 
+    public function getFiltros3($id, $key, $permiso, $todas, $idUser) {
+        $sql="call sp_selectEmpresaLocalFiltros3('$id','$key', '$permiso','$todas', '$idUser')";
+        return parent::getConsultar($sql);   
+    }
+
     
 
 

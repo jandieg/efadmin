@@ -560,7 +560,13 @@ function getTablaFiltrada($id, $key, $idForum, $mostrarTodas) {
     $objEmpresaLocal= new EmpresaLocal();
     $cuerpo='';
     $cont=1;
-    $resultset= $objEmpresaLocal->getFiltros2($id, $key,$idForum,$mostrarTodas);//getFiltros($id, $key, $permiso)
+    if ($_SESSION['user_user']=='admin') { 
+        $resultset= $objEmpresaLocal->getFiltros2($id, $key,$idForum,$mostrarTodas);
+    } else {
+        $resultset= $objEmpresaLocal->getFiltros3($id, $key,$idForum,$mostrarTodas, $_SESSION['user_id_ben']);
+    }
+    
+    
     while($row = $resultset->fetch_assoc()) { 
         $verDetalle='';
         if (in_array($perVerDetalleOp8, $_SESSION['usu_permiso'])) {
