@@ -157,13 +157,13 @@ function convert_datetime($string,$type){
 
 	
 
-        $sql_date=date_create($string);
+        $sql_date=strtotime($string);
 
-		$month =  date_format($sql_date, 'm');
+		$month =  date('m', $sql_date);
 
-		$day =  date_format($sql_date, 'd');
+		$day =  date('d', $sql_date);
 
-		$year =  date($sql_date, 'Y');
+		$year =  date('Y', $sql_date);
 
 if($type=='literal'){
 
