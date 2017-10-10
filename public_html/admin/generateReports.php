@@ -413,10 +413,10 @@ for ($i = 9; $i <= 20; $i++) {
 	//cell N for Cancels
 	//cell P for adds
 
-$N=get_member_by_status_changed('cancels','top',$year,$i,$report_country, $corte); //Top Cancels
-$P=get_member_by_status_changed('adds','top',$year,$i,$report_country, $corte);    //Top Adds
-$O=get_member_by_status_changed('cancels','key',$year,$i,$report_country, $corte); //Key Cancels
-$Q=get_member_by_status_changed('adds','key',$year,$i,$report_country, $corte);    //Key Adds
+$N=get_member_by_status_changed('cancels','top',$year,$i,$sedeid, $corte); //Top Cancels
+$P=get_member_by_status_changed('adds','top',$year,$i,$sedeid, $corte);    //Top Adds
+$O=get_member_by_status_changed('cancels','key',$year,$i,$sedeid, $corte); //Key Cancels
+$Q=get_member_by_status_changed('adds','key',$year,$i,$sedeid, $corte);    //Key Adds
 
 $objPHPExcel->getActiveSheet()->setCellValue('N'.$i, $N);
 $objPHPExcel->getActiveSheet()->setCellValue('P'.$i, $P);

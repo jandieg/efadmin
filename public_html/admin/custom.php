@@ -1857,7 +1857,7 @@ return $sc_members_count;
 
 
 
-function get_member_by_status_changed($type,$category,$year,$month,$country, $corte){
+function get_member_by_status_changed($type,$category,$year,$month,$sede_id, $corte){
 
 include("../../incluidos/db_config/config.php");
 
@@ -1924,6 +1924,7 @@ $sql = "SELECT count(miembro.mie_id) AS sp_members FROM miembro
 	JOIN grupos ON (grupos.gru_id=miembro.grupo_id)
 	WHERE month(miembro.mie_fecha_cambio_status) <= '$month' 
 	AND grupos.agrup in ('B')
+	AND grupos.sede_id = '$sede_id'
 	AND date(miembro.mie_fecha_cambio_status) <= '$corte' 
 	AND miembro.cancelled='1'  
 	AND YEAR(miembro.mie_fecha_cambio_status)='$year'";	
@@ -1937,6 +1938,7 @@ $sql = "SELECT count(miembro.mie_id) AS sp_members FROM miembro
 	JOIN miembro_inscripcion ON (miembro.mie_id = miembro_inscripcion.miembro_id)
 	WHERE month(miembro_inscripcion.mie_ins_fecha_ingreso) <= '$month' 
 	AND grupos.agrup in ('B')
+	AND grupos.sede_id = '$sede_id'
 	AND miembro_inscripcion.mie_ins_fecha_ingreso <= '$corte' 
 	AND miembro.status_member_id='1' 
 	AND YEAR(miembro_inscripcion.mie_ins_fecha_ingreso)='$year'";	
@@ -1949,6 +1951,7 @@ $sql = "SELECT count(miembro.mie_id) AS sp_members FROM miembro
 	JOIN grupos ON (grupos.gru_id=miembro.grupo_id)
 	WHERE month(miembro.mie_fecha_cambio_status) <= '$month' 
 	AND grupos.agrup in ('A') 
+	AND grupos.sede_id = '$sede_id'
 	AND date(miembro.mie_fecha_cambio_status) <= '$corte' 
 	AND miembro.cancelled='1'  
 	AND YEAR(miembro.mie_fecha_cambio_status)='$year'";	
@@ -1962,6 +1965,7 @@ $sql = "SELECT count(miembro.mie_id) AS sp_members FROM miembro
 		JOIN grupos ON (grupos.gru_id=miembro.grupo_id)
 		WHERE month(miembro_inscripcion.mie_ins_fecha_ingreso) <= '$month'  
 		AND grupos.agrup in ('A')
+		AND grupos.sede_id = '$sede_id'
 		AND miembro_inscripcion.mie_ins_fecha_ingreso <= '$corte' 
 		AND miembro.status_member_id='1' 
 		AND year(miembro_inscripcion.mie_ins_fecha_ingreso)='$year'";	
