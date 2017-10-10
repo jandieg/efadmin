@@ -1522,7 +1522,7 @@ return $row['total'];
 
 //Membership Reports//
 
-function get_active_members($type,$status,$year,$month,$country, $corte){
+function get_active_members($type,$status,$year,$month,$sede_id, $corte){
 
 include("../../incluidos/db_config/config.php");
 
@@ -1613,6 +1613,8 @@ AND t0.mie_ins_fecha_ingreso <= '$corte'
 
 AND t2.agrup in ('A')
 
+AND t2.sede_id = '$sede_id' 
+
 AND((t1.cancelled = 0) 
 
 OR (( month(t1.mie_fecha_cambio_status) >'$month' 
@@ -1645,6 +1647,7 @@ AND t0.mie_ins_fecha_ingreso <= '$corte'
 
 AND t2.agrup  in ('B')
 
+AND t2.sede_id = '$sede_id' 
 
 AND(((t1.cancelled = 0) ) 
 
