@@ -281,7 +281,7 @@ $form['form_12'] = array("elemento" => "combo","change" => "getCargarPaises()","
             $tabla2['t_11'] = array("t_1" => generadorNegritas($lblCodigoPostal), "t_2" => $row['sede_codigopostal']);
 
             $tabla3['t_12'] = array("t_1" => generadorNegritas($lblPais), "t_2" => $row['pai_nombre']);
-            $tabla3['t_13'] = array("t_1" => generadorNegritas($lblProvincia), "t_2" => $row['est_nombre']);
+            //$tabla3['t_13'] = array("t_1" => generadorNegritas($lblProvincia), "t_2" => $row['est_nombre']);
             $tabla3['t_14'] = array("t_1" => generadorNegritas($lblCiudad), "t_2" => $row['ciu_nombre']);
             $tabla3['t_15'] = array("t_1" => generadorNegritas($lblDireccion), "t_2" => $row['sede_direccion']);
 
