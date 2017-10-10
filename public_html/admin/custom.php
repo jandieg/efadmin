@@ -2010,7 +2010,7 @@ function old_dues_comment($idMiembro, $year) {
 
 }
 
-function comment_members($type,$status,$cell,$year,$month,$country, $corte){
+function comment_members($type,$status,$cell,$year,$month,$sede_id, $corte){
 
 include("../../incluidos/db_config/config.php");
 
@@ -2107,6 +2107,8 @@ AND t0.mie_ins_fecha_ingreso <= '$corte'
 
 AND t2.agrup in ('A')
 
+AND t2.sede_id = '$sede_id'
+
 AND((t1.cancelled = 0)  
 
 OR (( month(t1.mie_fecha_cambio_status) >'$month' 
@@ -2155,6 +2157,8 @@ AND t0.mie_ins_fecha_ingreso <= '$corte'
 
 AND t2.agrup in ('B')
 
+AND t2.sede_id = '$sede_id'
+
 AND((t1.cancelled = 0)  
 
 OR (( month(t1.mie_fecha_cambio_status) >'$month' 
@@ -2201,6 +2205,7 @@ if(($type=='cancels')&&($cell=='N')){
 	JOIN grupos on (grupos.gru_id=miembro.grupo_id)
 	WHERE month(miembro.mie_fecha_cambio_status) <= '$month'
 	AND grupos.agrup in ('A') 
+	AND grupos.sede_id = '$sede_id'
 	AND(date(miembro.mie_fecha_cambio_status) <= '$corte') AND miembro.cancelled='1' 
 	 AND YEAR(miembro.mie_fecha_cambio_status)='$year'";
 
@@ -2217,6 +2222,7 @@ if(($type=='adds')&&($cell=='P')){
 	JOIN miembro_inscripcion ON (miembro.mie_id= miembro_inscripcion.miembro_id)
 	WHERE month(miembro_inscripcion.mie_ins_fecha_ingreso) <= '$month'  
 	AND grupos.agrup in ('A')
+	AND grupos.sede_id = '$sede_id'
 	AND(miembro_inscripcion.mie_ins_fecha_ingreso <= '$corte') AND miembro.status_member_id='1' 
 	 AND YEAR(miembro_inscripcion.mie_ins_fecha_ingreso)='$year'";
 
@@ -2232,6 +2238,7 @@ if(($type=='cancels')&&($cell=='O')){
 	JOIN grupos ON (grupos.gru_id = miembro.grupo_id) 
 	WHERE month(miembro.mie_fecha_cambio_status) <= '$month' 
 	AND grupos.agrup in ('B') 
+	AND grupos.sede_id = '$sede_id'
 	AND(date(miembro.mie_fecha_cambio_status) <= '$corte') AND miembro.cancelled='1' 
 	 AND YEAR(miembro.mie_fecha_cambio_status)='$year'";
 }
@@ -2247,6 +2254,7 @@ if(($type=='adds')&&($cell=='Q')){
 	JOIN grupos ON (grupos.gru_id=miembro.grupo_id)
 	WHERE month(miembro_inscripcion.mie_ins_fecha_ingreso) <= '$month'  
 	AND grupos.agrup in ('B') 
+	AND grupos.sede_id = '$sede_id'
 	AND(miembro_inscripcion.mie_ins_fecha_ingreso <= '$corte') 
 	AND miembro.status_member_id='1'  
 	AND YEAR(miembro_inscripcion.mie_ins_fecha_ingreso)='$year'";

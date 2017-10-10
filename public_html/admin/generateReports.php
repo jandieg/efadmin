@@ -374,13 +374,13 @@ $B=get_active_members('top',1,$year,$i,$sedeid, $corte);
 $C=get_active_members('top',4,$year,$i,$sedeid, $corte);
 $D=get_active_members('top',3,$year,$i,$sedeid, $corte);
 if($B>0){
-$objPHPExcel->getActiveSheet()->getComment('B'.$i)->setHeight("auto")->setWidth("200px")->getText()->createTextRun(comment_members('top',1,'B',$year,$i,$report_country, $corte)); 
+$objPHPExcel->getActiveSheet()->getComment('B'.$i)->setHeight("auto")->setWidth("200px")->getText()->createTextRun(comment_members('top',1,'B',$year,$i,$sedeid, $corte)); 
 }
 if($C>0){
-$objPHPExcel->getActiveSheet()->getComment('C'.$i)->setHeight("auto")->setWidth("200px")->getText()->createTextRun(comment_members('top',4,'C',$year,$i,$report_country, $corte)); 
+$objPHPExcel->getActiveSheet()->getComment('C'.$i)->setHeight("auto")->setWidth("200px")->getText()->createTextRun(comment_members('top',4,'C',$year,$i,$sedeid, $corte)); 
 }
 if($D>0){
-$objPHPExcel->getActiveSheet()->getComment('D'.$i)->setHeight("auto")->setWidth("200px")->getText()->createTextRun(comment_members('top',3,'D',$year,$i,$report_country, $corte)); 
+$objPHPExcel->getActiveSheet()->getComment('D'.$i)->setHeight("auto")->setWidth("200px")->getText()->createTextRun(comment_members('top',3,'D',$year,$i,$sedeid, $corte)); 
 }
 
 }//end for
@@ -396,13 +396,13 @@ $H=get_active_members('executive',4,$year,$i,$sedeid, $corte);
 $I=get_active_members('executive',3,$year,$i,$sedeid, $corte);
 
 if($G>0){
-$objPHPExcel->getActiveSheet()->getComment('G'.$i)->setHeight("auto")->setWidth("150px")->getText()->createTextRun(comment_members('executive',1,'G',$year,$i,$report_country, $corte)); 
+$objPHPExcel->getActiveSheet()->getComment('G'.$i)->setHeight("auto")->setWidth("150px")->getText()->createTextRun(comment_members('executive',1,'G',$year,$i,$sedeid, $corte)); 
 }
 if($H>0){
-$objPHPExcel->getActiveSheet()->getComment('H'.$i)->setHeight("auto")->setWidth("150px")->getText()->createTextRun(comment_members('executive',4,'H',$year,$i,$report_country, $corte)); 
+$objPHPExcel->getActiveSheet()->getComment('H'.$i)->setHeight("auto")->setWidth("150px")->getText()->createTextRun(comment_members('executive',4,'H',$year,$i,$sedeid, $corte)); 
 }
 if($I>0){
-$objPHPExcel->getActiveSheet()->getComment('I'.$i)->setHeight("auto")->setWidth("150px")->getText()->createTextRun(comment_members('executive',3,'I',$year,$i,$report_country, $corte)); 
+$objPHPExcel->getActiveSheet()->getComment('I'.$i)->setHeight("auto")->setWidth("150px")->getText()->createTextRun(comment_members('executive',3,'I',$year,$i,$sedeid, $corte)); 
 }
 
 
@@ -425,17 +425,17 @@ $objPHPExcel->getActiveSheet()->setCellValue('Q'.$i, $Q);
 
 
 if($N>0){
-$objPHPExcel->getActiveSheet()->getComment('N'.$i)->setHeight("auto")->setWidth("150px")->getText()->createTextRun(comment_members('cancels',0,'N',$year,$i,$report_country, $corte)); 
+$objPHPExcel->getActiveSheet()->getComment('N'.$i)->setHeight("auto")->setWidth("150px")->getText()->createTextRun(comment_members('cancels',0,'N',$year,$i,$sedeid, $corte)); 
 }
 if($P>0){
-$objPHPExcel->getActiveSheet()->getComment('P'.$i)->setHeight("auto")->setWidth("150px")->getText()->createTextRun(comment_members('adds',0,'P',$year,$i,$report_country, $corte)); 
+$objPHPExcel->getActiveSheet()->getComment('P'.$i)->setHeight("auto")->setWidth("150px")->getText()->createTextRun(comment_members('adds',0,'P',$year,$i,$sedeid, $corte)); 
 }
 
 if($O>0){
-$objPHPExcel->getActiveSheet()->getComment('O'.$i)->setHeight("auto")->setWidth("150px")->getText()->createTextRun(comment_members('cancels',0,'O',$year,$i,$report_country, $corte)); 
+$objPHPExcel->getActiveSheet()->getComment('O'.$i)->setHeight("auto")->setWidth("150px")->getText()->createTextRun(comment_members('cancels',0,'O',$year,$i,$sedeid, $corte)); 
 }
 if($Q>0){
-$objPHPExcel->getActiveSheet()->getComment('Q'.$i)->setHeight("auto")->setWidth("150px")->getText()->createTextRun(comment_members('adds',0,'Q',$year,$i,$report_country, $corte)); 
+$objPHPExcel->getActiveSheet()->getComment('Q'.$i)->setHeight("auto")->setWidth("150px")->getText()->createTextRun(comment_members('adds',0,'Q',$year,$i,$sedeid, $corte)); 
 }
 
 
@@ -453,13 +453,13 @@ $B=get_active_members('top',1,$nextyear,$i,$sedeid, $corte);
 $C=get_active_members('top',4,$nextyear,$i,$sedeid, $corte);
 $D=get_active_members('top',3,$nextyear,$i,$sedeid, $corte);
 if($B>0){
-$objPHPExcel->getActiveSheet()->getComment('B'.$i)->setHeight("auto")->setWidth("200px")->getText()->createTextRun(comment_members('top',1,'B',$nextyear,$i,$report_country, $corte)); 
+$objPHPExcel->getActiveSheet()->getComment('B'.$i)->setHeight("auto")->setWidth("200px")->getText()->createTextRun(comment_members('top',1,'B',$nextyear,$i,$sedeid, $corte)); 
 }
 if($C>0){
-$objPHPExcel->getActiveSheet()->getComment('C'.$i)->setHeight("auto")->setWidth("200px")->getText()->createTextRun(comment_members('top',4,'C',$nextyear,$i,$report_country, $corte)); 
+$objPHPExcel->getActiveSheet()->getComment('C'.$i)->setHeight("auto")->setWidth("200px")->getText()->createTextRun(comment_members('top',4,'C',$nextyear,$i,$sedeid, $corte)); 
 }
 if($D>0){
-$objPHPExcel->getActiveSheet()->getComment('D'.$i)->setHeight("auto")->setWidth("200px")->getText()->createTextRun(comment_members('top',3,'D',$nextyear,$i,$report_country, $corte)); 
+$objPHPExcel->getActiveSheet()->getComment('D'.$i)->setHeight("auto")->setWidth("200px")->getText()->createTextRun(comment_members('top',3,'D',$nextyear,$i,$sedeid, $corte)); 
 }
 
 
@@ -477,13 +477,13 @@ $H=get_active_members('executive',4,$nextyear,$i,$sedeid, $corte);
 $I=get_active_members('executive',3,$nextyear,$i,$sedeid, $corte);
 
 if($G>0){
-$objPHPExcel->getActiveSheet()->getComment('G'.$i)->setHeight("auto")->setWidth("150px")->getText()->createTextRun(comment_members('executive',1,'G',$nextyear,$i,$report_country, $corte)); 
+$objPHPExcel->getActiveSheet()->getComment('G'.$i)->setHeight("auto")->setWidth("150px")->getText()->createTextRun(comment_members('executive',1,'G',$nextyear,$i,$sedeid, $corte)); 
 }
 if($H>0){
-$objPHPExcel->getActiveSheet()->getComment('H'.$i)->setHeight("auto")->setWidth("150px")->getText()->createTextRun(comment_members('executive',4,'H',$nextyear,$i,$report_country, $corte)); 
+$objPHPExcel->getActiveSheet()->getComment('H'.$i)->setHeight("auto")->setWidth("150px")->getText()->createTextRun(comment_members('executive',4,'H',$nextyear,$i,$sedeid, $corte)); 
 }
 if($I>0){
-$objPHPExcel->getActiveSheet()->getComment('I'.$i)->setHeight("auto")->setWidth("150px")->getText()->createTextRun(comment_members('executive',3,'I',$nextyear,$i,$report_country, $corte)); 
+$objPHPExcel->getActiveSheet()->getComment('I'.$i)->setHeight("auto")->setWidth("150px")->getText()->createTextRun(comment_members('executive',3,'I',$nextyear,$i,$sedeid, $corte)); 
 }
 
 
@@ -506,17 +506,17 @@ $objPHPExcel->getActiveSheet()->setCellValue('Q'.$i, $Q);
 
 
 if($N>0){
-$objPHPExcel->getActiveSheet()->getComment('N'.$i)->setHeight("auto")->setWidth("150px")->getText()->createTextRun(comment_members('cancels',0,'N',$nextyear,$i,$report_country, $corte)); 
+$objPHPExcel->getActiveSheet()->getComment('N'.$i)->setHeight("auto")->setWidth("150px")->getText()->createTextRun(comment_members('cancels',0,'N',$nextyear,$i,$sedeid, $corte)); 
 }
 if($P>0){
-$objPHPExcel->getActiveSheet()->getComment('P'.$i)->setHeight("auto")->setWidth("150px")->getText()->createTextRun(comment_members('adds',0,'P',$nextyear,$i,$report_country, $corte)); 
+$objPHPExcel->getActiveSheet()->getComment('P'.$i)->setHeight("auto")->setWidth("150px")->getText()->createTextRun(comment_members('adds',0,'P',$nextyear,$i,$sedeid, $corte)); 
 }
 
 if($O>0){
-$objPHPExcel->getActiveSheet()->getComment('O'.$i)->setHeight("auto")->setWidth("150px")->getText()->createTextRun(comment_members('cancels',0,'O',$nextyear,$i,$report_country, $corte)); 
+$objPHPExcel->getActiveSheet()->getComment('O'.$i)->setHeight("auto")->setWidth("150px")->getText()->createTextRun(comment_members('cancels',0,'O',$nextyear,$i,$sedeid, $corte)); 
 }
 if($Q>0){
-$objPHPExcel->getActiveSheet()->getComment('Q'.$i)->setHeight("auto")->setWidth("150px")->getText()->createTextRun(comment_members('adds',0,'Q',$nextyear,$i,$report_country, $corte)); 
+$objPHPExcel->getActiveSheet()->getComment('Q'.$i)->setHeight("auto")->setWidth("150px")->getText()->createTextRun(comment_members('adds',0,'Q',$nextyear,$i,$sedeid, $corte)); 
 }
 
 
