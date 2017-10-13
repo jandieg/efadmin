@@ -96,6 +96,11 @@ class Evento extends Conexion{
         return parent::getConsultar($sql);
     }
 
+    public function getTodosEventos2() {
+        $sql = "call sp_selectEventos2()";
+        return parent::getConsultar($sql);
+    }
+
     public function getEventosByGrupo($idGrupo) {
         $sql = "call sp_selectEventosByGrupo('$idGrupo')";
         return parent::getConsultar($sql);

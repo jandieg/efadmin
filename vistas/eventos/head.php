@@ -193,7 +193,7 @@ function getTablaCasosDelMes() {
     $tabla.= "<thead>";
     $tabla.= "<tr><th class='tabla-colapsada'>&nbsp;</th><th class='tabla-colapsada'>&nbsp;</th>";
 
-    $resultset2 = $objEvento2->getTodosEventos();
+    $resultset2 = $objEvento2->getTodosEventos2();
     $objMiembro = new Miembro();
     $resultset3 = $objMiembro->getAllMembers();
     $anhoact = "";                        
