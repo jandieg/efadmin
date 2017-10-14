@@ -132,7 +132,9 @@ function getDetalleUpdate($id, $recargar) {
         }
         
         $objEmpresaLocal= new EmpresaLocal();
-        $listaEmpresas= $objEmpresaLocal->getListaEmpresa5($row['emp_id'], NULL, $_SESSION['user_id_ben']);
+        $listaemp2 = array();
+        $listaemp2['lista_1'] = array("value" => 1,  "select" => "" ,"texto" => "Sin Empresa");
+        $listaEmpresas= $objEmpresaLocal->getListaEmpresa5($row['emp_id'], $listaemp2, $_SESSION['user_id_ben']);
                                                                                     
         global $lblForumLeader,$lblNombre, $lblApellido , $lblTipoPersona, $lblIdentificacion, $lblGenero,
                 $lblTitulo,$lblFNacimiento, $lblCorreo, $lblCorreoSecundario, $lblTF, $lblTM, $lblEmpresa,
