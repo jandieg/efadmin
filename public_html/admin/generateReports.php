@@ -602,7 +602,7 @@ $objPHPExcel = PHPExcel_IOFactory::load("./excels_templates/dues_template_2.xlsx
 $objPHPExcel->setActiveSheetIndex($xSheet);
 //First sheet
 $objPHPExcel->getActiveSheet();
-$s="SELECT * FROM grupos WHERE sede_id='$sedeid'";
+$s="SELECT * FROM grupos WHERE sede_id='$sedeid' order by gru_descripcion asc";
 $r = mysqli_query($con,$s);
 $curagrup = "";
 $totalagrup = array();
