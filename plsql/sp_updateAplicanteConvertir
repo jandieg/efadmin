@@ -1,0 +1,96 @@
+CREATE DEFINER=`execforums`@`localhost` PROCEDURE `sp_updateAplicanteConvertir`(IN `_id_prospecto` INT, IN `_fecharegistro` TIMESTAMP, IN `_usuario` INT, IN `_grupo` INT, IN `_membresia` INT, IN `_status` INT)
+BEGIN
+
+    DECLARE _LID_APLICANTE int;
+    DECLARE _grupo_nuevo int;
+set @varlue= (SELECT  prosp_esaplicanteesmiembro FROM prospecto WHERE pro_id=_id_prospecto);
+
+if @varlue <> '1'  then
+INSERT INTO miembro
+    (empresalocal_emp_id, prospecto_pro_id,  mie_codigo,   Persona_per_id, categoria_cat_id, forum_usu_id, Profesion_prof_id, mie_participacion_correo, mie_observacion) 
+        (SELECT empresalocal_emp_id, pro_id, prosp_codigo, Persona_per_id, categoria_cat_id, forum_usu_id,   Profesion_prof_id, participacion_correo,  prosp_observacion
+        FROM prospecto  WHERE pro_id= _id_prospecto limit 1);
+
+
+    SET _LID_APLICANTE = LAST_INSERT_ID();
+    set @forum= (SELECT  forum_usu_id FROM `miembro` WHERE mie_id=_LID_APLICANTE LIMIT 1);
+    set @grupo =(SELECT gru_id FROM `grupos` WHERE gru_forum = @forum LIMIT 1);
+    set @membresia= (SELECT `memb_id` FROM `membresia` LIMIT 1);
+    set @status= (SELECT `mem_sta_id` FROM `member_status` LIMIT 1);
+    
+    
+    select gru_id into _grupo_nuevo from grupos 
+    where gru_forum = (select forum_usu_id from prospecto where pro_id = _id_prospecto limit 1) limit 1;
+
+       UPDATE miembro SET 
+    mie_id_usuario=_usuario,
+    mie_fecharegistro= _fecharegistro,
+    mie_fechamodificacion=_fecharegistro,
+    grupo_id= _grupo_nuevo,
+    membresia_id= @membresia,
+    status_member_id= @status
+    WHERE mie_id=_LID_APLICANTE;
+    
+    INSERT INTO `miembro_inscripcion`( `mie_ins_valor`,`mie_ins_id_usuario`, `mie_ins_fecharegistro`, `mie_ins_fechamodificacion`, `miembro_id`, 
+                                         `mie_ins_fecha_ingreso`,estado_cobro_id, mie_ins_year, mie_ins_fecha_cobro) 
+    VALUES (0,1,now(),now(),_LID_APLICANTE,curdate(),1, year(curdate()), now());
+      
+    UPDATE prospecto SET prosp_esaplicanteesmiembro='1'
+    WHERE pro_id= _id_prospecto;
+  
+    
+   
+
+   if (SELECT COUNT(red_id) FROM redsocial_prospecto WHERE prospecto_pro_id=_id_prospecto and red_tipo='skype') > 0  then
+        SET @value = (SELECT red_descripcion FROM redsocial_prospecto WHERE prospecto_pro_id=_id_prospecto and binary red_tipo='skype' LIMIT 1);
+        INSERT INTO `redsocial_miembro`( `redmi_descripcion`, `redmi_tipo`, `miembro_mie_id`) 
+                                    VALUES (@value,'skype',_LID_APLICANTE);
+    end if;  
+
+    if (SELECT COUNT(red_id) FROM redsocial_prospecto WHERE prospecto_pro_id=_id_prospecto and red_tipo='twitter') > 0  then
+         SET @value = (SELECT red_descripcion FROM redsocial_prospecto WHERE prospecto_pro_id=_id_prospecto and binary red_tipo='twitter' LIMIT 1);
+        INSERT INTO `redsocial_miembro`( `redmi_descripcion`, `redmi_tipo`, `miembro_mie_id`) 
+                                    VALUES (@value,'twitter',_LID_APLICANTE);
+    end if; 
+
+     if (SELECT count(pro_des_id) FROM prospecto_desafio WHERE prospecto_pro_id=_id_prospecto) > 0  then
+        SET @value = (SELECT MAX(mie_des_id) FROM miembro_desafio);
+
+        INSERT INTO `miembro_desafio`( `desafio_des_id`) 
+        (SELECT  desafio_des_id FROM prospecto_desafio WHERE prospecto_pro_id=_id_prospecto );
+        
+        UPDATE miembro_desafio SET miembro_mie_id= _LID_APLICANTE WHERE mie_des_id > @value;
+
+
+    end if;
+
+    if (SELECT count(prosp_hob_id) FROM prospecto_hobbies WHERE prospecto_pro_id=_id_prospecto) > 0  then
+        SET @value = (SELECT MAX(mie_hob_id) FROM miembro_hobbises);
+        INSERT INTO miembro_hobbises(hobbies_hob_id) (SELECT hobbies_hob_id FROM prospecto_hobbies WHERE prospecto_pro_id=_id_prospecto );
+
+        UPDATE miembro_hobbises SET miembro_mie_id= _LID_APLICANTE WHERE mie_hob_id > @value;
+    end if;
+
+
+
+     if (SELECT count(prosp_emp_id) FROM prospecto_empresa WHERE prospecto_prosp_id=_id_prospecto) > 0  then
+        SET @value = (SELECT MAX(mie_emp_id) FROM miembro_empresa );
+        INSERT INTO miembro_empresa
+        (  tipo_empresa_id,`mie_emp_descripcion`, `empresalocal_emp_id`, `mie_emp_fechamodificacion`, `mie_emp_fecharegistro`, `mie_emp_usu_id`) 
+        (SELECT tipo_empresa_id, prosp_emp_descripcion,  empresalocal_emp_id, prosp_emp_fechamodificacion, prosp_emp_fecharegistro, prosp_emp_usu_id 
+        FROM prospecto_empresa WHERE prospecto_prosp_id=_id_prospecto);
+
+        UPDATE miembro_empresa SET miembro_mie_id= _LID_APLICANTE WHERE mie_emp_id > @value;
+    end if;
+    
+     if (SELECT count(prosp_asi_id)  FROM prospecto_asistente WHERE prospecto_id = _id_prospecto) > 0  then
+        SET @value = (SELECT MAX(mie_asi_id) FROM miembro_asistente );
+        INSERT INTO miembro_asistente(mie_asi_usu_id,  persona_per_id, cargo_id) 
+                       (SELECT          prosp_asi_usu_id,  persona_per_id, categoria_cat_id 
+                        FROM prospecto_asistente WHERE prospecto_id = _id_prospecto);
+
+        UPDATE miembro_asistente SET miembro_mie_id=_LID_APLICANTE WHERE mie_asi_id > @value;
+    end if;
+end if;
+
+END;

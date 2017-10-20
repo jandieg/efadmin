@@ -584,6 +584,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             break;
 
+            case 'KEY_CANCELAR_MEMBRESIA_MIEMBRO_2':
+
+             if( !empty($_POST['_id_miembro']) && !empty($_POST['_mes_elegido'])){
+
+                    $objPresupuestoCobro = new PresupuestoCobro();
+                    $data = explode('/',$_POST['_mes_elegido']);
+                    $comp = $objPresupuestoCobro->cancelarPresupuestoCobroMiembro2($_POST['_id_miembro'], intval($data[0]), $data[1]);                               
+                        if($comp == "OK"){
+                            $data = array("success" => "true", "priority"=>'success',"msg" => 'Los Cobros fueron cancelados exitosamente');
+                            echo json_encode($data);
+                        }else{
+                            $data = array("success" => "false", "priority"=>'info',"msg" => $comp); 
+                            echo json_encode($data);
+                        }
+                }  else {
+                    $data = array("success" => "false", "priority"=>'info', "msg" => 'Faltan campos por llenar!');  
+                    echo json_encode($data); 
+                }
+  
+                
+
+            break;
+
             case 'KEY_VERIFICAR_CODIGO':
                 
              if( !empty($_POST['_id_miembro']) && !empty($_POST['_codigo'])){

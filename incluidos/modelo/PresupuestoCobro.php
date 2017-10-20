@@ -41,6 +41,15 @@ class PresupuestoCobro extends Conexion{
         $penultima = date('Y-m-d', strtotime("-2 day", $fecha2)) . " 00:00:00";        
         $sql = "CALL sp_cancelPresupuestoCobroMiembro('$idMiembro', '$mes', '$anho', '$penultima')";
         return parent::setSqlSp($sql);
+    }   
+
+    public function cancelarPresupuestoCobroMiembro2($idMiembro, $mes, $anho) {
+        $mes2 = str_pad($mes,2,"0",STR_PAD_LEFT );
+        $fecha = $anho."-".$mes2."-01"; 
+        $fecha2= strtotime($fecha);
+        $penultima = date('Y-m-d', strtotime("-2 day", $fecha2)) . " 00:00:00";        
+        $sql = "CALL sp_cancelPresupuestoCobroMiembro2('$idMiembro', '$mes', '$anho', '$penultima')";
+        return parent::setSqlSp($sql);
     }       
 
     public function getPendientesByPrecobro($idPrecobro) {
