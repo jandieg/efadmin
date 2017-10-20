@@ -284,6 +284,7 @@ var setEstado = function(_id_prospecto) {
         });
 
 }
+
 var setConvertirAplicante = function(){
         var parametros = {
                 KEY: 'KEY_CONVERTIR_APLICANTE',
@@ -307,7 +308,7 @@ var setConvertirAplicante = function(){
                     	window.location.replace("http://"+ window.location.hostname + "/admin/miembros?id_miembro="+$("#convertir_id").val()+"&email=1");	                                                          
                   } else {
                     	window.location.replace("http://"+ window.location.hostname + "/admin/miembros?id_miembro="+$("#convertir_id").val());	                                        
-                    //window.location.replace("http://efadmin.localhost:3000/admin/miembros?id_miembro="+$("#convertir_id").val());	                                              
+                        //window.location.replace("http://efadmin.localhost:3000/admin/miembros?id_miembro="+$("#convertir_id").val());	                                              
                   }
 				
                     }else{

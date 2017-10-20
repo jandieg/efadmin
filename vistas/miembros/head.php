@@ -2019,8 +2019,40 @@ $listaFuncion2 = generadorComboSelectOption("_funcion_asistente_u", "",$lista);
 if(isset($_GET['id_miembro'])){ 
 /*  echo '<script>alert("Test")</script>';    */
 if(!empty($_GET['id_miembro']) ){ 
-include(HTML."/cabecera.php");
-echo getDetalleUpdate($_GET['id_miembro'],TRUE);
+setDatosConexion($_SESSION['user_subasedatos']);
+setDatosConexion('bases');
+
+$t='';
+if (in_array($perFiltroVerTodoslosMiembrosOp6, $_SESSION['usu_permiso'])) {
+    $tabla= getTablaFiltrada("","","",0);
+    $resultado = str_replace("{fitros}", generadorEtiquetasFiltro(getFiltros()), generadorFiltro('Filtros','ben_contenedor_filtro')); 
+    $resultado = str_replace("{cuerpo}", $tabla, $resultado);  
+    
+    $t=$resultado;
+      
+ }  elseif (in_array($perFiltroVerMiembrosForumOp6, $_SESSION['usu_permiso'])) {
+   
+    $tabla= getTablaFiltrada("","",$_SESSION['user_id_ben'],0);
+    $resultado = str_replace("{fitros}", generadorEtiquetasFiltro(getFiltros()), generadorFiltro('Filtros','ben_contenedor_filtro')); 
+    $resultado = str_replace("{cuerpo}", $tabla, $resultado);  
+    
+    $t=$resultado;
+}elseif (in_array($perGlobalMiembrosOp12, $_SESSION['usu_permiso'])) {
+    $bases= '';
+    //Esta variable se encuantra declarada en el login
+    if($_SESSION['global_databases_temporales'] != 'x'){
+        $bases= $_SESSION['global_databases_temporales'];
+    }                    
+    $tabla= getGlobalTablaFiltrada("","",$bases,0);
+    $resultado = str_replace("{fitros}", generadorEtiquetasFiltro(getGlobalFiltros()), generadorFiltro('Filtros','ben_contenedor_filtro')); 
+    $resultado = str_replace("{cuerpo}", $tabla, $resultado);  
+    
+    $t=$resultado;
+}
+
+
+//include(HTML."/cabecera.php");
+$t2 = getDetalleUpdate($_GET['id_miembro'],TRUE);
 
  }
 }

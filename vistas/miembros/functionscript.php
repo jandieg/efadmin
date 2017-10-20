@@ -516,7 +516,8 @@ var getDetalle = function( id_miembro, base){
             url:   'miembros',
             type:  'post',
             success:  function (mensaje) { 
-                $("#ben_contenedor").hide();                
+                $("#ben_contenedor").hide();  
+                $("#ben_contenedor2").html("");              
                 $("#ben_contenedor2").html(mensaje);
                 $("#ben_contenedor2").show();
                 $("#alertas").html("");
@@ -935,12 +936,17 @@ var getFiltroWithParams = function(parametros) {
 
 var getRecargar = function(){
     //location.reload();
-
-    $("#ben_contenedor2").hide();
-    $("#ben_contenedor").show();
-    /*
-    sessionStorage._recargado = true;
-	window.location.replace(window.location.origin+"/admin/miembros");	*/
+    if ($("#ben_contenedor2").is(":visible")) {
+        $("#ben_contenedor2").hide();
+        $("#ben_contenedor").show();
+    } else {
+        console.log('entra aca');
+        console.log($("#_id_miembro_cancel"));
+        getDetalle($("#_id_miembro_cancel").val(), '');
+        $.get( "/admin/miembros", function( data ) {
+            $("#ben_contenedor").html(data);
+        });
+    }
 };
 
 var getFiltro = function(key){
