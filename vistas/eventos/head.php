@@ -68,7 +68,13 @@ function getTablaComponenteEducacional() {
     $interval = DateInterval::createFromDateString('1 month');
     $period   = new DatePeriod($start, $interval, $end); 
     $objGrupo = new Grupo();
-    $lista = $objGrupo->getListaGruposAndForumLeaders();
+    if (in_array(trim($_SESSION['user_perfil']), array('Forum Leader'))) {
+        $lista = $objGrupo->getListaGruposAndForumLeaders();
+    } else {
+        $lista = $objGrupo->getListaGruposAndForumLeadersByUser();
+    }
+    
+    
     $listaNombres = getListaNombres($lista);
      $tabla="<div='myDiv' style=' >
     <div class='row'><div class ='span2'>&nbsp;</div><div class ='span2'>&nbsp;</div><div 
@@ -100,7 +106,12 @@ function getTablaComponenteEducacional() {
     }
 
     $objEvento = new Evento();
-    $resultset = $objEvento->getEventosByYearPeriod($anho_inicio, date('Y'));
+    if (in_array(trim($_SESSION['user_perfil']), array('Admin'))) {
+        $resultset = $objEvento->getEventosByYearPeriod($anho_inicio, date('Y'));
+    } else {
+        $resultset = $objEvento->getEventosByYearPeriodByUser($anho_inicio, date('Y'), $_SESSION['user_ben_id']);
+    }
+    
 
     while ($row = $resultset->fetch_assoc()) {
         $listaData[$row['anho']][$row['mes']][$row['grupos_gru_id']]['evento'] = "<td class='tabla-colapsada'>" . $row['ocasion'] . "</td>";
@@ -119,7 +130,6 @@ function getTablaComponenteEducacional() {
         $tabla.="<td class='tabla-colapsada'>".$meses[$dt->format("m")]."</td>";
                 
         foreach($lista as $l) {
-
             $tabla.=$listaData[$dt->format('Y')][intval($dt->format('m'))][$l['id']]['evento'];
             $tabla.=$listaData[$dt->format('Y')][intval($dt->format('m'))][$l['id']]['puntaje']; //"<td style='border: 1px solid black; border-collapse: collapse;  border-right-width: 3px;'>&nbsp;</td>";
         }
@@ -173,7 +183,10 @@ function getTablaCasosDelMes() {
 
     $objEvento = new Evento();
     $objEvento2 = new Evento();
+    
     $resultset = $objEvento->getMiembrosPendientes(); 
+     
+    
     $listaPendientes = array();
     $gruact = "";
     $cont = 1;
@@ -192,10 +205,14 @@ function getTablaCasosDelMes() {
     $tabla .= "<table class='table table-bordered tabla-colapsada' id='latabla'>";
     $tabla.= "<thead>";
     $tabla.= "<tr><th class='tabla-colapsada'>&nbsp;</th><th class='tabla-colapsada'>&nbsp;</th>";
-
+    
     $resultset2 = $objEvento2->getTodosEventos2();
+    
     $objMiembro = new Miembro();
+    
     $resultset3 = $objMiembro->getAllMembers();
+    
+    
     $anhoact = "";                        
     foreach ($period as $dt) {
         if ($anhoact != $dt->format('Y')) {

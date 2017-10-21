@@ -386,8 +386,25 @@ class Grupo extends Conexion{
         return parent::getConsultar($sql);
     }
 
+    public function getGruposAndForumLeadersByUser($idUser) {
+        $sql="call sp_selectGruposAndForumLeadersByUser('$idUser')";
+        return parent::getConsultar($sql);
+    }
+
     public function getListaGruposAndForumLeaders() {
         $resultset = $this->getGruposAndForumLeaders();
+        $lista = array();
+        $i = 0;
+        while ($row = $resultset->fetch_assoc()) {
+            $lista[$i]['id'] = $row['gru_id'];
+            $lista[$i]['nombre'] = $row['usu_user'];
+            $i++;
+        }
+        return $lista;
+    }
+
+    public function getListaGruposAndForumLeadersByUser($idUser) {
+        $resultset = $this->getGruposAndForumLeadersByUser($idUser);
         $lista = array();
         $i = 0;
         while ($row = $resultset->fetch_assoc()) {
