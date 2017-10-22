@@ -6,9 +6,9 @@
     #mi_modal_personalizado{
       width: 60% !important;
     }
-    /*#ben_contenedor{
-          overflow-x: scroll;
-    }*/
+    #ben_contenedor{
+       height: 100% !important;
+    }
 
     .tabla-colapsada {
       border: 1px solid black !important; 
@@ -38,7 +38,8 @@
 
     th, td { white-space: nowrap; }
     div.dataTables_wrapper {
-        width: 800px;
+        width: 100%;
+        height: 600px !important;
         margin: 0 auto;
     }
   </style>

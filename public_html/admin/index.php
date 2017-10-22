@@ -336,7 +336,7 @@ function ResetReports(id){
 
             var getConfTablaFixed = function() {
                 $('#latabla').DataTable( {
-                    scrollY:        "300px",
+                    scrollY:        "500px",
                     scrollX:        true,
                     scrollCollapse: true,
                     ordering: false,
