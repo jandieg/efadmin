@@ -71,9 +71,9 @@ function getTablaComponenteEducacional() {
     if (in_array(trim($_SESSION['user_perfil']), array('Forum Leader'))) {
         $lista = $objGrupo->getListaGruposAndForumLeaders();
     } else {
-        $lista = $objGrupo->getListaGruposAndForumLeadersByUser();
+        $lista = $objGrupo->getListaGruposAndForumLeadersByUser($_SESSION['user_id_ben']);
     }
-    
+        
     
     $listaNombres = getListaNombres($lista);
      $tabla="<div='myDiv' style=' >
@@ -109,9 +109,8 @@ function getTablaComponenteEducacional() {
     if (in_array(trim($_SESSION['user_perfil']), array('Admin'))) {
         $resultset = $objEvento->getEventosByYearPeriod($anho_inicio, date('Y'));
     } else {
-        $resultset = $objEvento->getEventosByYearPeriodByUser($anho_inicio, date('Y'), $_SESSION['user_ben_id']);
+        $resultset = $objEvento->getEventosByYearPeriodByUser($anho_inicio, date('Y'), $_SESSION['user_id_ben']);
     }
-    
 
     while ($row = $resultset->fetch_assoc()) {
         $listaData[$row['anho']][$row['mes']][$row['grupos_gru_id']]['evento'] = "<td class='tabla-colapsada'>" . $row['ocasion'] . "</td>";
@@ -121,13 +120,13 @@ function getTablaComponenteEducacional() {
     $anhoact = "";
     foreach($period as $dt) {
         if ($dt->format('Y') != $anhoact) {            
-            $tabla.="<tr style='border-top: 3px solid black;'><td class='tabla-colapsada' style='border-top-width: 3px;'>".$dt->format('Y')."</td>";
+            $tabla.="<tr style='border-top: 3px solid black;'><td class='tabla-colapsada fondo-blanco' style='border-top-width: 3px;'>".$dt->format('Y')."</td>";
             $anhoact = $dt->format('Y');
         } else {            
-            $tabla.="<tr><td class='tabla-colapsada'>".$dt->format('Y')."</td>";
+            $tabla.="<tr><td class='tabla-colapsada fondo-blanco'>".$dt->format('Y')."</td>";
         }
                
-        $tabla.="<td class='tabla-colapsada'>".$meses[$dt->format("m")]."</td>";
+        $tabla.="<td class='tabla-colapsada fondo-blanco'>".$meses[$dt->format("m")]."</td>";
                 
         foreach($lista as $l) {
             $tabla.=$listaData[$dt->format('Y')][intval($dt->format('m'))][$l['id']]['evento'];
