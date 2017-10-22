@@ -182,8 +182,12 @@ function getTablaCasosDelMes() {
 
     $objEvento = new Evento();
     $objEvento2 = new Evento();
+    if (in_array(trim($_SESSION['user_perfil']), array('Admin'))) {
+        $resultset = $objEvento->getMiembrosPendientes(); 
+    } else {
+        $resultset = $objEvento->getMiembrosPendientesByUser($_SESSION['user_id_ben']); 
+    }
     
-    $resultset = $objEvento->getMiembrosPendientes(); 
      
     
     $listaPendientes = array();
@@ -205,11 +209,20 @@ function getTablaCasosDelMes() {
     $tabla.= "<thead>";
     $tabla.= "<tr><th class='tabla-colapsada'>&nbsp;</th><th class='tabla-colapsada'>&nbsp;</th>";
     
-    $resultset2 = $objEvento2->getTodosEventos2();
+    if (in_array(trim($_SESSION['user_perfil']), array('Admin'))) {
+        $resultset2 = $objEvento2->getTodosEventos2();
+    } else {
+        $resultset2 = $objEvento2->getTodosEventos2ByUser($_SESSION['user_id_ben']);
+    }
+    
     
     $objMiembro = new Miembro();
-    
-    $resultset3 = $objMiembro->getAllMembers();
+
+    if (in_array(trim($_SESSION['user_perfil']), array('Admin'))) {
+        $resultset3 = $objMiembro->getAllMembers();
+    } else {
+        $resultset3 = $objMiembro->getAllMembersByUser($_SESSION['user_id_ben']);
+    }
     
     
     $anhoact = "";                        
