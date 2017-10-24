@@ -56,8 +56,10 @@
                    
                     <li><a href="mantenedorprovincia">Estado / Provincia</a></li>
                     <li><a href="mantenedorestadoprospecto">Estado Aplicante</a></li>
-                    <li><a href="mantenedorestadopresupuesto">Estado Monetario</a></li>
+                    <li><a href="mantenedorestadopresupuesto">Estado Monetario</a></li>                    
+                    <?php if (in_array($perMantenedorFormaPagoOp5, $_SESSION['usu_permiso'])) { ?>
                     <li><a href="mantenedorformapago">Forma Pago</a></li>
+                    <?php } ?>
                     <li><a href="mantenedormembresia">Membresia</a></li>
                     <!--<li><a href="mantenedorstatusmember">Status Member</a></li>-->                   
                     <!--<li><a href="mantenedorfuente">Fuentes</a></li>-->
