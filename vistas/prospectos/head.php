@@ -1031,7 +1031,12 @@ function getFiltros() {
     }
 	
 	    $objForum = new ForumLeader();
-        $listaForum=$objForum->getListaForumLeaders2(NULL,$lista);
+        if ($_SESSION['user_user']=='admin') {
+            $listaForum=$objForum->getListaForumLeaders2(NULL,$lista);
+        } else {
+            $listaForum=$objForum->getListaForumLeaders7(NULL,$lista, $_SESSION['user_id_ben']);
+        }
+        
         $form['form_2'] = array("elemento" => "combo","change" => "getFiltro('2')", "titulo" => "Forum Leader", "id" => "_forum", "option" => $listaForum); 
     /*
     $objEmpresaLocal= new EmpresaLocal();
