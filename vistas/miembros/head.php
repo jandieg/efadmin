@@ -1086,7 +1086,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         $lista["0"]= array("value" => "x",  "select" => "selected" ,"texto" => "Seleccione...");                                
                         $objGrupo= new Grupo();
                         if ($_POST['_filtro'] == "x") {
-                            $listaGrupos= $objGrupo->getListaGrupos2(NULL,$lista);                   
+                            $listaGrupos= $objGrupo->getListaGrupos7(NULL,$lista, $_SESSION['user_id_ben']);                   
                         } else {
                             $listaGrupos= $objGrupo->getListaGruposForum($_POST['_filtro'],NULL, $lista);                   
                         }
