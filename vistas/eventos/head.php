@@ -198,7 +198,7 @@ function getTablaCasosDelMes() {
             $cont = 1;
             $gruact = $row['grupo_id'];
         }
-        if ($cont < 6) {
+        if ($cont < 4) {
             $listaPendientes[$row['grupo_id']] = $row['mie_id'];
         }        
         $cont++;
