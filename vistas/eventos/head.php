@@ -193,16 +193,10 @@ function getTablaCasosDelMes() {
     $listaPendientes = array();
     $gruact = "";
     $cont = 1;
-    while ($row = $resultset->fetch_assoc()) {
-        if ($gruact != $row['grupo_id']) {
-            $cont = 1;
-            $gruact = $row['grupo_id'];
-        }
-        if ($cont < 4) {
-            $listaPendientes[$row['grupo_id']] = $row['mie_id'];
-        }        
-        $cont++;
+    while ($row = $resultset->fetch_assoc()) {                
+            $listaPendientes[$row['grupo_id']] = $row['mie_id'];                                  
     }
+    
     $tabla="<div='myDiv' style=' width: 900px !important; overflow-x: scroll !important;'>
     <div class='row'><div class ='span2'>&nbsp;</div><div class ='span2'>&nbsp;</div><div class ='span2'>&nbsp;</div><div class ='span2 btn btn-primary' onClick='getRecargar()' style='margin-left:20px;'>Regresar</div></div>";
     $tabla .= "<table class='table table-bordered tabla-colapsada' id='latabla'>";
@@ -268,9 +262,24 @@ function getTablaCasosDelMes() {
         
     }
 
+
     foreach ($listaPendientes as $k => $l) {
-        $data[$k][$l][date('Y')][intval(date('m'))] = "<td style='background-color: green;' class='tabla-colapsada'><strong>n</strong></td>";
+        $lista = explode(',' ,$l);
+        $cont = 0;
+        foreach ($lista as $ll) {
+            if (strlen($ll) > 0) {
+                if (isset($data[$k][$ll][date('Y')][intval(date('m'))])) {
+                    $data[$k][$ll][date('Y')][intval(date('m'))] = "<td style='background-color: green;' class='tabla-colapsada'><strong>n</strong></td>";
+                    $cont++;
+                }                
+            }
+
+            if ($cont == 3) {
+                break;
+            }            
+        }        
     }
+
     $nombreact = "";
     $i = 1;
     $j = 1;

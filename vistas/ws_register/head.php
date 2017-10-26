@@ -22,7 +22,14 @@ if (isset($data)) {
 				$cuerpoMensaje="Estimado ".$member["name"].", utiliza el siguiente código para acceder a la APP de Executive Forums:<br><br> ".$code;
 				
 				$mail= new Mail();
-				$msg= $mail->enviar("Executive Forums - APP", "", "Código de acceso a App Executive Forums", $cuerpoMensaje, $data->user, TRUE, $member['correo_ibp']);
+				if (strlen($member['correo_ibp']) > 0) {
+					$msg= $mail->enviar("Executive Forums - APP", "", "Código de acceso a App Executive Forums", 
+					$cuerpoMensaje, $data->user, TRUE, $member['correo_ibp']);
+				} else {
+					$msg= $mail->enviar("Executive Forums - APP", "", "Código de acceso a App Executive Forums", 
+					$cuerpoMensaje, $data->user, TRUE, $member['correo_ibp2']);
+				}
+				
 				
 					 $response["success"] = "1"; 
 				     $response["data"] = $resultset['usuario'][0]; 
@@ -36,7 +43,14 @@ if (isset($data)) {
 							$cuerpoMensaje="Estimado ".$member["name"].", utiliza el siguiente código para acceder a la APP de Executive Forums:<br><br> ".$code;
 				
 							$mail= new Mail();
-							$msg= $mail->enviar("Executive Forums - APP", "", "Código de acceso a App Executive Forums",  $cuerpoMensaje, $data->user, TRUE, $member['correo_ibp']);
+							if (strlen($member['correo_ibp']) > 0) {
+								$msg= $mail->enviar("Executive Forums - APP", "", "Código de acceso a App Executive Forums",  
+								$cuerpoMensaje, $data->user, TRUE, $member['correo_ibp']);
+							} else {
+								$msg= $mail->enviar("Executive Forums - APP", "", "Código de acceso a App Executive Forums",  
+								$cuerpoMensaje, $data->user, TRUE, $member['correo_ibp2']);
+							}
+							
 
 								 $response["success"] = "1"; 
 								 $response["data"] = $resultset['staff'][0]; 
