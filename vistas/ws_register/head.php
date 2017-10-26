@@ -23,10 +23,10 @@ if (isset($data)) {
 				
 				$mail= new Mail();
 				if (strlen($member['correo_ibp']) > 0) {
-					$msg= $mail->enviar("Executive Forums - APP", "", "Código de acceso a App Executive Forums", 
+					$msg= $mail->enviarCodigo("Executive Forums - APP", "", "Código de acceso a App Executive Forums", 
 					$cuerpoMensaje, $data->user, TRUE, $member['correo_ibp']);
 				} else {
-					$msg= $mail->enviar("Executive Forums - APP", "", "Código de acceso a App Executive Forums", 
+					$msg= $mail->enviarCodigo("Executive Forums - APP", "", "Código de acceso a App Executive Forums", 
 					$cuerpoMensaje, $data->user, TRUE, $member['correo_ibp2']);
 				}
 				
@@ -44,10 +44,10 @@ if (isset($data)) {
 				
 							$mail= new Mail();
 							if (strlen($member['correo_ibp']) > 0) {
-								$msg= $mail->enviar("Executive Forums - APP", "", "Código de acceso a App Executive Forums",  
+								$msg= $mail->enviarCodigo("Executive Forums - APP", "", "Código de acceso a App Executive Forums",  
 								$cuerpoMensaje, $data->user, TRUE, $member['correo_ibp']);
 							} else {
-								$msg= $mail->enviar("Executive Forums - APP", "", "Código de acceso a App Executive Forums",  
+								$msg= $mail->enviarCodigo("Executive Forums - APP", "", "Código de acceso a App Executive Forums",  
 								$cuerpoMensaje, $data->user, TRUE, $member['correo_ibp2']);
 							}
 							
