@@ -25,13 +25,23 @@ class Inscripcion extends Conexion{
      public function setGrabar($valor, $idMiembro,  $user, $fechaInscripcion,$estado, $fecha_cobro) {
         $fecha= date_format(date_create($fechaInscripcion),'Y-m-d H:i:s');        
         $ano= date_format(date_create($fechaInscripcion),'Y');
-        $f_c= $fecha_cobro . ' ' . date("H:i:s");
+        if (strlen($fecha_cobro) == 0) {
+            $f_c= NULL;
+        } else {
+            $f_c= $fecha_cobro . ' ' . date("H:i:s");
+        }
+        
         $sql="call sp_createInscripcion('$valor', '$idMiembro', '$fecha', '$user' ,'$fechaInscripcion','$estado','$ano', '$f_c')";  
         return parent::setSqlSp($sql);
         
     }
      public function setActualizar($id, $valor,  $user, $fechaInscripcion,$estado, $fecha_cobro) {
-        $f_c= $fecha_cobro . ' ' . date("H:i:s");
+        if (strlen($fecha_cobro) == 0) {
+            $f_c= NULL;
+        } else {
+            $f_c= $fecha_cobro . ' ' . date("H:i:s");
+        }
+        
         $sql="call sp_updateInscripcion('$id', '$valor',  '$user' ,'$fechaInscripcion','$estado', '$f_c')";  
         return parent::setSqlSp($sql);
         
