@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             case 'KEY_SHOW_FORM_GUARDAR'://///////////////////////////////////////////////////////// 
                 $objForum= new ForumLeader();
                 $lista=array();
-                $lista=$objForum->getListaForumLeaders(); 
+                $lista=$objForum->getListaForumLeaders7('', NULL, $_SESSION['user_id_ben']); 
 
                 $boton['boton_2'] = array("click" => "setCrear('g')" ,"id" => "btnGuardar","modal" => "" ,"color" => "btn-info" ,"titulo" => "Guardar" ,"lado" => "pull-right" ,"icono" => "fa-pencil");
                 $boton['boton_3'] = array("click" => "setCrear('gn')" ,"id" => "btnGuardarNuevo","modal" => "" ,"color" => "btn-info" ,"titulo" => "Guardar y Nuevo" ,"lado" => "pull-right" ,"icono" => "fa-pencil");
@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     if ($row = $resultset->fetch_assoc()) { //usuario.usu_id , persona.per_nombre, persona.per_apellido
                     $objForum= new ForumLeader();
                     $lista=array();
-                    $lista=$objForum->getListaForumLeaders3($row['gru_forum'], '',NULL); 
+                    $lista=$objForum->getListaForumLeaders7($row['gru_forum'], NULL, $_SESSION['user_id_ben']); 
                     
                                
                     $boton['boton_2'] = array("click" => "setActualizar(".$row['gru_id'].")" ,"modal" => "" ,"color" => "btn-info" ,"titulo" => "Guardar" ,"lado" => "pull-right" ,"icono" => "fa-pencil");
