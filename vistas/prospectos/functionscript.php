@@ -308,8 +308,8 @@ var setConvertirAplicante = function(){
                   if ($("#_email").is(":checked")) {
                     	window.location.replace("http://"+ window.location.hostname + "/admin/miembros?id_miembro="+$("#convertir_id").val()+"&email=1");	                                                          
                   } else {
-                    	//window.location.replace("http://"+ window.location.hostname + "/admin/miembros?id_miembro="+$("#convertir_id").val());	                                        
-                        window.location.replace("http://efadmin.localhost:3000/admin/miembros?id_miembro="+$("#convertir_id").val());	                                              
+                    	window.location.replace("http://"+ window.location.hostname + "/admin/miembros?id_miembro="+$("#convertir_id").val());	                                        
+                        //window.location.replace("http://efadmin.localhost:3000/admin/miembros?id_miembro="+$("#convertir_id").val());	                                              
                   }
 				
                     }else{

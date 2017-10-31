@@ -1352,7 +1352,7 @@ var setActualizarUserPass = function(){
             KEY: 'KEY_ACTUALIZAR_CREDENCIALES',  
             _id: $("#_id_credenciales").val().toString(),
             _user: $("#_user_credenciales").val().toString(),
-            _contrasena: $("#_clave_credenciales").val().toString(),
+            _contraseña: $("#_clave_credenciales").val().toString(),
             _confirmar: $("#_confirmar_credenciales").val().toString(),
             _bandera_credenciales: $("#_bandera_credenciales").val().toString(),
             _correo_credenciales: $("#_correo_credenciales").val().toString()
