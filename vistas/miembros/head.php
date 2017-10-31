@@ -836,7 +836,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     }
                                 }
 
-                                if (getFormatoFechadmy($fecha_ingreso) != "31/12/1969") {
+                                if (! in_array(getFormatoFechadmy($fecha_ingreso), array("31/12/1969","30/11/-0001"))) {
                                     $tabla7['t_0'] = array("t_1" => generadorNegritas("Fecha de Registro"), "t_2" => getFormatoFechadmy($fecha_ingreso));
                                 } else {
                                     $tabla7['t_0'] = array("t_1" => generadorNegritas("Fecha de Registro"), "t_2" => "---");
@@ -844,21 +844,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 
                                 $tabla7['t_1'] = array("t_1" => generadorNegritas("Estado"), "t_2" => $estado_presup);
                                 $tabla8['t_0'] = array("t_1" => generadorNegritas("Precio"), "t_2" => $valor_ins);
-                                if (getFormatoFechadmy($fecha_cobro) != "31/12/1969") {
+                                if (! in_array(getFormatoFechadmy($fecha_cobro), array("31/12/1969","30/11/-0001"))) {
                                     $tabla8['t_1'] = array("t_1" => generadorNegritas("Fecha de Cobro"), "t_2" => getFormatoFechadmy($fecha_cobro));
                                 } else {
                                     $tabla8['t_1'] = array("t_1" => generadorNegritas("Fecha de Cobro"), "t_2" => "---");
                                 }
                                 
                             } else {
-                                if (getFormatoFechadmy($fecha_ingreso) != "31/12/1969") {
+                                if (! in_array(getFormatoFechadmy($fecha_ingreso), array("31/12/1969","30/11/-0001"))) {
                                     $tabla7['t_0'] = array("t_1" => generadorNegritas("Fecha de Registro"), "t_2" => getFormatoFechadmy($fecha_ingreso));
                                 } else {
                                     $tabla7['t_0'] = array("t_1" => generadorNegritas("Fecha de Registro"), "t_2" => "---");
                                 }
                                 $tabla7['t_1'] = array("t_1" => generadorNegritas("Estado"), "t_2" => "---");
                                 $tabla8['t_0'] = array("t_1" => generadorNegritas("Precio"), "t_2" => "---");
-                                if (getFormatoFechadmy($fecha_cobro) != "31/12/1969") {
+                                if (! in_array(getFormatoFechadmy($fecha_ingreso), array("31/12/1969","30/11/-0001"))) {
                                     $tabla8['t_1'] = array("t_1" => generadorNegritas("Fecha de Cobro"), "t_2" => getFormatoFechadmy($fecha_cobro));
                                 } else {
                                     $tabla8['t_1'] = array("t_1" => generadorNegritas("Fecha de Cobro"), "t_2" => "---");
@@ -873,7 +873,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         }
                              
                              
-
 
                         //end inscripcion
                         
