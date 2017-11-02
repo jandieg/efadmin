@@ -147,8 +147,22 @@ class Evento extends Conexion{
         return parent::getConsultar($sql);
     }
 
+    public function getEventosByUsuarioPersona2($idUser) {
+        $sql = "call sp_selectEventosByUsuarioPersona2('$idUser')";
+        return parent::getConsultar($sql);
+    }
+
     public function getJSONEventosCalendar($id){
         $resultset= $this->getEventosByUsuarioPersona($id);
+        $response = array();
+        while ($row = $resultset->fetch_assoc()) { 
+            array_push($response, $row);     
+        } 
+        return json_encode(json_encode($response)); 
+    }
+
+    public function getJSONEventosCalendar2($id){
+        $resultset= $this->getEventosByUsuarioPersona2($id);
         $response = array();
         while ($row = $resultset->fetch_assoc()) { 
             array_push($response, $row);     
