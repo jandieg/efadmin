@@ -788,13 +788,24 @@ var setUserActualizar = function(  id_persona, id_miembro){
                 _grupo_asignar:$("#_grupo_asignar").val().toString()
         };
         if ($("#_fecha_registro").val().toString().length >0 ) {
-            textoalertas += setAgregarInscripcionEnPrincipal(
-            $("#_id_insc").val().toString(), 
-            id_miembro.toString(), 
-            $("#_fecha_registro").val().toString(), 
-            $("#_ins_valor").val().toString(), 
-            1, 
-            $("#_fecha_cobro").val().toString()
+            if ($("#_fecha_cobro").val().toString().length > 0) {
+                textoalertas += setAgregarInscripcionEnPrincipal(
+                $("#_id_insc").val().toString(), 
+                id_miembro.toString(), 
+                $("#_fecha_registro").val().toString(), 
+                $("#_ins_valor").val().toString(), 
+                2, 
+                $("#_fecha_cobro").val().toString()
+            } else {
+                textoalertas += setAgregarInscripcionEnPrincipal(
+                $("#_id_insc").val().toString(), 
+                id_miembro.toString(), 
+                $("#_fecha_registro").val().toString(), 
+                $("#_ins_valor").val().toString(), 
+                1, 
+                $("#_fecha_cobro").val().toString()
+            }
+            
         );
        
         } /*else {
