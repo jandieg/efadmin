@@ -50,6 +50,7 @@ if (isset($data)) {
 
 					 $response["success"] = "1"; 
 				     $response["data"] = $resultset['usuario'][0]; 
+					 $response["data"]["type"]="M"; 
 				     echo json_encode($response); 
                 }else{
 				//staff
@@ -87,6 +88,7 @@ if (isset($data)) {
 
 								 $response["success"] = "1"; 
 								 $response["data"] = $resultset['staff'][0]; 
+								 $response["data"]["type"]="S"; 
 								 echo json_encode($response); 
 							}else{
 								 $response["success"] = "0"; 
