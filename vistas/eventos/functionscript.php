@@ -412,6 +412,7 @@ var setCrearEvento = function(op, id_tipo_evento,opcion_contacto,opcion_acompana
             
         },error : function(xhr, status) {
             $.msg('unblock');
+            console.log(xhr);
             $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema'});
         }
     });

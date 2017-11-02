@@ -507,8 +507,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                  $objCategoria= new Categoria();                    
                  $listacategoria=  $objCategoria->getListaCategoria(NULL);
 
-                  $objForum= new ForumLeader();
-                  $listaPerfil= $objForum->getListaForumLeaders(NULL);
+                 $objForum= new ForumLeader();
+                 $listaPerfil= $objForum->getListaForumLeaders7ConGrupos("", NULL, $_SESSION['user_id_ben']);
     
                  //Direccion 
                  $objPais= new Pais();

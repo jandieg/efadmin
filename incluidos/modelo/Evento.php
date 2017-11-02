@@ -37,14 +37,14 @@ class Evento extends Conexion{
         $fecha= date("Y-m-d H:i:s");
         $sql="call sp_createEventoCalendar( '$titular','$toeldia','$fi','$ff','$descripcion' , "
                 . "'$fecha' , '$id_user', '$listaInvitados','$listaGrupos','$listaMiembros',"
-                . "'$misGrupos','$todosGrupos','$idEvento','$idDireccion','$idAcompanado','$listaContactos','$listaEmpresarios','$nombre','$idGenerado', '$todoslosgrupos', '$ciudad')";  
+                . "'$misGrupos','$todosGrupos','$idEvento','$idDireccion','$idAcompanado','$listaContactos','$listaEmpresarios','$nombre','$idGenerado', '$todoslosgrupos', '$ciudad')";                  
         $resultset= parent::getConsultar($sql);
         $idEvento = 0;
         if($row = $resultset->fetch_assoc()) { 
            $idEvento= $row['eve_id'];                                                                    
         }
         return $idEvento;
-        
+  
     }
 //    public function setEventoIDGenerado($idGenerado) {
 //        $sql="call sp_selectEventoIDGenerado('$idGenerado')";
@@ -147,8 +147,22 @@ class Evento extends Conexion{
         return parent::getConsultar($sql);
     }
 
+    public function getEventosByUsuarioPersona2($idUser) {
+        $sql = "call sp_selectEventosByUsuarioPersona2('$idUser')";
+        return parent::getConsultar($sql);
+    }
+
     public function getJSONEventosCalendar($id){
         $resultset= $this->getEventosByUsuarioPersona($id);
+        $response = array();
+        while ($row = $resultset->fetch_assoc()) { 
+            array_push($response, $row);     
+        } 
+        return json_encode(json_encode($response)); 
+    }
+
+    public function getJSONEventosCalendar2($id){
+        $resultset= $this->getEventosByUsuarioPersona2($id);
         $response = array();
         while ($row = $resultset->fetch_assoc()) { 
             array_push($response, $row);     

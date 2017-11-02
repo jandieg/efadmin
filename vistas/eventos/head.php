@@ -23,6 +23,7 @@ include(HTML."/html_combos.php");
 include(HTML."/html_filtros.php");
 include(LENGUAJE."/lenguaje_1.php");
 $settings = parse_ini_file(E_LIB."settings.ini.php");
+error_reporting(E_ALL);
 $asunto= "";$tabla= "";$correo= "";
 
 
@@ -887,11 +888,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 break; 
             case 'KEY_DATA_CALENDARIO'://///////////////////////////////////////////////////////// 
                 $objEvento= new Evento();
-                if (in_array(trim($_SESSION['user_perfil']), array('Administrador', 'Administrador Regional', 'IBP', 'Asistente'))) {
-                    echo $objEvento->getJSONEventosCalendar(""); 
-                } 
-                if (in_array(trim($_SESSION['user_perfil']), array('Forum Leader'))) {
+                if (in_array(trim($_SESSION['user_perfil']), array('IBP', 'Asistente'))) {
                     echo $objEvento->getJSONEventosCalendar($_SESSION['user_id_ben']); 
+                } 
+                if (in_array(trim($_SESSION['user_perfil']), array('Administrador', 'Administrador Regional'))) {
+                    echo $objEvento->getJSONEventosCalendar(""); 
+                }
+                if (in_array(trim($_SESSION['user_perfil']), array('Forum Leader'))) {
+                    echo $objEvento->getJSONEventosCalendar2($_SESSION['user_id_ben']); 
                 }
                     
                 break;

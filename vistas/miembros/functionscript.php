@@ -788,13 +788,24 @@ var setUserActualizar = function(  id_persona, id_miembro){
                 _grupo_asignar:$("#_grupo_asignar").val().toString()
         };
         if ($("#_fecha_registro").val().toString().length >0 ) {
-            textoalertas += setAgregarInscripcionEnPrincipal(
-            $("#_id_insc").val().toString(), 
-            id_miembro.toString(), 
-            $("#_fecha_registro").val().toString(), 
-            $("#_ins_valor").val().toString(), 
-            1, 
-            $("#_fecha_cobro").val().toString()
+            if ($("#_fecha_cobro").val().toString().length > 0) {
+                textoalertas += setAgregarInscripcionEnPrincipal(
+                $("#_id_insc").val().toString(), 
+                id_miembro.toString(), 
+                $("#_fecha_registro").val().toString(), 
+                $("#_ins_valor").val().toString(), 
+                2, 
+                $("#_fecha_cobro").val().toString()
+            } else {
+                textoalertas += setAgregarInscripcionEnPrincipal(
+                $("#_id_insc").val().toString(), 
+                id_miembro.toString(), 
+                $("#_fecha_registro").val().toString(), 
+                $("#_ins_valor").val().toString(), 
+                1, 
+                $("#_fecha_cobro").val().toString()
+            }
+            
         );
        
         } /*else {
@@ -1041,7 +1052,7 @@ var getFiltro = function(key){
           
     }
 
-    sessionStorage._memb_type = $('#_memb_type').val().toString();
+    /*sessionStorage._memb_type = $('#_memb_type').val().toString();
     sessionStorage._status_memb = $('#_status_memb').val().toString();
     sessionStorage._industria = $('#_industria').val().toString();
     sessionStorage._grupo = $('#_grupo').val().toString();
@@ -1051,7 +1062,7 @@ var getFiltro = function(key){
     sessionStorage._key_filtro = key;
     sessionStorage._filtro = filtro;
     sessionStorage._canceladas = canceladas;
-    console.log(sessionStorage);
+    console.log(sessionStorage);*/
 
       var parametros = {
             KEY: 'KEY_SHOW_FILTRO',
