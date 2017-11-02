@@ -1041,7 +1041,7 @@ var getFiltro = function(key){
           
     }
 
-    sessionStorage._memb_type = $('#_memb_type').val().toString();
+    /*sessionStorage._memb_type = $('#_memb_type').val().toString();
     sessionStorage._status_memb = $('#_status_memb').val().toString();
     sessionStorage._industria = $('#_industria').val().toString();
     sessionStorage._grupo = $('#_grupo').val().toString();
@@ -1051,7 +1051,7 @@ var getFiltro = function(key){
     sessionStorage._key_filtro = key;
     sessionStorage._filtro = filtro;
     sessionStorage._canceladas = canceladas;
-    console.log(sessionStorage);
+    console.log(sessionStorage);*/
 
       var parametros = {
             KEY: 'KEY_SHOW_FILTRO',

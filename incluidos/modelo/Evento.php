@@ -37,14 +37,14 @@ class Evento extends Conexion{
         $fecha= date("Y-m-d H:i:s");
         $sql="call sp_createEventoCalendar( '$titular','$toeldia','$fi','$ff','$descripcion' , "
                 . "'$fecha' , '$id_user', '$listaInvitados','$listaGrupos','$listaMiembros',"
-                . "'$misGrupos','$todosGrupos','$idEvento','$idDireccion','$idAcompanado','$listaContactos','$listaEmpresarios','$nombre','$idGenerado', '$todoslosgrupos', '$ciudad')";  
+                . "'$misGrupos','$todosGrupos','$idEvento','$idDireccion','$idAcompanado','$listaContactos','$listaEmpresarios','$nombre','$idGenerado', '$todoslosgrupos', '$ciudad')";                  
         $resultset= parent::getConsultar($sql);
         $idEvento = 0;
         if($row = $resultset->fetch_assoc()) { 
            $idEvento= $row['eve_id'];                                                                    
         }
         return $idEvento;
-        
+  
     }
 //    public function setEventoIDGenerado($idGenerado) {
 //        $sql="call sp_selectEventoIDGenerado('$idGenerado')";

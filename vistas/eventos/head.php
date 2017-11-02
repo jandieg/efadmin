@@ -23,6 +23,7 @@ include(HTML."/html_combos.php");
 include(HTML."/html_filtros.php");
 include(LENGUAJE."/lenguaje_1.php");
 $settings = parse_ini_file(E_LIB."settings.ini.php");
+error_reporting(E_ALL);
 $asunto= "";$tabla= "";$correo= "";
 
 

@@ -371,13 +371,10 @@ $form['form_0'] = array("elemento" => "subir-imagen", "valor" => $cod1."-".$cod2
                                 $form11['form_0'] = array("elemento" => "caja" ,"tipo" => "date", "titulo" => "Fecha de Registro", "id" => "_fecha_registro", "reemplazo" => $fecha_ingreso);                        
                                 //$form11['form_1'] = array("elemento" => "combo","change" => "", "titulo" => "Estado", "id" => "_estado_presupuesto", "option" => $listaEP);
                                 $form11['form_1'] = array("elemento" => "caja","tipo" => "hidden", "titulo" => "", "id" => "_estado_presupuesto", "reemplazo" => 2);
-                                $form11['form_2'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_id_insc" ,"reemplazo" => $row4['mie_ins_id']);
-                                
-                                
+                                $form11['form_2'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_id_insc" ,"reemplazo" => $row4['mie_ins_id']);                                                                
                                 $form12['form_0'] = array("elemento" => "caja" ,"tipo" => "hidden" , "titulo" => "", "id" => "_ins_valor" ,"reemplazo" => $id_valor);
                                 $form12['form_1'] = array("elemento" => "combo", "deshabilitado" => true, "titulo" => "Precio",  "id" => "_ins_valor2" ,"option" => $listam3);
-                                $form12['form_2'] = array("elemento" => "caja" ,"tipo" => "date", "titulo" => "Fecha de Cobro", "id" => "_fecha_cobro", "reemplazo" => $fecha_cobro);                        
-                                
+                                $form12['form_2'] = array("elemento" => "caja" ,"tipo" => "date", "titulo" => "Fecha de Cobro", "id" => "_fecha_cobro", "reemplazo" => $fecha_cobro);                                                        
                             } else {
                                 $objEstadoPresupuesto= new EstadoPresupuesto();
                                 $listaEP= array();
