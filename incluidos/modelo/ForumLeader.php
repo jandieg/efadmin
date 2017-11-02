@@ -24,6 +24,12 @@ class ForumLeader extends Conexion{
         $sql="Call sp_selectForumLeader7('$id_forum', '$idUser')";
         return parent::getConsultar($sql);   
     }
+
+    public function getForumLeader7ConGrupos($id_forum= '', $idUser) {
+        $sql="Call sp_selectForumLeader7ConGrupos('$id_forum', '$idUser')";
+        return parent::getConsultar($sql);   
+    }
+
     public function getForumLeader2($id_forum= '', $estado= '') {
         $sql="Call sp_selectForumLeader1('$id_forum' , '$estado')";
         return parent::getConsultar($sql);   
@@ -118,7 +124,31 @@ class ForumLeader extends Conexion{
        }
         return $listaForum;
     }
-    
+
+    public function getListaForumLeaders7ConGrupos($idSeleccionado='',$listaForum=array(), $idUser) {   
+        $resultset= $this->getForumLeader7ConGrupos(NULL, $idUser); 
+        
+      
+        if($idSeleccionado!=''){
+             while ($row = $resultset->fetch_assoc()) { //usuario.usu_id , persona.per_nombre, persona.per_apellido
+                if($idSeleccionado==$row['usu_id']){
+                     $listaForum['lista_'.$row['usu_id']] = array("value" => $row['usu_id'],  "select" => "selected" ,"texto" => $row['per_nombre'].' '.$row['per_apellido']);
+                }  else {
+                    $listaForum['lista_'.$row['usu_id']] = array("value" => $row['usu_id'],  "select" => "" ,"texto" => $row['per_nombre'].' '.$row['per_apellido']);
+
+                }
+
+             }
+        }  else {
+             while ($row = $resultset->fetch_assoc()) { 
+                $listaForum['lista_'.$row['usu_id']] = array("value" => $row['usu_id'],  "select" => "" ,"texto" => $row['per_nombre'].' '.$row['per_apellido']);
+
+            } 
+       }
+        return $listaForum;
+    }
+
+
      public function getListaForumLeaders3($idSeleccionado='', $estado,$listaForum=array()) {   
         $resultset= $this->getForumLeader2(NULL, $estado); 
         
