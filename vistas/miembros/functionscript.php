@@ -713,6 +713,34 @@ var setActualizarCancelacion = function(){
 };
 
 
+var borrarFechaCobro = function (id) {
+    var parametros = {
+        KEY: 'KEY_BORRAR_COBRO',
+        _id: id
+    };
+
+    $.ajax({
+        data: parametros,
+        url: 'miembros',
+        type: 'post',       
+        beforeSend: function () {
+            $.msg({content : '<img src="public/images/loanding.gif" />', autoUnblock: false});
+                //$.blockUI({ message: '<h3>Esperé un momento...</h3>'}); 
+        },
+        success: function(data) {
+            $.msg('unblock');
+            console.log('esta entrando en el log de cobro');
+            console.log(data);
+            $("#_fecha_cobro").val("");            
+            $.toaster({ priority : 'success', title : 'Alerta', message : 'la fecha de cobro fue eliminada exitosamente'});            
+        }, 
+        error: function(xhr, status) {
+            console.log('esta cancelando');
+            console.log(status);
+        } 
+    });
+};
+
 
 
 var setUserActualizar = function(  id_persona, id_miembro){

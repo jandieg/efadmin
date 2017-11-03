@@ -355,7 +355,7 @@ $form['form_0'] = array("elemento" => "subir-imagen", "valor" => $cod1."-".$cod2
                                 if ($row5 = $resultset5->fetch_assoc()) {
                                     $id_valor = $row5['memb_id'];
                                 }
-
+                     
                                 $listam3 = array();                     
                                 foreach ($listaMemb as $k=>$v) {                         
                                     $listam3[$k] = $v;
@@ -374,7 +374,9 @@ $form['form_0'] = array("elemento" => "subir-imagen", "valor" => $cod1."-".$cod2
                                 $form11['form_2'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_id_insc" ,"reemplazo" => $row4['mie_ins_id']);                                                                
                                 $form12['form_0'] = array("elemento" => "caja" ,"tipo" => "hidden" , "titulo" => "", "id" => "_ins_valor" ,"reemplazo" => $id_valor);
                                 $form12['form_1'] = array("elemento" => "combo", "deshabilitado" => true, "titulo" => "Precio",  "id" => "_ins_valor2" ,"option" => $listam3);
-                                $form12['form_2'] = array("elemento" => "caja" ,"tipo" => "date", "titulo" => "Fecha de Cobro", "id" => "_fecha_cobro", "reemplazo" => $fecha_cobro);                                                        
+                                $form12['form_2'] = array("elemento" => "caja + boton" ,"tipo" => "date", "boton_tipo" => "btn-info",
+                                "boton_icono" => "fa fa-trash", "boton_click" => "borrarFechaCobro(".$row4['mie_ins_id'].")", "boton_nombre" => "Cobro",
+                                "titulo" => "Fecha de Cobro", "id" => "_fecha_cobro", "reemplazo" => $fecha_cobro);                                                        
                             } else {
                                 $objEstadoPresupuesto= new EstadoPresupuesto();
                                 $listaEP= array();
@@ -386,7 +388,10 @@ $form['form_0'] = array("elemento" => "subir-imagen", "valor" => $cod1."-".$cod2
                                 $form11['form_2'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_id_insc" ,"reemplazo" => $row4['mie_ins_id']);
                                 $form12['form_0'] = array("elemento" => "combo", "change" => "", "titulo" => "Precio",  "id" => "_ins_valor" ,"option" => $listaMemb);
                                 //$form12['form_1'] = array("elemento" => "caja" ,"tipo" => "date", "titulo" => "Fecha de Cobro", "id" => "_fecha_cobro", "reemplazo" => $fecha_cobro);                        
-                                                                $form12['form_2'] = array("elemento" => "caja" ,"tipo" => "date", "titulo" => "Fecha de Cobro", "id" => "_fecha_cobro", "reemplazo" => $fecha_cobro);                        
+                                                                //$form12['form_2'] = array("elemento" => "caja" ,"tipo" => "date", "titulo" => "Fecha de Cobro", "id" => "_fecha_cobro", "reemplazo" => $fecha_cobro);                        
+                                                                $form12['form_2'] = array("elemento" => "caja + boton" ,"tipo" => "date", "boton_tipo" => "btn-info",
+                                "boton_icono" => "fa fa-trash", "boton_click" => "borrarFechaCobro(".$row4['mie_ins_id'].")", "boton_nombre" => "Cobro",
+                                "titulo" => "Fecha de Cobro", "id" => "_fecha_cobro", "reemplazo" => $fecha_cobro);                                                        
                                 //$form12['form_1'] = array("elemento" => "caja" ,"tipo" => "hidden" , "id" => "_ins_valor" ,"reemplazo" => 1);    
                             }                             
                         } else {
@@ -558,6 +563,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 
                 //echo '<img class="image-preview" src="'."../../public_html/i/".$_POST['codigo'].".jpg".'" class="upload-preview" />';
             break;
+            case 'KEY_BORRAR_COBRO':
+                if (! empty($_POST['_id'])) {
+                    $objInscripcion = new Inscripcion();
+                    $comp = $objInscripcion->deleteFechaCobro($_POST['_id']);
+                    if ($comp == "OK") {
+                        $data = array("success" => "true", "priority"=>'success',"msg" => $comp);
+                        echo json_encode($data);
+                    } else {
+                        $data = array("success" => "false", "priority"=>'info',"msg" => $comp); 
+                        echo json_encode($data);
+                    }
+                } else {
+                    $data = array("success" => "false", "priority"=>'info',"msg" => $comp); 
+                            echo json_encode($data);
+                }
+            break;
+
             case 'KEY_CANCELAR_MEMBRESIA_MIEMBRO':
 
              if( !empty($_POST['_id_miembro']) && !empty($_POST['_mes_elegido'])){

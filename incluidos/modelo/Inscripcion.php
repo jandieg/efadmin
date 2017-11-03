@@ -22,6 +22,11 @@ class Inscripcion extends Conexion{
         return parent::getConsultar($sql);   
     }
 
+    public function deleteFechaCobro($id) {
+        $sql = "call sp_deleteFechaCobro('$id')";
+        return parent::getSqlSp($sql);
+    }
+
      public function setGrabar($valor, $idMiembro,  $user, $fechaInscripcion,$estado, $fecha_cobro) {
         $fecha= date_format(date_create($fechaInscripcion),'Y-m-d H:i:s');        
         $ano= date_format(date_create($fechaInscripcion),'Y');
