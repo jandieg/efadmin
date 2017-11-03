@@ -1443,12 +1443,16 @@ $form['form_1'] = array("elemento" => "combo","change" => "loadgroups();","titul
                         
 						
                         //$form['form_4'] = array("elemento" => "combo","change" => "",                   "titulo" => "Ubicación", "id" => "_ubicacion", "option" => $lista);
-               
-                        if($row['eve_todoeldia'] =='1'){
-                            $form['form_5'] = array("elemento" => "Checkbox-color" ,"chec" => "checked" ,"tipo" => "" , "titulo" => "Todo el día", "id" => "_all_day" ,"reemplazo" => ""); 
-                        }  else {
-                            $form['form_5'] = array("elemento" => "Checkbox-color" ,"chec" => "" ,"tipo" => "" , "titulo" => "Todo el día", "id" => "_all_day" ,"reemplazo" => ""); 
+                        if (in_array($row['tipo_evento_id'], array(1,4))) {
+                            if($row['eve_todoeldia'] =='1'){
+                                $form['form_5'] = array("elemento" => "Checkbox-color" ,"chec" => "checked" ,"tipo" => "" , "titulo" => "Todo el día", "id" => "_all_day" ,"reemplazo" => ""); 
+                            }  else {
+                                $form['form_5'] = array("elemento" => "Checkbox-color" ,"chec" => "" ,"tipo" => "" , "titulo" => "Todo el día", "id" => "_all_day" ,"reemplazo" => ""); 
+                            }
+                        } else {
+                            $form['form_5'] = array("elemento" => "caja" ,"tipo" => "hidden", "id" => "_all_day" ,"reemplazo" => "");
                         }
+                        
 
                         if (in_array(trim($_SESSION['user_perfil']), array('Forum Leader'))) { 
                             $form['form_6'] = array("elemento" => "fecha + tiempo" ,"tipo_date" => "date" , "titulo_date" => "Fecha de Inicio", "id_date" => "_f_inicio" ,"deshabilitado" => "", "reemplazo_date" => date('Y-m-d',strtotime($row['eve_fechainicio']))
