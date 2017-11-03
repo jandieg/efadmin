@@ -69,7 +69,13 @@ function getDetalleUpdate($id, $recargar) {
         $listacategoria=  $objCategoria->getListaCategoria($row['categoria_cat_id']);
         
         $objForum= new ForumLeader();
-        $listaForumLeader= $objForum->getListaForumLeaders($row['forum_usu_id']);
+        if ($_SESSION['user_user'] == "admin") {
+            $listaForumLeader=$objForum->getListaForumLeaders($row['forum_usu_id']);
+        } else {
+            $listaForumLeader=$objForum->getListaForumLeaders7ConGrupos($row['forum_usu_id'], NULL, $_SESSION['user_id_ben']);
+        }
+        
+        
  
         $idDireccion='';        $idCiudad='';        $idEstado='';        $idPais='';        $direccion= ''; $prefijoPais='';
         
