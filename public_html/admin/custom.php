@@ -450,10 +450,20 @@ function get_paid_month_info($id,$month,$year){
 
 	include("../../incluidos/db_config/config.php");
 
-	
+	$sql2 = "SELECT ifnull(sum(ifnull(t3.precobro_credito,0)),0) AS TOTAL FROM cobro t1
+	join presupuesto_cobro t2
+	join presupuestocobro t3
+	 WHERE t1.cobro_id = t2.cobro_id and t3.precobro_id = t2.presupuestocobro_id 
+	 and t1.miembro_id='$id' AND MONTH(t1.cobro_fecharegistro)='$month' 
+	 AND YEAR(t1.cobro_fecharegistro)='$year'";
 
 		$sql = "SELECT sum(cobro_total) AS TOTAL FROM cobro WHERE miembro_id='$id' 
 		AND MONTH(cobro_fecharegistro)='$month' AND YEAR(cobro_fecharegistro)='$year'";	
+
+		$res2 = mysqli_query($con,$sql);
+		$row2 = mysqli_fetch_array($res2);
+
+		$total2 = $row2['TOTAL'];
 
 		$res = mysqli_query($con,$sql);
 
@@ -461,13 +471,13 @@ function get_paid_month_info($id,$month,$year){
 
 		
 
-		$total = $row['TOTAL'];
+		$total = $row['TOTAL'] + $total2;
 
 		
 
 		if($total){
 
-			$total = $row['TOTAL'];
+			$total = $row['TOTAL'] + $total2;
 
 		}else{
 

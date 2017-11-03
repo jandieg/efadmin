@@ -88,21 +88,21 @@ function getDetalleEmpresaConMiembros($id, $key, $año) {
     }
     $tablaDetalleMiembros=  generadorTablaModal(1,"","", array( "Miembros",""), $cuerpo);     
     return "<h4></h4>".$tablaDetalleMiembros.'<div id="ben_contenedor_detalle_cobro"></div>';
-    
-    
-    
-    
+        
 }
+
 function getCheckPrincipal($total) {
     $msg='';
     $msg='<center><input type="checkbox" id="selectall" name="'.$total.'" onclick="getSeleccionarTodos()"/></center>'; 
     return $msg;
 }
+
 function getCheckCobro($id, $idPresupuesto, $disabled, $bandera, $cobro ) {
     $msg='';
     $msg='<center><input type="checkbox" class="'.$bandera.'" name="'.$idPresupuesto.'" id="'.$id.'" '.$disabled.' value="'.$cobro.'" onclick="getSeleccionarCobro()" /></center>'; 
     return $msg;
 }
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {    
     try{
         switch ($_POST['KEY']): 

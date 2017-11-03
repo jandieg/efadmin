@@ -795,7 +795,7 @@ var setUserActualizar = function(  id_persona, id_miembro){
                 $("#_fecha_registro").val().toString(), 
                 $("#_ins_valor").val().toString(), 
                 2, 
-                $("#_fecha_cobro").val().toString()
+                $("#_fecha_cobro").val().toString());
             } else {
                 textoalertas += setAgregarInscripcionEnPrincipal(
                 $("#_id_insc").val().toString(), 
@@ -803,22 +803,12 @@ var setUserActualizar = function(  id_persona, id_miembro){
                 $("#_fecha_registro").val().toString(), 
                 $("#_ins_valor").val().toString(), 
                 1, 
-                $("#_fecha_cobro").val().toString()
+                $("#_fecha_cobro").val().toString());
             }
             
-        );
+        
        
-        } /*else {
-            textoalertas += setAgregarInscripcionEnPrincipal(
-            $("#_id_insc").val().toString(), 
-            id_miembro.toString(), 
-            $("#_fecha_registro").val().toString(), 
-            $("#_ins_valor").val().toString(), 
-            $("#_estado_presupuesto").val().toString(), 
-            $("#_fecha_cobro").val().toString()
-        );
-       
-        }*/
+        } 
         
     
 
@@ -1182,7 +1172,7 @@ var setAgregarPresupuestoEnPrincipal = function(id_presupuesto, id_miembro, id_p
 
         return respuesta;
 
-}
+};
 var setAgregarPresupuesto = function(){
         var parametros = {
                 KEY: 'KEY_GUARDAR_PRESUPUESTO',

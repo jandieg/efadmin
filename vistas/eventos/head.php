@@ -23,7 +23,7 @@ include(HTML."/html_combos.php");
 include(HTML."/html_filtros.php");
 include(LENGUAJE."/lenguaje_1.php");
 $settings = parse_ini_file(E_LIB."settings.ini.php");
-error_reporting(E_ALL);
+
 $asunto= "";$tabla= "";$correo= "";
 
 
@@ -61,7 +61,7 @@ function getTablaComponenteEducacional() {
         "11" => "Nov",
         "12" => "Dic"
     );
-    $anho_inicio = intval(date('Y'))-3;
+    $anho_inicio = intval(date('Y'))-1;
     $start    = new DateTime(date($anho_inicio.'-m-01'));
     $start->modify('first day of this month');
     $end      = new DateTime(date('Y-m-d'));

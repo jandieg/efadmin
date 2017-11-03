@@ -45,8 +45,8 @@ $settings = parse_ini_file(E_LIB."settings.ini.php");
 
 require_once MODELO2.'GlobalMiembro.php';
 require_once MODELO2.'GlobalSede.php';
-
 error_reporting(0);
+
 $objProfesion; $objFuente; $objEstadoProspecto;$objIndustria;$objCategoria;$objPais;$objProvincia;$objCiudad;$objDesafio;$objRedSocial;
 $objUsuario;$objForum;$objHobby;$objMiembro;$tabla_desafios=array();$objEmpresaLocal;$objDireccion;$objStatus;$prefijoPais="";$codigoMiembro='';
 $titulo='';$idpersona='';$empresa='';$direcion='';$ciudad='';$estado='';$pais='';$nombreGrupo='';
@@ -1356,7 +1356,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                          $msg='La Inscripción se creo correctamente!';
                         } else {
                             
-                         $comp= "notok"
+                         $comp= "notok";
                          $msg='Solo se pueden crear inscripciones del año en curso';
                         }
                          
