@@ -67,6 +67,11 @@ class PresupuestoCobro extends Conexion{
         return parent::setSqlSp($sql);
     }
 
+    public function actualizarDetalleCobro($id, $cobro) {
+        $sql = "CALL sp_updateDetalleCobro('$id', '$cobro')";
+        return parent::setSqlSp($sql);
+    }
+
     public function getCreditoMiembro($id) {
         $resultset = $this->getCreditoPresupuestoMiembro($id);
         while ($row = $resultset->fetch_assoc()) {

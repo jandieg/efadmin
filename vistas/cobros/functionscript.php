@@ -437,6 +437,54 @@ var setReversarCobros = function(){
         });
 };
 
+var fillModalEditarCobro = function(id_precobro) {
+    var datos = $('input[name='+id_precobro+']').val();
+    $("#_id_valor_precobro").val(id_precobro);
+    $("#_valor_cobro").val(datos);
+};
+
+var setEditarCobro = function() {
+    var precobro_id = $("#_id_valor_precobro").val();
+    var cobro = $("#_valor_cobro").val();
+    
+
+      $.msg({content : '<img src="public/images/loanding.gif" />', autoUnblock: false});
+    var parametros = {
+        KEY: 'KEY_ACTUALIZAR_DETALLE_COBRO',  
+        _id: precobro_id,
+        _cobro: cobro
+    };
+
+    
+    $.ajax({
+        data:  parametros,
+        url:   'cobros',
+        type:  'post',
+        dataType : 'json',
+        success:  function (mensaje) { 
+            if(mensaje.success == "true"){
+                $("#_" + precobro_id).html("$ " + cobro);
+                $('input[name='+precobro_id+']').val(cobro);                
+                $.toaster({ priority : mensaje.priority, title : 'Alerta', message : mensaje.msg});
+                $('#modal_editarCobro').modal('toggle');  
+                $.msg('unblock');
+                $('#btnGuardar').attr("disabled", false);
+                //getRecargar();
+            }else{
+                $.msg('unblock');
+                $('#btnGuardar').attr("disabled", false);
+                $.toaster({ priority : mensaje.priority, title : 'Alerta', message : mensaje.msg});
+            }
+            
+
+                
+        },error : function(xhr, status) {
+            $.msg('unblock');
+            $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema'});
+        }
+    });
+};
+
 var setCobrarAdminReg = function(){
     var cont= $("#selectall").attr("name");
     var listaIDDetalle = [];

@@ -14,8 +14,8 @@
    </div>
 </div> 
 
- <div class="modal fade" id="modal_InscripcionCobro" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
-     <div class="modal-dialog" id="">
+<div class="modal fade" id="modal_InscripcionCobro" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog" id="">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -35,5 +35,24 @@
                 <button type="button" id="btnGuardarInscrición" class="btn btn-primary" onclick="setCobrarInscripcion()">Cobrar</button>
             </div>
         </div>
-   </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal_editarCobro" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog" id="">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Editar Cobro</h4>            
+            </div>
+            <div class="modal-body" id=""> 
+                <input type="hidden" id= "_id_valor_precobro">
+                <label for="">Ingrese el nuevo valor del cobro</label>
+                <input type="text" class="form-control" id="_valor_cobro">                                           
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btnEditarCobro" class="btn btn-primary" onclick="setEditarCobro()">Guardar</button>
+            </div>
+        </div>
+    </div>
 </div>

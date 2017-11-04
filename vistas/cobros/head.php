@@ -103,6 +103,14 @@ function getCheckCobro($id, $idPresupuesto, $disabled, $bandera, $cobro ) {
     return $msg;
 }
 
+function getBotonEditarCobro($texto, $funcion) {
+    $msg= '';
+    $msg ='<button type="button" data-toggle="modal" 
+    data-target="#modal_editarCobro" class="btn btn-info btn-sm" onclick="' 
+    . $funcion.'"><i class="fa fa-pencil"></i>'.$texto.'</button>';
+    return $msg;
+} 
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {    
     try{
         switch ($_POST['KEY']): 
@@ -153,10 +161,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $cuerpo = "";
 
                     while($row = $resultset->fetch_assoc()) {
+                        $dataBoton = getBotonEditarCobro('Editar', 'fillModalEditarCobro('.$row['detalleprecobro_id'].')'); 
                         if($row['estado_presupuesto_est_pre_id'] == '2'){                            
                             $estadoColor="success";
                             $disabled="";
                             $bandera="case2";                                                   
+                            $dataBoton = "";
                         }
                        
                         $fecha= $row['detalleprecobro_fechavencimiento'];
@@ -165,8 +175,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                array(
                                    getCheckCobro($cont,$row['detalleprecobro_id'],$disabled,$bandera, $row['detalleprecobro_valor']),                 
                                    getFormatoFechadmy($fecha),
-                                   "$ ".$row['detalleprecobro_valor'],           
-                                   '<span class="label label-'.$estadoColor.'">'.$row['detalleprecobro_estado'].'</span>')); 
+                                   "<span id ='_".$row['detalleprecobro_id']."' >". "$ ".$row['detalleprecobro_valor'] . "</span>",           
+                                   '<span class="label label-'.$estadoColor.'">'.$row['detalleprecobro_estado'].'</span>',
+                                   $dataBoton)); 
                          $cont=$cont + 1;
                          $estadoColor="danger";
                          $disabled="";
@@ -179,7 +190,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             //generadorNegritas("N°"),
                             generadorNegritas("Fecha"),
                             generadorNegritas("Valor a Cobrar"),
-                            generadorNegritas("Estado")), $cuerpo); 
+                            generadorNegritas("Estado"),
+                            generadorNegritas("Edicion")), $cuerpo); 
                         echo $tablaDetalle;
                     } else {
                         echo '<center><h1>No hay presupuesto para el año elegido</h1></center></br></br></br></br>';                 
@@ -233,6 +245,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         
 
                     while($row = $resultset->fetch_assoc()) { 
+                        $dataBoton = getBotonEditarCobro('Editar', 'fillModalEditarCobro('.$row['detalleprecobro_id'].')'); 
                         if($row['estado_presupuesto_est_pre_id'] == '2'){
                             if (! $esadminreg) {
                                 $estadoColor="success";
@@ -243,6 +256,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 $disabled="";
                                 $bandera="case2";
                             }
+
+                            $dataBoton = "";
                            
                         }
                        
@@ -252,8 +267,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                array(
                                    getCheckCobro($cont,$row['detalleprecobro_id'],$disabled,$bandera, $row['detalleprecobro_valor']),                 
                                    getFormatoFechadmy($fecha),
-                                   "$ ".$row['detalleprecobro_valor'],           
-                                   '<span class="label label-'.$estadoColor.'">'.$row['detalleprecobro_estado'].'</span>')); 
+                                   "<span id ='_".$row['detalleprecobro_id']."' >". "$ ".$row['detalleprecobro_valor'] . "</span>",           
+                                   '<span class="label label-'.$estadoColor.'">'.$row['detalleprecobro_estado'].'</span>',
+                                   $dataBoton )); 
                          $cont=$cont + 1;
                          $estadoColor="danger";
                          $disabled="";
@@ -267,7 +283,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             //generadorNegritas("N°"),
                             generadorNegritas("Fecha"),
                             generadorNegritas("Valor a Cobrar"),
-                            generadorNegritas("Estado")), $cuerpo); 
+                            generadorNegritas("Estado"),
+                            generadorNegritas("Edicion")), $cuerpo); 
                      } else {
                         $tablaDetalle= generadorTablaDetalleEstadoCuenta(
                         array( 
@@ -275,7 +292,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             //generadorNegritas("N°"),
                             generadorNegritas("Fecha"),
                             generadorNegritas("Valor a Cobrar"),
-                            generadorNegritas("Estado")), $cuerpo); 
+                            generadorNegritas("Estado"),
+                            generadorNegritas("Edicion")), $cuerpo); 
                      }
                     
                     $formModal['form_1'] = array("elemento" => "caja - oculta","id" => "_id_presupuesto_cobro" ,"reemplazo" => $_POST['_id_presupuesto']);
@@ -341,6 +359,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 }
               
                 break;
+
+            case 'KEY_ACTUALIZAR_DETALLE_COBRO':
+                if (! empty($_POST['_id']) && ! empty($_POST['_cobro'])) {
+
+                   $objPresupuestoCobro = new PresupuestoCobro();
+                    $comp = $objPresupuestoCobro->actualizarDetalleCobro($_POST['_id'], $_POST['_cobro']); 
+                    if ($comp == "OK") {                        
+                        $data = array("success" => "true", "priority"=>'success',"msg" => 'El Cobro se actualizo correctamente');  
+                        echo json_encode($data);
+                    } else {
+                        $data = array("success" => "false", "priority"=>'info',"msg" => $comp); 
+                        echo json_encode($data);
+                    }
+                                
+                                                                   
+                 }  else {
+                     $data = array("success" => "false", "priority"=>'info', "msg" => 'Faltan campos por llenar!');  
+                     echo json_encode($data); 
+                 }
+            break;
                 
             case 'KEY_GUARDAR_COBRO': 
                  
