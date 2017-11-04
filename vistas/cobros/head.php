@@ -344,11 +344,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 
             case 'KEY_GUARDAR_COBRO': 
                  
-                 if( !empty($_POST['_id_presupuesto']) && !empty($_POST['_lista_id_detalle_presupuesto'] ) 
+                 if( !empty($_POST['_id_presupuesto'])  
                  && !empty($_POST['_formapago'] ) && !empty($_POST['_id_miembro']) 
-                 &&  strlen($_POST['_bandera_credito']) > 0 && strlen($_POST['_resto'])>0 ){  
+                 &&  strlen($_POST['_bandera_credito']) > 0 && strlen($_POST['_resto'])>0){  
                     
-               
+                if (! empty($_POST['_lista_id_detalle_presupuesto'])) {
                     $lista="";
                     if(isset($_POST['_lista_id_detalle_presupuesto'])){
                         foreach($_POST['_lista_id_detalle_presupuesto'] as $valor){
@@ -356,25 +356,33 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         }
                     }
 
-                     $objPresupuestoCobro = new PresupuestoCobro();
+                    $objPresupuestoCobro = new PresupuestoCobro();
                     $resultado = $objPresupuestoCobro->actualizarCreditoPresupuestoMiembro($_POST['_id_presupuesto'], $_POST['_resto'], $_POST['_bandera_credito']); 
                    
-                     $objCobro= new Cobro();
-                     $comp= $objCobro->setGrabar($_POST['_id_presupuesto'],$lista,$_POST['_id_miembro'], $_POST['_formapago'],$_SESSION['user_id_ben']);  
-                    
-                   
-                                    
-                    
-                     if($comp == "OK"){
-                       
+                    $objCobro= new Cobro();
+                    $comp= $objCobro->setGrabar($_POST['_id_presupuesto'],$lista,$_POST['_id_miembro'], $_POST['_formapago'],$_SESSION['user_id_ben']);  
+                                                                                               
+                    if ($comp == "OK") {                       
                         $data = array("success" => "true", "priority"=>'success',"msg" => 'El Cobro se creo correctamente!');  
                         echo json_encode($data);
-                    }else{
+                    } else {
                         $data = array("success" => "false", "priority"=>'info',"msg" => $comp); 
                         echo json_encode($data);
                     }
 
-
+                } else {
+                    $objPresupuestoCobro = new PresupuestoCobro();
+                    $comp = $objPresupuestoCobro->actualizarCreditoPresupuestoMiembro($_POST['_id_presupuesto'], $_POST['_resto'], $_POST['_bandera_credito']); 
+                    if ($comp == "OK") {                        
+                        $data = array("success" => "true", "priority"=>'success',"msg" => 'El Credito se actualizo correctamente');  
+                        echo json_encode($data);
+                    } else {
+                        $data = array("success" => "false", "priority"=>'info',"msg" => $comp); 
+                        echo json_encode($data);
+                    }
+                }
+                
+                                                                   
                  }  else {
                      $data = array("success" => "false", "priority"=>'info', "msg" => 'Faltan campos por llenar!');  
                      echo json_encode($data); 
@@ -384,38 +392,49 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             case 'KEY_GUARDAR_COBRO_ADMIN_REG': 
                  
-                 if( !empty($_POST['_id_presupuesto']) && !empty($_POST['_lista_id_detalle_presupuesto'] ) 
-                 && !empty($_POST['_formapago'] ) && !empty($_POST['_id_miembro']) && ! empty($_POST['_fecha'])
+                 if( !empty($_POST['_id_presupuesto']) 
+                 && !empty($_POST['_formapago'] ) && !empty($_POST['_id_miembro']) 
+                 && ! empty($_POST['_fecha'])
                  &&  strlen($_POST['_bandera_credito']) > 0 && strlen($_POST['_resto'])>0 ){  
                     
-               
-                $fechad = date_format(date_create($_POST['_fecha']), 'Y-m-d H:i:s');
-                    $lista="";
-                    if(isset($_POST['_lista_id_detalle_presupuesto'])){
-                        foreach($_POST['_lista_id_detalle_presupuesto'] as $valor){
-                            $lista.= $valor.",";
+                    if (! empty($_POST['_lista_id_detalle_presupuesto'] )) {
+                        $fechad = date_format(date_create($_POST['_fecha']), 'Y-m-d H:i:s');
+                        $lista="";
+                        if(isset($_POST['_lista_id_detalle_presupuesto'])){
+                            foreach($_POST['_lista_id_detalle_presupuesto'] as $valor){
+                                $lista.= $valor.",";
+                            }
+                        }
+
+                        $objPresupuestoCobro = new PresupuestoCobro();
+                        $resultado = $objPresupuestoCobro->actualizarCreditoPresupuestoMiembro($_POST['_id_presupuesto'], $_POST['_resto'], $_POST['_bandera_credito']); 
+                    
+                        $objCobro= new Cobro();
+                        $comp= $objCobro->setGrabarWithDatetime($_POST['_id_presupuesto'],$lista,$_POST['_id_miembro'], $_POST['_formapago'],$_SESSION['user_id_ben'], $fechad);  
+                                                                                                        
+                        if ($comp == "OK") {                        
+                            $data = array("success" => "true", "priority"=>'success',"msg" => 'El Cobro se creo correctamente!');  
+                            echo json_encode($data);
+                        } else {
+                            $data = array("success" => "false", "priority"=>'info',"msg" => $comp); 
+                            echo json_encode($data);
+                        }
+
+
+
+                    } else {
+                        $objPresupuestoCobro = new PresupuestoCobro();
+                        $comp = $objPresupuestoCobro->actualizarCreditoPresupuestoMiembro($_POST['_id_presupuesto'], $_POST['_resto'], $_POST['_bandera_credito']); 
+                        if ($comp == "OK") {                        
+                            $data = array("success" => "true", "priority"=>'success',"msg" => 'El Credito se actualizo correctamente');  
+                            echo json_encode($data);
+                        } else {
+                            $data = array("success" => "false", "priority"=>'info',"msg" => $comp); 
+                            echo json_encode($data);
                         }
                     }
-
-                     $objPresupuestoCobro = new PresupuestoCobro();
-                    $resultado = $objPresupuestoCobro->actualizarCreditoPresupuestoMiembro($_POST['_id_presupuesto'], $_POST['_resto'], $_POST['_bandera_credito']); 
-                   
-                     $objCobro= new Cobro();
-                     $comp= $objCobro->setGrabarWithDatetime($_POST['_id_presupuesto'],$lista,$_POST['_id_miembro'], $_POST['_formapago'],$_SESSION['user_id_ben'], $fechad);  
-                    
-                   
-                                    
-                    
-                     if($comp == "OK"){
-                       
-                        $data = array("success" => "true", "priority"=>'success',"msg" => 'El Cobro se creo correctamente!');  
-                        echo json_encode($data);
-                    }else{
-                        $data = array("success" => "false", "priority"=>'info',"msg" => $comp); 
-                        echo json_encode($data);
-                    }
-
-
+               
+                
                  }  else {
                      $data = array("success" => "false", "priority"=>'info', "msg" => 'Faltan campos por llenar!');  
                      echo json_encode($data); 

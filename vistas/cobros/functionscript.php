@@ -448,8 +448,6 @@ var setCobrarAdminReg = function(){
         banderacredito = 1;
         montopagar += Number($("#_credito").val());
     }
-
-
     
     $(".case").each(function() {
         if (Number($(this).val()) <= montopagar) {
@@ -459,16 +457,9 @@ var setCobrarAdminReg = function(){
             
         }
     });
-    
-    /*
-    for (var i=0; i < cont; i++) {
-        if($("#" + (i + 1)).prop('checked') ) {
-            listaIDDetalle.push($("#" + (i + 1)).attr("name"));
-            //alert($("#" + (i + 1)).attr("name"));            
-        }     
-    }*/
-    if (! estanSalteados()) {
+        
 
+    if (! estanSalteados()) {
     
     $('#btnGuardar').attr("disabled", true);
     $.msg({content : '<img src="public/images/loanding.gif" />', autoUnblock: false});
