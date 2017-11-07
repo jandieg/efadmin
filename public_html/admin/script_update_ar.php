@@ -17,7 +17,7 @@ require_once dirname(__FILE__) . '/PHPExcel/Classes/PHPExcel.php';
 require_once dirname(__FILE__) . '/PHPExcel/Classes/PHPExcel/IOFactory.php';
 
 function cargarIndustrias() {
-	$objPHPExcel = PHPExcel_IOFactory::load("IMPORTACION-AR-02.xlsx");
+	$objPHPExcel = PHPExcel_IOFactory::load("IMPORTACION-MX-04.xlsx");
 	$objPHPExcel->setActiveSheetIndexByName("INDUSTRIAS");
 	$i = 2;
 	while (strlen($objPHPExcel->getActiveSheet()->getCell("A".$i)->getValue()) > 0) {
@@ -30,7 +30,7 @@ function cargarIndustrias() {
 }
 
 function cargarEmpresas() {
-	$objPHPExcel = PHPExcel_IOFactory::load("IMPORTACION-AR-02.xlsx");
+	$objPHPExcel = PHPExcel_IOFactory::load("IMPORTACION-MX-04.xlsx");
 	$objPHPExcel->setActiveSheetIndexByName("EMPRESAS");
 	$i = 2;
 	$data = array();
@@ -45,7 +45,7 @@ function cargarEmpresas() {
 }
 
 function cargarMiembros($datos) {
-	$objPHPExcel = PHPExcel_IOFactory::load("IMPORTACION-AR-02.xlsx");
+	$objPHPExcel = PHPExcel_IOFactory::load("IMPORTACION-MX-04.xlsx");
 	$objPHPExcel->setActiveSheetIndexByName("MIEMBROS");
 	$i = 2;
 	while (strlen($objPHPExcel->getActiveSheet()->getCell("A".$i)->getValue()) > 0) {		
