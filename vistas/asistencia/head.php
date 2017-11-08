@@ -64,13 +64,13 @@ function getAsistencia($idGrupo, $fecha_inicio, $fecha_fin) {
             //Guardo en un array todos los eventos, en base al miembro
             $arrayEventos[$cont] =  array("evento" =>  getCheck($row['asis_id'],$funcion,$disabled, $checked),
                 "miembro_id" => $row['miembro_mie_id'],
-                "mes" => date('m',strtotime($row['eve_fechafin'])),
+                "mes" => date('m',strtotime($row['eve_fechainicio'])),
                 "faltas" => $isFalta,
                 "chequeado" => $checked,
-                "control" => date('n',strtotime($row['eve_fechafin'])));
+                "control" => date('n',strtotime($row['eve_fechainicio'])));
             //Guardo los miembros en un array, es decir, sin repeticiones
             if($banderaMiembros != $row['miembro_mie_id']){                 
-               $arrayMiembros[$cont] = array("nombre" => $row['nombre'], "miembro_id" => $row['miembro_mie_id'], "fecha" => $row['eve_fechainicio']);               
+               $arrayMiembros[$cont] = array("nombre" => $row['nombre'], "miembro_id" => $row['miembro_mie_id'], "fecha" => $row['eve_fechafin']);               
             }
             $banderaMiembros=$row['miembro_mie_id'];
  
