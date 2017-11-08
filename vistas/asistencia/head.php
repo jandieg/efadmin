@@ -70,19 +70,19 @@ function getAsistencia($idGrupo, $fecha_inicio, $fecha_fin) {
                 "control" => date('n',strtotime($row['eve_fechafin'])));
             //Guardo los miembros en un array, es decir, sin repeticiones
             if($banderaMiembros != $row['miembro_mie_id']){                 
-               $arrayMiembros[$cont] = array("nombre" => $row['nombre'], "miembro_id" => $row['miembro_mie_id'], "fecha" => $row['eve_fechafin']);               
+               $arrayMiembros[$cont] = array("nombre" => $row['nombre'], "miembro_id" => $row['miembro_mie_id'], "fecha" => $row['eve_fechainicio']);               
             }
             $banderaMiembros=$row['miembro_mie_id'];
  
             $funcion2= getAccionesParametrizadas(
-                                           "getDetalleEvento('".$row['eve_nombre']."','".$row['eve_responsable']."','".getFormatoFechadmyhis($row['eve_fechainicio'])."','".getFormatoFechadmyhis($row['eve_fechafin'])."','".$row['direccion']."','".$row['eve_descripcion']."')",
-                                           "modal_detalleEvento",
-                                           "Ver Detalle de Evento",
-                                           "fa fa-eye");
+                "getDetalleEvento('".$row['eve_nombre']."','".$row['eve_responsable']."','".getFormatoFechadmyhis($row['eve_fechainicio'])."','".getFormatoFechadmyhis($row['eve_fechafin'])."','".$row['direccion']."','".$row['eve_descripcion']."')",
+                "modal_detalleEvento",
+                "Ver Detalle de Evento",
+                "fa fa-eye");
             //Guardo la cabecera que seran los meses de la fecha de cada evento
             if ( !in_array($row['eve_id'],  $arrayCabeceraId)) {
-                $arrayCabecera[$cont]= array("valor" => date('M',strtotime($row['eve_fechafin'])).'</br>'.$funcion2,
-                                             "control" => date('n',strtotime($row['eve_fechafin'])));
+                $arrayCabecera[$cont]= array("valor" => date('M',strtotime($row['eve_fechainicio'])).'</br>'.$funcion2,
+                                             "control" => date('n',strtotime($row['eve_fechainicio'])));
                 //$arrayCabecera[$cont]= date('M',strtotime($row['eve_fechafin'])).'</br>'.$funcion2;
                 $arrayCabeceraId[$cont]= $row['eve_id'];
             }  
@@ -98,6 +98,7 @@ function getAsistencia($idGrupo, $fecha_inicio, $fecha_fin) {
         $html .='<tr style="background-color:#2ECCFA;">';
         $html.='<th><center>Nombre</center></th>';
         foreach($arrayCabecera as $valor =>$val ){
+            
             $html .= getAddMeses($control, $val["control"], $val["control"],TRUE);//Para add columnas
             $control= $val["control"] + 1;//Para add columnas            
             $html.='<th><center>'.$val["valor"].'</center></th>';
