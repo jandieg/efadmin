@@ -77,6 +77,26 @@ class ForumLeader extends Conexion{
        }
         return $listaForum;
     }
+
+    public function getListaForumLeadersEVENTOSConGrupos($idSeleccionado='', $idUser) {   
+        $resultset= $this->getForumLeader7ConGrupos(NULL, $idUser); 
+        $listaForum=array();
+        if($idSeleccionado!=''){
+             while ($row = $resultset->fetch_assoc()) {
+                if($idSeleccionado==$row['per_id']){
+                     $listaForum['lista_'.$row['usu_id']] = array("value" => $row['per_id'],  "select" => "selected" ,"texto" => $row['per_nombre'].' '.$row['per_apellido']);
+                }  else {
+                    $listaForum['lista_'.$row['usu_id']] = array("value" => $row['per_id'],  "select" => "" ,"texto" => $row['per_nombre'].' '.$row['per_apellido']);
+                }
+             }
+        }  else {
+             while ($row = $resultset->fetch_assoc()) { 
+                $listaForum['lista_'.$row['usu_id']] = array("value" => $row['per_id'],  "select" => "" ,"texto" => $row['per_nombre'].' '.$row['per_apellido']);
+
+            } 
+       }
+        return $listaForum;
+    }
 	
 	
     public function getListaForumLeaders2($idSeleccionado='',$listaForum=array()) {   

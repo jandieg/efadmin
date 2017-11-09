@@ -1391,7 +1391,7 @@ $form['form_1'] = array("elemento" => "combo","change" => "loadgroups();","titul
                         }
 						
         $objForum= new ForumLeader();
-        $listaForumLeader= $objForum->getListaForumLeadersEVENTOS($row['eve_responsable']);
+        $listaForumLeader= $objForum->getListaForumLeadersEVENTOSConGrupos($row['eve_responsable'], $_SESSION['user_id_ben']);
                         
                        // $form['form_1'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => "Forum Leader", "id" => "_titular" ,"reemplazo" => $row['eve_responsable']); 
                        if (in_array(trim($_SESSION['user_perfil']), array('Forum Leader'))) { 
