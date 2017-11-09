@@ -61,6 +61,8 @@ function getAsistencia($idGrupo, $fecha_inicio, $fecha_fin) {
 
             
             $funcion="setAsistencia(".$row['asis_id'].")";
+            
+    
             //Guardo en un array todos los eventos, en base al miembro
             $arrayEventos[$cont] =  array("evento" =>  getCheck($row['asis_id'],$funcion,$disabled, $checked),
                 "miembro_id" => $row['miembro_mie_id'],
@@ -81,9 +83,8 @@ function getAsistencia($idGrupo, $fecha_inicio, $fecha_fin) {
                 "fa fa-eye");
             //Guardo la cabecera que seran los meses de la fecha de cada evento
             if ( !in_array($row['eve_id'],  $arrayCabeceraId)) {
-                $arrayCabecera[$cont]= array("valor" => date('M',strtotime($row['eve_fechainicio'])).'</br>'.$funcion2,
-                                             "control" => date('n',strtotime($row['eve_fechainicio'])));
-                //$arrayCabecera[$cont]= date('M',strtotime($row['eve_fechafin'])).'</br>'.$funcion2;
+                $arrayCabecera[$cont]= array("valor" => date('M',strtotime($row['eve_fechainicio'])).'</br>'.$funcion2,                                            
+                                             "control" => date('n',strtotime($row['eve_fechainicio'])));                
                 $arrayCabeceraId[$cont]= $row['eve_id'];
             }  
             $cont= $cont + 1;         
