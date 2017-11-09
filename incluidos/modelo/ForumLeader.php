@@ -148,6 +148,29 @@ class ForumLeader extends Conexion{
         return $listaForum;
     }
 
+        public function getListaForumLeaders7ConGruposPersona($idSeleccionado='',$listaForum=array(), $idUser) {   
+        $resultset= $this->getForumLeader7ConGrupos(NULL, $idUser); 
+        
+      
+        if($idSeleccionado!=''){
+             while ($row = $resultset->fetch_assoc()) { //usuario.usu_id , persona.per_nombre, persona.per_apellido
+                if($idSeleccionado==$row['usu_id']){
+                     $listaForum['lista_'.$row['per_id']] = array("value" => $row['Persona_per_id'],  "select" => "selected" ,"texto" => $row['per_nombre'].' '.$row['per_apellido']);
+                }  else {
+                    $listaForum['lista_'.$row['per_id']] = array("value" => $row['Persona_per_id'],  "select" => "" ,"texto" => $row['per_nombre'].' '.$row['per_apellido']);
+
+                }
+
+             }
+        }  else {
+             while ($row = $resultset->fetch_assoc()) { 
+                $listaForum['lista_'.$row['per_id']] = array("value" => $row['per_id'],  "select" => "" ,"texto" => $row['per_nombre'].' '.$row['per_apellido']);
+
+            } 
+       }
+        return $listaForum;
+    }
+
 
      public function getListaForumLeaders3($idSeleccionado='', $estado,$listaForum=array()) {   
         $resultset= $this->getForumLeader2(NULL, $estado); 

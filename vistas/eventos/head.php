@@ -868,7 +868,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 if (! empty($_POST['_id'])) {
                     $objGrupo = new Grupo();
                     $lista= array();
-                    $listado=$objGrupo->getListaGruposByForumLeaderPersona($_POST['_id'], $lista);                
+                    $listado=$objGrupo->getListaGruposByForumLeaderPersona($_POST['_id'], $lista); 
+                    print_r($listado);               
                     $form['form_3'] = array("elemento" => "combo","change" => "setCambioGrupos()", "titulo" => "Grupos", "id" => "_miembrosGrupos", "option" => $listado);
                     echo generadorEtiqueta($form);   
                 }     
@@ -919,7 +920,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 					*/
 					
                   $objForum= new ForumLeader();
-                  $listaPerfil= $objForum->getListaForumLeadersEVENTOS(NULL);
+                  $listaPerfil= $objForum->getListaForumLeaders7ConGruposPersona('', NULL, $_SESSION['user_id_ben']);
 					
 					
                     $boton['boton_2'] = array("click" => "setCrearEvento('g',".$_POST['_id_te'].",".$row['tip_eve_opcion_contacto'].",".$row['tip_eve_opcion_acompanado'].",".$row['tip_eve_opcion_invitado'].",".$row['tip_eve_opcion_empresario_mes'].")" ,"modal" => "" ,"id" => "btnGuardar"  ,"color" => "btn-info" ,"titulo" => "Guardar" ,"lado" => "pull-right" ,"icono" => "fa-pencil");
