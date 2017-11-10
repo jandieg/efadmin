@@ -257,6 +257,11 @@ class Grupo extends Conexion{
         return parent::getConsultar($sql);   
     }
 
+    public function getGruposForumByAgrup($idForum, $agrup = "") {
+        $sql = "call sp_selectGruposForumByAgrup('$idForum', '$agrup')";
+        return parent::getConsultar($sql);
+    }
+
     public function getGrupoByUsuario($idUser, $agrup) {
         $sql = "call sp_selectGrupoByUser('$idUser', '$agrup')";
         return parent::getConsultar($sql);
@@ -353,6 +358,27 @@ class Grupo extends Conexion{
        }
         return $list;
     }
+
+    public function getListaGruposSede2($idUser='', $idSeleccionado='',$list= array(), $agrup = "") {           
+        $resultset= $this->getGrupoByUsuario($idUser, $agrup);
+        if($idSeleccionado!=''){
+            while($row = $resultset->fetch_assoc()) { 
+                if($row['gru_id'] == $idSeleccionado){
+                     $list['lista_'.$row['gru_id']] = array( "value" => $row['gru_id'],  "select" => "selected" ,"texto" => $row['gru_descripcion']);
+                     if($this->primerGrupo == ''){ $this->primerGrupo=$row['gru_id']; }
+                }else{
+                     $list['lista_'.$row['gru_id']] = array( "value" => $row['gru_id'],  "select" => "" ,"texto" => $row['gru_descripcion']);
+                     if($this->primerGrupo == ''){ $this->primerGrupo=$row['gru_id']; }
+                }
+            }
+        }  else {
+            while($row = $resultset->fetch_assoc()) { 
+                $list['lista_'.$row['gru_id']] = array( "value" => $row['gru_id'],  "select" => "" ,"texto" => $row['gru_descripcion']);
+                if($this->primerGrupo == ''){ $this->primerGrupo=$row['gru_id']; }
+            }
+       }
+        return $list;
+    }
     
     public function getListaGruposForum($idForum='', $idSeleccionado='',$list= array()) {           
         $resultset= $this->getGruposForum($idForum);
@@ -374,6 +400,28 @@ class Grupo extends Conexion{
        }
         return $list;
     }
+
+     public function getListaGruposForum2($idForum='', $idSeleccionado='',$list= array(), $agrup) {           
+        $resultset= $this->getGruposForumByAgrup($idForum);
+        if($idSeleccionado!=''){
+            while($row = $resultset->fetch_assoc()) { 
+                if($row['gru_id'] == $idSeleccionado){
+                     $list['lista_'.$row['gru_id']] = array( "value" => $row['gru_id'],  "select" => "selected" ,"texto" => $row['gru_descripcion']);
+                     if($this->primerGrupo == ''){ $this->primerGrupo=$row['gru_id']; }
+                }else{
+                     $list['lista_'.$row['gru_id']] = array( "value" => $row['gru_id'],  "select" => "" ,"texto" => $row['gru_descripcion']);
+                     if($this->primerGrupo == ''){ $this->primerGrupo=$row['gru_id']; }
+                }
+            }
+        }  else {
+            while($row = $resultset->fetch_assoc()) { 
+                $list['lista_'.$row['gru_id']] = array( "value" => $row['gru_id'],  "select" => "" ,"texto" => $row['gru_descripcion']);
+                if($this->primerGrupo == ''){ $this->primerGrupo=$row['gru_id']; }
+            }
+       }
+        return $list;
+    }
+    
     
 	
 	public function getGruposForumSede($idForum) {

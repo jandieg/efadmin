@@ -41,8 +41,8 @@ function getAsistencia($idGrupo, $fecha_inicio, $fecha_fin) {
             $suma = 0;
             
             //Que solo sean fechas ya pasadas
-            if( date_format(date_create($row['mie_fecharegistro']), 'Y-m-d') <= date('Y-m-d', strtotime($row['eve_fechafin'])) 
-            && date('Y-m-d', strtotime($row['eve_fechafin'])) <= date("Y-m-d")){
+            if( date_format(date_create($row['mie_fecharegistro']), 'Y-m') <= date('Y-m', strtotime($row['eve_fechafin'])) 
+            && date('Y-m', strtotime($row['eve_fechafin'])) <= date("Y-m")){
                 $disabled="";
                 if (in_array(trim($_SESSION['user_perfil']), array('Forum Leader'))) {
                     $disabled="disabled";
@@ -348,13 +348,13 @@ if (in_array($perVerFiltrosIDForumAsistenciaOp17, $_SESSION['usu_permiso'])) {
     
     //$lista['lista_']=array("value" => "x",  "select" => "" ,"texto" => "Seleccione...");        
     $objGrupo= new Grupo();
-    $listaGrupos= $objGrupo->getListaGruposForum($_SESSION['user_id_ben'], NULL,NULL);
+    $listaGrupos= $objGrupo->getListaGruposForum2($_SESSION['user_id_ben'], NULL,NULL, 'A');
     
  }  else {
   
     //$lista['lista_']=array("value" => "x",  "select" => "" ,"texto" => "Seleccione...");
     $objGrupo= new Grupo();    
-    $listaGrupos= $objGrupo->getListaGruposSede($_SESSION['user_id_ben'], NULL, NULL);
+    $listaGrupos= $objGrupo->getListaGruposSede2($_SESSION['user_id_ben'], NULL, NULL, 'A');
     
  }
 
