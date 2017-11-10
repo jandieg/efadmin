@@ -260,7 +260,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                      $objAsistencia= new Asistencia();
                      $comp= $objAsistencia->setActualizarAsistencia($_POST['_id_asistencia'],$_SESSION['user_id_ben'], $checked);  
                      if($comp == "OK"){
-                        $data = array("success" => "true", "priority"=>'success',"msg" => 'El asistencia se actualizó correctamente!');  
+                        $data = array("success" => "true", "priority"=>'success',"msg" => 'La asistencia se actualizó correctamente!');  
                         echo json_encode($data);
                     }else{
                         $data = array("success" => "false", "priority"=>'info',"msg" => $comp); 
