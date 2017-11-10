@@ -186,9 +186,9 @@ function getTablaCasosDelMes() {
     $objEvento2 = new Evento();
     $objGrupo4 = new Grupo();
     if (in_array(trim($_SESSION['user_perfil']), array('Admin'))) {
-        $resultset3 = $objGrupo4->getGruposAndForumLeaders(); 
+        $resultset3 = $objGrupo4->getGruposAndForumLeaders('A'); 
     } else {        
-        $resultset3 = $objGrupo4->getGrupoByUsuario($_SESSION['user_id_ben']);;        
+        $resultset3 = $objGrupo4->getGrupoByUsuario($_SESSION['user_id_ben'], 'A');;        
     }         
     $listaPendientes = array();
 
@@ -223,10 +223,9 @@ function getTablaCasosDelMes() {
     if (in_array(trim($_SESSION['user_perfil']), array('Admin'))) {
         $resultset3 = $objMiembro->getAllMembers();
     } else {
-        $resultset3 = $objMiembro->getAllMembersByUser($_SESSION['user_id_ben']);
+        $resultset3 = $objMiembro->getAllMembersByUser($_SESSION['user_id_ben'], 'A');
     }
-    
-    
+        
     $anhoact = "";                        
     foreach ($period as $dt) {
         if ($anhoact != $dt->format('Y')) {
@@ -2002,7 +2001,7 @@ $form['form_8'] = array("elemento" => "combo", "change" => "getCargarProvincias(
 $form['form_9'] = array("elemento" => "combo", "change" => "",                  "titulo" => $lblCiudad, "id" => "_ciudad", "option" => $listaciudad);
 
 $listaDireccion= generadorEtiquetaVVertical($form);
-$contenido=getTablaCasosDelMes();
+
 
 
 

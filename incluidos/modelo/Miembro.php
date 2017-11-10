@@ -251,13 +251,13 @@ public function setActualizarMiembro($idMiembro, $id_persona, $propietario, $nom
         return parent::getConsultar($sql);
     }
 
-    public function getAllMembers() {
-        $sql = "call sp_selectAllMembers()";
+    public function getAllMembers($agrup = "") {
+        $sql = "call sp_selectAllMembers('$agrup')";
         return parent::getConsultar($sql);
     }
 
-    public function getAllMembersByUser($idUser) {
-        $sql = "call sp_selectAllMembersByUser('$idUser')";
+    public function getAllMembersByUser($idUser, $agrup = "") {
+        $sql = "call sp_selectAllMembersByUser('$idUser', '$agrup')";
         return parent::getConsultar($sql);
     }
 

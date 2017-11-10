@@ -257,8 +257,8 @@ class Grupo extends Conexion{
         return parent::getConsultar($sql);   
     }
 
-    public function getGrupoByUsuario($idUser) {
-        $sql = "call sp_selectGrupoByUser('$idUser')";
+    public function getGrupoByUsuario($idUser, $agrup) {
+        $sql = "call sp_selectGrupoByUser('$idUser', '$agrup')";
         return parent::getConsultar($sql);
     }
 
@@ -386,8 +386,8 @@ class Grupo extends Conexion{
         return parent::getConsultar($sql);   
     }
 
-    public function getGruposAndForumLeaders() {
-        $sql="call sp_selectGruposAndForumLeaders()";
+    public function getGruposAndForumLeaders($agrup = "") {
+        $sql="call sp_selectGruposAndForumLeaders('$agrup')";
         return parent::getConsultar($sql);
     }
 
