@@ -85,7 +85,7 @@ var setAsistencia = function(_id_asistencia){
     }
 
     //alert(_checked +'  '+ _id_asistencia);
-    $.msg({content : '<img src="public/images/loanding.gif" />', autoUnblock: false});
+    //$.msg({content : '<img src="public/images/loanding.gif" />', autoUnblock: false});
     var parametros = {
                 KEY: 'KEY_GUARDAR_ASISTENCIA',  
                 _id_asistencia: _id_asistencia,
@@ -99,14 +99,14 @@ var setAsistencia = function(_id_asistencia){
             success:  function (mensaje) { 
                 if(mensaje.success == "true"){
                     $.toaster({ priority : mensaje.priority, title : 'Alerta', message : mensaje.msg});
-                    $.msg('unblock');
+                    //$.msg('unblock');
                     getDetalleFiltro();
                 }else{
-                    $.msg('unblock');
+                    //$.msg('unblock');
                     $.toaster({ priority : mensaje.priority, title : 'Alerta', message : mensaje.msg});
                 }   
             },error : function(xhr, status) {
-               $.msg('unblock');
+               //$.msg('unblock');
                $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema'});
             }
         });
