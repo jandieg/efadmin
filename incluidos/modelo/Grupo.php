@@ -257,6 +257,11 @@ class Grupo extends Conexion{
         return parent::getConsultar($sql);   
     }
 
+    public function getGrupoByUsuario($idUser) {
+        $sql = "call sp_selectGrupoByUser('$idUser')";
+        return parent::getConsultar($sql);
+    }
+
     public function getGrupoByEmpresa($idEmpresa) {
         $sql ="call sp_selectGrupoByEmpresa('$idEmpresa');";
         return parent::getConsultar($sql);

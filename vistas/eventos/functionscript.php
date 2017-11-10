@@ -152,7 +152,7 @@ var getCasoDelMes = function(id) {
                getConfTablaFixed();
                   
             },error : function(xhr, status) {                
-               
+               console.log(xhr);
                $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema'+status.toString()});
             }
         });

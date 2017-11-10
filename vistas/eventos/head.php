@@ -22,6 +22,7 @@ include(HTML."/html.php");
 include(HTML."/html_combos.php");
 include(HTML."/html_filtros.php");
 include(LENGUAJE."/lenguaje_1.php");
+error_reporting(E_ALL);
 $settings = parse_ini_file(E_LIB."settings.ini.php");
 
 $asunto= "";$tabla= "";$correo= "";
@@ -183,20 +184,26 @@ function getTablaCasosDelMes() {
 
     $objEvento = new Evento();
     $objEvento2 = new Evento();
+    $objGrupo4 = new Grupo();
     if (in_array(trim($_SESSION['user_perfil']), array('Admin'))) {
-        $resultset = $objEvento->getMiembrosPendientes(); 
-    } else {
-        $resultset = $objEvento->getMiembrosPendientesByUser($_SESSION['user_id_ben']); 
-    }
-    
-     
-    
+        $resultset3 = $objGrupo4->getGruposAndForumLeaders(); 
+    } else {        
+        $resultset3 = $objGrupo4->getGrupoByUsuario($_SESSION['user_id_ben']);;        
+    }         
     $listaPendientes = array();
-    $gruact = "";
-    $cont = 1;
-    while ($row = $resultset->fetch_assoc()) {                
-            $listaPendientes[$row['grupo_id']] = $row['mie_id'];                                  
+
+    while ($row = $resultset3->fetch_assoc()) {
+        $grupo = $row['gru_id'];
+        $objEvento5 = new Evento();
+        $resultset = $objEvento5->getMiembrosPendientesxGrupo($grupo);
+        while ($row2 = $resultset->fetch_assoc()) {
+            $listaPendientes[$grupo][] = $row2['mie_id']; 
+        }                
     }
+    
+    
+    $gruact = "";
+    $cont = 1;    
     
     $tabla="<div='myDiv' style=' width: 900px !important; overflow-x: scroll !important;'>
     <div class='row'><div class ='span2'>&nbsp;</div><div class ='span2'>&nbsp;</div><div class ='span2'>&nbsp;</div><div class ='span2 btn btn-primary' onClick='getRecargar()' style='margin-left:20px;'>Regresar</div></div>";
@@ -259,25 +266,21 @@ function getTablaCasosDelMes() {
             $data[$row2['grupo_id']][$row2['mie_id']]['nombre'] = $row2['nombre'];            
         }
 
-        $data[$row2['grupo_id']][$row2['mie_id']][$row2['anho']][$row2['mes']] = "<td style='background-color: yellow;' class='tabla-colapsada'><strong>C</strong></td>";        
-        
+        $data[$row2['grupo_id']][$row2['mie_id']][$row2['anho']][$row2['mes']] = "<td style='background-color: yellow;' class='tabla-colapsada'><strong>C</strong></td>";                
     }
-
 
     foreach ($listaPendientes as $k => $l) {
         $lista = explode(',' ,$l);
         $cont = 0;
-        foreach ($lista as $ll) {
+        
+        foreach ($l as $ll) {
             if (strlen($ll) > 0) {
                 if (isset($data[$k][$ll][date('Y')][intval(date('m'))])) {
+                    
                     $data[$k][$ll][date('Y')][intval(date('m'))] = "<td style='background-color: green;' class='tabla-colapsada'><strong>n</strong></td>";
                     $cont++;
                 }                
-            }
-
-            if ($cont == 3) {
-                break;
-            }            
+            }                      
         }        
     }
 
@@ -311,6 +314,7 @@ function getTablaCasosDelMes() {
 
     $tabla.="</tbody></table></div>";
     return $tabla;
+    
 }
 
 
@@ -1998,6 +2002,7 @@ $form['form_8'] = array("elemento" => "combo", "change" => "getCargarProvincias(
 $form['form_9'] = array("elemento" => "combo", "change" => "",                  "titulo" => $lblCiudad, "id" => "_ciudad", "option" => $listaciudad);
 
 $listaDireccion= generadorEtiquetaVVertical($form);
+$contenido=getTablaCasosDelMes();
 
 
 
