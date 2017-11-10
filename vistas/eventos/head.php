@@ -731,8 +731,9 @@ function getRecordarEvento($idEvento, $doAsistencia= false) {
             //Asistencia
             if($doAsistencia){
                 if($row['key'] == "mis-grupos-miembros" || $row['key'] == "todos-grupos-miembros" || $row['key'] == "grupos-miembros"){    
-                   $listaGruposMiembros .=$row['id'].",";
-
+                    if (strlen(trim($row['id'])) > 0) {
+                        $listaGruposMiembros .=$row['id'].",";
+                    }                   
                 }
 //                elseif ($row['key'] == "miembros") {
 //                    $listaMiembrosInvitados .= $row['id'].",";
