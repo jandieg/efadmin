@@ -239,13 +239,14 @@
                         <div class="form-group">
                             <label for="codigo">Apellido</label>
                             <input type="text" class="form-control" name="" id="_apellido_asistente" placeholder="Apellido" required value="">
+                            <input type="hidden" id= "_funcion_asistente" value = "1" >
                          </div>
-                        <div class="form-group">
+                        <!--<div class="form-group">
                           <label>Función</label>
-                          <!--<select id="_funcion_asistente" onchange="" class="form-control">-->
+                          
                                <?php echo $listaFuncion;?>
-                          <!--</select>--> 
-                        </div>
+                          
+                        </div>-->
                         <div class="form-group">
                             <label for="codigo">Correo</label>
                             <input type="text" class="form-control" name="" id="_correo_asistente" placeholder="Correo" required value="">

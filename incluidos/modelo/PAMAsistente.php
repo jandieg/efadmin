@@ -78,7 +78,6 @@ class PAMAsistente extends Conexion{
                        array(
                            $cont,
                            $row_ma['per_nombre'] ." ". $row_ma['per_apellido'],
-                           $row_ma['cargo'],
                            $row_ma['movil'],
                            $row_ma['fijo'],
                            $row_ma['correo'],
@@ -99,7 +98,6 @@ class PAMAsistente extends Conexion{
         $tablaDetalleAsistente= generadorTablaDetalleEstadoCuenta(
             array( "N°",
                 generadorNegritas($lblNombre),
-                generadorNegritas($lblCategoría),
                 generadorNegritas($lblTM),
                 generadorNegritas($lblTF),
                 generadorNegritas($lblCorreo),
