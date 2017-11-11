@@ -995,6 +995,7 @@ $form['form_1'] = array("elemento" => "combo","change" => "loadgroups();","titul
                         
                         
                         if($row['tip_eve_tododia'] =='1'){
+                            
                             $form['form_6'] = array("elemento" => "Checkbox-color" ,"chec" => "checked" ,"tipo" => "" , "titulo" => "Todo el día", "id" => "_all_day" ,"reemplazo" => ""); 
                         }  else {
                             $form['form_6'] = array("elemento" => "Checkbox-color" ,"chec" => "" ,"tipo" => "" , "titulo" => "Todo el día", "id" => "_all_day" ,"reemplazo" => ""); 
@@ -1090,7 +1091,7 @@ $form['form_1'] = array("elemento" => "combo","change" => "loadgroups();","titul
                     
                     
                     
-                    if($row['tip_eve_tododia'] =='1'){
+                    if($row['tip_eve_tododia'] =='1' && $_POST['_id_te'] != '2'){
                         $form['form_5'] = array("elemento" => "Checkbox-color" ,"chec" => "checked" ,"tipo" => "" , "titulo" => "Todo el día", "id" => "_all_day" ,"reemplazo" => ""); 
                     }  else {
                         $form['form_5'] = array("elemento" => "Checkbox-color" ,"chec" => "" ,"tipo" => "" , "titulo" => "Todo el día", "id" => "_all_day" ,"reemplazo" => ""); 
