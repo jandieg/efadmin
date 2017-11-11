@@ -73,6 +73,7 @@ SUM(miembro_inscripcion.mie_ins_valor) AS total
 FROM miembro, miembro_inscripcion, grupos WHERE  
 MONTH(miembro_inscripcion.mie_ins_fecha_cobro)='$month' 
 AND YEAR(miembro_inscripcion.mie_ins_fecha_cobro)='$year' 
+AND miembro_inscripcion.estado_cobro_id = 2 
 AND miembro.grupo_id = grupos.gru_id 
 AND grupos.sede_id = '$sede'
 AND DATE(miembro_inscripcion.mie_ins_fecha_cobro)<='$corte' AND miembro.mie_id = miembro_inscripcion.miembro_id ";

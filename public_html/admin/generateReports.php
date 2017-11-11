@@ -113,7 +113,7 @@ if ($row['estado_cobro_id'] == 2) {
 $this_month =  date('m', $sql_date);
 //End Getting time and date//
 if((($this_month=='01')||($this_month=='05')||($this_month=='09'))) {
- if ($row['mie_ins_valor']!="0"){
+ if ($row['mie_ins_valor']!="0" && $fecha_cobro != "-"){
     $val1 = $n + $cor1;
  $objPHPExcel->getActiveSheet()->setCellValue('A'.$val1, get_user_details($row['miembro_id'],'member_code'));
  $objPHPExcel->getActiveSheet()->setCellValue('B'.$val1, $fecha_cobro);
@@ -123,7 +123,7 @@ if((($this_month=='01')||($this_month=='05')||($this_month=='09'))) {
     }
 }
 if((($this_month=='02')||($this_month=='06')||($this_month=='10'))) {
- if ($row['mie_ins_valor']!="0"){
+ if ($row['mie_ins_valor']!="0" && $fecha_cobro != "-"){
     $val2 = $n + $cor2;
  $objPHPExcel->getActiveSheet()->setCellValue('E'.$val2, get_user_details($row['miembro_id'],'member_code'));
  $objPHPExcel->getActiveSheet()->setCellValue('F'.$val2, $fecha_cobro);
@@ -133,7 +133,7 @@ if((($this_month=='02')||($this_month=='06')||($this_month=='10'))) {
     }
 }
 if((($this_month=='03')||($this_month=='07')||($this_month=='11'))) {
-    if ($row['mie_ins_valor']!="0"){
+    if ($row['mie_ins_valor']!="0" && $fecha_cobro != "-"){
     $val3 = $n + $cor3;
  $objPHPExcel->getActiveSheet()->setCellValue('I'.$val3 , get_user_details($row['miembro_id'],'member_code'));
  $objPHPExcel->getActiveSheet()->setCellValue('J'.$val3, $fecha_cobro);
@@ -143,7 +143,7 @@ if((($this_month=='03')||($this_month=='07')||($this_month=='11'))) {
     }
 }
 if(($this_month=='04')) {
- if ($row['mie_ins_valor']!="0"){
+ if ($row['mie_ins_valor']!="0" && $fecha_cobro != "-"){
     $val4 = $n + $cor4;
  $objPHPExcel->getActiveSheet()->setCellValue('M'.$val4, get_user_details($row['miembro_id'],'member_code'));
  $objPHPExcel->getActiveSheet()->setCellValue('N'.$val4, $fecha_cobro);
@@ -153,7 +153,7 @@ if(($this_month=='04')) {
     }
 }
 if(($this_month=='08')) { 
-    if ($row['mie_ins_valor']!="0"){
+    if ($row['mie_ins_valor']!="0" && $fecha_cobro != "-"){
     $val5 = $n + $cor5;
  $objPHPExcel->getActiveSheet()->setCellValue('M'.$val5, get_user_details($row['miembro_id'],'member_code'));
  $objPHPExcel->getActiveSheet()->setCellValue('N'.$val5, $fecha_cobro);
@@ -163,7 +163,7 @@ if(($this_month=='08')) {
     }
 }
 if(($this_month=='12')) { 
-    if ($row['mie_ins_valor']!="0"){
+    if ($row['mie_ins_valor']!="0" && $fecha_cobro != "-"){
     $val6 = $n - $cor6;
  $objPHPExcel->getActiveSheet()->setCellValue('M'.$val6, get_user_details($row['miembro_id'],'member_code'));
  $objPHPExcel->getActiveSheet()->setCellValue('N'.$val6, $fecha_cobro);
@@ -220,7 +220,7 @@ if ($row['estado_cobro_id'] == 2) {
 $this_month =  date('m', $sql_date);
 //End Getting time and date//
 if(($this_month=='01')) { 
-    if ($row['mie_ins_valor']!="0"){
+    if ($row['mie_ins_valor']!="0" && $fecha_cobro != "-"){
     $val1 = $n + $cor1;
  $objPHPExcel->getActiveSheet()->setCellValue('A'.$val1, get_user_details($row['miembro_id'],'member_code'));
  $objPHPExcel->getActiveSheet()->setCellValue('B'.$val1, $fecha_cobro);
@@ -230,7 +230,7 @@ if(($this_month=='01')) {
     }
 }
 if(($this_month=='02')) { 
-    if ($row['mie_ins_valor']!="0"){
+    if ($row['mie_ins_valor']!="0" && $fecha_cobro != "-"){
     $val2 = $n + $cor2;
  $objPHPExcel->getActiveSheet()->setCellValue('E'.$val2, get_user_details($row['miembro_id'],'member_code'));
  $objPHPExcel->getActiveSheet()->setCellValue('F'.$val2, $fecha_cobro);
@@ -240,7 +240,7 @@ if(($this_month=='02')) {
     }
 }
 if(($this_month=='03')) { 
-    if ($row['mie_ins_valor']!="0"){
+    if ($row['mie_ins_valor']!="0" && $fecha_cobro != "-"){
     $val3 = $n + $cor3;
  $objPHPExcel->getActiveSheet()->setCellValue('I'.$val3, get_user_details($row['miembro_id'],'member_code'));
  $objPHPExcel->getActiveSheet()->setCellValue('J'.$val3, $fecha_cobro);
@@ -250,7 +250,7 @@ if(($this_month=='03')) {
     }
 }
 if(($this_month=='04')) { 
-    if ($row['mie_ins_valor']!="0"){
+    if ($row['mie_ins_valor']!="0" && $fecha_cobro != "-"){
     $val4 = $n + $cor4;
  $objPHPExcel->getActiveSheet()->setCellValue('M'.$val4, get_user_details($row['miembro_id'],'member_code'));
  $objPHPExcel->getActiveSheet()->setCellValue('N'.$val4, $fecha_cobro);
