@@ -461,7 +461,7 @@ function get_paid_month_info($id,$month,$year){
 		$sql = "SELECT sum(cobro_total) AS TOTAL FROM cobro WHERE miembro_id='$id' 
 		AND MONTH(cobro_fecharegistro)='$month' AND YEAR(cobro_fecharegistro)='$year'";	
 
-		$res2 = mysqli_query($con,$sql);
+		$res2 = mysqli_query($con,$sql2);
 		$row2 = mysqli_fetch_array($res2);
 
 		$total2 = $row2['TOTAL'];

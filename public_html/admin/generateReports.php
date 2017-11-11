@@ -122,6 +122,7 @@ if((($this_month=='01')||($this_month=='05')||($this_month=='09'))) {
         $cor1--;
     }
 }
+
 if((($this_month=='02')||($this_month=='06')||($this_month=='10'))) {
  if ($row['mie_ins_valor']!="0" && $fecha_cobro != "-"){
     $val2 = $n + $cor2;
@@ -670,7 +671,6 @@ $lasfechas = old_dues_comment($row['mie_id'], $year);
 if (count($lasfechas) > 0) {
     $objPHPExcel->getActiveSheet()->getComment('C'.$i)->setHeight("50px")->setWidth("250px")->getText()->createTextRun("Deuda mes: " . implode(', ', $lasfechas)); 
 }
-
 
 $objPHPExcel->getActiveSheet()->setCellValue('D'.$i, getInscription_info($row['mie_id'],'cob'));
 $objPHPExcel->getActiveSheet()->getStyle('D'.$i)->getAlignment()->setWrapText(true);
