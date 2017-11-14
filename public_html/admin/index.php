@@ -685,7 +685,7 @@ function ResetReports(id){
                             _correo_asistente: $("#_correo_asistente_u").val().toString(),
                             _movil_asistente: $("#_movil_asistente_u").val().toString(),
                             _apellido_asistente: $("#_apellido_asistente_u").val().toString(),
-                            _funcion_asistente: $("#_funcion_asistente_u").val().toString(),
+                            _funcion_asistente: 1,
                             _fijo_asistente: $("#_movil_fijo_asistente_u").val().toString(),
                             _bandera:_bandera
                     };

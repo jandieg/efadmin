@@ -95,18 +95,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
          $lista = "<div class='flex-container'>"
          ."<div>".$datos['sede'] ."</div><input type='hidden' id='_la_sede' value ='".$lasedeid."'><div>"
-         .$lamoneda."</div>";
+         ."</div>";
          $deshabilitado = '';
          if (! in_array(trim($_SESSION['user_perfil']), array('Administrador Regional'))) {
              $deshabilitado = 'disabled';
          }
          
          $lista .= "<div class='row'>
-         <div class='span2'><span>Sede: ".$lasede."</span></div>
-         <div class='span2'><span>Moneda: </span><input type='text' id='_la_moneda' value='".$lamoneda."' "
+         <div class='span2 lista-botones'><span><strong>Sede: ".$lasede."</strong></span></div>
+         <div class='span2 lista-botones'><span><strong>Moneda: </strong></span><input type='text' id='_la_moneda' value='".$lamoneda."' "
          .$deshabilitado."></div>";
          foreach($datosm as $k => $dd) {
-             $lista.= "<div class='span2'><span>".$meses[$k].": </span><input ".$deshabilitado." type='text' id='mes_".$k."' value='".$dd."' /></div>";
+             $lista.= "<div class='span2 lista-botones'><span><strong>".$meses[$k].": </strong></span><input ".$deshabilitado." type='text' id='mes_".$k."' value='".$dd."' /></div>";
          }
          $lista .="</div>";
          $lista .="</div>";
@@ -157,18 +157,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
          }
 
          $lista = "<div class='flex-container'>"
-         ."<div>".$datos['sede'] ."</div><input type='hidden' id='_la_sede' value ='".$lasedeid."'><div>"
-         .$lamoneda."</div>";
+         ."<div><strong>".$datos['sede'] ."</strong></div><input type='hidden' id='_la_sede' value ='".$lasedeid."'><div>"
+         ."</div>";
          $deshabilitado = '';
          if (! in_array(trim($_SESSION['user_perfil']), array('Administrador Regional'))) {
              $deshabilitado = 'disabled';
          }
          $lista .= "<div class='row'>
-         <div class='span2'><span>Sede: ".$lasede."</span></div>
-         <div class='span2'><span>Moneda: </span><input type='text' id='_la_moneda' value='".$lamoneda."' "
+         <div class='span2 lista-botones'><span><strong>Sede: ".$lasede."</strong></span></div>
+         <div class='span2 lista-botones'><span><strong>Moneda: </strong></span><input type='text' id='_la_moneda' value='".$lamoneda."' "
          .$deshabilitado."></div>";
          foreach($datosm as $k => $dd) {
-             $lista.= "<div class='span2'><span>".$meses[$k].": </span><input ".$deshabilitado." type='text' id='mes_".$k."' value='".$dd."' /></div>";
+             $lista.= "<div class='span2 lista-botones'><span><strong>".$meses[$k].": </strong></span><input ".$deshabilitado." type='text' id='mes_".$k."' value='".$dd."' /></div>";
          }
          $lista .="</div>";
          $lista .="</div>";

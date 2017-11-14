@@ -7,7 +7,7 @@
     
     justify-content: center;
 
-  
+  align-items: stretch;
 }
 .flex-container {
     display: flex;
