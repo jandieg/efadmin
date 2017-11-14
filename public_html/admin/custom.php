@@ -445,7 +445,34 @@ function get_meses_cobros($id,$month, $year) {
 
 }
 
+function get_moneda_sede($sede) {
+	include("../../incluidos/db_config/config.php");
+	$sql = "select moneda from tipo_cambio where sede_id = $sede limit 1";
+	$res = mysqli_query($con,$sql);
+	$row = mysqli_fetch_array($res);
+	
+	if (strlen($row['moneda']) > 0) {
+		return $row['moneda'];
+	} else {
+		return 'USD';
+	}
 
+}
+
+function get_tipo_cambio($sede, $month, $year) {
+	include("../../incluidos/db_config/config.php");
+	$sql = "select cambio from tipo_cambio where sede_id = $sede and mes = $month 
+	and anho=$year limit 1";
+	$res = mysqli_query($con,$sql);
+	$row = mysqli_fetch_array($res);
+	
+	if (strlen($row['cambio']) > 0) {
+		return $row['cambio'];
+	} else {
+		return 1;
+	}
+
+}
 
 function get_paid_month_info($id,$month,$year){
 

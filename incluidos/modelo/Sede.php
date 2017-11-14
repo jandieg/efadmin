@@ -19,6 +19,16 @@ class Sede extends Conexion{
         parent:: __construct();        
     }
 
+    public function getTipoCambio($anho, $idUser) {
+        $sql = "call sp_selectTipoCambio('$anho', '$idUser')";
+        return parent::getConsultar($sql);
+    }
+
+    public function setTipoCambio($mes, $anho, $sede, $cambio, $moneda) {
+        $sql = "call sp_updateTipoCambio('$mes', '$anho', '$sede', '$cambio', '$moneda')";
+        return parent::setSqlSp($sql);
+    }
+
     public function getSedeByUser($id_usuario) {
         $sql = "call sp_selectSedeByUser('$id_usuario')";
         return parent::getConsultar($sql);

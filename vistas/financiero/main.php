@@ -14,10 +14,10 @@
                     
                     </br></br></br></br></br>
                  <div class="box-body no-padding  ">
-                  <ul class="users-list clearfix ">
+                  <ul class="users-list clearfix lista-botones">
                  
                     <?php  if (in_array($perCobrosOp11, $_SESSION['usu_permiso'])) { ?>
-                        <li style="width: 33.33% !important">
+                        <li style="">
                           <img src="public/images/cobro.jpg" alt="User Image">
                           <h2><a class="users-list-name" href="cobros">Cobros</a></h2>
                         </li>
@@ -27,19 +27,23 @@
                           <h2><a class="users-list-name" href="pagos">Pagos</a></h2>
                         </li>
                     <?php }*/ if (in_array($perReportesOp11, $_SESSION['usu_permiso'])) { ?>
-                        <li  style="width: 33.33% !important">
+                        <li  style="">
                           <img src="public/images/reportes.jpg" alt="User Image">
                           <h2><a class="users-list-name" href="reporting">Reportes</a></h2>
                         </li>
                         
                     <?php } if (in_array($perPresupuestoOp11, $_SESSION['usu_permiso'])) { ?>
-                    <li  style="width: 33.33% !important">
+                    <li  style="">
                       <img src="public/images/presupuesto.jpg" alt="User Image">
                       <h2><a class="users-list-name" href="presupuesto">Presupuesto</a></h2>
+                    </li>                                                                                           
+                    <?php } ?>   
+                    <?php if (in_array(trim($_SESSION['user_perfil']), array('Administrador Regional', 'IBP', 'Asistente'))) : ?>
+                    <li  style="" onclick="getTipoCambio()">
+                      <img src="public/images/cambio2.png" alt="User Image">
+                      <h2><a class="users-list-name">Tipo de Cambio</a></h2>
                     </li>   
-                        
-                        
-                    <?php } ?>    
+                    <?php endif; ?>
                   </ul>
                   <!-- /.users-list -->
                 </div>
