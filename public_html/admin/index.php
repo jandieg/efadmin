@@ -668,8 +668,9 @@ function ResetReports(id){
                 $("#_nombre_asistente_u").val(nombre.toString());
                 $("#_apellido_asistente_u").val(apellido.toString());
                 $("#_correo_asistente_u").val(correo.toString());
-                $("#_movil_asistente_u").val(movil.toString());
-                $("#_movil_fijo_asistente_u").val(fijo.toString());
+                $("#_movil_asistente_u").val(Number(movil.toString().split(')')[1].trim()));
+                $("#_movil_fijo_asistente_u").val(Number(fijo.toString().split(')')[1].trim()));
+                
             //    $('#_funcion_asistente_u option[value="' + funcion + '"]').prop('selected', true);
                 $("#_funcion_asistente_u").val(funcion);
                 $(".select2").select2();

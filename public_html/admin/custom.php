@@ -1634,11 +1634,11 @@ if($type=='top'){
 
 //$sql="SELECT miembro.*, miembro_inscripcion.*, count(miembro.mie_id) AS active_members FROM miembro, miembro_inscripcion WHERE miembro_inscripcion.mie_ins_fecha_ingreso<='$xmonth' OR miembro_inscripcion.mie_ins_fechamodificacion>='$fmonth' AND miembro.status_member_id='1' AND miembro.status_member_id<>'2' AND YEAR(miembro_inscripcion.mie_ins_fechamodificacion)='$year' AND miembro.mie_id = miembro_inscripcion.miembro_id";
 
-$sql="SELECT COUNT(*) AS active_members
+$sql="SELECT COUNT(distinct t1.mie_id) AS active_members
 
 FROM miembro_inscripcion AS t0
 
-LEFT OUTER JOIN miembro AS t1 ON(t1.mie_id = t0.miembro_id)
+JOIN miembro AS t1 ON(t1.mie_id = t0.miembro_id)
 
 JOIN grupos AS t2 ON (t2.gru_id = t1.grupo_id)
 
@@ -1662,17 +1662,19 @@ AND year(t1.mie_fecha_cambio_status) = '$year' )
 OR (year(t1.mie_fecha_cambio_status) > '$year'))
 )
 
+
+
 ";
 
 }else{
 
 //$sql = "SELECT count(mie_id) AS active_members FROM miembro WHERE MONTH(mie_fecharegistro)='$month' AND YEAR(mie_fecharegistro)='$year' AND status_member_id='1' AND categoria_cat_id='4'".$extra_logic;	
 
-$sql="SELECT COUNT(*) AS active_members
+$sql="SELECT COUNT(distinct t1.mie_id) AS active_members
 
 FROM miembro_inscripcion AS t0
 
-LEFT OUTER JOIN miembro AS t1 ON(t1.mie_id = t0.miembro_id)
+JOIN miembro AS t1 ON(t1.mie_id = t0.miembro_id)
 
 JOIN grupos AS t2 ON (t2.gru_id = t1.grupo_id)
 
@@ -2133,7 +2135,7 @@ if($type=='top'){
 $sql="SELECT *
 FROM miembro_inscripcion AS t0
 
-LEFT OUTER JOIN miembro AS t1 ON(t1.mie_id = t0.miembro_id)
+JOIN miembro AS t1 ON(t1.mie_id = t0.miembro_id)
 
 JOIN grupos AS t2 ON (t2.gru_id = t1.grupo_id)
 
@@ -2159,7 +2161,9 @@ AND year(t1.mie_fecha_cambio_status) = '$year')
 
 OR (year(t1.mie_fecha_cambio_status) > '$year')
 )
-)";
+) 
+group by t1.mie_id 
+";
 
 /*
 FROM miembro_inscripcion AS t0
@@ -2183,7 +2187,7 @@ AND year(t1.mie_fecha_cambio_status) >= '$year' )))
 $sql="SELECT *
 FROM miembro_inscripcion AS t0
 
-LEFT OUTER JOIN miembro AS t1 ON(t1.mie_id = t0.miembro_id)
+JOIN miembro AS t1 ON(t1.mie_id = t0.miembro_id)
 
 JOIN grupos AS t2 ON (t2.gru_id = t1.grupo_id)
 
@@ -2208,7 +2212,8 @@ OR (( month(t1.mie_fecha_cambio_status) >'$month'
 AND year(t1.mie_fecha_cambio_status) = '$year' )
 OR (year(t1.mie_fecha_cambio_status) > '$year')
 )
-)";
+) 
+group by t1.mie_id ";
 /*
 FROM miembro_inscripcion AS t0
 LEFT OUTER JOIN miembro AS t1 ON(t1.mie_id = t0.miembro_id)
