@@ -177,11 +177,11 @@
                         </div>
                         <div class="form-group">
                             <label for="codigo">Teléfono Móvil</label>
-                            <input type="number" class="form-control" name="" id="_movil_asistente" placeholder="Teléfono Móvil" required value="">
+                            <input type="text" class="form-control" name="" id="_movil_asistente" placeholder="Teléfono Móvil" required value="">
                         </div>
                         <div class="form-group">
                             <label for="codigo">Teléfono Fijo</label>
-                            <input type="number" class="form-control" name="" id="_fijo_asistente" placeholder="Teléfono Móvil" required value="">
+                            <input type="text" class="form-control" name="" id="_fijo_asistente" placeholder="Teléfono Móvil" required value="">
                         </div>
                         
                     </div>
