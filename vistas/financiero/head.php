@@ -1,6 +1,172 @@
 <?php
 require_once MODELO.'Sede.php';
 
+public $monedas = array(
+'AED' => 'Emiratos Arabes Unidos',
+'AFN' => 'Afghani Afghanistan',
+'ALL' => 'Lek Albano',
+'AMD' => 'Dram Armeno',
+'ANG' => 'Guilder (Antillas Holandesas)',
+'AOA' => 'Kwanza Angolano',
+'ARS' => 'Peso Argentino',
+'AUD' => 'Dolar Australiano',
+'AWG' => 'Guilder (Aruba)',
+'AZN' => 'Manat (Azerbaijan)',
+'BAM' => 'Marka Convertible (Bonsia y Herzegovina)',
+'BBD' => 'Dolar de Barbados',
+'BDT' => 'Taka de Bangladesh',
+'BGN' => 'Lev Bulgaro',
+'BHD' => 'Dinar (Bahrein)',
+'BIF' => 'Franco de Burundi',
+'BMD' => 'Dolar de Bermuda',
+'BND' => 'Dolar de Brunei',
+'BOB' => 'Boliviano (Bolivia)',
+'BRL' => 'Real Brasilero',
+'BSD' => 'Dolar de las Bahamas',
+'BTN' => 'Ngultrum Butanes',
+'BWP' => 'Pula (Botsuana)',	 
+'BYN' => 'Rublo (Belarus)',
+'BZD' => 'Dolar de Belize',
+'CAD' => 'Dolar Canadiense',
+'CDF' => 'Franco del Congo',	
+'CHF' => 'Franco suizo',
+'CLP' => 'Peso Chileno',
+'CNY' => 'Yuan Chino',
+'COP' => 'Peso Colombiano',
+'CRC' => 'Colon Costarricense',
+'CUC' => 'Peso Cubano Convertible',
+'CUP' => 'Peso Cubano',
+'CVE' => 'Escudo Cape Verde',
+'CZK' => 'Republica Checa',
+'DJF' => 'Franco de Djibouti',
+'DKK' => 'Corona Danesa',
+'DOP' => 'Peso Dominicano',
+'DZD' => 'Dinar Argelino',	
+'EGP' => 'Libra Egipcia',
+ERN	Eritrea Nakfa
+ETB	Ethiopia Birr
+EUR	Euro Member Countries
+FJD	Fiji Dollar
+FKP	Falkland Islands (Malvinas) Pound
+GBP	United Kingdom Pound
+GEL	Georgia Lari
+GGP	Guernsey Pound
+GHS	Ghana Cedi
+GIP	Gibraltar Pound
+GMD	Gambia Dalasi
+GNF	Guinea Franc
+GTQ	Guatemala Quetzal
+GYD	Guyana Dollar
+HKD	Hong Kong Dollar
+HNL	Honduras Lempira
+HRK	Croatia Kuna
+HTG	Haiti Gourde
+HUF	Hungary Forint
+IDR	Indonesia Rupiah
+ILS	Israel Shekel
+IMP	Isle of Man Pound
+INR	India Rupee
+IQD	Iraq Dinar
+IRR	Iran Rial
+ISK	Iceland Krona
+JEP	Jersey Pound
+JMD	Jamaica Dollar
+JOD	Jordan Dinar
+JPY	Japan Yen
+KES	Kenya Shilling
+KGS	Kyrgyzstan Som
+KHR	Cambodia Riel
+KMF	Comorian Franc
+KPW	Korea (North) Won
+KRW	Korea (South) Won
+KWD	Kuwait Dinar
+KYD	Cayman Islands Dollar
+KZT	Kazakhstan Tenge
+LAK	Laos Kip
+LBP	Lebanon Pound
+LKR	Sri Lanka Rupee
+LRD	Liberia Dollar
+LSL	Lesotho Loti
+LYD	Libya Dinar
+MAD	Morocco Dirham
+MDL	Moldova Leu
+MGA	Madagascar Ariary
+MKD	Macedonia Denar
+MMK	Myanmar (Burma) Kyat
+MNT	Mongolia Tughrik
+MOP	Macau Pataca
+MRO	Mauritania Ouguiya
+MUR	Mauritius Rupee
+MVR	Maldives (Maldive Islands) Rufiyaa
+MWK	Malawi Kwacha
+MXN	Mexico Peso
+MYR	Malaysia Ringgit
+MZN	Mozambique Metical
+NAD	Namibia Dollar
+NGN	Nigeria Naira
+NIO	Nicaragua Cordoba
+NOK	Norway Krone
+NPR	Nepal Rupee
+NZD	New Zealand Dollar
+OMR	Oman Rial
+PAB	Panama Balboa
+PEN	Peru Sol
+PGK	Papua New Guinea Kina
+PHP	Philippines Peso
+PKR	Pakistan Rupee
+PLN	Poland Zloty
+PYG	Paraguay Guarani
+QAR	Qatar Riyal
+RON	Romania Leu
+RSD	Serbia Dinar
+RUB	Russia Ruble
+RWF	Rwanda Franc
+SAR	Saudi Arabia Riyal
+SBD	Solomon Islands Dollar
+SCR	Seychelles Rupee
+SDG	Sudan Pound
+SEK	Sweden Krona
+SGD	Singapore Dollar
+SHP	Saint Helena Pound
+SLL	Sierra Leone Leone
+SOS	Somalia Shilling
+SPL*	Seborga Luigino
+SRD	Suriname Dollar
+STD	São Tomé and Príncipe Dobra
+SVC	El Salvador Colon
+SYP	Syria Pound
+SZL	Swaziland Lilangeni
+THB	Thailand Baht
+TJS	Tajikistan Somoni
+TMT	Turkmenistan Manat
+TND	Tunisia Dinar
+TOP	Tonga Pa'anga
+TRY	Turkey Lira
+TTD	Trinidad and Tobago Dollar
+TVD	Tuvalu Dollar
+TWD	Taiwan New Dollar
+TZS	Tanzania Shilling
+UAH	Ukraine Hryvnia
+UGX	Uganda Shilling
+USD	United States Dollar
+UYU	Uruguay Peso
+UZS	Uzbekistan Som
+VEF	Venezuela Bolívar
+VND	Viet Nam Dong
+VUV	Vanuatu Vatu
+WST	Samoa Tala
+XAF	Communauté Financière Africaine (BEAC) CFA Franc BEAC
+XCD	East Caribbean Dollar
+XDR	International Monetary Fund (IMF) Special Drawing Rights
+XOF	Communauté Financière Africaine (BCEAO) Franc
+XPF	Comptoirs Français du Pacifique (CFP) Franc
+YER	Yemen Rial
+ZAR	South Africa Rand
+ZMW	Zambia Kwacha
+ZWD	Zimbabwe Dollar
+
+);
+
 function getTipoCambio($anho) {
     $objSede = new Sede();
     $resultset = $objSede->getTipoCambio($anho,$_SESSION['user_id_ben']);

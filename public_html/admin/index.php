@@ -679,6 +679,7 @@ function ResetReports(id){
                 $("#btnActAsistente").html('Actualizando Asistente ...');
                 $('#btnActAsistente').attr("disabled", true);
                 $.msg({content : '<img src="public/images/loanding.gif" />', autoUnblock: false});
+                
                 var parametros = {
                             KEY: 'KEY_ACTUALIZAR_ASISTENTE',
                             _id_asistente: $("#_id_asistente_u").val().toString(),
