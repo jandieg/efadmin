@@ -251,6 +251,11 @@ public function setActualizarMiembro($idMiembro, $id_persona, $propietario, $nom
         return parent::getConsultar($sql);
     }
 
+    public function verificarCodigoMiembro($user, $codigo) {
+        $sql = "call sp_selectCodigoMiembro('$user', '$codigo')";
+        return parent::getConsultar($sql);
+    }
+
     public function getAllMembers($agrup = "") {
         $sql = "call sp_selectAllMembers('$agrup')";
         return parent::getConsultar($sql);

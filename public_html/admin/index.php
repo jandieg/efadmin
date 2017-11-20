@@ -675,6 +675,36 @@ function ResetReports(id){
                 $("#_funcion_asistente_u").val(funcion);
                 $(".select2").select2();
             };
+
+            var cambiarClave = function() {
+                var parametros = {
+                    KEY: 'KEY_ACTUALIZAR_CLAVE'                    
+                };
+                $.msg({content : '<img src="public/images/loanding.gif" />', autoUnblock: false});
+
+                 $.ajax({
+                        data:  parametros,
+                        url:   'usuario',
+                        type:  'post',
+                        dataType : 'json',
+                        success:  function (mensaje) { 
+                                $.msg('unblock');
+                                if(mensaje.success == "true"){
+                                    $.toaster({ priority : mensaje.priority, title : 'Alerta', message : mensaje.msg});
+                                }else{
+                                    $.toaster({ priority : mensaje.priority, title : 'Alerta', message : mensaje.msg});
+                                }
+                        },error : function(xhr, status) {
+                           $.msg('unblock');
+                           $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema'});
+                        }
+                    });
+                    
+
+
+                $.toaster({ priority : mensaje.priority, title : 'Alerta', message : mensaje.msg});
+            };
+
             var setPAMActualizarAsistente = function(_bandera){
                 $("#btnActAsistente").html('Actualizando Asistente ...');
                 $('#btnActAsistente').attr("disabled", true);

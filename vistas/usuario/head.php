@@ -168,6 +168,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     }
                      exit();
                     break;
+            case 'KEY_ACTUALIZAR_CLAVE':
+                $objUsuario = new Usuario();
+                $resultset = $objUsuario->getCredencialesUsuario($_SESSION['user_id_ben']);
+                if ($row = $resultset->fetch_assoc()) {
+                    if (strlen($row['cor_descripcion']) > 0) {
+                        $mail= new Mail();				
+                        $cuerpoMensaje = "Estimado en el presente enlace podra actualizar su clave: <a href='http://executiveforums.la/admin/contrasena?user=".$row['usu_user']."&cod=".$row['codigo']."'>Enlace</a>";
+					$msg= $mail->enviar("Executive Forums - APP", "", "Actualizacion de clave", 
+					$cuerpoMensaje, $row['cor_descripcion'], TRUE, '');					
+                    $data = array("success" => "true", "priority"=>'success',"msg" => 'El correo para actualizar su clave fue enviado exitosamente');  
+                        echo json_encode($data);    
+                    } else {
+                        $data = array("success" => "false", "priority"=>'info',"msg" => 'El usuario no tiene correo adjunto');  
+                        echo json_encode($data);    
+                    }
+                } else {
+                    $data = array("success" => "false", "priority"=>'info',"msg" => 'El usuario no tiene correo adjunto');  
+                        echo json_encode($data);
+                }
+            
+            break;
             case 'KEY_ACTUALIZAR_CREDENCIALES':///////////////////////////////////////////////////////////       
                 
            

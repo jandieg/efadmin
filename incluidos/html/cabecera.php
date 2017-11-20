@@ -109,6 +109,9 @@
                     <?php }  ?>
                 </div>
                 <div class="pull-right">
+                  <div class="btn btn-default btn-falt" onclick="cambiarClave()">Cambiar contraseña</div>
+                </div>
+                <div class="pull-right">
                   <a href="logout" class="btn btn-default btn-flat">Cerrar Sesión</a>
                 </div>
               </li>
