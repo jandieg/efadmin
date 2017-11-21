@@ -218,6 +218,11 @@ public function setActualizarMiembro($idMiembro, $id_persona, $propietario, $nom
             return false;
         }
     }
+
+    public function setPresupuesto2017($miembro_id, $valor) {
+        $sql = "call sp_createPresupuesto2017('$miembro_id', '$valor')";
+        return setSqlSp($sql);
+    }
     
     public function hotfixCodigos($nombre, $apellido, $codigo, $grupo) {
         $sql = "call sp_hotfixCodigos('$nombre', '$apellido', '$codigo', '$grupo')";

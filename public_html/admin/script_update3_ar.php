@@ -16,9 +16,8 @@ require_once '../../incluidos/modelo/EmpresaLocal.php';
 require_once dirname(__FILE__) . '/PHPExcel/Classes/PHPExcel.php';
 require_once dirname(__FILE__) . '/PHPExcel/Classes/PHPExcel/IOFactory.php';
 
-
 function cargarMiembros() {
-	$objPHPExcel = PHPExcel_IOFactory::load("PE-02.xlsx");
+	$objPHPExcel = PHPExcel_IOFactory::load("BO-01.xlsx");
 	$objPHPExcel->setActiveSheetIndexByName("MIEMBROS");
 	$i = 2;
 	while (strlen($objPHPExcel->getActiveSheet()->getCell("A".$i)->getValue()) > 0) {		

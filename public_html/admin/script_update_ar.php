@@ -77,7 +77,7 @@ function sanear_string($string)
 
 
 function cargarIndustrias() {
-	$objPHPExcel = PHPExcel_IOFactory::load("PE-02.xlsx");
+	$objPHPExcel = PHPExcel_IOFactory::load("BO-01.xlsx");
 	$objPHPExcel->setActiveSheetIndexByName("INDUSTRIAS");
 	$i = 2;
 	while (strlen($objPHPExcel->getActiveSheet()->getCell("A".$i)->getValue()) > 0) {
@@ -90,7 +90,7 @@ function cargarIndustrias() {
 }
 
 function cargarEmpresas() {
-	$objPHPExcel = PHPExcel_IOFactory::load("PE-02.xlsx");
+	$objPHPExcel = PHPExcel_IOFactory::load("BO-01.xlsx");
 	$objPHPExcel->setActiveSheetIndexByName("EMPRESAS");
 	$i = 2;
 	$data = array();
@@ -105,7 +105,7 @@ function cargarEmpresas() {
 }
 
 function cargarMiembros($datos) {
-	$objPHPExcel = PHPExcel_IOFactory::load("PE-02.xlsx");
+	$objPHPExcel = PHPExcel_IOFactory::load("BO-01.xlsx");
 	$objPHPExcel->setActiveSheetIndexByName("MIEMBROS");
 	$i = 2;
 	while (strlen($objPHPExcel->getActiveSheet()->getCell("A".$i)->getValue()) > 0) {		

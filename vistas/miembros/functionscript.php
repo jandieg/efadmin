@@ -778,7 +778,7 @@ var setUserActualizar = function(  id_persona, id_miembro){
         participacion="1";
      }
      var la_membresia = $("#_membresia").val().toString();
-     if ($("#_membresia_presupuesto").val().toString() != "x") {
+     if ($("#_membresia_presupuesto").val() != null && $("#_membresia_presupuesto").val().toString() != "x") {
          la_membresia = $("#_membresia_presupuesto").val().toString();
      }
         var parametros = {
@@ -815,13 +815,17 @@ var setUserActualizar = function(  id_persona, id_miembro){
                 _lista_hobbies:_lista_hobbies,
                 _grupo_asignar:$("#_grupo_asignar").val().toString()
         };
+        var valorr = "0";
+        if ($("#_ins_valor").val() != null) {
+            valorr = $("#_ins_valor").val().toString();
+        }
         if ($("#_fecha_registro").val().toString().length >0 ) {
             if ($("#_fecha_cobro").val().toString().length > 0) {
                 textoalertas += setAgregarInscripcionEnPrincipal(
                 $("#_id_insc").val().toString(), 
                 id_miembro.toString(), 
                 $("#_fecha_registro").val().toString(), 
-                $("#_ins_valor").val().toString(), 
+                valorr, 
                 2, 
                 $("#_fecha_cobro").val().toString());
             } else {
@@ -829,7 +833,7 @@ var setUserActualizar = function(  id_persona, id_miembro){
                 $("#_id_insc").val().toString(), 
                 id_miembro.toString(), 
                 $("#_fecha_registro").val().toString(), 
-                $("#_ins_valor").val().toString(), 
+                valorr, 
                 1, 
                 $("#_fecha_cobro").val().toString());
             }
@@ -839,17 +843,17 @@ var setUserActualizar = function(  id_persona, id_miembro){
         } 
         
     
-
-        if ($("#_periodo_presupuesto").val().toString() != "x" && $("#_membresia_presupuesto").val().toString() != "x") {
-            textoalertas += setAgregarPresupuestoEnPrincipal(
-                $("#_id_presup").val().toString(), 
-                id_miembro.toString(), 
-                $("#_periodo_presupuesto").val().toString(), 
-                $("#_fecha_registro").val().toString(), 
-                $("#_membresia_presupuesto").val().toString()
-            );        
-        }
-
+        if ($("#_membresia_presupuesto").val()!= null) {
+            if ($("#_periodo_presupuesto").val().toString() != "x" && $("#_membresia_presupuesto").val().toString() != "x") {
+                textoalertas += setAgregarPresupuestoEnPrincipal(
+                    $("#_id_presup").val().toString(), 
+                    id_miembro.toString(), 
+                    $("#_periodo_presupuesto").val().toString(), 
+                    $("#_fecha_registro").val().toString(), 
+                    $("#_membresia_presupuesto").val().toString()
+                );        
+            }
+        } 
      
         
         
