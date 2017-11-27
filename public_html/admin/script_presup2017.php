@@ -13,70 +13,16 @@ require_once '../../incluidos/Conexion.php';
 require_once '../../incluidos/modelo/Miembro.php';
 
 
-/*
-$fh = fopen('filename.txt','r');
-while ($line = fgets($fh)) {
-  // <... Do your work with the line ...>
-  // echo($line);
-}
-fclose($fh);
-*/
+
 function actualice() {
-    
-
-    $objMiembro = new Miembro();
-    print_r($objMiembro->setPresupuesto2017(1170,900));
-    
-    $objMiembro = new Miembro();
-    print_r($objMiembro->setPresupuesto2017(1171,500));
-    
-    $objMiembro = new Miembro();
-    print_r($objMiembro->setPresupuesto2017(1172,900));
-    
-    $objMiembro = new Miembro();
-    print_r($objMiembro->setPresupuesto2017(1173,900));
-    
-    
-    $objMiembro = new Miembro();
-    print_r($objMiembro->setPresupuesto2017(1174,500));
-    
-    
-    $objMiembro = new Miembro();
-    print_r($objMiembro->setPresupuesto2017(1175,900));
-    
-    $objMiembro = new Miembro();
-    print_r($objMiembro->setPresupuesto2017(1176,900));
-    
-    $objMiembro = new Miembro();
-    print_r($objMiembro->setPresupuesto2017(1177,900));
-    
-    $objMiembro = new Miembro();
-    print_r($objMiembro->setPresupuesto2017(1178,900));
-    
-    $objMiembro = new Miembro();
-    print_r($objMiembro->setPresupuesto2017(1179,900));
-    
-    $objMiembro = new Miembro();
-    print_r($objMiembro->setPresupuesto2017(1179,900));
-    
-    $objMiembro = new Miembro();
-    print_r($objMiembro->setPresupuesto2017(1180,900));
-
-    $objMiembro = new Miembro();
-    print_r($objMiembro->setPresupuesto2017(1181,900));
-
-    $objMiembro = new Miembro();
-    print_r($objMiembro->setPresupuesto2017(1182,900));
-
-    $objMiembro = new Miembro();
-    print_r($objMiembro->setPresupuesto2017(1185,900));
-
-    $objMiembro = new Miembro();
-    print_r($objMiembro->setPresupuesto2017(1186,900));
-
-    $objMiembro = new Miembro();
-    print_r($objMiembro->setPresupuesto2017(1187,900));
-
+  $fh = fopen('data.txt','r');
+  while ($line = fgets($fh)) {
+      $datos = trim($line);
+      $lista = explode(',',$datos);
+      $objMiembro = new Miembro();
+      print_r($objMiembro->setPresupuesto2017($lista[0],$lista[1]));    
+  }
+  fclose($fh);
 }
 
 actualice();

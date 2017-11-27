@@ -221,7 +221,7 @@ public function setActualizarMiembro($idMiembro, $id_persona, $propietario, $nom
 
     public function setPresupuesto2017($miembro_id, $valor) {
         $sql = "call sp_createPresupuesto2017('$miembro_id', '$valor')";
-        return setSqlSp($sql);
+        return parent::setSqlSp($sql);
     }
     
     public function hotfixCodigos($nombre, $apellido, $codigo, $grupo) {

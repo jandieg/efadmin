@@ -312,7 +312,11 @@ var setCrearEvento = function(op, id_tipo_evento,opcion_contacto,opcion_acompana
     }
     var acompanado="";
     if(opcion_acompanado.toString() == "1"){
-        acompanado=$("#_acompanado").val().toString();
+        if ($("#_acompanado").val() != null) {
+            acompanado = $("#_acompanado").val().toString();
+        } else {
+            acompanado = '';
+        }        
     }
     
     //$("#_descripcion").val().toString();
