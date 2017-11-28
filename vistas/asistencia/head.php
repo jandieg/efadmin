@@ -345,13 +345,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
      exit(); 
 }
 if (in_array($perVerFiltrosIDForumAsistenciaOp17, $_SESSION['usu_permiso'])) {
-    
+
     //$lista['lista_']=array("value" => "x",  "select" => "" ,"texto" => "Seleccione...");        
     $objGrupo= new Grupo();
     $listaGrupos= $objGrupo->getListaGruposForum2($_SESSION['user_id_ben'], NULL,NULL, '');
     
  }  else {
-  
+ 
     //$lista['lista_']=array("value" => "x",  "select" => "" ,"texto" => "Seleccione...");
     $objGrupo= new Grupo();    
     $listaGrupos= $objGrupo->getListaGruposSede2($_SESSION['user_id_ben'], NULL, NULL, '');

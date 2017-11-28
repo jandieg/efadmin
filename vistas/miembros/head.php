@@ -1369,7 +1369,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                      $objMembresia = new Membresia();
                      $membresiaValor= $objMembresia->getMembresiaValor($_POST['_membresia_inscripcion']);
-/
+
 
                       if($_POST['_id_inscripcion'] != "0"){
                          $objInscripcion= new Inscripcion();   

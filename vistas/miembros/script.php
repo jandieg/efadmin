@@ -257,6 +257,9 @@ $('#modal-cropper').on('shown.bs.modal', function () {
 
 function cropper_Modal() {
     console.log('entra en el cropper modal');
+    
+    $('#cropper-image').cropper('destroy');
+    
     $("#modal-cropper").modal().show();
 }
 

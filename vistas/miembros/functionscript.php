@@ -43,12 +43,14 @@ reader.readAsDataURL(document.getElementById('archivo').files[0]);
             processData:false,
             success: function(data)
             {
+                datosimg = false;
                 console.log(data);
             },
             error: function() 
             {
             } 	        
         });
+        
 
     }
 /*    reader.onloadend = function () {
