@@ -329,8 +329,13 @@ class Grupo extends Conexion{
         return parent::getConsultar($sql);
     }
 
+    public function getGruposAgrupExcluyendo2($idExcluir) {
+        $sql = "call sp_selectGruposAgrupExcluyendo2('$idExcluir')";
+        return parent::getConsultar($sql);
+    }
+
     public function getGruposA($idExcluir) {
-        $resultset = $this->getGruposAgrupExcluyendo($idExcluir);
+        $resultset = $this->getGruposAgrupExcluyendo2($idExcluir);
         $lista = array();
         while ($row = $resultset->fetch_assoc()) {
             $lista[] = $row['gru_id'];
