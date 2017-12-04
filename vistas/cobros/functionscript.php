@@ -496,18 +496,22 @@ var setCobrarAdminReg = function(){
         banderacredito = 1;
         montopagar += Number($("#_credito").val());
     }
+
+    var bandera = true;
     
     $(".case").each(function() {
-        if (Number($(this).val()) <= montopagar) {
-            
+        if (Number($(this).val()) <= montopagar && bandera) {            
             montopagar -= $(this).val();
-            listaIDDetalle.push($(this).attr("name"));
-            
+            listaIDDetalle.push($(this).attr("name"));            
+        } else {
+            bandera = false;
         }
     });
-        
+    
+    console.log('El monto a pagar es: ' + montopagar);
 
     if (! estanSalteados()) {
+        
     
     $('#btnGuardar').attr("disabled", true);
     $.msg({content : '<img src="public/images/loanding.gif" />', autoUnblock: false});

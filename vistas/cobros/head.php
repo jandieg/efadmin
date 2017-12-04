@@ -436,6 +436,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                  &&  strlen($_POST['_bandera_credito']) > 0 && strlen($_POST['_resto'])>0 ){  
                     
                     if (! empty($_POST['_lista_id_detalle_presupuesto'] )) {
+                
                         $fechad = date_format(date_create($_POST['_fecha']), 'Y-m-d H:i:s');
                         $lista="";
                         if(isset($_POST['_lista_id_detalle_presupuesto'])){
@@ -446,7 +447,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                         $objPresupuestoCobro = new PresupuestoCobro();
                         $resultado = $objPresupuestoCobro->actualizarCreditoPresupuestoMiembro($_POST['_id_presupuesto'], $_POST['_resto'], $_POST['_bandera_credito']); 
-                    
+                
                         $objCobro= new Cobro();
                         $comp= $objCobro->setGrabarWithDatetime($_POST['_id_presupuesto'],$lista,$_POST['_id_miembro'], $_POST['_formapago'],$_SESSION['user_id_ben'], $fechad);  
                                                                                                         
@@ -457,8 +458,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             $data = array("success" => "false", "priority"=>'info',"msg" => $comp); 
                             echo json_encode($data);
                         }
-
-
 
                     } else {
                         $objPresupuestoCobro = new PresupuestoCobro();
@@ -471,8 +470,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             echo json_encode($data);
                         }
                     }
-               
-                
+                                                   
                  }  else {
                      $data = array("success" => "false", "priority"=>'info', "msg" => 'Faltan campos por llenar!');  
                      echo json_encode($data); 
