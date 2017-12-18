@@ -18,15 +18,15 @@ require_once dirname(__FILE__) . '/PHPExcel/Classes/PHPExcel/IOFactory.php';
 
 
 
-function cargarCobros() {
-	$objPHPExcel = PHPExcel_IOFactory::load("status.xls");
-	$objPHPExcel->setActiveSheetIndexByName("PA01");
+function cargarStatus() {
+	$objPHPExcel = PHPExcel_IOFactory::load("SPE02.xls");
+	$objPHPExcel->setActiveSheetIndexByName("MX6");
 	$i = 3;
-
 	while (strlen($objPHPExcel->getActiveSheet()->getCell("A".$i)->getValue()) > 0) {
         $codigo = $objPHPExcel->getActiveSheet()->getCell("A".$i)->getValue();
         $valor = date('d/m/Y', PHPExcel_Shared_Date::ExcelToPHP($objPHPExcel->getActiveSheet()->getCell('D'.$i)->getValue()));
-        $fecha = implode('-', array_reverse(explode('/', $valor)));        
+        $fecha = implode('-', array_reverse(explode('/', $valor))); 
+        echo " " . $fecha . " ";       
         $objPresupuestoCobro = new PresupuestoCobro();        
         print_r($objPresupuestoCobro->updateStatus2017($codigo, $fecha));
 		$i++;
@@ -35,6 +35,6 @@ function cargarCobros() {
 
 	
 
-cargarCobros();
+cargarStatus();
 
 ?>

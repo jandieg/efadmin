@@ -223,6 +223,11 @@ public function setActualizarMiembro($idMiembro, $id_persona, $propietario, $nom
         $sql = "call sp_createPresupuesto2017('$miembro_id', '$valor')";
         return parent::setSqlSp($sql);
     }
+
+    public function setPresupuesto2018($miembro_id, $valor) {
+        $sql = "call sp_createPresupuesto2018('$miembro_id', '$valor')";
+        return parent::setSqlSp($sql);
+    }
     
     public function hotfixCodigos($nombre, $apellido, $codigo, $grupo) {
         $sql = "call sp_hotfixCodigos('$nombre', '$apellido', '$codigo', '$grupo')";

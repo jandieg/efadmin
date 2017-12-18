@@ -62,6 +62,11 @@ class PresupuestoCobro extends Conexion{
         return parent::getConsultar($sql);
     }
 
+    public function  updateStatus2017($codigo, $fecha) {
+        $sql = "call sp_updateStatus2017('$codigo', '$fecha')";
+        return parent::setSqlSp($sql);
+    }    
+
     public function setPresupuestoFromScript($monto, $codigo, $total, $listaf, $estado) {
         $sql = "call sp_createPresupuestoCobroMiembro4('$monto', '2016-01-01 00:00:00', fc_getMiembroByCodigo('$codigo'), '$total', 1, '2016-01-01 00:00:00', 1, '$listaf', 2016, '$estado', 1)";
         return parent::setSqlSp($sql);

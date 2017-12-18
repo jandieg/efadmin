@@ -16,11 +16,9 @@ require_once '../../incluidos/modelo/PresupuestoCobro.php';
 require_once dirname(__FILE__) . '/PHPExcel/Classes/PHPExcel.php';
 require_once dirname(__FILE__) . '/PHPExcel/Classes/PHPExcel/IOFactory.php';
 
-
-
 function cargarCobros() {
-	$objPHPExcel = PHPExcel_IOFactory::load("cob2016.xls");
-	$objPHPExcel->setActiveSheetIndexByName("CO03");
+	$objPHPExcel = PHPExcel_IOFactory::load("cob20164.xls");
+	$objPHPExcel->setActiveSheetIndexByName("BO-01");
 	$i = 3;
 
 	while (strlen($objPHPExcel->getActiveSheet()->getCell("A".$i)->getValue()) > 0) {
