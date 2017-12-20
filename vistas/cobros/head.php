@@ -18,6 +18,7 @@ $objEmpresaLocal;
 $objFormaPago;
 include(LENGUAJE."/lenguaje_1.php");
 
+
                         
 function getDetalleEmpresaConMiembros($id, $key, $año) {  
      if(isset($_SESSION['cobro_ultimo_id'])){
@@ -26,11 +27,16 @@ function getDetalleEmpresaConMiembros($id, $key, $año) {
     }
     $cuerpo='';
     $objPresupuestoCobro= new PresupuestoCobro();
+    //es anho actual
+    
     if($key == "EMPRESA"){
-        $resultset= $objPresupuestoCobro->getPresupuestoCobroMiembrosxEmpresas($id, $año);
-    }elseif ($key == "MIEMBRO") {
+        
+        $resultset= $objPresupuestoCobro->getPresupuestoCobroMiembrosxEmpresas($id, $año);        
+    }elseif ($key == "MIEMBRO") {        
+        
         $resultset= $objPresupuestoCobro->getPresupuestoCobroMiembrosxMiembros($id, $año);
     }elseif ($key == "GRUPO"){
+        
         $resultset= $objPresupuestoCobro->getPresupuestoCobroMiembrosFiltroGrupo($id,$año );
     }
     
