@@ -155,7 +155,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             break;
             case 'KEY_ACTUALIZAR':///////////////////////////////////////////////////////////             
                    if(!empty($_POST['_id']) && !empty($_POST['_nombre']) && !empty($_POST['_apellido'])  
-                        && !empty($_POST['_perfil'] ) && !empty($_POST['_correo'] ) &&  !empty($_POST['_celular'] ) 
+                        && !empty($_POST['_perfil'] ) && !empty($_POST['_correo'] ) 
                         &&  !empty($_POST['_pais'] ) && ! empty($_POST['_sede'])){ 
                        
 //                        if($_POST['_sede'] == 'x'){
@@ -243,8 +243,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     if(!empty($_POST['_nombre']) && !empty($_POST['_apellido']) && !empty($_POST['key_operacion'] ) 
                            && !empty($_POST['_perfil'] )&& !empty($_POST['_user'] )
                             && !empty($_POST['_contraseña'] )&& !empty($_POST['_confirmar'] )
-                            && !empty($_POST['_correo']) && !empty($_POST['_telefono']) 
-                            && !empty($_POST['_celular']) && !empty($_POST['_pais']) 
+                            && !empty($_POST['_correo']) 
+                             && !empty($_POST['_pais']) 
                             && !empty($_POST['_sede'])) { 
 //                        if($_POST['_sede'] == 'x'){
 //                            $data = array("success" => "false", "priority"=>'warning', "msg" => 'Debes seleccionar una Sede!');  

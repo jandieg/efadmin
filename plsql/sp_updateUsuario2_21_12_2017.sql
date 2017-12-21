@@ -6,9 +6,15 @@ BEGIN
         `per_identificacion`=_identificacion,`per_fechanacimiento`=_fechanacimiento,
         `per_genero`=_genero, per_hijos= _hijos, per_esposa = _esposa  
     WHERE `per_id`=(SELECT  `Persona_per_id` FROM `usuario` WHERE usu_id=_id_user);
-
-    UPDATE `telefono` SET `tel_descripcion`=_celular, `tel_id_usuario`=_id_usuario WHERE `Persona_per_id`= (SELECT  `Persona_per_id` FROM `usuario` WHERE usu_id=_id_user) and `tel_tipo`='M';
-    UPDATE `telefono` SET `tel_descripcion`=_telefono, `tel_id_usuario`=_id_usuario WHERE `Persona_per_id`= (SELECT  `Persona_per_id` FROM `usuario` WHERE usu_id=_id_user) and `tel_tipo`='C';
+    
+    if _celular <> '' then
+      UPDATE `telefono` SET `tel_descripcion`=_celular, `tel_id_usuario`=_id_usuario WHERE `Persona_per_id`= (SELECT  `Persona_per_id` FROM `usuario` WHERE usu_id=_id_user) and `tel_tipo`='M';
+    end if;
+    
+    if _telefono <> '' then
+      UPDATE `telefono` SET `tel_descripcion`=_telefono, `tel_id_usuario`=_id_usuario WHERE `Persona_per_id`= (SELECT  `Persona_per_id` FROM `usuario` WHERE usu_id=_id_user) and `tel_tipo`='C';
+    end if;
+    
     UPDATE `correo` SET `cor_descripcion`=_correo,`cor_id_usuario`=_id_usuario WHERE `Persona_per_id`=(SELECT  `Persona_per_id` FROM `usuario` WHERE usu_id=_id_user) and cor_tipo='Personal';
 
 END;

@@ -20,11 +20,15 @@ BEGIN
         INSERT INTO correo( cor_tipo,cor_descripcion, cor_fecharegistro, Persona_per_id, cor_id_usuario, cor_estado) 
         VALUES ('Personal',_correo,_fecharegistro,_LID_PERSONA,_id_usuario,'A');
 
+        if _telefono <> '' then
         INSERT INTO telefono( tel_descripcion, tel_fecharegistro,Persona_per_id, tel_tipo, tel_id_usuario, tel_estado) VALUES 
         (_telefono,_fecharegistro,_LID_PERSONA,'C',_id_usuario,'A');
-
+        end if;
+                
+        if _celular <> '' then 
         INSERT INTO telefono( tel_descripcion, tel_fecharegistro,Persona_per_id, tel_tipo, tel_id_usuario, tel_estado) VALUES 
         (_celular,_fecharegistro,_LID_PERSONA,'M',_id_usuario,'A');
+        end if; 
 
          SELECT Count(usu_id), 'OK' as '_key' FROM usuario WHERE binary usu_user= _user;
         
