@@ -873,7 +873,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $objGrupo = new Grupo();
                     $lista= array();
                     $listado=$objGrupo->getListaGruposByForumLeaderPersona($_POST['_id'], $lista); 
-                    print_r($listado);               
+                                
                     $form['form_3'] = array("elemento" => "combo","change" => "setCambioGrupos()", "titulo" => "Grupos", "id" => "_miembrosGrupos", "option" => $listado);
                     echo generadorEtiqueta($form);   
                 }     

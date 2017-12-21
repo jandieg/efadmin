@@ -57,6 +57,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	
 	$objSede= new Sede();
     $listaSedes= $objSede->getLista($row['pais_id'],$listap); 
+    $objSede2 = new Sede();
+    $listasede2 = $objSede2->getListaSedeUsuario($row['pais_id'], $row['sede_id']);
 
 							
 							
@@ -78,7 +80,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             $form['form_17'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => generadorAsterisco($lblTM), "id" => "_celular" ,"reemplazo" => $row['movil']);     
                             $form['form_11'] = array("elemento" => "combo","change" => "","titulo" => $lblEstado, "id" => "_estado", "option" => generadorComboEstado(($row['usu_estado']=="A" ? "Activo" : "Inactivo")));  
 						//   $form['form_12'] = array("elemento" => "combo", "change" => "",                  "titulo" => "Sede", "id" => "_sede", "option" => $listaSedes);
-						   $form['form_12'] =  array("elemento" => "combo","change" => "","titulo" => $lblPais, "id" => "_pais", "option" => $listapais);
+						   $form['form_12'] =  array("elemento" => "combo","change" => "cambioPais()","titulo" => $lblPais, "id" => "_pais", "option" => $listapais);
+                           $form['form_20'] =  array("elemento" => "combo","change" => "","titulo" => generadorAsterisco("Sede"), "id" => "_sede", "option" => $listasede2);
                            $form['form_13'] = array("elemento" => "cajaoc" ,"tipo" => "text" , "titulo" => "Esposa", "id" => "_esposa" ,"reemplazo" => $row['per_esposa']);
                            $form['form_14'] = array("elemento" => "cajaoc" ,"tipo" => "text" , "titulo" => "Hijos", "id" => "_hijos" ,"reemplazo" => $row['per_hijos']);
                            $form['form_18'] = array("elemento" => "subir-imagen-oc", "valor" => $row['usu_id']);
@@ -96,14 +99,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                       echo  $resultado ;
                     }
                     break;
+            case 'KEY_CAMBIO_PAIS' :
+                if(isset($_POST['_id'])){
+                    $objSede = new Sede();
+                    $form = array();
+                    $listasede = $objSede->getListaSedeUsuario($_POST['_id'], ''); 
+                    $form['form_20'] =  array("elemento" => "combo","change" => "","titulo" => generadorAsterisco("Sede"), "id" => "_sede", "option" => $listasede);                           
+                    echo generadorEtiqueta($form);
+                }                       
+            break;
             case 'KEY_SHOW_FORM_GUARDAR'://///////////////////////////////////////////////////////// 
                 $objPerfil= new Perfil();
                 $listaPerfil= $objPerfil->getListaPerfiles(NULL,NULL,$_SESSION['_tipo_usuario']);
                 
-    $objPais= new Pais();
-    $listapais= $objPais->getListaPais($_SESSION['global_pais_temporales'],$listap); 
-	
-	
+                $objPais= new Pais();
+                $listapais= $objPais->getListaPais($_SESSION['global_pais_temporales'],$listap); 
+
+                $objSede = new Sede();
+                $listasede = $objSede->getListaSedeUsuario('1', '');
+                        
                 $boton['boton_1'] = array("click" => "setUserCrear('g')" ,"modal" => ""  ,"color" => "btn-info" ,"titulo" => "Guardar" ,"lado" => "pull-right" ,"icono" => "fa-pencil");
                 $boton['boton_2'] = array("click" => "setUserCrear('gn')" ,"modal" => ""  ,"color" => "btn-info" ,"titulo" => "Guardar y Nuevo" ,"lado" => "pull-right" ,"icono" => "fa-pencil");
                 $boton['boton_3'] = array("click" => "getRecargar()" ,"modal" => ""  ,"color" => "btn-info" ,"titulo" => "Regresar" ,"lado" => "" ,"icono" => "fa-mail-reply");
@@ -125,11 +139,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $form2['form_13'] = array("elemento" => "caja" ,"tipo" => "Password" , "titulo" => generadorAsterisco("Contraseña"), "id" => "_contraseña" ,"reemplazo" =>'');
                 $form2['form_14'] = array("elemento" => "caja" ,"tipo" => "Password" , "titulo" => generadorAsterisco("Confirmar"), "id" => "_confirmar" ,"reemplazo" => ''); 
                 $form['form_11'] = array("elemento" => "combo","change" => "","titulo" => $lblEstado, "id" => "_estado", "option" => generadorComboEstado('Activo'));   
-                $form['form_12'] =  array("elemento" => "combo","change" => "","titulo" => $lblPais, "id" => "_pais", "option" => $listapais);
+                $form['form_12'] =  array("elemento" => "combo","change" => "cambioPais()","titulo" => $lblPais, "id" => "_pais", "option" => $listapais);
+                $form['form_20'] =  array("elemento" => "combo","change" => "","titulo" => generadorAsterisco("Sede"), "id" => "_sede", "option" => $listasede);
                 $form['form_18'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => generadorAsterisco("Esposa"), "id" => "_esposa" ,"reemplazo" => '');
                 $form['form_19'] = array("elemento" => "caja" ,"tipo" => "text" , "titulo" => generadorAsterisco("Hijos"), "id" => "_hijos" ,"reemplazo" => '');
                 //echo $formDatosPersonales= generadorFormularios(NULL,NULL,$form, $boton,$cabecera);
-                
+
                 $resultado = str_replace("{contenedor_1}", generadorEtiqueta($form),  getPage('page_detalle_crear') );//generadorContMultipleRow($colum));      
                 $resultado = str_replace("{boton}", generadorBoton($boton), $resultado);  
                 $resultado = str_replace("{cabecera}", "Crear Usuario", $resultado);
@@ -140,7 +155,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             break;
             case 'KEY_ACTUALIZAR':///////////////////////////////////////////////////////////             
                    if(!empty($_POST['_id']) && !empty($_POST['_nombre']) && !empty($_POST['_apellido'])  
-                        && !empty($_POST['_perfil'] ) && !empty($_POST['_correo'] ) &&  !empty($_POST['_celular'] )&&  !empty($_POST['_pais'] )){ 
+                        && !empty($_POST['_perfil'] ) && !empty($_POST['_correo'] ) &&  !empty($_POST['_celular'] ) 
+                        &&  !empty($_POST['_pais'] ) && ! empty($_POST['_sede'])){ 
                        
 //                        if($_POST['_sede'] == 'x'){
 //                            $data = array("success" => "false", "priority"=>'warning', "msg" => 'Debes seleccionar una Sede!');  
@@ -151,7 +167,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         $objUsuario= new Usuario();
                         $comp= $objUsuario->setActualizarUsuario2($_POST['_id'] ,$_POST['_nombre'], $_POST['_apellido'], $_POST['_tipo_p'] ,
                                 'a', $_POST['_fn'], $_POST['_genero'], $_POST['_perfil'], $_POST['_estado'], $_SESSION['user_id_ben'], $_POST['_correo']
-                                ,$_POST['_telefono'], $_POST['_celular'], '1', $_POST['_pais'], $_POST['_esposa'], $_POST['_hijos']); 
+                                ,$_POST['_telefono'], $_POST['_celular'], '1', $_POST['_pais'], $_POST['_esposa'], $_POST['_hijos'], $_POST['_sede']); 
                         
                         if($comp == "OK"){
                             $data = array("success" => "true", "priority"=>'success',"msg" => 'El usuario se actualizó correctamente!');  
@@ -227,7 +243,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     if(!empty($_POST['_nombre']) && !empty($_POST['_apellido']) && !empty($_POST['key_operacion'] ) 
                            && !empty($_POST['_perfil'] )&& !empty($_POST['_user'] )
                             && !empty($_POST['_contraseña'] )&& !empty($_POST['_confirmar'] )
-                            && !empty($_POST['_correo'] )&& !empty($_POST['_telefono'] )&& !empty($_POST['_celular'] )&& !empty($_POST['_pais'] )){ 
+                            && !empty($_POST['_correo']) && !empty($_POST['_telefono']) 
+                            && !empty($_POST['_celular']) && !empty($_POST['_pais']) 
+                            && !empty($_POST['_sede'])) { 
 //                        if($_POST['_sede'] == 'x'){
 //                            $data = array("success" => "false", "priority"=>'warning', "msg" => 'Debes seleccionar una Sede!');  
 //                            echo json_encode($data); 
@@ -254,7 +272,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             $objUsuario= new Usuario();
                             $comp= $objUsuario->setGrabarUsuario($_POST['_nombre'], $_POST['_apellido'], $_POST['_tipo_p'],'a', $_POST['_fn'], 
                                 $_POST['_genero'], $_POST['_user'] , $hash, $_POST['_perfil'],$_POST['_estado'],  $_SESSION['user_id_ben'],$_POST['_correo']
-                                ,$_POST['_telefono'],$_POST['_celular'],$salt,'1',$_POST['_pais']);  
+                                ,$_POST['_telefono'],$_POST['_celular'],$salt,'1',$_POST['_pais'], $_POST['_sede']);  
                             
                             if($comp=="OK"){
                                 //Correo

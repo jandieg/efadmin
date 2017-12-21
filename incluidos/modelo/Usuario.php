@@ -64,13 +64,13 @@ class Usuario extends Conexion{
 //            return $row['_key'];  
 //        }  
 //    }
-     public function setGrabarUsuario($n, $a, $tipo,$ident, $fn, $genero, $user, $pass, $id_perfil, $estado, $id_user, $correo, $telefono, $celular,$salt, $sede, $pais) {
+     public function setGrabarUsuario($n, $a, $tipo,$ident, $fn, $genero, $user, $pass, $id_perfil, $estado, $id_user, $correo, $telefono, $celular,$salt, $sede, $pais, $sede) {
         //$hash= password_hash($pass, PASSWORD_DEFAULT);
         $fecha= date("Y-m-d H:i:s");
         $bases= $_SESSION['databases'];
         $sql="call sp_globalCreateUsuario('$n', '$a', '$tipo','$ident', '$fn' , "
                 . "'$genero' , '$user', '$pass', '$id_perfil','$fecha', '$estado',"
-                . " '$id_user', '$correo','$telefono','$celular', '$salt', '$sede', '$bases', '$pais')";  
+                . " '$id_user', '$correo','$telefono','$celular', '$salt', '$sede', '$bases', '$pais', '$sede')";  
         $resultset= parent::getConsultar($sql);
         if ($row = $resultset->fetch_assoc()) { 
             return $row['_key'];  
@@ -97,8 +97,8 @@ class Usuario extends Conexion{
         return parent::setSqlSp($sql);        
     }
 
-    public function setActualizarUsuario2($id ,$n, $a, $tipo,$ident, $fn, $genero, $id_perfil, $estado, $id_user, $correo, $telefono, $celular, $sede, $pais, $esposa, $hijos) {
-        $sql="call sp_updateUsuario2('$id','$n', '$a', '$tipo','$ident', '$fn' , '$genero' , '$id_perfil', '$estado', '$id_user', '$correo', '$telefono','$celular', '$sede', '$pais','$esposa', '$hijos')"; 
+    public function setActualizarUsuario2($id ,$n, $a, $tipo,$ident, $fn, $genero, $id_perfil, $estado, $id_user, $correo, $telefono, $celular, $sede, $pais, $esposa, $hijos, $sede_id) {
+        $sql="call sp_updateUsuario2('$id','$n', '$a', '$tipo','$ident', '$fn' , '$genero' , '$id_perfil', '$estado', '$id_user', '$correo', '$telefono','$celular', '$sede', '$pais','$esposa', '$hijos', '$sede_id')"; 
         return parent::setSqlSp($sql);
         
     }

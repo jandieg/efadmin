@@ -49,6 +49,28 @@ class Sede extends Conexion{
         $sql="call sp_selectSedesXCiudad('$id')";
         return parent::getConsultar($sql);   
     } 
+
+    public function getListaSedeUsuario($id, $sede_id = '') {
+        $lista = array();
+        $resultset = $this->getSedesXPais($id);
+        while ($row = $resultset->fetch_assoc()) {
+            if ($row['sede_id'] == $sede_id) {
+                $lista['lista_' . $row['sede_id']] = array("value" => $row['sede_id'],  
+                "select" => "selected", "texto" => $row['sede_razonsocial'] . ' - ' . $row['ciu_nombre']);
+            } else {
+                $lista['lista_' . $row['sede_id']] = array("value" => $row['sede_id'],  
+                "select" => "", "texto" => $row['sede_razonsocial'] . ' - ' . $row['ciu_nombre']);
+            }
+            
+        }
+
+        return $lista;
+    }
+
+    public function getSedesXPais($id) {
+        $sql = "call sp_selectSedexPais('$id')";
+        return parent::getConsultar($sql);
+    }
     
     public function getLista($id='', $lista=array()) { 
         if($this->idCiudad == ''){

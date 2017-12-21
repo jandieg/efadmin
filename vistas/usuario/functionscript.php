@@ -33,6 +33,25 @@ var getEnviarCorreoIndividual = function( correo_receptor,_nombre_receptor,_emai
    $("#_email_key").val(_email_key.toString());   
 };
 
+var cambioPais = function() {
+    var parametros = {
+        KEY: 'KEY_CAMBIO_PAIS',
+        _id: $("#_pais").val().toString()
+    };
+    $.ajax({
+        data: parametros,
+        url: 'usuario',
+        type: 'post',
+        success:  function (mensaje) {
+                    $("#_sede").html(mensaje);
+            },error : function(xhr, status) {
+                console.log(xhr);
+                console.log(status);
+                $.toaster({ priority : 'danger', title : 'Alerta', message : 'Disculpe, existió un problema' + status.toString()+" "+ xhr.toString()});
+            }
+    });
+};
+
 var setEnviarCorreoIndividual = function(){
 
         var parametros = {
@@ -153,6 +172,7 @@ var setActualizarDatos = function(id){
             _telefono: telefonofijo, 
             _celular: $("#_celular").val().toString(),
 			_pais: $("#_pais").val().toString(),
+            _sede: $("#_sede").val().toString(),
             _esposa: esposa,
             _hijos: hijos
 //            _sede: $("#_sede").val().toString()
@@ -195,7 +215,8 @@ var setUserCrear = function(op){
                 _correo: $("#_correo").val().toString(), 
                 _telefono: $("#_telefono").val().toString(), 
                 _celular: $("#_celular").val().toString(),
-				_pais: $("#_pais").val().toString()
+				_pais: $("#_pais").val().toString(),
+                _sede: $("#_sede").val().toString()
 //                _sede: $("#_sede").val().toString()
         };
         $.ajax({
