@@ -1376,17 +1376,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                          $comp= $objInscripcion->setActualizar($_POST['_id_inscripcion'],$membresiaValor,$_SESSION['user_id_ben'],$_POST['_fecha_inscripcion'],$_POST['_estado_inscripcion'],$_POST['_fecha_cobro']); 
                          $msg='La Inscripción se actualizo correctamente!';
                       }else{
-                        if (substr($_POST['_fecha_inscripcion'],0,4) == date("Y")) {
+                        /*if (substr($_POST['_fecha_inscripcion'],0,4) == date("Y")) {*/
                             $objInscripcion= new Inscripcion();
                          $comp= $objInscripcion->setGrabar( $membresiaValor, $_POST['_id_miembro_inscripcion'], $_SESSION['user_id_ben'],
                                  $_POST['_fecha_inscripcion'],$_POST['_estado_inscripcion'], $_POST['_fecha_cobro']); 
 
                          $msg='La Inscripción se creo correctamente!';
-                        } else {
+                        /*} else {
                             
                          $comp= "notok";
                          $msg='Solo se pueden crear inscripciones del año en curso';
-                        }
+                        }*/
                          
                       }
 
