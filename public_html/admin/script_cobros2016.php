@@ -17,17 +17,17 @@ require_once dirname(__FILE__) . '/PHPExcel/Classes/PHPExcel.php';
 require_once dirname(__FILE__) . '/PHPExcel/Classes/PHPExcel/IOFactory.php';
 
 function cargarCobros() {
-	$objPHPExcel = PHPExcel_IOFactory::load("cob20164.xls");
-	$objPHPExcel->setActiveSheetIndexByName("BO-01");
+	$objPHPExcel = PHPExcel_IOFactory::load("cob20165.xls");
+	$objPHPExcel->setActiveSheetIndexByName("CO-04");
 	$i = 3;
 
 	while (strlen($objPHPExcel->getActiveSheet()->getCell("A".$i)->getValue()) > 0) {
         $codigo = $objPHPExcel->getActiveSheet()->getCell("A".$i)->getValue();
         $status = $objPHPExcel->getActiveSheet()->getCell("C".$i)->getValue();
         $estado = 1;
-        if (in_array(trim($status), array("MC", "MS"))) {
+        /*if (in_array(trim($status), array("MC", "MS"))) {
             $estado = 2;
-        }
+        }*/
         $lista = array();
         $fechas = array();
         $numeros = $objPHPExcel->getActiveSheet()->getCell("D".$i)->getValue();

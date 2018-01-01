@@ -600,6 +600,9 @@ $xSheet=0; //First Index for each sheet
 $CM=date('m'); //Current Month
 $CY=date('Y'); //Current Year
 $objPHPExcel = PHPExcel_IOFactory::load("./excels_templates/dues_template_2.xlsx");
+$hoja = $objPHPExcel->getSheetByName('PE-01-01');
+
+
 $objPHPExcel->setActiveSheetIndex($xSheet);
 //First sheet
 $objPHPExcel->getActiveSheet();
@@ -610,6 +613,12 @@ $totalagrup = array();
 while($xrow = mysqli_fetch_array($r)) {
     $curagrup = $xrow['agrup'];
     $totalagrup[$curagrup]['sheet'] = $xSheet; //guardo el ultimo index de cada grupo.    
+    if ($xSheet != 0) {
+        $objPHPExcel2 = PHPExcel_IOFactory::load("./excels_templates/dues_template_2.xlsx");
+        $hoja = $objPHPExcel2->getSheetByName('PE-01-01');
+        $hoja->setTitle($hoja->getTitle() . ' copia' . $xSheet);
+        $objPHPExcel->addExternalSheet($hoja);
+    } 
 $objPHPExcel->setActiveSheetIndex($xSheet);
 $objPHPExcel->getActiveSheet()->setCellValue('D3', $xrow['gru_descripcion']);
 $objPHPExcel->getActiveSheet()->setCellValue('D4', get_admin_details($xrow['gru_forum'],'fullname'));

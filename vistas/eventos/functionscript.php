@@ -54,6 +54,7 @@ var setCambioGrupos = function() {
         KEY: 'KEY_MIEMBROS_GRUPOS',
         _id: $("#_miembrosGrupos").val().toString()
     };
+    
     $.ajax({  
 		type: "POST",  
 		url: "eventos",  
