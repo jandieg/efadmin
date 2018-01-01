@@ -523,6 +523,8 @@ var getDetalle = function( id_miembro, base){
                 $("#ben_contenedor2").html(mensaje);
                 $("#ben_contenedor2").show();
                 $("#alertas").html("");
+                window.scrollTo(0, 0);
+
 
             },error : function(xhr, status) {
                 console.log(xhr);
