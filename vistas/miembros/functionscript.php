@@ -412,8 +412,7 @@ var setEnviarCorreoIndividual = function(){
                     if(mensaje.success == "true"){
                         $.toaster({ priority : mensaje.priority, title : 'Alerta', message : mensaje.msg});
                         $('#modal_enviarCorreo').modal('toggle'); 
-                        setLimpiar();
-                        
+                        setLimpiar();                        
                     }else{
                         $.toaster({ priority : mensaje.priority, title : 'Alerta', message : mensaje.msg});
                     }
@@ -423,6 +422,7 @@ var setEnviarCorreoIndividual = function(){
         });
 
 };
+
 var getEnviarCorreoIndividual = function( correo_receptor,_nombre_receptor){
    setLimpiar();
    $("#_email_receptor").val(correo_receptor.toString());
