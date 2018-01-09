@@ -407,7 +407,7 @@ var setEnviarCorreoIndividual = function(){
             beforeSend: function () {
                 $("#btnEnviarCorreo").html('Enviando correo ...');
                 $('#btnEnviarCorreo').attr("disabled", true);
-            },
+            }, 
             success:  function (mensaje) {
                     if(mensaje.success == "true"){
                         $.toaster({ priority : mensaje.priority, title : 'Alerta', message : mensaje.msg});

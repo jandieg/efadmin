@@ -26,7 +26,7 @@ $year = getYearByCorte($corte);
 
 function getYearByCorte($corte) {
     $fecha = date_create($corte);
-    $anhoactual = date('Y');
+    $anhoactual = date_format($fecha,'Y'); //date('Y');
     $mesdia = date_format($fecha,'md');
     if (intval($mesdia) <= 430) {
         return intval($anhoactual)-1;
