@@ -123,6 +123,11 @@ class PresupuestoCobro extends Conexion{
         return parent::getConsultar($sql);   
     }
 
+    public function getPresupuestoCobroMiembrosFiltroSede($id, $year) {
+        $sql="CALL sp_selectPresupuestoCobroMiembrosFiltroxSede('$id', '$year')";
+        return parent::getConsultar($sql);   
+    }
+
     public function getCuotasEnCero($id) {
         $sql = "CALL sp_selectCuotasEnCero('$id')";
         return parent::getConsultar($sql);

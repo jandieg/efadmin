@@ -36,8 +36,12 @@ function getDetalleEmpresaConMiembros($id, $key, $año) {
         
         $resultset= $objPresupuestoCobro->getPresupuestoCobroMiembrosxMiembros($id, $año);
     }elseif ($key == "GRUPO"){
+        if (strlen($id) > 0) {
+            $resultset= $objPresupuestoCobro->getPresupuestoCobroMiembrosFiltroGrupo($id,$año );
+        } else {
+            $resultset= $objPresupuestoCobro->getPresupuestoCobroMiembrosFiltroSede($_SESSION['sede_id'],$año );
+        }
         
-        $resultset= $objPresupuestoCobro->getPresupuestoCobroMiembrosFiltroGrupo($id,$año );
     }
     
     while ($row = $resultset->fetch_assoc()) {   
@@ -152,7 +156,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     exit();            
                 } else {
                     $objGrupo = new Grupo();
-                    echo getDetalleEmpresaConMiembros($objGrupo->getPrimerGrupo(), "GRUPO", $_POST['_año']);
+                    echo getDetalleEmpresaConMiembros('', "GRUPO", $_POST['_año']);
                 }
                 break;
 
