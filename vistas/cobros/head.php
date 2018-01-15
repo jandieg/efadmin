@@ -592,7 +592,7 @@ if (in_array($perVerTodosFiltrosCobrosOp13, $_SESSION['usu_permiso'])) {
     $objGrupo= new Grupo();
     $listaGrupos= $objGrupo->getListaGrupos4(NULL,$lista, $_SESSION['user_id_ben']);
     
-    $tabla_miembros= getDetalleEmpresaConMiembros($objGrupo->getPrimerGrupo(), "GRUPO", date('Y')); 
+    $tabla_miembros= getDetalleEmpresaConMiembros('', "GRUPO", date('Y')); 
     
     $t=getTablaFiltro($listaMiembros,$listaEmpresa,$listaGrupos, $tabla_miembros );
     
@@ -605,7 +605,7 @@ if (in_array($perVerTodosFiltrosCobrosOp13, $_SESSION['usu_permiso'])) {
     $objGrupo= new Grupo();
     $listaGrupos= $objGrupo->getListaGruposForum($_SESSION['user_id_ben'],NULL, $lista); 
     
-    $tabla_miembros= getDetalleEmpresaConMiembros($objGrupo->getPrimerGrupo(), "GRUPO", date('Y')); 
+    $tabla_miembros= getDetalleEmpresaConMiembros('', "GRUPO", date('Y')); 
     
     $t=getTablaFiltro($listaMiembros ,NULL, $listaGrupos ,$tabla_miembros);
     
