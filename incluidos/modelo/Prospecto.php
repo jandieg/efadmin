@@ -66,8 +66,8 @@ class Prospecto extends Conexion{
         return parent::setSqlSp($sql);
     }
 
-    public function getProspectosFiltros($id, $key,$esaplicante) {
-        $sql="call sp_selectProspectoFiltros('$id', '$key', '$esaplicante')";
+    public function getProspectosFiltros($id, $key,$esaplicante, $sede) {
+        $sql="call sp_selectProspectoFiltros('$id', '$key', '$esaplicante', '$sede')";
         return parent::getConsultar($sql);   
     }
     public function getProspecto($id) {

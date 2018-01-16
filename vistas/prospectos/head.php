@@ -969,7 +969,7 @@ function getTablaFiltrada($id, $key, $esaplicante) {
    $objProspesto= new Prospecto();
     $cuerpo='';
     $cont=1;
-    $resultset= $objProspesto->getProspectosFiltros($id, $key, $esaplicante);
+    $resultset= $objProspesto->getProspectosFiltros($id, $key, $esaplicante, $_SESSION['sede_id']);
     $objStatus= new StatusMember();
     $listaStatus2= array();
     $listaStatus2= $objStatus->getListaAplicante($listaStatus2);
