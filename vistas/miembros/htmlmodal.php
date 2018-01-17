@@ -328,7 +328,7 @@
                           } else {
                               $elmes = $elmes - 2;
                           }
-                          echo $meses[$elmes] . " (incluido " . $meses[$elmes] . ")"; ?></span></label>
+                          echo $meses[1] . " (incluido " . $meses[1] . ")"; ?></span></label>
                         </div>                                                                                    
                     </div>
                 </div>
@@ -405,7 +405,7 @@
                           } else {
                               $elmes = $elmes - 2;
                           }
-                          echo $meses[$elmes] . " (incluido " . $meses[$elmes] . ")"; ?></span></label>
+                          echo $meses[1] . " (incluido " . $meses[1] . ")"; ?></span></label>
                         </div>                                                                                    
                     </div>
                 </div>
@@ -484,7 +484,7 @@
                           } else {
                               $elmes = $elmes - 2;
                           }
-                          echo $meses[$elmes] . " (incluido " . $meses[$elmes] . ")"; ?></span></label>
+                          echo $meses[1] . " (incluido " . $meses[1] . ")"; ?></span></label>
                         </div>                                                                                    
                     </div>
                 </div>

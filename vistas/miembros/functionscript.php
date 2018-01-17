@@ -264,11 +264,12 @@ var setCanceladas = function() {
 }
 
 var generarRangoFechas = function () {
+    console.log('entra en 1');
     var date2 = new Date().toISOString().substr(0,19).replace('T', ' ');
     var month = date2.substr(5,2);
     var year  = date2.substr(0,4);
     if (month == "01" || month == "02") {
-        month = month + 9;
+        month = "00"; //month + 9;
         year  = year - 1;
     } else {
         month = month - 3;
@@ -286,15 +287,12 @@ var generarRangoFechas = function () {
         showButtonPanel: false,
         minDate: fechaInicial,
         defaultDate: fechaInicial,
-        onChangeMonthYear: function(y,m,i) {
-            
+        onChangeMonthYear: function(y,m,i) {            
             $("#mesact").html(meses[m-1]+" (incluido " + meses[m-1] + ")");
             $("#_seleccion_del_mes").val(m + '/' + y);
-           
-            
-            
-        },
-       
+            console.log('el mes es ' + m);               
+            console.log(year);    
+        },       
     });
 
 
@@ -303,18 +301,21 @@ var generarRangoFechas = function () {
 }
 
 var generarRangoFechas2 = function () {
+    console.log('entra en 2');
     var date2 = new Date().toISOString().substr(0,19).replace('T', ' ');
     var month = date2.substr(5,2);
     var year  = date2.substr(0,4);
     if (month == "01" || month == "02") {
-        month = month + 9;
-        year  = year - 1;
+        month = "00"; //month + 9;
+        year  = year - 1;        
     } else {
+        console.log('el a;o 2 es ' + year);
         month = month - 3;
     }
     var meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 
     var fechaInicial = new Date(year, month, 1);
+    console.log(fechaInicial);
 
     $('.date-picker-meses').datepicker(
     {
@@ -325,28 +326,23 @@ var generarRangoFechas2 = function () {
         showButtonPanel: false,
         minDate: fechaInicial,
         defaultDate: fechaInicial,
-        onChangeMonthYear: function(y,m,i) {
-            
+        onChangeMonthYear: function(y,m,i) {            
             $("#mesact2").html(meses[m-1]+" (incluido " + meses[m-1] + ")");
             $("#_seleccion_del_mes2").val(m + '/' + y);
-           
-            
-            
-        },
-       
+            console.log('el mes es  ' + m);       
+            console.log(year);                 
+        },       
     });
-
-
-
     
 }
 
 var generarRangoFechas3 = function () {
+    console.log('entra en 3');
     var date2 = new Date().toISOString().substr(0,19).replace('T', ' ');
     var month = date2.substr(5,2);
     var year  = date2.substr(0,4);
     if (month == "01" || month == "02") {
-        month = month + 9;
+        month = "00";//month + 9;
         year  = year - 1;
     } else {
         month = month - 3;
@@ -368,8 +364,9 @@ var generarRangoFechas3 = function () {
             
             $("#mesact3").html(meses[m-1]+" (incluido " + meses[m-1] + ")");
             $("#_seleccion_del_mes3").val(m + '/' + y);
-           
             
+           console.log('el mes es ' + m);
+            console.log(year);
             
         },
        
