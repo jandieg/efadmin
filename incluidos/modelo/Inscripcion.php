@@ -59,10 +59,10 @@ class Inscripcion extends Conexion{
         
     }
 
-    public function setCobrar2($idMiembro,  $user, $fecha_cobro) {        
+    public function setCobrar2($idMiembro,  $user, $fecha_cobro, $anho = "") {        
         $cobro = $fecha_cobro . " " . date('H:i:s');
         $ano= date("Y");
-        $sql="call sp_updateInscriccionCobrar('$idMiembro','$ano',  '$cobro', '$user')";  
+        $sql="call sp_updateInscriccionCobrar('$idMiembro','$anho',  '$cobro', '$user')";  
         return parent::setSqlSp($sql);
         
     }

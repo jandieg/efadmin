@@ -527,7 +527,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                  if( !empty($_POST['_id_inscripcion_miembro']) && ! empty($_POST['_fecha_cobro'])){  
                
                      $objInscripcion= new Inscripcion();
-                     $comp= $objInscripcion->setCobrar2($_POST['_id_inscripcion_miembro'],$_SESSION['user_id_ben'], $_POST['_fecha_cobro']);  
+                     $comp= $objInscripcion->setCobrar2($_POST['_id_inscripcion_miembro'],$_SESSION['user_id_ben'], $_POST['_fecha_cobro'], $_POST['_anho_cobro']);  
    
                      if($comp == "OK"){
                         $data = array("success" => "true", "priority"=>'success',"msg" => 'El Cobro se realizó correctamente!');  
